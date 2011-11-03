@@ -1,0 +1,172 @@
+div.selector {
+	display: inline;
+	width: 400px;
+}
+
+div.selector div.actualItems {
+}
+
+div.selector div.actualItems span.actualItem {
+	background-color: #ffffff;
+}
+
+div.selector div.actualItems span.actualItem span span.text {
+}
+
+div.selector div.actualItems span.actualItem span img {
+}
+
+div.selector div.options {
+	position: absolute;
+	z-index: 1000;
+	top: 0px;
+	left: 0px;
+	width: 520px;
+	height: 320px;
+	padding-top: 34px;
+	overflow: scroll;
+	display: none;
+	background: #ffffff;
+	/*border: 1px solid #dddddd;*/
+}	
+
+div.selector div.actualItems span.activeItem,
+div.selector div.options a {
+	position: relative;
+	display: block;
+	text-decoration: none;
+	line-height: 32px;
+	width: 100%;
+	color: #222222;
+	padding: 3px 0px;
+	margin: 2px;
+}
+
+div.selector div.actualItems span.activeItem.autowidth,
+div.selector div.options a.autowidth {
+	width: auto;
+	float: left;
+}
+
+div.selector div.options a:hover {
+	color: #000000;
+	background: #eeeeee;
+}
+
+div.selector div.actualItems span.activeItem,
+div.selector div.options a.actual {
+	/*
+	border-top: 1px solid #f3f3f3;
+	border-left: 1px solid #f3f3f3;
+	border-bottom: 1px solid #dddddd;
+	border-right: 1px solid #dddddd;
+	*/
+}
+
+div.selector div.options a.actual {
+	background: url('../images/selector.png') right center no-repeat;
+}
+
+div.selector div.actualItems span.activeItem img,
+div.selector div.options a img {
+	display: block;
+	float: left;
+	border: none;
+}
+
+div.selector div.actualItems span.activeItem span.text,
+div.selector div.options a span.text {
+	display: block;
+	float: left;
+}
+
+div.selector div.actualItems span.activeItem span.indent,
+div.selector div.options a span.indent {
+	display: block;
+	float: left;
+	width: 10px;
+	height: 32px;
+}
+
+div.selector div.actualItems span.activeItem span.clear,
+div.selector div.options a span.clear {
+	display: block;
+	clear: both;
+}
+
+div.selector div.addNewItemButton {
+	display: block;
+	height: 32px;
+}
+
+div.selector div.addNewItemButton a {
+	display: block;
+	height: 32px;
+	width: 32px;
+	background: url('../images/add.png') center center no-repeat;
+}
+
+div.selector div.selectItemButton {
+	display: block;
+	float: left;
+	height: 32px;
+	width: 32px;
+}
+
+div.selector div.selectItemButton a {
+	display: block;
+	height: 32px;
+	width: 32px;
+	background: url('../images/next.png') center center no-repeat;
+}
+
+div.selector div.floating {
+	float: left;
+}
+
+div.selector span.clear {
+	display: block;
+	clear: both;
+}
+
+div.selector div.actualItems span.activeItem span {
+}
+
+div.selector div.actualItems span.activeItem a.removeItem {
+	position: absolute;
+	top: -10px;
+	right: -10px;
+	width: 32px;
+	height: 32px;
+	background: url('../images/remove.png') center center no-repeat;
+	border: none;
+}
+
+div.selector div.actualItems span.activeItem a.removeItem:hover {
+	border: none;
+}
+
+div.selector div.options a.closer {
+	position: absolute;
+	display: block;
+	float: none;
+	top: 0px;
+	right: 0px;
+	width: 32px;
+	height: 32px;
+	z-index: 100;
+	background: url('../images/remove.png') center center no-repeat;
+}
+
+div.selector div.options a.adder {
+	position: absolute;
+	display: block;
+	float: none;
+	top: 2px;
+	left: 2px;
+	width: 32px;
+	height: 32px;
+	z-index: 100;
+	background: url('../images/add.png') center center no-repeat;
+}
+

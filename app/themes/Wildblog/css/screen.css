@@ -1,0 +1,583 @@
+/**
+ * Style for frontend
+ * Author: Jan Horak
+ * Date: 18.10.2009
+ */
+ 
+@import "default.css";
+@import "../../Common/css/cleanform.css";
+@import "../../Common/css/common.css";
+
+
+/**
+ *------------------------------------------------
+ * basic form
+ *------------------------------------------------
+ */ 
+label {
+	width: 30%;
+	font-weight: bold;
+}
+
+input, textarea, button, label {
+	float: left;
+	margin: 3px 5px;
+}
+
+input, textarea, button {
+	width: 60%;
+	border: 1px #aaaaaa solid;
+	background: #ffffff;
+}
+
+input.submit, button {
+	width: auto;
+	height:30px;
+	line-height:20px;
+	
+	background-color:#f5f5f5;
+    border:1px solid #dedede;
+    border-top:1px solid #eee;
+    border-left:1px solid #eee;
+	
+    font-size:110%;
+    text-decoration:none;
+    font-weight:bold;
+    color:#565656;
+    cursor:pointer;
+	
+	background-position: 6px;
+	background-repeat:no-repeat;
+	padding: 0px 30px;
+}
+
+input.submit:hover, button:hover {
+	background-color:#E6EFC2;
+    border:1px solid #C6D880;
+    color:#529214;
+}
+
+input.checkbox, button {
+	width: auto;
+}
+
+/**
+ * Cleanform updates (overrides basic cleanform definition)
+ */
+
+form.cleanform {
+	border:solid 2px #b7ddf2;
+	background:#f3f3f3;
+}
+
+form.cleanform div.header {
+	border-bottom:solid 1px #CCCCCC;
+	margin: 20px 14px;
+}
+
+form.cleanform div.line {
+	background: none;
+	border: none;
+}
+
+form.cleanform input.button {
+	background-color:#f5f5f5;
+    border:1px solid #dedede;
+    border-top:1px solid #eee;
+    border-left:1px solid #eee;
+	margin: 0 14px 0 0;
+}
+
+form.cleanform input.button.submit {
+	background-image:url("/media/.ico/32/next.png");
+}
+
+form.cleanform input.button.delete {
+	background-image:url("/media/.ico/32/remove.png");
+}
+
+form.cleanform div.error, form.cleanform div.confirm {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+form.cleanform input, form.cleanform textarea {
+	border-color: #CCCCCC;
+}
+
+form.cleanform textarea.lite {
+	width: 420px;
+}
+
+/**
+ *------------------------------------------------
+ * base layout 
+ *------------------------------------------------
+ */ 
+body {
+	text-align: center;
+	background: #ececec url('../images/page-bg2.gif') center center repeat-y;
+}
+
+.clear {
+	clear: both;
+}
+
+div.list a {
+	display: block;
+}
+
+.border {
+	border: 5px #cccccc solid;
+}
+
+#page {
+	text-align: left;
+	margin: 0 auto;
+	width: 990px;
+	background: #ffffff url("../images/right-bg.gif") right top repeat-y;
+}
+
+#upper, #lower {
+	/*border-left: 5px #cccccc solid;
+	border-right: 5px #cccccc solid;*/
+}
+
+#upper {
+	
+}
+
+#lower {
+	
+}
+
+#middle {
+	width: 100%;
+	padding-top: 180px;
+}
+	
+#left {
+	float: left;
+	width: 65%;
+}
+	
+#right {
+	float: right;
+	width: 33%;
+	background: #ededed;
+}
+	
+/**
+ *------------------------------------------------
+ * header 
+ *------------------------------------------------
+ */ 
+#header {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 180px;
+	background: #d00000 url("../images/header-bg.gif") left 40px repeat-x;
+	color: #ffffff;
+}	
+
+#header a {
+	color: #ffffff;
+}
+
+#header img {
+	border: none;
+}
+
+#header-logo {
+	position: absolute;
+	top: 50px;
+	left: 50px;
+	font-size: 180%;
+}
+
+#header-logo a {
+	font-weight: bold;
+}
+
+#header-logo a:hover {
+	text-decoration: none;
+}
+
+#header-logo a img {
+	position: absolute;
+	top: 25px;
+	left: 0px;
+}
+
+#header-logo a span.text {
+	position: absolute;
+	top: 50px;
+	left: 200px;
+	width: 400px;
+}
+
+#header-logo a span.text span {
+	font-size: 80%;
+}
+
+#header-menu {
+	position: absolute;
+	top: 10px;
+	right: 40px;
+	font-size: 140%;
+}
+
+#header-menu a {
+	font-weight: normal;
+	padding: 0px 10px;
+}
+
+#header-quot {
+	position: absolute;
+	top: 10px;
+	left: 50px;
+}
+
+#header-rss {
+	position: absolute;
+	top: 40px;
+	right: 30px;
+}
+
+#header-search {
+	position: absolute;
+	top: 120px;
+	right: 13px;
+	background: #ffffff;
+	width: 302px;
+	height: 30px;
+}
+
+#header-search input {
+	margin: 0px;
+	border: none;
+	background: #ffffff;
+	padding: 2px 3px;
+	font-size: 140%;
+	float: right;
+	width: 250px;
+}
+
+#header-search input.submit {
+	background: #ffffff url("/media/.ico/24/search.png") center center no-repeat;
+	width: 24px;
+	float: right;
+	cursor: pointer;
+}
+
+#header-langs {
+	position: absolute;
+	padding: 3px;
+	top: 50px;
+	right: 100px;
+	width: 200px;
+	height: 20px;
+}
+
+#header-langs a img {
+	padding: 0px;
+	margin: 0px;
+	border: 1px solid transparent;
+}
+#header-langs a:hover img {
+	border-color: #ffffff;
+}
+
+/**
+ *------------------------------------------------
+ * footer 
+ *------------------------------------------------
+ */ 
+#footer {
+	padding: 15px 45px;
+	background: #282828 url("../images/footer-bg.gif") left top repeat-x;
+}
+
+#footer, #footer a {
+	color: #d0d0d0;
+}
+
+#footer h3 {
+	border-bottom: 1px #d0d0d0 dotted;
+}
+
+#footer ul {
+	margin-left: 10px;
+}
+
+#footer ul li {
+	list-style-type: none;
+}
+
+#footer ul li, #footer ul li a {
+	color: #ffffff;
+}
+
+#footer ul li ul {
+	margin-left: -30px;
+}
+
+#footer ul li ul li {
+	display: inline;
+	padding: 0px 3px;
+}
+
+#footer ul li ul li, #footer ul li ul li a {
+	color: #d0d0d0;
+}
+
+#footer-left {
+	float: left;
+	width: 45%;
+}
+	
+#footer-right {
+	float: right;
+	width: 45%;
+}
+	
+#footer-bottom {
+	padding: 20px 0px 0px 0px;
+}
+	
+#footer-copy {
+	margin: 1px 0px 1px 0px;
+	border-top: 2px #aaaaaa solid;
+	border-bottom: 2px #aaaaaa solid;
+	padding: 20px;
+	background: #dddddd;
+	color: #444444;
+}
+
+#footer-copy img {
+	border: none;
+}
+
+
+/**
+ *------------------------------------------------
+ * content 
+ *------------------------------------------------
+ */ 
+#content {
+	padding: 20px;
+}
+	
+#content h2 {
+	width: 80%;
+	line-height: 200%;
+}
+	
+#content h2 a {
+	color: #000000;
+	font-weight: normal;
+}
+	
+#content a {
+	font-weight: bold;
+}
+
+#content .article .date {
+	position: absolute;
+	top: -20px;
+	right: 20px;
+	color: #ffffff;
+	font-size: 150%;
+	background: #efefef url("../images/date-bg.gif") center center no-repeat;
+	width: 115px;
+	height: 68px;
+	text-align: center;
+}
+	
+#content .article .date span.w {
+	display: block;
+	position: absolute;
+	top: 35px;
+	left: 0px;
+	width: 115px;
+	height: 68px;
+	text-align: center;
+}
+
+#content .article .date span.y {
+	display: block;
+	position: absolute;
+	top: 15px;
+	left: 0px;
+	width: 115px;
+	height: 68px;
+	text-align: center;
+	font-size: 60%;
+	font-weight: bold;
+}
+
+#content div.article div.related {
+	margin: 10px 0px 10px 0px;
+	padding: 10px 0px 10px 0px;
+	border-top: 1px solid #ddd;
+}
+
+#content div.article div.related a img {
+	border: none;
+	margin-right: 5px;
+}
+
+#content div.article div.related a {
+	display: block;
+}
+
+#content h1, #content h2, #content h3 {
+	border-left: 5px #ec4b00 solid;
+	padding-left: 5px;
+}
+
+#content h2 {
+	border-left-width: 3px;
+	border-left-color: #999999;
+}
+
+#content h3 {
+	border-left-width: 2px;
+	border-left-color: #cccccc;
+}
+
+#content .tags {
+	color: #aaaaaa;
+	padding: 15px 26px;
+	background: url("/media/.ico/24/tag.png") left center no-repeat;
+}
+
+#content .comments a img {
+	border: none;
+	top: 4px;
+}
+
+#content .comments h3 a {
+	text-decoration: none;
+}
+
+#content a.more {
+	display: block;
+	text-align: right;
+	margin: 5px 0px;
+	padding: 5px 10px;
+}
+
+#navi {
+	position: absolute;
+	top: 10px;
+	left: 30px;
+	font-size: 85%;
+	color: #d00000;
+}
+
+/**
+ *------------------------------------------------
+ * right 
+ *------------------------------------------------
+ */ 
+#right a {
+	color: #333333;
+}
+
+#right .box {
+	margin: 0px;
+	border-top: 3px #ffffff solid;
+	padding: 4px 0px;
+}
+
+#right .dark {
+	background: #dddddd;
+	border-top: 2px #ffffff solid;
+	border-bottom: 2px #ffffff solid;
+	padding: 10px;
+}
+
+#right .light {
+	background: #f2f2f2;
+	padding: 10px;
+}
+
+#right .headline {
+	font-size: 180%;
+	padding: 10px 20px;
+}
+
+#right .news a, #footer .news a {
+	display: block;
+	margin: 0px 0px 0px 50px;
+}
+
+#right .news a span.date, #footer .news a span.date {
+	display: block;
+	position: absolute;
+	top: -2px;
+	left: -50px;
+	font-size: 70%;
+	color: #aa3333;
+	width: 45px;
+	text-align: right;
+}
+
+#footer .news a span.date {
+	color: #aaaaaa;
+}
+
+div.advertisment {
+	text-align: center;
+}
+
+div.advertisment img {
+	border: none;
+}
+
+
+div#page.research h1 {
+	background: none;
+}
+
+div#page.research {
+	background: #ffffff;
+	width: 100%;
+	text-align: center;
+}
+
+div#page_inner {
+	width: 900px;
+	text-align: left;
+	margin: 0px auto;
+}
+
+form.research {
+	background: none;
+	border: none;
+}
+
+/* paging colors */
+div.paging a {
+	color: #ffffff;
+	background-color: #69ba00;
+}
+
+div.paging a:hover {
+	background-color: #a9da00;
+}
+
+div.paging .paging_actual {
+	background-color: #a9da00;
+}
+
+
+/**
+ *------------------------------------------------
+ * end 
+ *------------------------------------------------
+ */ 
+

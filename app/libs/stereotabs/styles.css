@@ -1,0 +1,62 @@
+/**
+ * Style: Black tabs
+ * Author: Jan Horak, horak.jan@centrum.cz
+ * Date: 2010/10/06
+ */
+
+div.black_tabs {
+
+}
+
+div.black_tabs ul {
+	background: url('black-tab-bg.gif') center bottom repeat-x;
+	height: 31px;
+}
+
+div.black_tabs ul li {
+	float: left;
+	display: block;
+	margin-right: 3px;
+	height: 22px;
+}
+
+div.black_tabs ul li a {
+	float: left;
+	display: block;
+	padding-right: 13px;
+	padding-left: 13px;
+	background: #4a4a4a url('black-tab-item-r.gif') right 0px no-repeat;
+	height: 22px;
+	line-height: 22px;
+	color: #dddddd;
+	font-size: 90%;
+	font-weight: bold;
+}
+
+div.black_tabs ul li a b {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	display: block;
+	width: 13px;
+	height: 22px;
+	background: url('black-tab-item-l.gif') left 0px no-repeat;
+}
+
+div.black_tabs ul li a.selected,
+div.black_tabs ul li a:hover {
+	background-position: right -22px;
+	text-decoration: none;
+	color: #ffffff;
+}
+
+div.black_tabs ul li a.selected b,
+div.black_tabs ul li a:hover b {
+	background-position: left -22px;
+}
+
+/*
+ *end 
+ */ 
+
+

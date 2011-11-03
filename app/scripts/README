@@ -1,0 +1,12 @@
+This directory contains some scripts mostly useful for updating application 
+from lower version to higher version. 
+
+If you e.g. have 0.5 version installed and want to upgrade to 0.7, you 
+should run all scripts higher than present version and lower or eaqual 
+to desired (new) version.
+
+Example of upgrading from 0.5 to 0.7:
+0.5 < script_version <= 0.7
+
+All scripts with extention sql are sql queries that has to be run in DB.
+

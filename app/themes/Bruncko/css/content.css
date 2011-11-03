@@ -1,0 +1,172 @@
+/**
+ * Style: Jitka Pokorna Web | default style definition
+ * Author: Jan Horak, horak.jan@centrum.cz
+ * Date: 2010/05/30
+ */
+ 
+html, body, textarea {
+	font-family:Tahoma, Arial, helvetica, sans-serif;
+	font-size:12px;
+	line-height:1.6em;
+}
+
+p {
+	margin-bottom:15px;
+}
+a {
+	color:#fbf0d2;
+	outline:none;
+}
+a:hover {
+	text-decoration:none;
+}
+h1 {
+	font-size : 2.73em;
+	font-family : Georgia, "Times New Roman", Times, serif;
+	font-weight : normal;
+	line-height : 1em;
+	margin-bottom : 20px;
+	margin-top : 30px;
+}
+h2 {
+	color : #ffda77;
+	font-size : 2.33em;
+	font-family : Georgia, "Times New Roman", Times, serif;
+	font-weight : normal;
+	line-height : 1em;
+	margin-bottom : 20px;
+	margin-top : 30px;
+}
+h3 {
+	color : #ffda77;
+	font-size : 1.87em;
+	line-height : 1em;
+	font-family : Georgia, "Times New Roman", Times, serif;
+	font-weight : normal;
+	margin-bottom : 20px;
+	margin-top : 30px;
+}
+h3 a {
+	text-decoration: none;	
+}
+h3 a:hover {
+	text-decoration: underline;	
+}
+h4 {
+	font-size : 1em;
+	line-height : 1.5em;
+	color : #fff;
+	margin-bottom : 20px;
+	margin-top : 30px;
+}
+ul, ol {
+	list-style: circle;
+}
+img {
+	border:0;
+	vertical-align:top;
+	text-align:left;
+}
+
+span.clear {
+	display: block;
+	clear: both;
+}
+
+table {
+	font-size: 100%;
+}
+
+img, .border {
+	border: 2px #888888 solid;
+}
+
+a:hover img {
+	border-color: #cccccc;
+}
+
+
+img.float-left, span.float-left {
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+
+img.float-right, span.float-right {
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+
+/* special format classes */
+
+.no-border {
+	border: none;
+}
+
+.float-left  { 
+	float: left; 
+}
+
+.float-right {	
+	float: right;  
+}
+
+.clear {
+	clear: both;
+}
+
+.align-left  {	
+	text-align: left; 
+}
+
+.align-right {	
+	text-align: right; 
+}
+
+.align-center {
+	text-align: center;
+}
+
+div.insertfile {
+	padding: 10px 30px;
+}
+
+div.insertfile a img, div.insertfile a span {
+	float: left;
+	display: block;
+	vertical-align: middle;
+}
+
+div.insertfile a {
+	display: block;
+}
+
+div.insertfile a img {
+	border: none;
+}
+
+div.insertfile a.size16 {
+	height: 16px;
+	line-height: 16px;
+}
+
+div.insertfile a.size32 {
+	height: 32px;
+	line-height: 32px;
+	font-size: 110%;
+}
+
+div.insertfile a.size64 {
+	height: 64px;
+	line-height: 64px;
+	font-size: 130%;
+}
+
+img.emoticon {
+	border: none;
+}
+
+/*
+ *end 
+ */ 
+
+

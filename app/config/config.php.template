@@ -1,0 +1,58 @@
+<?php
+
+require_once('app/config/default.inc');
+require_once(DIR_CORE . 'Config.class.php');
+
+// captcha length
+define('CAPTCHA_LENGTH', 5);
+define('CAPTCHA_WIDTH', 150);
+define('CAPTCHA_HEIGHT', 75);
+
+// general controllers config
+define('DEFAULT_PAGING_LIMIT', 30);
+
+// debugging info 0 = off, 1 = on
+Config::Set('DEBUG_MODE', 0);
+Config::Set('PROJECT_STATUS', PROJECT_NOT_INSTALLED);
+
+// debugging info 0 = off, 1 = on
+Config::Set('PROJECT_TITLE', '___project_title___');
+Config::Set('PROJECT_DESCRIPTION', '___project_description___');
+
+// project config
+Config::Set('PROJECT_URL', '___project_url___');
+Config::Set('PROJECT_PROTOCOL', 'http://');	// todo: should be by route definition
+
+// default visual temes
+Config::Set('THEME_FRONT_END', 'Default');
+Config::Set('THEME_BACK_END', 'DefaultAdmin');
+
+// default action in format Package::Controller::action
+Config::Set('HOMEPAGE_ACTION', '___default_action___');
+Config::Set('HOMEPAGE_ACTION_ADMIN', '___default_admin_action___'); // mode|Package::Controller::method or auto
+
+// default email to send emails to or from
+Config::Set('DEFAULT_EMAIL', '___admin_email___');
+
+// default Language
+Config::Set('DEFAULT_LANGUAGE', '___default_language___');
+Config::Set('DEFAULT_LANGUAGE_BACK_END', '___default_language___');
+
+// project specific default paging limit
+Config::Set('DEFAULT_PROJECT_PAGING_LIMIT', 30);
+
+// Cache settings
+Config::Set('ALLOW_CACHE', true);
+
+// path to image on error page
+Config::Set('ERROR_IMAGE_PATH', 'app/error_page.jpg');
+
+// true if selectors should be initialized immediately in the HTML
+// false if selectors should be initialized after page is loaded
+Config::Set('SELECTOR_IMMEDIATELY', true);
+
+// true if tabs should be initialized immediately in the HTML
+// false if tabs should be initialized after page is loaded
+Config::Set('TABS_IMMEDIATELY', true);
+
+?>

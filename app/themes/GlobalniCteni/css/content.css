@@ -1,0 +1,175 @@
+/**
+ * Style: Globalni cteni Web | default style definition
+ * Author: Jan Horak, horak.jan@centrum.cz
+ * Date: 2010/10/30
+ */
+
+* {
+	padding: 0px;
+	margin: 0px;
+	border: 0;
+}
+
+html, body {
+	background: #ffffff;
+	color: #000000;
+	font-size: 12px;
+	line-height: 150%;
+	font-family: Verdana, "Geneva CE", lucida, sans-serif;
+}
+
+table {
+	font-size: 12px;
+}
+
+ul, ol {
+	margin: 15px 0px 15px 15px;
+}
+
+p {
+	margin: 10px 0px;
+}
+
+div.clear,
+span.clear {
+	display: block;
+	clear: both;
+	font-size: 1px;
+	line-height: 1px;
+}
+
+
+h1, h2, h3 {
+	font-weight: normal;
+	font-family: "Trebuchet MS", "Geneva CE", lucida, sans-serif;
+	color: #75a54b;
+}
+
+h1 {
+	font-size: 180%;
+	margin: 20px 0px;
+}
+
+h2 {
+	font-size: 140%;
+	margin: 15px 0px;
+}
+
+h3 {
+	font-size: 120%;
+	margin: 10px 0px;
+}
+
+img {
+	border: none;
+}
+
+.border {
+	border: 2px #cccccc solid;
+}
+
+a:hover img {
+	border-color: #0198e7;
+}
+
+
+img.float-left, span.float-left {
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+
+img.float-right, span.float-right {
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+
+/* special format classes */
+
+.no-border {
+	border: none;
+}
+
+.float-left  { 
+	float: left; 
+}
+
+.float-right {	
+	float: right;  
+}
+
+.clear {
+	clear: both;
+}
+
+.align-left  {	
+	text-align: left; 
+}
+
+.align-right {	
+	text-align: right; 
+}
+
+.align-center {
+	text-align: center;
+}
+
+div.insertfile {
+	padding: 10px 30px;
+}
+
+div.insertfile a img, div.insertfile a span {
+	float: left;
+	display: block;
+	vertical-align: middle;
+}
+
+div.insertfile a {
+	display: block;
+}
+
+div.insertfile a img {
+	border: none;
+}
+
+div.insertfile a.size16 {
+	height: 16px;
+	line-height: 16px;
+}
+
+div.insertfile a.size32 {
+	height: 32px;
+	line-height: 32px;
+	font-size: 110%;
+}
+
+div.insertfile a.size64 {
+	height: 64px;
+	line-height: 64px;
+	font-size: 130%;
+}
+
+img.emoticon {
+	border: none;
+}
+
+div.box {
+	background: #f9fcdf;
+	border: 2px solid #000000;
+	padding: 10px;
+}
+
+div.box div.float-left {
+	width: 48%;
+}
+
+div.box div.float-right {
+	width: 48%;
+}
+
+
+
+/*
+ *end 
+ */ 
+
+

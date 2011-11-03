@@ -1,0 +1,29 @@
+{require file='part.header'}
+
+{if $title and not $notitle}<h1>{$title}</h1>{/if}
+
+{if $blogposts->data.items}
+{foreach from=$blogposts->data.items item=post}
+	<div class="article">
+	<h1><a href="{$post->link}">{$post->title}</a></h1>
+	<div class="date"><span class="w">{$post->published|date_format:"%m"|month_format:"%nam"}|{$post->published|date_format:"%e"}</span> <span class="y">{$post->published|date_format:"%Y"}</span></div>
+	{$post->text}
+	<div class="clear"></div>
+	{require file='part.tags' tags=$post->tags package=Blog}
+	<div class="comments">
+	<a href="{$post->link}#comment_add"><img src="{$iconsPath}16/comment_add.png" alt="" title="" /> add comment</a>
+	<a href="{$post->link}#comments"><img src="{$iconsPath}16/comments.png" alt="" title="" /> view posted comments ({$post->commentsCount})</a>
+	</div>
+	</div>
+	<br /><br /><br />
+{/foreach}
+{else}
+	<p>{tg}No posts found.{/tg}</p>
+{/if}
+
+{generate_paging collection=$blogposts}
+
+{require package=Base file='part.addNewItem' itemPackage=Blog itemController=Posts itemAction=actionNew}
+
+{require file='part.footer'}
+

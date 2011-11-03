@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Selector — JavaScript Widget</title>
+    <link rel="stylesheet" href="../stylesheets/selector.css">
+    <style>
+      body {
+        font-family: Trebuchet MS;
+      }
+    </style>
+    <script src="../prototype.js"></script>
+    <script src="../selector.js"></script>
+    <script>
+      function setupSelectors() {
+        // Embedded Selector
+        SelectorMenu.setup(
+          {
+            selectField: 'embeddedSelector',
+            containerField: 'embeddedSelectorContainer',
+            attributeFields: [
+            	{ img: 'ico.png', indent:0 }, 
+            	{ img: 'ico.png', indent:1 }, 
+            	{ img: 'ico2.png', indent:2 }, 
+            	{ img: 'ico.png', indent:3 }, 
+            	{ img: 'ico2.png', indent:3 }, 
+            	{ img: 'ico.png', indent:2 }, 
+            	{ img: 'ico2.png', indent:2 }, 
+            	{ img: 'ico.png', indent:1 }
+            ]
+          }
+        )
+      }
+      Event.observe(window, 'load', function() { setupSelectors() })
+    </script>
+  </head>
+  <body>
+
+    <form action="" method="post">
+    <fieldset>
+    <div id="embeddedSelect">
+    <select name="" id="embeddedSelector" multiple="multiple">
+    <option value="1">a</option>
+    <option value="2">b</option>
+    <option value="3" selected="selected">c</option>
+    <option value="4">d</option>
+    <option value="5" selected="selected">e</option>
+    <option value="6">f</option>
+    <option value="7">g</option>
+    <option value="9">h</option>
+    </select>
+    </div>
+    <div id="embeddedSelectorContainer" class="selector">
+    </div>
+
+
+    <input type="submit" name="submit" value="Submit" onclick="for(var i=0; i<$(embeddedSelector).options.length; i++)if ($(embeddedSelector).options[i].selected) {alert($(embeddedSelector).options[i].value);} return false;" />
+    </fieldset>
+    </form>
+  </body>
+</html>

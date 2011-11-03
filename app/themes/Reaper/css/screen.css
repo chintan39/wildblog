@@ -1,0 +1,517 @@
+/********************************************
+   AUTHOR:  			Erwin Aligam 
+   WEBSITE:   			http://www.styleshout.com/
+	TEMPLATE NAME: 	Bright Side of Life
+   TEMPLATE CODE: 	S-0005
+   VERSION:          1.0          	
+ *******************************************/ 
+ 
+/********************************************
+   HTML ELEMENTS
+********************************************/ 
+
+@import "default.css";
+@import "../../Common/css/cleanform.css";
+
+/* top elements */
+
+body {
+	background: #C1E893 url(../images/bg.gif) repeat-x;
+	color: #666666; 
+}
+
+/* links */
+a { 
+	background-color: inherit;
+	text-decoration: none;
+}
+a:hover {
+	color: #9EC630;
+	background-color: inherit;
+}
+
+ul, ol, a, input.button, blockquote {
+	color: #c3310a;
+}
+
+/* headers */
+h1, h2, h3 {
+	font: bold 1em 'Trebuchet MS', Arial, Sans-serif;
+	color: #333;	
+}
+h1, h2, h2 a, h2 a:hover { 
+	color: #c3310a; 
+} 
+h3, h3 a, h3 a:hover { 
+	color: #9EC630; 
+} 
+
+h1 { font-size: 1.5em; } 
+h2 { font-size: 1.4em; }
+h3 { font-size: 1.3em; }
+
+p, h1, h2, h3 {
+	margin: 10px 15px;
+}
+ul, ol {
+	margin: 10px 30px;
+	padding: 0 15px;
+}
+ul span, ol span {
+	color: #666666; 
+}
+
+/* images */
+img {
+	border: 2px solid #CCC;
+}
+img.no-border {
+	border: none;
+}
+.float-right, .float-left {
+  display: block;
+  position: relative;
+  z-index: 10;
+}
+.float-right {
+  margin: 5px 0px 5px 15px;  
+}
+.float-left {
+  margin: 5px 15px 5px 0px;
+}
+
+a img {  
+  border: 2px solid #DDD;
+}
+a:hover img {  
+  border: 2px solid #9EC630 !important; /* IE fix*/
+  border: 2px solid #9EC630;
+}
+
+div.recaptcha a:hover img {
+	border: none !important; /* IE fix*/
+}
+
+a:hover img.no-border {
+	border: none !important;
+}
+
+code {
+  margin: 5px 0;
+  padding: 10px;
+  text-align: left;
+  display: block;
+  overflow: auto;  
+  font: 500 1em/1.5em 'Lucida Console', 'courier new', monospace;
+  /* white-space: pre; */
+  background: #FAFAFA;
+}
+code, blockquote {
+  border-left: 4px solid #c3310a; 
+}
+acronym {
+  cursor: help;
+  border-bottom: 1px solid #777;
+}
+blockquote {
+	margin: 15px;
+ 	padding: 0 0 0 20px;  	
+  	background: #FAFAFA;
+	border: 1px solid #f2f2f2; 
+	font: bold 1.2em/1.5em Georgia, 'Bookman Old Style', Serif; 
+}
+
+/* form elements */
+form {
+	margin:10px; padding: 0;
+	border: 1px solid #f2f2f2; 
+	background-color: #FAFAFA; 
+}
+label {
+	display:block;
+	font-weight:bold;
+	margin:5px 0;
+}
+input {
+	padding: 2px;
+	border:1px solid #eee;
+	font: normal 1em Verdana, sans-serif;
+	color:#777;
+}
+textarea {
+	width:300px;
+	padding:2px;
+	font: normal 1em Verdana, sans-serif;
+	border:1px solid #eee;
+	height:100px;
+	display:block;
+	color:#777;
+}
+input.button { 
+	margin: 0; 
+	font: bold 1em Arial, Sans-serif; 
+	border: 1px solid #CCC;
+	background: #FFF; 
+	padding: 2px 3px; 
+}
+
+/* search form */
+form.searchform {
+	background: transparent;
+	border: none;
+	margin: 0; padding: 0;
+}
+form.searchform input {
+	float: right;
+	margin: 5px; 
+	width: 120px;
+	border: 1px solid #9EC630; 
+	background: #FFF;
+	color: #333; 
+	height: 14px;
+	vertical-align: top;
+}
+form.searchform input.submit { 
+	padding: 2px 3px; 
+	font: bold 12px Arial, Sans-serif; 
+	background: #FAFAFA;
+	border: 1px solid #f2f2f2;
+	color: #777;	
+	width: 60px;
+	height: auto;
+	vertical-align: top;
+}
+
+/***********************
+	  LAYOUT
+************************/
+#wrap {
+	background: #FFF;
+	width: 950px; height: 100%;
+	margin: 0 auto;	
+	text-align: left;
+}
+#content-wrap {
+	clear: both;
+	margin: 0; padding: 85px 0 0 0;	
+	background: #FFF;
+}
+
+/* header */
+#header {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 85px;	
+	background: #fff url(../images/headerbg.gif) repeat-x 0% 100%;	
+}
+#header h2#logo {
+	position: absolute;
+	margin: 0; padding: 0;
+	font: bolder 280% 'Trebuchet MS', Arial, Sans-serif;
+	letter-spacing: -2px;
+	text-transform: lowercase;
+	top: 0; left: 5px;	
+}
+#header h2#slogan {
+	position: absolute;
+	margin: 0; padding: 0;
+	top:45px; left: 7px;
+	color: #666666;
+	text-indent: 0px;
+	font: bold 13px Tahoma, 'trebuchet MS', Sans-serif; 
+	text-transform: none;	
+	width: 400px;
+}
+#headerphoto div#name, #headerphoto div#address {
+	position: absolute;
+	margin: 0; padding: 0;
+	left: 680px;
+	color: #046508;
+	text-indent: 0px;
+	text-transform: none;	
+}
+#headerphoto div#name {
+	top:10px;
+	font: bolder 240% 'Trebuchet MS', Arial, Sans-serif;
+}
+#headerphoto div#address {
+	top:50px;
+	font: bolder 120% 'Trebuchet MS', Arial, Sans-serif;
+}
+#header form.searchform {
+	position: absolute;
+	top: 0; right: 0px;	
+}
+
+/* main */
+#mainleft {
+	padding: 200px 0 0 0;
+	float: right;
+	width: 74%;
+}
+
+#headerphoto {
+	position: absolute;
+	top: 85px;
+	left: 0px;
+	width: 950px;
+	height: 200px;
+	background: #C1EBFF url(../images/headerphoto.jpg) center center;
+}
+
+#main {
+	float: left;
+	padding: 15px 0 0 0;
+	width: 65%;	
+	position: relative;
+}
+
+.post-footer {
+	background-color: #FAFAFA;
+	padding: 5px; margin: 20px 15px 0 15px;
+	border: 1px solid #f2f2f2;
+	font-size: 95%;	
+}
+.post-footer .date {
+	background: url(../images/clock.gif) no-repeat left center;
+	padding-left: 20px; margin: 0 10px 0 5px;
+}
+.post-footer .comments {
+	background: url(../images/comment.gif) no-repeat left center;
+	padding-left: 20px; margin: 0 10px 0 5px;
+}
+.post-footer .readmore {
+	background: url(../images/page.gif) no-repeat left center;
+	padding-left: 20px; margin: 0 10px 0 5px;
+}
+
+/* sidebar */
+#sidebar {
+	float: left;
+	width: 24%;
+	margin: 0;	padding: 200px 0 0 0; 
+}
+#sidebar h2 { 
+	font-size: 1.2em;
+	margin-top: 30px;
+}
+#sidebar ul.sidemenu {
+	list-style:none;
+	margin:10px 0 10px 15px;
+	padding:0;		
+}
+#sidebar ul.sidemenu li {
+	list-style-type: none;
+	margin-bottom:1px;
+	border: 1px solid #f2f2f2;
+}
+#sidebar ul.sidemenu a {
+	display:block;
+	font-weight:bold;
+	color: #333;	
+	text-decoration:none;	
+	padding:2px 5px 2px 10px;
+	background: #f2f2f2;
+	border-left:4px solid #CCC;	
+	
+	min-height:18px;
+}
+
+* html body #sidebar ul.sidemenu a { height: 18px; }
+
+#sidebar ul.sidemenu a:hover {
+	padding:2px 5px 2px 10px;
+	background: #f2f2f2;
+	color: #9EC630;
+	border-left:4px solid #9EC630;
+}
+
+/* rightbar */
+#rightbar {
+	float: left;
+	width: 32%;
+	padding: 0; margin:0;		
+}
+
+/* Footer */
+#footer { 
+	clear: both; 
+	color: #FFF; 
+	background: #A9BAC3; 
+	border-top: 5px solid #c3310a;
+	margin: 0; padding: 0; 
+	height: 50px;	  
+	font-size: 95%;		
+}
+#footer a { 
+	text-decoration: none; 
+	font-weight: bold;	
+	color: #FFF;
+}
+#footer .footer-left{
+	float: left;
+	width: 60%;
+}
+#footer .footer-right{
+	float: right;
+	width: 35%;
+}
+#header a:hover {
+	color: #d00000;
+	text-decoration: none;
+}
+
+/* menu tabs */
+#header ul {
+	z-index: 9;
+	position: absolute;
+   margin:0; padding: 0;
+   list-style:none;
+	right: 0; 
+	bottom: 6px !important; bottom: 5px;
+	font: bold 13px  Arial, 'Trebuchet MS', Tahoma, verdana,  sans-serif;	
+}
+#header li {
+   display:inline;
+   margin:0; padding:0;
+}
+#header ul li a {
+   float:left;
+   background: url(../images/tableft.gif) no-repeat left top;
+   margin:0;
+   padding:0 0 0 4px;
+   text-decoration:none;
+}
+#header ul li a span {
+   float:left;
+   display:block;
+   background: url(../images/tabright.gif) no-repeat right top;
+   padding:6px 15px 3px 8px;
+   color: #FFF;
+}
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#header ul li a span {float:none;}
+/* End IE5-Mac hack */
+#header ul li a:hover span {
+	color:#FFF;
+}
+#header ul li a:hover {
+   background-position:0% -42px;
+}
+#header ul li a:hover span {
+   background-position:100% -42px;
+}
+#header #current ul li a {
+   background-position:0% -42px;
+	color: #FFF;
+}
+#header #current ul li a span {
+   background-position:100% -42px;
+	color: #FFF;
+}
+/* end menu tabs */
+
+/* navigation */
+#navi {
+	position: absolute;
+	padding: 1px 3px;
+	top: 0px;
+	left: 0px;
+	font-weight: bold;
+	background: #BDECFE;
+}
+/* end of navigation */
+
+/* cleanform updates */
+form.cleanform div.line, form.cleanform input.button {
+	background-color: #ebf4d3;
+}
+form.cleanform div.line, form.cleanform input.button, form.cleanform input, form.cleanform textarea, form.cleanform select, form.cleanform span.note {
+	border-color: #d9e1c2;
+}
+form.cleanform .float-right {
+	background: none;
+	border: none;
+}
+form.cleanform label {
+	width: 120px;
+}
+form.cleanform input {
+	width: 280px;
+}
+form.cleanform textarea.lite {
+	width: 418px;
+}
+/* end of cleanform updates */
+
+/* alignment classes */
+.float-left  { float: left; }
+.float-right {	float: right;  }
+.align-left  {	text-align: left; }
+.align-right {	text-align: right; }
+
+/* additional classes */
+.clear { clear: both; }
+.orange {	color: #ea8d14; }
+.red {	color: #d00000; }
+.gray  {	color: #BFBFBF; }
+.black  {	color: #000000; }
+.quote { font-style: italic; }
+
+.price {
+	padding: 0; margin: 1px 0;
+	line-height: 100%;
+	text-align: right;
+	color: #d00000; 
+	font-weight: bold;
+}
+.old {
+	color: #000;
+	text-decoration: line-through;
+}
+.separator {
+	padding: 0; margin: 15px;
+	height: 2px;
+	background: #DDD;
+}
+.pause {
+	padding: 0; margin: 15px;
+	height: 2px;
+	background: none;
+}
+
+.paging {
+	text-align: center;
+}
+
+.paging {
+	margin: 20px 0px;
+	height: 32px;
+}
+
+.paging a {
+	width: 32px;
+	height: 32px;
+	display: block;
+	background-position: center center;
+	background-repeat: no-repeat; 
+}
+.paging a.paging_first {
+	background-image: url(/media/.ico/16/back.png);
+	float: left;
+}
+.paging a.paging_prev {
+	background-image: url(/media/.ico/32/back.png);
+	float: left;
+}
+.paging a.paging_next {
+	background-image: url(/media/.ico/32/next.png);
+	float: right;
+}
+.paging a.paging_last {
+	background-image: url(/media/.ico/16/next.png);
+	float: right;
+}
+

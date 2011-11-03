@@ -1,0 +1,230 @@
+a.decrease,
+a.increase {
+	display: block;
+	float: right;
+	margin-right: 5px;
+}
+
+div.admin_edit {
+	margin: 0px;
+	padding: 0px;
+	width: 52px;
+	height: 52px;
+	position: absolute; 
+	top: 0px; 
+	right: 0px; 
+	background: #FFFFFF;
+}
+
+div.admin_edit a {
+	margin: 0px;
+	padding: 0px;
+	width: 42px;
+	height: 42px;
+	position: absolute; 
+	top: 4px; 
+	right: 4px; 
+	background: #ffffff;
+	border: 1px solid #ffffff;
+}
+
+div.admin_edit a img {
+	margin: 0px;
+	padding: 0px;
+	border: 5px solid #CC6600;
+}
+
+div.admin_edit a:hover img {
+	border-color: #FF6600;
+}
+
+img#ajax_loader {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 1000;
+}
+
+/**
+ *------------------------------------------------
+ * messages 
+ *------------------------------------------------
+ */ 
+
+div.messages {
+	border-width: 1px;
+	border-style: solid;
+	padding: 5px 10px 5px 45px;
+	margin: 3px 0px;
+	background-position: 3px center;
+	background-repeat: no-repeat;
+}
+
+div.messages.info {
+	background-color: #cfefb7;
+	border-color: #99cb75;
+	background-image: url("/media/.ico/32/accept.png"); 
+}
+
+div.messages.warning {
+	background-color: #f8eaba;
+	border-color: #cfae87;
+	background-image: url("/media/.ico/32/warning.png"); 
+}
+
+div.messages.error {
+	background-color: #ef7a7a;
+	border-color: #c94545;
+	background-image: url("/media/.ico/32/remove.png"); 
+}
+
+/**
+ *------------------------------------------------
+ * paging 
+ *------------------------------------------------
+ */ 
+
+/* colors */
+div.paging a {
+	color: #ffffff;
+	background-color: #888888;
+}
+
+div.paging a:hover {
+	background-color: #aaaaaa;
+}
+
+div.paging .paging_actual {
+	background-color: #aaaaaa;
+}
+
+/* rest */
+div.paging {
+	margin: 10px 0px;
+	padding: 2px 0px;
+	text-align: center;
+}
+
+div.paging span,
+div.paging a {
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
+	text-align: center;
+	display: block;
+	background-position: center center;
+	background-repeat: no-repeat;
+	letter-spacing: -1px;
+	font-weight: bold;
+	float: left;
+	margin: 0px 1px;
+}
+div.paging a:hover {
+	text-decoration: none;
+}
+
+div.paging a.paging_first {
+	float: right;
+}
+
+div.paging .paging_actual {
+	margin: 0px 1px;
+}
+
+
+div.paging a.paging_first {
+	background-image: url(/media/.ico/32/page_first.png);
+}
+div.paging a.paging_prev {
+	background-image: url(/media/.ico/32/page_prev.png);
+}
+div.paging a.paging_next {
+	background-image: url(/media/.ico/32/page_next.png);
+}
+div.paging a.paging_last {
+	background-image: url(/media/.ico/32/page_last.png);
+}
+
+
+div.paging a.paging_first,
+div.paging a.paging_prev,
+div.paging a.paging_next,
+div.paging a.paging_last,
+div.paging a.paging_nextList,
+div.paging a.paging_prevList {
+}
+
+div.paging.rounds a.paging_first {
+	background-image: url(/media/.ico/16/back.png);
+}
+div.paging.rounds a.paging_prev {
+	background-image: url(/media/.ico/32/back.png);
+}
+div.paging.rounds a.paging_next {
+	background-image: url(/media/.ico/32/next.png);
+}
+div.paging.rounds a.paging_last {
+	background-image: url(/media/.ico/16/next.png);
+}
+div.paging.rounds a.paging_nextList {
+	background-image: url(/media/.ico/24/no_arrow.png);
+}
+div.paging.rounds a.paging_prevList {
+	background-image: url(/media/.ico/24/no_arrow.png);
+}
+div.paging.rounds span.paging_actual {
+	background-image: url(/media/.ico/32/no_arrow.png);
+}
+
+div.paging div.paging_first,
+div.paging div.paging_next,
+div.paging div.paging_last,
+div.paging div.paging_nextList,
+div.paging div.paging_prevList,
+div.paging div.paging_actual {
+	min-height: 32px;
+}
+div.paging div div.inner {
+	min-height: 32px;
+}
+div.paging div.paging_first {
+	width: 6%;
+	float: left;
+}
+div.paging div.paging_first div.inner {
+	float: right;
+}
+div.paging div.paging_prev {
+	width: 6%;
+	float: left;
+}
+div.paging div.paging_next {
+	width: 6%;
+	float: left;
+}
+div.paging div.paging_next div.inner {
+	float: right;
+}
+div.paging div.paging_last {
+	width: 6%;
+	float: left;
+}
+
+div.paging div.paging_nextList {
+	width: 35%;
+	float: left;
+}
+
+div.paging div.paging_prevList {
+	width: 35%;
+	float: left;
+}
+div.paging div.paging_prevList div.inner {
+	float: right;
+}
+
+div.paging div.paging_actual {
+	width: auto;
+	float: left;
+}
+

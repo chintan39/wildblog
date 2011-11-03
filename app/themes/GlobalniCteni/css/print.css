@@ -1,0 +1,73 @@
+/**
+ * Style: Globalni cteni Web | print version
+ * Author: Jan Horak, horak.jan@centrum.cz
+ * Date: 2010/10/30
+ */
+ 
+@import "default.css";
+
+/**
+ *------------------------------------------------
+ * not printed 
+ *------------------------------------------------
+ */ 
+
+html, body {
+	font-size: 13px;
+	color: #000000;
+}
+
+div#leftpanel, div#footer, div#header {
+	display: none;
+}
+
+hr.invisible {
+	display: block;
+}
+
+div#debug_info_box {
+	display: none;
+}
+
+div#workingpage {
+	margin: 0px auto;
+	width: 17cm;
+	height: 26cm;
+}
+
+h1 {
+	display: none;
+}
+
+div#workingpage table {
+	border-collapse: collapse;
+	height: 100%;
+	width: 100%;
+	font-size: 28px;
+}
+
+div#workingpage table td {
+	text-align: center;
+	vertical-align: center;
+	line-height: 1.4em;
+}
+
+div#workingpage table td span.tooltipDesc {
+	display: none;
+}
+
+div.buttons {
+	display: none;
+}
+
+div#lighttexteditor, form.hidden {
+	display: none;
+}
+
+/**
+ *------------------------------------------------
+ * end 
+ *------------------------------------------------
+ */ 
+
+

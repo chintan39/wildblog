@@ -1,0 +1,39 @@
+;
+; INI file for ErrorLoggerConfig.ini
+;
+; home url of the project
+base_url = "___project_base___"
+
+; emails can be devided by ','
+emails_to_notify = "___admin_email___"
+
+; path to image displayd in the middle of the error page
+error_image_path = "app/themes/Common/images/error_page.jpg"
+
+; background color of the error page
+error_background_color = #cbd1df
+
+; font style
+error_font_style = "font-family: Georgia, 'Times New CE', 'Times CE', 'Times New Roman', Times, serif; line-height: 140%;"
+
+; headline of the error page 
+headline = "I'm very sorry, but the page is broken."
+
+; text of the error
+homepage_text = "Administrators have been noticed and the problem is fixing already.<br />Try [homepage] or contact [emails]."
+
+; maximum size of the e-mail
+emails_notify_limit_kb = 10
+
+; minimum distance between e-mails
+emails_notify_limit_minutes = 60
+
+; where to store log - [Y][m][d] will be replaced by current year, month or day
+log_file = "log/log_[Y]_[m].csv"
+
+; where to store temporary messages
+log_file_tmp = "log/log_tmp.csv"
+
+; should error e-mail been sent?
+sent_error_to_emails = 0
+

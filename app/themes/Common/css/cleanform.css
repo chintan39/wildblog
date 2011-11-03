@@ -1,0 +1,272 @@
+/**
+ * Style for WildWeb
+ * Author: Jan Horak
+ * Date: 18.10.2009
+ */
+
+/*
+ * Clean CSS Form downloaded from http://sabbour.wordpress.com/2008/07/04/clean-css-form/
+ * eddited 
+ */ 
+
+form.cleanform {
+	margin: 3px auto;
+	padding: 4px 2px;
+	line-height: 100%;
+}
+
+form.cleanform h1, form.cleanform h2 {
+	margin-top: 5px;
+}
+
+form.cleanform div.header {
+	margin: 5px 0px 20px 0px;
+	border: none;
+	background: none;
+}
+
+form.cleanform div.header .description {
+	color: #666666;
+	line-height: 140%;
+}
+
+form.cleanform div.line {
+	font-size:11px;
+	margin-bottom: 4px;
+	background: #eeeeee;
+	border: 1px #cccccc solid;
+	padding: 2px 3px;
+}
+
+form.cleanform div.line.alternativeAction {
+	background: #ffffff;
+	border: none;
+}
+
+form.cleanform div.line.alternativeAction select {
+}
+
+form.cleanform div.clear {
+	border: none;
+	background: none;
+	clear: both;
+	margin: 0px;
+	padding: 0px;
+}
+
+form.cleanform div.float-right {
+	border: none;
+	background: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+form.cleanform label{
+	display:block;
+	font-weight:bold;
+	text-align:right;
+	width:140px;
+	float:left;
+	margin-left: 14px;
+	margin-right: 4px;
+}
+
+form.cleanform .small{
+	color:#666666;
+	display:block;
+	font-size:11px;
+	font-weight:normal;
+	text-align:right;
+	width:100%;
+}
+
+form.cleanform span.error {
+	color: #ab1800;
+	background: url("/media/.ico/16/error.png") left top no-repeat;
+	text-indent: 16px;
+}
+
+form.cleanform input, form.cleanform textarea, form.cleanform select, form.cleanform span.note {
+	float:left;
+	display: inline;
+	font-size:12px;
+	padding:4px 2px;
+	border:solid 1px #cccccc;
+	width:300px;
+	margin:1px;
+}
+
+form.cleanform input.radio, form.cleanform label.radio {
+	width: auto;
+}
+
+form.cleanform input.radio {
+	margin-right: 5px;
+	margin-left: 14px;
+}
+
+form.cleanform label.radio {
+	margin-left: 5px;
+	margin-right: 14px;
+}
+
+form.cleanform textarea{
+	width: 670px;
+}
+
+form.cleanform textarea.full {
+}
+
+form.cleanform textarea.lite {
+	width: 510px;
+}
+
+form.cleanform span.note {
+	width: 330px;
+	border: none;
+}
+
+/* Button main class */
+form.cleanform input.button {
+	float:none;
+	width:145px;
+	height:40px;
+	text-align:left;
+	line-height:30px;
+	
+	background: #e7e7e7;
+	border: 1px #cccccc solid;
+	
+    text-decoration:none;
+    font-size:130%;
+    font-weight:bold;
+    color:#565656;
+    cursor:pointer;
+	
+	background-position: 6px;
+	background-repeat:no-repeat;
+	text-indent:40px;
+	
+	margin: 0 0 0 4px;
+	padding: 0;
+}
+
+
+/* Positive button */
+form.cleanform input.button.positive {
+	color:#529214;	
+}
+
+form.cleanform input.button:hover.positive {
+	background-color:#e6efc2;
+    border:1px solid #cccccc;
+    color:#529214;
+}
+
+/* Negative button */
+form.cleanform input.button.negative {
+	color:#d12f19;	
+}
+
+form.cleanform input.button:hover.negative {
+	background-color:#fbe3e4;
+    border:1px solid #fbc2c4;
+    color:#d12f19;
+}
+
+/* Button images */
+form.cleanform input.button.save {
+	background-image:url("/media/.ico/32/floppy.png");
+}
+
+form.cleanform input.button.submit {
+	background-image:url("/media/.ico/32/next.png");
+}
+
+form.cleanform input.button.send {
+	background-image:url("/media/.ico/32/next.png");
+}
+
+form.cleanform input.button.delete {
+	background-image:url("/media/.ico/32/remove.png");
+}
+
+form.cleanform input.button.clear {
+	background-image:url("/media/.ico/32/error.png");
+}
+
+form.cleanform input.button.choose {
+	background-image:url("/media/.ico/32/basic.png");
+}
+
+form.cleanform input.checkbox {
+	width: 20px;
+	height: 20px;
+	padding: 0px;
+}
+
+form.cleanform div.error, form.cleanform div.confirm {
+	padding: 13px 13px 13px 50px;
+	margin: 15px 0px;
+	font-weight: bold;
+	font-size: 120%;
+	text-indent: 0px;
+	line-height: 140%;
+}
+
+form.cleanform div.error {
+	background: #e6d4c6 url("/media/.ico/32/error.png") 3px center no-repeat;
+	border: 1px #e69153 solid;
+	color: #ab1800;
+}
+
+form.cleanform div.confirm {
+	background: #cfefb7 url("/media/.ico/32/accept.png") 3px center no-repeat;
+	border: 1px solid #99cb75;
+	color: #1a5500;
+}
+
+form.cleanform.no-border {
+	border: none;
+}
+
+form.cleanform input.captcha, form.cleanform img.captcha {
+	float: left;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+
+form.cleanform input.captcha {
+	width: 120px;
+	background-image:url("/media/.ico/32/reload.png");
+}
+
+form.cleanform input.captcha_text {
+	width: 100px;
+}
+
+form.cleanform p.nodisplay {
+	visibility: hidden;
+	height: 0px;
+}
+
+form.cleanform div.recaptcha {
+	display: block;
+	float: left;
+	width: 300px;
+}
+
+form.cleanform img.choose {
+	margin-left: 10px;
+}
+
+form.cleanform input.error, form.cleanform textarea.error, form.cleanform select.error {
+	background: #f1e6dd url("/media/.ico/16/error.png") right center no-repeat;
+}
+
+/**
+ *------------------------------------------------
+ * end 
+ *------------------------------------------------
+ */ 
+

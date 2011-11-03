@@ -1,0 +1,12 @@
+div.tooltip{
+        padding: 5px;
+        margin: 5px;
+        background-color: #f6e0aa;
+        border: 1px solid #e0c586;
+        color: #000000;
+        width: 200px;
+}
+
+span.tooltipDesc {
+	display: none;
+}

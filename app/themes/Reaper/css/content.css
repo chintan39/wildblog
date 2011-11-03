@@ -1,0 +1,118 @@
+/**
+ * Stylesheet for theme Reaper
+ * Design for main content and the Wysiwyg editor 
+ * Author: Jan Horak
+ * Date: 22.12.2009
+ */
+ 
+
+* {
+	padding:0px;
+	margin:0px;
+	position: relative;
+	border:0;
+}
+html , body {
+	font-family: Verdana, 'Geneva CE', lucida, sans-serif;
+	font-size: 12px;
+	line-height: 170%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+}
+
+h1 {
+	font-size: 170%;
+	margin: 30px 0px 25px 0px;
+}
+
+h2 {
+	font-size: 150%;
+	margin: 25px 0px 15px 0px;
+}
+	
+h3 {
+	font-size: 130%;
+	margin: 20px 0px 11px 0px;
+}
+	
+h4 {
+	font-size: 125%;
+	margin: 20px 0px 10px 0px;
+}
+	
+h5 {
+	font-size: 120%;
+	margin: 20px 0px 9px 0px;
+}
+	
+h6 {
+	font-size: 115%;
+	margin: 15px 0px 8px 0px;
+}
+
+p {
+	margin: 10px 0px 7px 0px;
+}
+
+a {
+	text-decoration: none;
+	color: #d00000;
+}
+
+ul, ol {
+	padding: 0px 0px 0px 20px;
+}
+
+li {
+	list-style-type: circle;
+	padding: 0px 0px 0px 0px;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+img, form, fieldset {
+	border: none;
+}
+
+.center {
+	text-align: center;
+}
+
+
+/* special format classes */
+
+.no-border {
+	border: none;
+}
+
+.float-left  { 
+	float: left; 
+}
+
+.float-right {	
+	float: right;  
+}
+
+.clear {
+	clear: both;
+}
+
+.align-left  {	
+	text-align: left; 
+}
+
+.align-right {	
+	text-align: right; 
+}
+
+.align-center {
+	text-align: center;
+}
+
+/*
+ *end 
+ */ 

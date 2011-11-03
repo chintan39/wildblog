@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<head>
+  <title>Highlight</title>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" title="Default" href="styles/default.css">
+
+  <script src="highlight.js"></script>
+  <script src="highlight.pack.js"></script>
+  <script>
+  hljs.tabReplace = '    ';
+  hljs.initHighlightingOnLoad();
+  </script>
+
+<body>
+
+<pre class="highlight"><code>class CategoriesController &lt; App::ApplicationController
+  layout "core"
+
+  before_filter :login_required
+  before_filter :xhr_required, :only =&gt; [:create, :update]
+  before_filter :admin_privileges_required, :except =&gt; [:show]
+
+=begin
+  This method creates a category. Very difficult to understand, huh?
+=end
+
+  def create  # create!
+    @category = Category.create(params[:category])
+    flash[:notice] = "Category #{@category + "..."} was successfully created"
+  end
+end
+</code></pre>
+
+  
+<pre class="highlight"><code># loads object
+sub load
+{
+  my $flds = $c-&gt;db_load($id,@_) || do {
+    Carp::carp "Can`t load (class: $c, id: $id): '$!'"; return undef
+  };
+  my $o = $c-&gt;_perl_new();
+  $id12 = $id;
+  $o-&gt;{'ID'} = $id12 + 123;
+  $o-&gt;{'PAPA'} = $flds-&gt;{'PAPA'};
+  #$o-&gt;{'SHCUT'} = $flds-&gt;{'SHCUT'};
+  my $p = $o-&gt;props;
+  my $vt;
+  $string =~ m/^sought_text$/;
+  for my $key (keys %$p)
+  {
+    if(${$vt.'::property'}) {
+      $o-&gt;{$key . '_real'} = $flds-&gt;{$key};
+      tie $o-&gt;{$key}, 'CMSBuilder::Property', $o, $key;
+    } else {
+      $o-&gt;{$key} = $flds-&gt;{$key};
+    }
+  }
+  $o-&gt;save if delete $o-&gt;{'_save_after_load'};
+  return $o;
+}
+</code></pre>
+
+<pre class="highlight"><code>require_once 'Zend.php';
+require_once 'Zend/Uri/Exception.php';
+require_once 'Zend/Uri/Http.php';
+require_once 'Zend/Uri/Mailto.php';
+
+abstract class Zend_Uri
+{
+
+  /**
+   * Return a string representation of this URI.
+   *
+   * @see     getUri()
+   * @return  string
+   */
+  public function __toString()
+  {
+      return $this-&gt;getUri();
+  }
+
+  static public function factory($uri = 'http')
+  {
+      $uri = explode(':', $uri, 2);
+      $scheme = strtolower($uri[0]);
+      $schemeSpecific = isset($uri[1]) ? $uri[1] : '';
+
+      // Security check: $scheme is used to load a class file,
+      // so only alphanumerics are allowed.
+      if (!ctype_alnum($scheme)) {
+          throw new Zend_Uri_Exception('Illegal scheme');
+      }
+  }
+}
+</code></pre>
+
+</body>
+</html>

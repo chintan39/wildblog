@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>WildBlog - Technical Documentation</title>
+
+
+</head>
+
+<body>
+
+<h1>WildBlog - Technical Documentation</h1>
+
+<ol>
+
+  <li>
+    <h2>The main purpose</h2>
+
+WildBlog has been written to manage the content of the
+wild-web.eu, specially blog.
+  </li>
+
+  <li>
+    <h2>Terms used in this documentation</h2>
+
+If the word "system" is not specified or it is not explicitely obvious,
+then wildblog is that system.</li>
+
+  <li><br />
+
+    <h2>Language</h2>
+
+Wildblog is written in PHP and supports MySQL database. PHP object
+model is used as much as possible.
+    <h2>2.2 Files<br clear="all" />
+    </h2>
+
+  </li>
+
+</ol>
+
+The main directory contains following important directories: models,
+controllers, core, cache, libs, templates and config.<br />
+
+Directories model and controllers contains main modules files. Models
+and controllers will be describe later.<br />
+
+Core contains special files, most important files in the wildblog. <br />
+
+Cache is used by Smarty template engine and other to store some data to
+be reused quicker next time.<br />
+
+Libs contains third party files, for example DbObject classes, Smarty
+template engine, etc.<br />
+
+Templates directory is used by Smarty template engine to define finaly
+design HTML page structure, separately from the system logic. <br />
+
+Config contains configuration files of all types.
+<h2>2.2 Main class division</h2>
+
+The only script, which is called directly, is index.php in the main
+derectory. This is done using the mod_rewrite module - every request
+(which not stand for existing file) is redirected (inside the server
+only) to the index.php file. <br />
+
+In the index.php file is created first PHP object, which process the
+http request.
+<h2>2.3 Environment class</h2>
+
+This class covers connection to the database, stores the proceeded http
+request and creates the bridge between wildblog and system's
+neighbourhood.<br />
+
+This obejct is global.<br />
+
+Environment initialize the Benchmark object, the tool to test the
+wildblog system.<br />
+
+Then Smarty template engine and all extra Smarty filters are
+initialized.<br />
+
+All models and controllers are loaded and the Environment object is the
+interface to use the models and controllers in the future by all
+entities.
+<h2>2.4 Request class</h2>
+
+The only one object of this class represents the http request. It
+provides useful functions to work with the request confortable.<br />
+
+This obejct is global.<br />
+
+Handling this object (using other words handling the http request) is
+made up the respond - the http respond (this should be the redirection
+message, some "not allowed" responds, or html page in the most cases).
+<h2>2.5 While the request is processing the controllers are
+asked to process some data and finaly make up the respond.</h2>
+
+Which controllers are called? This is defined in the controllers
+themselfs.
+<h2>2.6 The controllers represent the system logic, while the
+models represent the data, including data methods.</h2>
+
+<br />
+
+</body>
+
+</html>

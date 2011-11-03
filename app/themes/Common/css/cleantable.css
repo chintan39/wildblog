@@ -1,0 +1,117 @@
+/**
+ * Style for homepage
+ * Author: Jan Horak
+ * Datum: 10.3.2009
+ */
+
+
+table.cleantable {
+	border-collapse: collapse;	
+	min-width: 100%;
+}
+
+table.cleantable * {
+	position: static;
+}
+
+table.cleantable tr {
+	height: 48px;
+}
+
+div.cleantable {
+	padding: 5px;
+	font-size: 115%;
+}
+
+table.cleantable td, table.cleantable th {
+	padding: 5px;
+	border: 2px solid #ffffff;
+}
+
+table.cleantable th {
+	font-size: 120%;
+}
+
+table.cleantable th, div.cleantable {
+	background: #888888;
+}
+
+table.cleantable th, div.cleantable, table.cleantable th a, div.cleantable a {
+	color: #ffffff;	
+}
+
+table.cleantable td {
+	background: #ffffff;
+	font-size: 100%;
+}
+
+table.cleantable tr.even td {
+	background: #dceaff;
+}
+
+table.cleantable tr:hover td {
+	background: #bce774;
+}
+
+table.cleantable tr.active td {
+	background: #eca063;
+}
+
+table.cleantable td.small {
+	font-size: 70%;
+	color: #888888;
+}
+
+table.cleantable td.button-set0 {
+	width: 26px;
+}
+
+table.cleantable td.button-set1 {
+	width: 42px;
+}
+
+table.cleantable td.button-set2 {
+	width: 58px;
+}
+
+table.cleantable td.button-set3 {
+	width: 74px;
+}
+
+table.cleantable td.button-set4 {
+	width: 90px;
+}
+
+table.cleantable td.button-set5 {
+	width: 106px;
+}
+
+div.table_wrap {
+	overflow: auto;
+	width: 100%;
+	padding: 1px;
+}
+
+
+th a.sorting_active {
+	text-decoration: underline;
+}
+
+th a.sorting_desc, th a.sorting_asc {
+	padding-right: 20px;
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+th a.sorting_desc {
+	background-image: url(/media/.ico/16/up.png);
+}
+
+th a.sorting_asc {
+	background-image: url(/media/.ico/16/down.png);
+}
+/**
+ *------------------------------------------------
+ * end 
+ *------------------------------------------------
+ */ 
+

@@ -1,0 +1,25 @@
+; Database connection configuration 
+; dbtype can be either mysql, postgresql or sqlite.
+; only mysql is properly tested now.
+
+; Database connection used in production environment.
+[ProductionDatabase]
+dbconnection = pdo
+dbtype = ___database_type___
+host = ___database_server___
+username = ___database_user___
+password = ___database_password___
+database = ___database_name___
+tablesprefix = ___database_prefix___
+
+; Database connection used in test environment.
+[TestDatabase]
+dbconnection = pdo
+dbtype = ___database_type___
+host = ___database_server___
+username = ___database_user___
+password = ___database_password___
+database = ___database_name___
+tablesprefix = ___database_prefix___
+
+

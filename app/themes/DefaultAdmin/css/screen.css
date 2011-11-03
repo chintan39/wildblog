@@ -1,0 +1,701 @@
+/**
+ * Style for homepage
+ * Author: Jan Horak
+ * Datum: 10.3.2009
+ */
+ 
+@import "default.css";
+@import "../../Common/css/cleanform.css";
+@import "../../Common/css/cleantable.css";
+
+h1, h2, h3, h4, h5, h6, p {
+	margin-top: 5px;
+}
+
+img {
+	border: none;
+}
+
+/**
+ *------------------------------------------------
+ * base layout 
+ *------------------------------------------------
+ */ 
+html {
+	background: none;
+}
+body {
+	text-align: center;
+}
+
+#wrap {
+	height:100%;
+	min-height:100%;
+	text-align: center;
+	background: #3d4c52 url("../images/page-bg.png") left top repeat;
+}
+
+html>body #wrap{height:auto}
+
+#page {
+	padding: 10px 0px;
+	text-align: left;
+	margin: 0 auto;
+	width: 990px;
+}
+
+.emptypage {
+	padding: 20px;
+}
+
+#upper, #lower, .emptypage {
+	border: 2px #131617 solid;
+}
+
+#upper, .emptypage {
+	margin: 0px 0px 10px 0px;
+	background: #ffffff;
+}
+
+#lower {
+	margin: 10px 0px 0px 0px;
+	padding: 10px;
+	text-align: right;
+	background: #333333;
+	color: #ffffff;
+}
+
+#lower a {
+	color: #ccccff;
+}
+
+#header {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	background: #457093 url("../images/header-bg.png") left top no-repeat;
+	height: 61px;
+	width: 964px;
+	color: #ffffff;
+}
+
+#header div {
+	position: absolute;
+}
+
+#header a.title {
+	font-size: 180%;
+	font-weight: bold;
+	top: 15px;
+	left: 15px;
+	color: #ffffff;
+}
+
+#header a.title {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+#header div.user {
+	top: 36px;
+	right: 160px;
+}
+
+#header div a, #header a, #header a:hover {
+	font-weight: bold;
+	color: #ffffff;
+}
+
+#header a.logging {
+	position: absolute;
+	top: 36px;
+	left: 820px;
+	padding-right: 20px;
+	text-align: right;
+	width: 115px;
+	height: 20px;
+	background: url("/media/.ico/16/user.png") right center no-repeat;
+}
+
+#header a.logging.logout {
+	background: url("/media/.ico/16/user_remove.png") right center no-repeat;
+}
+
+#middle {
+	margin: 80px 10px 20px 10px;
+}
+
+#left {
+	float: left;
+	width: 251px;
+}
+
+#leftmenu h2 {
+	color: #ffffff;
+	font-size: 120%;
+	font-weight: bold;
+	line-height: 44px;
+	height: 44px;
+	margin: 0px;
+	font-family: Verdana, 'Geneva CE', lucida, sans-serif;
+	background: #666666 url("../images/left-active-top2.png") left top no-repeat;
+}
+
+#leftmenu h2 span.head {
+	padding: 0px 10px 0px 10px;
+	display: block;
+}
+
+#leftmenu a {
+	width: 251px;
+	height: 49px;
+	display: block;
+	text-decoration: none;
+	background: #666666 url("../images/left-active-subitem.png") left top no-repeat;
+	color: #ffffff;
+}
+
+#leftmenu span.top {
+	display: block;
+	width: 100%;
+	height: 8px;
+	background: url('../images/left-active-topsmall.png') center bottom no-repeat;
+}
+
+#leftmenu span.bottom {
+	display: block;
+	width: 100%;
+	height: 8px;
+	background: url('../images/left-active-bottom.png') center top no-repeat;
+}
+
+#leftmenu a.sup_active, #leftmenu a.active, #leftmenu a.passive:hover {
+	background-image: url("../images/left-active-subitem-hover.png");
+}
+
+#leftmenu a span {
+	display: block;
+	position: absolute;
+}
+
+#leftmenu a span.text {
+	top: 5px;
+	left: 62px;
+	width: 172px;
+	height: 32px;
+	font-size: 110%;
+}
+
+#leftmenu a span.image {
+	top: 5px;
+	left: 17px;
+	width: 32px;
+	height: 32px;
+}
+
+
+#header-langs, #header-langs2,
+#image-manager {
+	position: absolute;
+	padding: 3px;
+	top:0px;
+	right: 0px;
+}
+
+#image-manager {
+	right: 0px;
+	top:27px;
+}
+
+#image-manager a img {
+	padding: 3px;
+	margin-left: 4px;
+	color: #555555;
+	background: #fdf9d7;
+	border: 1px solid #e8e3bc;
+}
+#image-manager a:hover img {
+	border-color: #888822;
+}
+
+#header-langs a img,
+#header-langs2 a img {
+	padding: 0px;
+	margin: 0px;
+	border: 1px solid #ffffff;
+}
+#header-langs a:hover img,
+#header-langs2 a:hover img {
+	border-color: #8888ff;
+}
+
+#header a.help_icon {
+	position: absolute;
+	padding: 3px;
+	top: 100px;
+	right: 105px;
+	width: 32px;
+	height: 32px;
+	text-align: left;
+	color: #555555;
+	background: #fdf9d7;
+	border: 1px solid #e8e3bc;
+}
+
+#header a.help_icon:hover {
+	border-color: #888822;
+}
+
+#header div#help_container {
+	position: absolute;
+	padding: 10px;
+	top: 100px;
+	right: 148px;
+	text-align: left;
+	color: #555555;
+	background: #fdf9d7;
+	border: 1px solid #e8e3bc;
+	width: 485px;
+	height: 360px;
+	overflow: auto;
+}
+
+div#header div#help_container a.help_close {
+	float: right;
+	top: 0px;
+	right: 0px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+/*
+#left div.active a.sub {
+	display: none;
+}
+
+#left div.active:hover a.sub {
+	display: block;
+}
+*/
+
+#right {
+	float: right;
+	width: 700px;
+}
+
+/* topmenu */
+.topmenu {
+}
+
+.topmenu a {
+	width: 190px;
+	margin-right: 3px;
+	height: 38px;
+	line-height: 38px;
+	float: left;
+	border: 1px solid #ffffff;
+	overflow: hidden;
+}
+
+.topmenu a.active, .topmenu a:hover {
+	background: #eeeeee;
+	border: 1px solid #cccccc;
+	text-decoration: none;
+}
+
+.topmenu a span {
+	height: 38px;
+}
+
+.topmenu a span.image {
+	float: left;
+	width: 32px;
+	height: 32px;
+	top: 3px;
+	left: 3px;
+}
+
+.topmenu a span.label {
+	float: right;
+	width: 145px;
+}
+
+a.detailItem {
+	position: absolute;
+	display: block;
+	top: 80px;
+	right: 48px;
+	width: 32px;
+	height: 32px;
+	background: url('/media/.ico/32/detail.png') center center no-repeat;;
+	border: 1px solid #ffffff;
+}
+
+a.detailItem:hover {
+	border: 1px solid #cccccc;
+}
+
+a.removeItem {
+	position: absolute;
+	display: block;
+	top: 80px;
+	right: 6px;
+	width: 32px;
+	height: 32px;
+	background: url('/media/.ico/32/remove.png') center center no-repeat;;
+	border: 1px solid #ffffff;
+}
+
+a.removeItem:hover {
+	border: 1px solid #cccccc;
+}
+
+
+
+
+/**
+ *------------------------------------------------
+ * form
+ *------------------------------------------------
+ */ 
+label {
+	width: 30%;
+	font-weight: bold;
+}
+
+input, textarea, button, label {
+	float: left;
+	margin: 3px 5px;
+}
+
+input, textarea, button {
+	width: 60%;
+	border: 1px #aaaaaa solid;
+	background: #ffffff;
+}
+
+input.submit, button {
+	width: auto;
+	height:30px;
+	line-height:20px;
+	
+	background-color:#f5f5f5;
+    border:1px solid #dedede;
+    border-top:1px solid #eee;
+    border-left:1px solid #eee;
+	
+    font-size:110%;
+    text-decoration:none;
+    font-weight:bold;
+    color:#565656;
+    cursor:pointer;
+	
+	background-position: 6px;
+	background-repeat:no-repeat;
+	padding: 0px 30px;
+}
+
+input.submit:hover, button:hover {
+	background-color:#E6EFC2;
+    border:1px solid #C6D880;
+    color:#529214;
+}
+
+input.checkbox, button {
+	width: auto;
+}
+
+a.filter_icon {
+	position: absolute;
+	top: 30px;
+	right: 156px;
+	background: #fdf9d7;
+	border: 1px solid #e8e3bc;
+	width: 38px;
+	height: 38px;
+}
+
+a.filter_icon img {
+	margin: 3px;
+}
+a.filter_icon:hover {
+	border-color: #888822;
+}
+
+#leftmenu a.wrapping {
+	display: block;
+	background: transparent url('/media/.ico/16/down.png') 220px center no-repeat;
+}
+
+#leftmenu a.wrapping.unwrapped {
+	background-image: url('/media/.ico/16/up.png')
+}
+
+/**
+ *------------------------------------------------
+ * Cleanform updates 
+ *------------------------------------------------
+ */ 
+
+form.cleanform div.header h2 {
+	font-size: 240%;
+	color: #e7a800;
+}
+
+form.cleanform div.header h2 span {
+	color: #e37000;
+}
+
+div.selector {
+	width: 660px !important;
+}
+
+/**
+ *------------------------------------------------
+ * Paging re-decoration
+ *------------------------------------------------
+ */ 
+
+div.paging a {
+	background-color: #555555;
+}
+div.paging a:hover {
+	background-color: #a0a0a0;
+}
+div.paging .paging_actual {
+	background-color: #a0a0a0;
+}
+
+/**
+ *------------------------------------------------
+ * Image / File manager
+ *------------------------------------------------
+ */ 
+
+div.manager {
+	background-color: #F0F0EE;  
+	color: #000000; 
+	font-size: 11px;
+	font-family: Tahoma,Verdana,sans-serif;
+}
+
+div.manager h1 {
+	font-family: Tahoma,Verdana,sans-serif;
+	margin: 2px 0px;
+	padding: 0px 0px 0px 2px;
+	height: 26px;
+	font-size: 16px;
+	line-height: 26px;
+	text-align: left;
+	border-bottom: 1px solid #aaaaaa;
+	width: 100%;
+	background: #333333;
+	color: #ffffff;
+}
+
+div.manager div.toolbar {
+	position: relative;
+	width: 100%;
+	height: 40px;
+}
+
+div.manager div.toolbar a {
+	background-color: #f6f6f6; 
+	border: 1px #ccc solid;
+	width: 34px;
+	height: 34px;
+	display: block;
+	float: left;
+	margin-left: 2px;
+}
+
+div.manager div.toolbar a:hover {
+	background-color: #fff; 
+	border-color: #ddd; 
+}
+
+div.manager div.toolbar input#f_size {
+	float: left;
+	font-size: 18px;
+	width: 150px;
+	height: 32px;
+	line-height: 32px;
+	margin-left: 30px;
+	padding: 0px 10px;
+}
+
+div.manager div.toolbar div#appletContainer {
+	float: left;
+	width: 130px;
+	height: 40px;
+	margin: 2px 0px 0px 18px;
+}
+
+div.manager div.statusbar {
+	position: absolute;
+	bottom: 34px;
+	right: 5px;
+	height: 20px;
+	width: 425px;
+}
+	
+div.manager div.statusbar input#f_url {
+	border: none;
+	background: none;
+	color: #999999;
+	text-align: right;
+	width: 430px;
+}
+
+div.manager div.items {
+	background-color: #FFFFFF;
+	height: 400px;
+	overflow: auto;
+	padding: 4px; 
+	border: 1px #ccc solid; 
+	margin: 5px 0;
+}
+
+div.manager div.items div.item {
+	float: left;
+	width: 100px;
+	height: 110px;
+	text-align: center;
+	margin: 3px;
+}
+
+div.manager div.items div.item a {
+	display: block;
+	padding: 4px 9px;
+	border: 1px solid #eeeeee;
+}
+
+div.manager div.items div.item a:hover {
+	border-color: #cccccc;
+	text-decoration: none;
+}
+
+div.manager div.items div.item a.active {
+	border-color: #aa8888;
+}
+
+div.manager div.items div.item a span.image {
+	margin: 0px auto;
+	display: block;
+}
+
+div.manager div.items div.item a:hover span.image {
+}
+
+div.manager div.items div.item a.active span.image {
+}
+
+div.manager div.items div.item a span.title {
+	display: block;
+	height: 20px;
+	line-height: 20px;
+	overflow: hidden;
+	color: #222222;
+}
+
+div.manager div.items div.item a:hover span.title {
+	color: #555555;
+}
+
+div.manager div.items div.item a.active span.title {
+	color: #aa5555;
+}
+
+div.manager div.items div.item a.deleteItem,
+div.manager div.items div.item a.editItem {
+	display: none;
+	position: absolute;
+	top: 71px;
+	left: 75px;
+	padding: 1px;
+	margin: 0px;
+	background: #ffffff;
+	border-color: #ffffff;
+}
+
+div.manager div.items div.item a.editItem {
+	left: 55px;
+}
+
+div.manager div.items div.item:hover a.deleteItem,
+div.manager div.items div.item:hover a.editItem {
+	display: block;
+}
+
+div.manager div.items div.item a.deleteItem:hover,
+div.manager div.items div.item a.editItem:hover {
+	border-color: #ff4444;
+}
+
+
+/* Buttons */
+div.manager div.buttons {
+	padding: 10px 0px 30px 20px;
+}
+div.manager button#insert, 
+div.manager button#cancel, 
+div.manager button.updateButton {
+	color: #000000;
+	border:0; margin:0; padding:0;
+	text-align: center;
+	font-weight:bold;
+	width:94px; height:26px;
+	background:url(../images/buttons.png) 0 -26px;
+	cursor:pointer;
+	padding-bottom:2px;
+}
+
+div.manager button#insert {
+	background:url(../images/buttons.png) 0 -52px;
+}
+
+div.manager button#cancel {
+	background:url(../images/buttons.png) 0 0;
+}
+
+div.sending {
+	margin: 20px 0px;
+}
+
+a.sending {
+	font-size: 140%;
+	height: 32px;
+	line-height: 32px;
+	float: left;
+	display: block;
+	padding: 0px 20px;
+	background-color:#f5f5f5;
+    border:1px solid #dedede;
+    border-top:1px solid #eee;
+    border-left:1px solid #eee;
+    text-decoration:none;
+    font-weight:bold;
+    color:#565656;
+	
+}
+
+a.sending:hover {
+	background-color:#E6EFC2;
+    border:1px solid #C6D880;
+    color:#529214;
+}
+
+div.testPass {
+	color: #00BB00;
+}
+
+div.testFail {
+	color: #EE0000;
+}
+
+/**
+ *------------------------------------------------
+ * end 
+ *------------------------------------------------
+ */ 
+

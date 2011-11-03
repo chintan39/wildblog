@@ -1,0 +1,56 @@
+
+
+#translations_container {
+	width: 100%;
+	text-align: center;
+	position: fixed;
+	top: 0pt;
+	padding: 0px;
+}
+
+#translations_inner {
+	width: 500px;
+	text-align: left;
+	margin: 0px auto;
+	background: #000000;
+	color: #cccccc;
+}
+
+#translations_content {
+	height: 500px;
+	overflow: scroll;
+	padding: 6px 15px;
+}
+
+#translations_content table {
+	border-collapse: collapse;
+}
+
+#translations_content table tr {
+	border-bottom: 1px solid #666666;
+}
+
+#translations_content table tr td {
+	padding: 3px;
+}
+
+#translations_container h3 {
+	color: #ffffff;
+}
+
+#translations_container a {
+	color: #ffffff;
+}
+
+#translations_container a.hide {
+	position: absolute;
+	top: 0px;
+	right: 80px;
+}
+
+#translations_container a.show {
+	position: absolute;
+	top: 0px;
+	right: 10px;
+}
+

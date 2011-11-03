@@ -1,0 +1,15 @@
+URL: http://www.schizofreend.nl/Pork.dbObject
+
+Pork.dbObject
+WTF is Pork.dbObject?
+
+It's an Object-Relation mapper for PHP 5 that attempts to be easy, fast, 
+lightweight, uses optimized database queries and provides an easy Find() 
+function very loosely based on rails'. Also, i'm coming with Pork.Generator: 
+A PHP5 based database analyzer that automatically sees the different types 
+of relations in your (MySQL) database and creates linked dbObjects for it.
+Rrright... And now in English?
+
+In short, the O/R mapper handles all your basic Select/Insert/Update/Delete/Join 
+statements for you so you won't have to write the same SQL over and over. 
+You just create PHP objects that are linked to a row in the database. 

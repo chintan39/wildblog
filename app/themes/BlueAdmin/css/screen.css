@@ -1,0 +1,313 @@
+/**
+ * Style for homepage
+ * Author: Jan Horak
+ * Datum: 10.3.2009
+ */
+ 
+@import "default.css";
+@import "../../Common/css/cleanform.css";
+@import "../../Common/css/cleantable.css";
+
+h1, h2, h3, h4, h5, h6, p {
+	margin-top: 5px;
+}
+
+img {
+	border: none;
+}
+
+/**
+ *------------------------------------------------
+ * base layout 
+ *------------------------------------------------
+ */ 
+html {
+	background: none;
+}
+body {
+	text-align: center;
+	background: #3d4c52 url("../images/page-bg.png") left top repeat;
+}
+
+#page {
+	text-align: left;
+	margin: 0 auto;
+	width: 990px;
+}
+
+.emptypage {
+	padding: 20px;
+}
+
+#upper, #lower, .emptypage {
+	border: 2px #131617 solid;
+}
+
+#upper, .emptypage {
+	margin: 10px 0px;
+	background: #ffffff;
+}
+
+#lower {
+	margin: 10px 0px;
+	padding: 5px;
+	text-align: right;
+	background: #d4d4d4 url("../images/footer-bg.png") left top repeat-x;
+}
+
+#header {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	background: #457093 url("../images/header-bg.png") left top no-repeat;
+	height: 61px;
+	width: 964px;
+	color: #ffffff;
+}
+
+#header div {
+	position: absolute;
+}
+
+#header a.title {
+	font-size: 180%;
+	font-weight: bold;
+	top: 15px;
+	left: 15px;
+	color: #ffffff;
+}
+
+#header a.title {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+#header div.user {
+	top: 36px;
+	left: 600px;
+}
+
+#header div a, #header a, #header a:hover {
+	font-weight: bold;
+	color: #ffffff;
+}
+
+#header a.logging {
+	position: absolute;
+	top: 36px;
+	left: 860px;
+	text-align: right;
+	width: 75px;
+	height: 20px;
+	background: url("/media/.ico/16/figurine_remove.png") left center no-repeat;
+}
+
+#middle {
+	margin: 80px 10px 20px 10px;
+}
+
+#left {
+	float: left;
+	width: 251px;
+}
+
+#left a, #left div.active, #left div.sup_active {
+	width: 251px;
+	display: block;
+	color: black;
+}
+
+#left a.passive {
+	height: 84px;
+	background: #eeeeee url("../images/left-item-back.png") left top no-repeat;
+}
+
+#left a.passive:hover {
+	background-image: url("../images/left-item-back-hover.png");
+	text-decoration: none;
+}
+
+#left div.active, #left div.active a, #left div.active a:hover,
+#left div.sup_active, #left div.sup_active a, #left div.sup_active a:hover {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+#left div.active a.top, #left div.sup_active a.top {
+	background: #ffffff url("../images/left-active-top.png") left top no-repeat;
+	height: 87px;
+}
+
+#left div.active a.sub, #left div.sup_active a.sub {
+	height: 49px;
+	background: #ffffff left top no-repeat;
+}
+
+#left div.active a.sub span, #left div.sup_active a.sub span {
+	display: block;
+	position: absolute;
+}
+
+#left div.active a.sub span.text, #left div.sup_active a.sub span.text {
+	top: 5px;
+	left: 62px;
+	width: 172px;
+	height: 32px;
+}
+
+#left div.active a.sub span.image, #left div.sup_active a.sub span.image {
+	top: 5px;
+	left: 17px;
+	width: 32px;
+	height: 32px;
+}
+
+#left div.active a.passive, #left div.sup_active a.passive {
+	background-image: url("../images/left-active-subitem.png");
+}
+
+#left div.active a.active, #left div.active a.sub:hover, #left div.active a.sup_active, #left div.sup_active a.sub:hover {
+	background-image: url("../images/left-active-subitem-hover.png");
+}
+
+#left div.active span.bottom, #left div.sup_active span.bottom {
+	display: block;
+	width: 251px;
+	height: 8px;
+	background: #ffffff url("../images/left-active-bottom.png") left top no-repeat;
+}
+
+#left a span {
+	position: relative;
+	display: block;
+}
+
+#left a span.large {
+	padding-top: 10px;
+	left: 78px;
+	width: 163px;
+	font-size: 130%;
+	font-weight: bold;
+	overflow: hidden;
+	line-height: 100%;
+}
+
+#left a span.small {
+	padding-top: 7px;
+	left: 78px;
+	width: 163px;
+	line-height: 120%;
+}
+
+#left a span.image {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 64px;
+	height: 64px;
+}
+
+#header-langs {
+	position: absolute;
+	padding: 3px;
+	top:0px;
+	right: 0px;
+}
+
+#header-langs a img {
+	padding: 0px;
+	margin: 0px;
+	border: 1px solid #ffffff;
+}
+#header-langs a:hover img {
+	border-color: #8888ff;
+}
+
+/*
+#left div.active a.sub {
+	display: none;
+}
+
+#left div.active:hover a.sub {
+	display: block;
+}
+*/
+
+#right {
+	float: right;
+	width: 700px;
+}
+
+/**
+ *------------------------------------------------
+ * form
+ *------------------------------------------------
+ */ 
+label {
+	width: 30%;
+	font-weight: bold;
+}
+
+input, textarea, button, label {
+	float: left;
+	margin: 3px 5px;
+}
+
+input, textarea, button {
+	width: 60%;
+	border: 1px #aaaaaa solid;
+	background: #ffffff;
+}
+
+input.submit, button {
+	width: auto;
+	height:30px;
+	line-height:20px;
+	
+	background-color:#f5f5f5;
+    border:1px solid #dedede;
+    border-top:1px solid #eee;
+    border-left:1px solid #eee;
+	
+    font-size:110%;
+    text-decoration:none;
+    font-weight:bold;
+    color:#565656;
+    cursor:pointer;
+	
+	background-position: 6px;
+	background-repeat:no-repeat;
+	padding: 0px 30px;
+}
+
+input.submit:hover, button:hover {
+	background-color:#E6EFC2;
+    border:1px solid #C6D880;
+    color:#529214;
+}
+
+input.checkbox, button {
+	width: auto;
+}
+
+/**
+ *------------------------------------------------
+ * Cleanform updates 
+ *------------------------------------------------
+ */ 
+
+form.cleanform div.header h2 {
+	font-size: 240%;
+	color: #e7a800;
+}
+
+form.cleanform div.header h2 span {
+	color: #e37000;
+}
+
+/**
+ *------------------------------------------------
+ * end 
+ *------------------------------------------------
+ */ 
+

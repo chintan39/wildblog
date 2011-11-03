@@ -1,0 +1,1 @@
+-- this is sample empty script

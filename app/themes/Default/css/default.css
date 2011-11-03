@@ -1,0 +1,18 @@
+/**
+ * Stylesheet for project WildBlog
+ * Author: Jan Horak
+ * Date: 18.10.2009
+ */
+ 
+
+/*
+ * base design include CSS definition of the Wysiwyg editor 
+ */ 
+
+@import "content.css";
+
+
+/*
+ *end 
+ */ 
+

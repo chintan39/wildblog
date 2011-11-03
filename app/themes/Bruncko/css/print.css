@@ -1,0 +1,35 @@
+/**
+ * Style: Control Invest Projekt | print version
+ * Author: Jan Horak, horak.jan@centrum.cz
+ * Date: 2010/09/21
+ */
+ 
+@import "default.css";
+
+/**
+ *------------------------------------------------
+ * not printed 
+ *------------------------------------------------
+ */ 
+
+html, body {
+	font-size: 13px;
+	color: #000000;
+}
+
+div#header, div.col-1 {
+	display: none;
+}
+
+hr.invisible {
+	display: block;
+}
+
+
+/**
+ *------------------------------------------------
+ * end 
+ *------------------------------------------------
+ */ 
+
+

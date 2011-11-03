@@ -1,0 +1,24 @@
+/**
+ * Style for homepage
+ * Author: Jan Horak
+ * Datum: 10.3.2009
+ */
+ 
+@import "default.css";
+
+/**
+ *------------------------------------------------
+ * what not to print 
+ *------------------------------------------------
+ */ 
+#right, #content .comments, #header, #footer-left, #footer-right,
+#content .more, #navi, form {
+	display: none;
+}
+
+/**
+ *------------------------------------------------
+ * end 
+ *------------------------------------------------
+ */ 
+
