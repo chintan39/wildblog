@@ -11,10 +11,19 @@ define('APP_VERSION', '0.4.5');
 define('APP_GENERATOR_NAME', 'WildBlog');
 
 define('DIR_APP', 'app/');
+define('DIR_PROJECT_BASE', '../');
+define('BASE_PATH', preg_replace('/config$/', '', __dir__));
 
 // $_GET['__project__'] is set by .htaccess to support multiple project
-define('BASE_PATH', preg_replace('/config$/', '', __dir__));
-define('DIR_PROJECT_PATH', (isset($_GET['__project__']) ? $_GET['__project__'] : 'project') . '/');
+if (isset($_GET['__project__']) && preg_match('/^[a-zA-Z0-9\/]*$/', $_GET['__project__']))
+	define('DIR_PROJECT_NAME', $_GET['__project__']);
+else
+	define('DIR_PROJECT_NAME', 'project');
+
+if (!is_dir(DIR_PROJECT_BASE . DIR_PROJECT_NAME))
+	die('Project path "' . DIR_PROJECT_BASE . DIR_PROJECT_NAME . '" does not exist.');
+
+define('DIR_PROJECT_PATH', DIR_PROJECT_BASE . DIR_PROJECT_NAME . '/');
 define('DIR_PROJECT_URL', 'project' . '/');
 define('DIR_PACKAGES', DIR_APP . 'packages/');
 define('DIR_PROJECT_PACKAGES', DIR_PROJECT_PATH . 'packages/');
