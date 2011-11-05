@@ -181,6 +181,7 @@ class AbstractDBObjectModel extends AbstractBasicModel
 		// TODO: the rest of this method should go to separate method used by __setSomeValue
 		if(array_key_exists($field, $this->changedValues)) return($this->changedValues[$field]); // this is an updated property, return it.
 		if(array_key_exists($field, $this->databaseValues)) return($this->databaseValues[$field]); // hack to use non-defined
+		if(array_key_exists($field, $this->nonDbValues)) return($this->nonDbValues[$field]); // hack to use non-db values
 		if($field === false) {
 			//TODO: maybe it is possible to return null if no field is found
 			// But this is better to control mistakes
