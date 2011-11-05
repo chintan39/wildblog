@@ -16,6 +16,7 @@ class AbstractBasicModel {
 	var $uploadedFiles = array();
 	var $databaseValues = array();
 	var $languageSupport = null;
+	var $predefinedValues = array();
 	
 	static public $propertiesDefinitionCache = false;	// property cache - not to load each when creating the new object
 	static public $propertiesOptionsCache = false;		// properties options cache - not to load each when creating the new object
@@ -861,6 +862,10 @@ class AbstractBasicModel {
 		return $value;
 	}
 	
+	
+	public function setPredefinedValues($values) {
+		$this->predefinedValues = $values;
+	}
 	
 }
 

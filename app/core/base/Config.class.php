@@ -62,6 +62,15 @@ class Config {
 		return self::$data[$name];
 	}
 	
+	/**
+	 * Returns true if config value is defined.
+	 * @param <string> $name Name of the config item
+	 * @return <bool> Value of the config item
+	 */
+	public static function Exists($name) {
+		return array_key_exists($name, self::$data);
+	}
+	
 }
 
 ?>

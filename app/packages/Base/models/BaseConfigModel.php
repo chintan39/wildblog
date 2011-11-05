@@ -12,7 +12,7 @@ class BaseConfigModel extends AbstractDefaultModel {
 	var $extendedTextsSupport = false;		// ability to translate columns
 
     protected function attributesDefinition() {
-    	
+
     	parent::attributesDefinition();
     	
 		$options = array();
@@ -57,6 +57,22 @@ class BaseConfigModel extends AbstractDefaultModel {
 		Environment::getPackage('Base')->getController('Cache')->actionClearCache(null);
 		return parent::Save($forceSaving);
 	}
+	
+	public function getValue($fieldName) {
+		if (array_key_exists($fieldName, $this->databaseValues))
+			return $this->databaseValues[$fieldName];
+		if ($fieldName == 'text' && isset($this->predefinedValues['key']))
+			return Config::GetCond($this->predefinedValues['key'], '');
+		return null;
+	}
+
+	public function setPredefinedValues($values) {
+		parent::setPredefinedValues($values);
+		if (isset($this->predefinedValues['key']) && Config::Exists($this->predefinedValues['key'])) {
+			$this->getMetaData('key')->setIsEditable(ModelMetaItem::NEVER);
+		}
+	}
+	
 }
 
 

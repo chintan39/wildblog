@@ -29,6 +29,7 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 									*/
 	
     function __construct($id = false, $forceLanguage = false) {
+		$this->id = $id;
     	parent::__construct($id);
     	if ($forceLanguage) {
     		$this->forceLanguage($forceLanguage);
@@ -37,7 +38,6 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 		$this->tableBase = $this->getTableName();
 		$this->primary = $this->getPrimaryKey();
 		$this->connection = 'ProductionDatabase';
-		$this->id = $id;
     	$this->__setupDatabase();
 		$this->relationsDefinition();
 		$this->qualificationDefinition();

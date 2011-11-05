@@ -290,6 +290,7 @@ class Form {
 	 */
 	public function fill(&$item, $buttonsList=null) {
 		$this->dataModel = $item;
+		$this->dataModel->setPredefinedValues($this->predefinedValues);
 		$this->updateValuesFromDataModel();
 		$this->addButtons($buttonsList);
 	}

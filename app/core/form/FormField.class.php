@@ -14,13 +14,15 @@ class FormField {
 	public $style='';
 	public $onclick='';
 	public $onchange='';
-	public $disabled = false;
+	public $disabled='';
 	public $hasBox = true;
 	public $hasLabel = true;
 	public $html = null;
 	public $lineStyle = '';
 	public $formIdentifier = '';
 	public $optionsFromModel = true;
+	public $isChangeAble = true;
+	public $isVisibleInForm = true;
 
 	public function __construct($formIdentifier) {
 		$this->message = new stdClass; 
@@ -104,7 +106,7 @@ class FormField {
 		return $this->formIdentifier;
 	}
 	
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		return $this;
 	}
@@ -113,9 +115,9 @@ class FormField {
 		$onclick = $this->onclick ? " onclick=\"{$this->onclick}\"": '';
 		$onchange = $this->onchange ? " onchange=\"{$this->onchange}\"": '';
 		$style = $this->style ? " style=\"{$this->style}\"": '';
-		$disabled = $this->disabled ? " disabled=\"disabled\"": '';
+		$this->disabled = $this->isChangeAble ? '' : " disabled=\"disabled\"";
 		if ($this->html === null) {
-			$this->setHTML($this->getClassAttr(), $this->getStyleAttr(), $onclick, $onchange, $disabled);
+			$this->setHTML($this->getClassAttr(), $this->getStyleAttr(), $onclick, $onchange);
 		}
 		$output = $this->html;
 		if ($this->hasLabel) {
@@ -191,13 +193,13 @@ class FormFieldFactory {
 
 	
 class FormFieldSpecificNotInDb extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = $this->meta->getRenderObject()->getFormHTML($this->meta, $this->dataModel);
 	}
 }
 
 class FormFieldHidden extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = "<p class=\"nodisplay\"><input type=\"hidden\"" . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" /></p>";
 	}
 	public function getHTML() {
@@ -209,7 +211,7 @@ class FormFieldHidden extends FormField {
 }
 
 class FormFieldInputDate extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'datetimepicker/datetimepicker.js');
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'datetimepicker/stylesheets/calendarview.css');
 		Javascript::addScript("Event.observe(window, 'load', function() { Calendar.setup({
@@ -222,7 +224,7 @@ class FormFieldInputDate extends FormField {
 }
 
 class FormFieldInputTime extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'datetimepicker/datetimepicker.js');
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'datetimepicker/stylesheets/calendarview.css');
 		Javascript::addScript("Event.observe(window, 'load', function() { Calendar.setup({
@@ -239,7 +241,7 @@ class FormFieldInputDateTime extends FormFieldInputTime {
 }
 
 class FormFieldInputText extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = "<input type=\"text\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\"{$onclick}{$onchange}{$style} />";
 	}
 }
@@ -251,14 +253,14 @@ class FormFieldInputNumber extends FormFieldInputText {
 }
 
 class FormFieldCheckbox extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$class = 'checkbox';
 		$this->html = "<input type=\"checkbox\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"1\"". (($this->value) ? " checked=\"checked\"" : "") ." class=\"$class\" />";
 	}
 }
 
 class FormFieldPassword extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = "<input type=\"password\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"\" class=\"$class\" />";
 		$origFieldId = 'form_' . $this->meta->getName();
 		if (Restriction::hasRestrictions($this->meta->getRestrictions(), Restriction::R_CONFIRM_DOUBLE)) {
@@ -280,7 +282,7 @@ class FormFieldPassword extends FormField {
 }
 
 class FormFieldHTML extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		switch ($this->meta->getType()) {
 			case Form::FORM_HTML_BBCODE:
 				Javascript::addWysiwyg("form_" . $this->meta->getName(), Javascript::WYSIWYG_BBCODE);
@@ -311,7 +313,7 @@ class FormFieldHTML extends FormField {
 }
 
 class FormFieldRadio extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$class = ' radio';
 		if (!$this->meta->getOptionsMustBeSelected()) {
@@ -327,9 +329,9 @@ class FormFieldRadio extends FormField {
 }
 
 class FormFieldSelect extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
-		$this->html .= "<select " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" class=\"$class\"$disabled>";
+		$this->html .= "<select " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" class=\"$class\"{$this->disabled}>";
 		if (!$this->meta->getOptionsMustBeSelected()) {
 			$this->html .= "<option value=\"\"". ((!$this->value) ? " selected=\"selected\"" : "") . ">" . "[not selected]" . "</option>\n";
 		}
@@ -376,7 +378,7 @@ class FormFieldSelect extends FormField {
 class FormFieldMultiSelect extends FormFieldSelect {
 	private function adjustValue() {
 	}
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$this->html .= "<select " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "[]\" multiple=\"multiple\" size=\"5\" class=\"$class\">";
 		
@@ -427,7 +429,7 @@ class FormFieldMultiSelectForeignKeyInteractive extends FormFieldMultiSelect {
 }
 
 class FormFieldFile extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$browserBaseUrl = DIR_PROJECT_URL_MEDIA;
 		$browserType = $this->getBrowserType();
@@ -451,7 +453,7 @@ class FormFieldImage extends FormFieldFile {
 }
 
 class FormFieldColorRHBHEXA extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'colorpicker/js/colorPicker.js');
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'colorpicker/css/colorPicker.css');
@@ -462,7 +464,7 @@ class FormFieldColorRHBHEXA extends FormField {
 }
 
 class FormFieldCaptcha extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$captchaImagePath = Request::getLinkSimple("Base", "Captcha", "actionCaptcha");
 		$captchaImagePath = rtrim($captchaImagePath, '/');
@@ -479,7 +481,7 @@ class FormFieldCaptcha extends FormField {
 }
 
 class FormFieldRecaptcha extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$this->html .= "<div class=\"recaptcha\">";
 		$this->html .= $this->value;
@@ -491,7 +493,7 @@ class FormFieldRecaptcha extends FormField {
 }
 
 class FormFieldLink extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'linkselector.js');
 		Javascript::addScript("Event.observe(window, 'load', function() { LinkSelector.setup({
@@ -505,7 +507,7 @@ class FormFieldLink extends FormField {
 
 
 class FormFieldUploadFile extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange, $disabled) {
+	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$this->html .= "<input type=\"file\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" class=\"$class\"{$onclick}{$onchange}{$style} />";
 	}
