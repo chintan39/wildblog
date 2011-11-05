@@ -116,22 +116,6 @@ class Environment {
 	}
 	
 	
-	static public function refreshSession() {
-		
-		// set session's cookie lifetime to 30min
-		if (!isset($_SESSION['timeout_idle'])) {
-			$_SESSION['timeout_idle'] = time() + Config::Get('SESSION_TIMEOUT');
-		} else {
-			if ($_SESSION['timeout_idle'] < time()) {   
-				//destroy session
-				Permission::clearSession();
-			} else {
-				$_SESSION['timeout_idle'] = time() + Config::Get('SESSION_TIMEOUT');
-			}
-		}
-	}
-	
-	
 	/**
 	 * Initialization of the Smarty template engine.
 	 */

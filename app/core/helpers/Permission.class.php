@@ -78,6 +78,22 @@ class Permission {
 	 */
 	static public function clearSession() {
 		unset($_SESSION['actualUserId']);
+		unset($_SESSION['timeout_idle']);
+	}
+	
+	
+	static public function refreshSession() {
+		// set session's cookie lifetime to 30min
+		if (!isset($_SESSION['timeout_idle'])) {
+			$_SESSION['timeout_idle'] = time() + Config::Get('SESSION_TIMEOUT');
+		} else {
+			if ($_SESSION['timeout_idle'] < time()) {   
+				//destroy session
+				self::clearSession();
+			} else {
+				$_SESSION['timeout_idle'] = time() + Config::Get('SESSION_TIMEOUT');
+			}
+		}
 	}
 	
 	

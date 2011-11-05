@@ -183,7 +183,7 @@ class Router {
 
 		// get the main action
 		$action = Request::getRequestAction();
-		Environment::refreshSession();
+		Permission::refreshSession();
 		
 		// handle subactions (we can sort them, but not necessary at pressent time)
 		$subactions = $this->getRequestSubctions();
