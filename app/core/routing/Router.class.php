@@ -438,7 +438,7 @@ class Router {
 		}
 
 		// if we have only ID, we load the item from DB (we use controller from route)
-		if (!is_object($item) && preg_match('/^\w+$/', $item)) {
+		if (!is_object($item) && !is_array($item) && preg_match('/^\w+$/', $item)) {
 			$item = $controller->getItem($item);
 		}
 		return $this->getRouteItemLink($route, $item, $args);

@@ -3,29 +3,6 @@
 class BlogPostsController extends AbstractPagesController {
 	
 	/**
-	 * Overloaded method to check if archive values (year and month) are good.
-	 */
-	public function checkRequestCondition($filters, $values) {
-		// check which rule is used
-		if (in_array("year", $filters)) {
-			$cond = true;
-			$output = array_combine($filters, $values);
-	
-			// we need to keep values as strings to reconstruct the url
-			if (array_key_exists("month", $output)) {
-				$cond &= ((int)$output["month"] <= 12 && (int)$output["month"] >= 1);
-			}
-			if (array_key_exists("year", $output)) {
-				$cond &= ((int)$output["year"] <= 2100 && (int)$output["year"] >= 1900);
-			}
-			
-			return ($cond ? array($output) : false);
-		} else {
-			return parent::checkRequestCondition($filters, $values);
-		}
-	}
-
-	/**
 	 * Posts List action
 	 */
 	public function actionPostsList($args) {
@@ -140,7 +117,6 @@ class BlogPostsController extends AbstractPagesController {
 			'item' => $post)));
 		$this->assign($form->getIdentifier(), $form->toArray());
 
-		// show template
 	}
 	
 	
@@ -149,6 +125,7 @@ class BlogPostsController extends AbstractPagesController {
 	 */
 	public function actionBlogPostArchivMonth($args) {
 		$items = new ItemCollection("blogposts", $this);
+		$items->setPagingAjax(true);
 		$filters = array("YEAR(published) = ?" => $args["year"]);
     	if (array_key_exists("month", $args)) {
     		$filters["MONTH(published) = ?"] = $args["month"];
@@ -163,7 +140,6 @@ class BlogPostsController extends AbstractPagesController {
 		$year_month = $args['year'] . (isset($args['month']) ? '/' . $args['month'] : '');
 		$this->assign("title", "Blog archive $year_month");
 		$this->assign("pageTitle", "Blog archive $year_month" . ' | ' . tp("Project Title Short"));
-		//$this->display('blogList');
 	}
 	
 	

@@ -145,7 +145,7 @@ class Request {
 			Environment::$smarty->assign('appGenerator', APP_GENERATOR_NAME . ' version ' . APP_VERSION);
 			Environment::$smarty->assign('dirLibs', DIR_LIBS);
 			Environment::$smarty->assign('thisLink', self::getSameLink());
-			Environment::$smarty->assign('requestIsAjax', self::$requestType == 'ajax');
+			Environment::$smarty->assign('requestIsAjax', self::isAjax());
 			
 			Environment::$smarty->assign('frontendLanguages', Language::getLanguages(Themes::FRONT_END));
 			Environment::$smarty->assign('backendLanguages', Language::getLanguages(Themes::BACK_END));

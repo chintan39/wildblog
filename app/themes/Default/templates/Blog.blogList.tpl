@@ -1,10 +1,10 @@
 {require file='part.header'}
 
-<div id="{$blogposts->containerId}">
-
 {*generate_paging collection=$blogposts showOnlyKeys=prev*}
 
-{if $title and not $notitle}<h1>{$title}</h1>{/if}
+{if $title and not $notitle and not $requestIsAjax}<h1>{$title}</h1>{/if}
+
+<div id="{$blogposts->containerId}">
 
 {if $blogposts->data.items}
 {foreach from=$blogposts->data.items item=post}
