@@ -60,7 +60,7 @@ function smarty_function_generate_table($params, &$smarty)
 		Javascript::addScriptaculous();
 		$filterFormId = 'filterForm' . Request::getUniqueNumber();
 		$style = $form['issent'] ? '' : 'display: none;';
-		$output .= "<a href=\"#\" onclick=\"Effect.toggle('$filterFormId','blind'); return false;\" title=\"" . tg('Filter items') . "\" class=\"filter_icon\"><img src=\"" . $smarty->get_template_vars("iconsPath") . "32/filter.png" . "\" alt=\"\" /></a>\n";
+		$output .= "<a href=\"#\" onclick=\"Effect.toggle('$filterFormId','blind'); return false;\" title=\"" . tg('Filter items') . "\" class=\"filter_icon\"><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "32/filter.png" . "\" alt=\"\" /></a>\n";
 		$output .= "<div id=\"$filterFormId\" style=\"$style\">\n";
 		
 		$output .= "<form action=\"{$form['action']}\" method=\"{$form['method']}\" class=\"cleanform\">\n";
@@ -165,7 +165,7 @@ function smarty_function_generate_table($params, &$smarty)
 								}
 								$title = tg('item ' . $imageName);
 								$iconSize = ($imageName == 'edit') ? 32 : 16;
-								$buttons[] = "<a href=\"" . $button["link"] . "\" title=\"$title\"$onclick><img src=\"" . $smarty->get_template_vars("iconsPath") . "$iconSize/" . $imageName . ".png\" alt=\"$action\" /></a>";
+								$buttons[] = "<a href=\"" . $button["link"] . "\" title=\"$title\"$onclick><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "$iconSize/" . $imageName . ".png\" alt=\"$action\" /></a>";
 							}
 						}
 						$value = implode("", $buttons);

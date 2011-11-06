@@ -82,7 +82,7 @@ class FormField {
 	}
 	
 	public function getLabel() {
-		return "\n<label for=\"form_" . $this->meta->getName() . "\">" 
+		return "\n<label for=\"" . $this->getIdValue() . "\">" 
 			. tg($this->meta->getLabel())
 			. (Restriction::hasRestrictions($this->meta->getRestrictions(), Restriction::R_NOT_EMPTY) ? '<span class="required">*</span>' : '')
 			. ($this->meta->getDescription() ? "<span class=\"small\">" . tg($this->meta->getDescription()) . "</span>":"") 
@@ -112,6 +112,7 @@ class FormField {
 	}
 	
 	public function getHTML() {
+		$this->adjustValue();
 		$onclick = $this->onclick ? " onclick=\"{$this->onclick}\"": '';
 		$onchange = $this->onchange ? " onchange=\"{$this->onchange}\"": '';
 		$style = $this->style ? " style=\"{$this->style}\"": '';
@@ -137,14 +138,22 @@ class FormField {
 		return $output;
 	}
 
-	private function adjustValue() {
-		$this->value = htmlspecialchars($field->value);
+	protected function adjustValue() {
+		$this->value = htmlspecialchars($this->value);
 			
 		// we don't need add autolink in the forms..
-		$this->value = preg_replace('/autolink:(\w+)::(\w+)::(\w+)/', 'autolink!:$1::$2::$3', $field->value);
+		$this->value = preg_replace('/autolink:(\w+)::(\w+)::(\w+)/', 'autolink!:$1::$2::$3', $this->value);
 	}
 	
 }
+
+
+
+
+
+
+
+
 
 class FormFieldFactory {
 	static public function getInstance($fieldType, $formIdentifier) {
@@ -183,14 +192,6 @@ class FormFieldFactory {
 
 
 
-
-
-
-
-
-
-
-
 	
 class FormFieldSpecificNotInDb extends FormField {
 	public function setHTML($class, $style, $onclick, $onchange) {
@@ -219,7 +220,7 @@ class FormFieldInputDate extends FormField {
 		triggerElement: '" . $this->meta->getIdValue('button') . "',
 		timeMode: 0})});");
 		$this->html = "<input type=\"text\"" . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" />"
-			."<a href=\"JavaScript:void(0);\" onclick=\"return false;\"" . $this->getIdAttr('button') . "><img src=\"" . Request::$url['base'] . DIR_THEMES . 'Common/images/ico/32/calendar_view.png' . "\" alt=\"" . tg("Choose date") . "\"class=\"choose\" /></a>";
+			."<a href=\"JavaScript:void(0);\" onclick=\"return false;\"" . $this->getIdAttr('button') . "><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . '32/calendar_view.png' . "\" alt=\"" . tg("Choose date") . "\"class=\"choose\" /></a>";
 	}
 }
 
@@ -228,12 +229,12 @@ class FormFieldInputTime extends FormField {
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'datetimepicker/datetimepicker.js');
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'datetimepicker/stylesheets/calendarview.css');
 		Javascript::addScript("Event.observe(window, 'load', function() { Calendar.setup({
-		dateField: 'form_" . $this->meta->getName() . "',
-		triggerElement: 'form_" . $this->meta->getName() . "_button',
+		dateField: '" . $this->getIdValue() . "',
+		triggerElement: '" . $this->getIdValue('button') . "',
 		timeMode: 1,
 		timeStep: 30})});");
 		$this->html = "<input type=\"text\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" />"
-			. "<a href=\"JavaScript:void(0);\" onclick=\"return false;\" " . $this->getIdAttr('button') . "><img src=\"" . Request::$url['base'] . DIR_THEMES . 'Common/images/ico/32/calendar_view.png' . "\" alt=\"" . tg("Choose time") . "\"class=\"choose\" /></a>";
+			. "<a href=\"JavaScript:void(0);\" onclick=\"return false;\" " . $this->getIdAttr('button') . "><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . '32/calendar_view.png' . "\" alt=\"" . tg("Choose time") . "\"class=\"choose\" /></a>";
 	}
 }
 
@@ -262,7 +263,7 @@ class FormFieldCheckbox extends FormField {
 class FormFieldPassword extends FormField {
 	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = "<input type=\"password\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"\" class=\"$class\" />";
-		$origFieldId = 'form_' . $this->meta->getName();
+		$origFieldId = $this->getIdValue();
 		if (Restriction::hasRestrictions($this->meta->getRestrictions(), Restriction::R_CONFIRM_DOUBLE)) {
 			$this->html .= "\n<div class=\"clear\"></div>";
 			$this->html .= "\n</div>";
@@ -285,10 +286,10 @@ class FormFieldHTML extends FormField {
 	public function setHTML($class, $style, $onclick, $onchange) {
 		switch ($this->meta->getType()) {
 			case Form::FORM_HTML_BBCODE:
-				Javascript::addWysiwyg("form_" . $this->meta->getName(), Javascript::WYSIWYG_BBCODE);
+				Javascript::addWysiwyg($this->getIdValue(), Javascript::WYSIWYG_BBCODE);
 				break;
 			case Form::FORM_HTML:
-				Javascript::addWysiwyg("form_" . $this->meta->getName(), ($this->meta->getWysiwygType()));
+				Javascript::addWysiwyg($this->getIdValue(), ($this->meta->getWysiwygType()));
 				break;
 			default:
 				break;
@@ -306,8 +307,8 @@ class FormFieldHTML extends FormField {
 		$this->html .= "<textarea class=\"$class\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" cols=\"80\" rows=\"$rows\"$style>" . $this->value . "</textarea>";
 		if ($this->meta->getType() == Form::FORM_TEXTAREA) { // TODO: override method (setHTML)
 			$this->html .= "\n<div class=\"clear\"></div>";
-			$this->html .= "<a href=\"#\" onclick=\"elementHeightChange($('form_" . $this->meta->getName() . "'), 50, -40);return false;\" class=\"decrease\"><img src=\"" . Request::$url['base'] . DIR_THEMES . 'Common/images/ico/16/up.png' . "\" alt=\"" . tg("decrease") . "\" /></a>\n";
-			$this->html .= "<a href=\"#\" onclick=\"elementHeightChange($('form_" . $this->meta->getName() . "'), 600, 40);return false;\" class=\"increase\"><img src=\"" . Request::$url['base'] . DIR_THEMES . 'Common/images/ico/16/down.png' . "\" alt=\"" . tg("increase") . "\" /></a>\n";
+			$this->html .= "<a href=\"#\" onclick=\"elementHeightChange($('" . $this->getIdValue() . "'), 50, -40);return false;\" class=\"decrease\"><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . '16/up.png' . "\" alt=\"" . tg("decrease") . "\" /></a>\n";
+			$this->html .= "<a href=\"#\" onclick=\"elementHeightChange($('" . $this->getIdValue() . "'), 600, 40);return false;\" class=\"increase\"><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . '16/down.png' . "\" alt=\"" . tg("increase") . "\" /></a>\n";
 		}
 	}
 }
@@ -376,8 +377,9 @@ class FormFieldSelect extends FormField {
 }
 
 class FormFieldMultiSelect extends FormFieldSelect {
-	private function adjustValue() {
+	protected function adjustValue() {
 	}
+	
 	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$this->html .= "<select " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "[]\" multiple=\"multiple\" size=\"5\" class=\"$class\">";
@@ -419,12 +421,13 @@ class FormFieldMultiSelect extends FormFieldSelect {
 }
 
 class FormFieldMultiSelectForeignKey extends FormFieldMultiSelect {
-	private function adjustValue() {
+	protected function adjustValue() {
 	}
+	
 }
 
 class FormFieldMultiSelectForeignKeyInteractive extends FormFieldMultiSelect {
-	private function adjustValue() {
+	protected function adjustValue() {
 	}
 }
 
@@ -459,7 +462,7 @@ class FormFieldColorRHBHEXA extends FormField {
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'colorpicker/css/colorPicker.css');
 		$backgroundColor = (strlen($this->value) > 0) ? 'style="background-color: ' . $this->value . '" ' : '';
 		$this->html .= "<input type=\"text\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" onclick=\"startColorPicker(this);\" onkeyup=\"maskedHex(this);\" $backgroundColor/>";
-		$this->html .= "<a href=\"#\" onclick=\"\$('" . $this->getIdValue() . "').value=''; \$('form_" . $this->meta->getName() . "').style.background='#ffffff'; return false;\" title=\"Clear item\"><img src=\"" . Request::$url['base'] . DIR_THEMES . "Common/images/ico/24/remove.png\" alt=\"Clear item\" /></a>\n";
+		$this->html .= "<a href=\"#\" onclick=\"\$('" . $this->getIdValue() . "').value=''; \$('" . $this->getIdValue() . "').style.background='#ffffff'; return false;\" title=\"Clear item\"><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "24/remove.png\" alt=\"Clear item\" /></a>\n";
 	}
 }
 
@@ -488,7 +491,7 @@ class FormFieldRecaptcha extends FormField {
 		$this->html .= "\n</div>";
 	}
 
-	private function adjustValue() {
+	protected function adjustValue() {
 	}
 }
 
@@ -497,9 +500,9 @@ class FormFieldLink extends FormField {
 		$this->html = '';
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'linkselector.js');
 		Javascript::addScript("Event.observe(window, 'load', function() { LinkSelector.setup({
-		container: 'form_" . $this->meta->getName() . "_container',
-		dataField: 'form_" . $this->meta->getName() . "',
-		triggerElement: 'form_" . $this->meta->getName() . "_button'})});");
+		container: '" . $this->getIdValue('container') . "',
+		dataField: '" . $this->getIdValue() . "',
+		triggerElement: '" . $this->getIdValue('button') . "'})});");
 		$this->html .= "<input type=\"text\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" />";
 		$this->html .= "<div id=\"" . $this->getIdValue() . "\"></div>";
 	}
@@ -512,5 +515,6 @@ class FormFieldUploadFile extends FormField {
 		$this->html .= "<input type=\"file\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" class=\"$class\"{$onclick}{$onchange}{$style} />";
 	}
 }
+
 
 ?>

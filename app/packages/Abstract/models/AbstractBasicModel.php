@@ -802,15 +802,15 @@ class AbstractBasicModel {
 				$value = $this->getTableValue();
 				break;
 			case Form::FORM_ID:
-				$value = "<img src=\"" . Environment::$smarty->get_template_vars("iconsPath") . "32/" . $this->getIcon() . ".png\" alt=\"\" /><br />" . $value;
+				$value = "<img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "32/" . $this->getIcon() . ".png\" alt=\"\" /><br />" . $value;
 				break;
 			case Form::FORM_INPUT_TEXT:
 				$value = htmlspecialchars(Utilities::truncate(strip_tags($value), 30));
 				break;
 			case Form::FORM_CHECKBOX: 
 				$value = "<div style=\"text-align: center;\">" . ($value 
-					? "<img src=\"" . Environment::$smarty->get_template_vars("iconsPath") . "24/accept.png\" alt=\"".tg("Yes")."\" />" 
-					: "<img src=\"" . Environment::$smarty->get_template_vars("iconsPath") . "24/remove.png\" alt=\"".tg("No")."\" />")
+					? "<img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "24/accept.png\" alt=\"".tg("Yes")."\" />" 
+					: "<img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "24/remove.png\" alt=\"".tg("No")."\" />")
 					."</div>";
 				break;
 			case Form::FORM_INPUT_PASSWORD: 

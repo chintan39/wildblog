@@ -116,6 +116,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 			if (!$model->id) {
 				$output .= '<span class="note">' . tg('Title image will be able to select after saving.') . '</span>';
 			} else {
+				// TODO: element ID is not right
 				$output .= '<select id="form_' . $fieldName . '" name="' . $fieldName . '">';
 				if ($model->id) {
 					$images = $model->Find('GalleryImagesModel');
