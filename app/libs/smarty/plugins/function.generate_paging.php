@@ -57,14 +57,29 @@ function smarty_function_generate_paging($params, &$smarty)
 	/* 
 	 * paging using ajax
 	 */
-	if ($collection->pagingAjax)
-		$onclick = " onclick=\"return ajaxReplace(this.href, 'get', '$collectionContainerId');\"";
-	else
-		$onclick = '';
+	$showOnlyKeys = isset($params['showOnlyKeys']) ? explode('|', $params['showOnlyKeys']) : array();
 		
 	if ($collection && array_key_exists("paging", $collection->data) && $collection->data["paging"]) {
-		$keys = array('first', 'prev', 'prevList', 'actual', 'nextList', 'next', 'last');
+		
+		if ($showOnlyKeys)
+			$keys = $showOnlyKeys;
+		else
+			$keys = array('first', 'prev', 'prevList', 'actual', 'nextList', 'next', 'last');
+		
 		foreach ($keys as $key) {
+			
+			/* handle onclick action when using ajax */
+			if ($collection->pagingAjax) {
+				if ($showOnlyKeys && $key == 'next')
+					$onclick = " onclick=\"this.hide(); return ajaxAppend(this.href, 'get', '$collectionContainerId');\"";
+				elseif ($showOnlyKeys && $key == 'prev')
+					$onclick = " onclick=\"return ajaxPrepend(this.href, 'get', '$collectionContainerId');\"";
+				else
+					$onclick = " onclick=\"return ajaxReplace(this.href, 'get', '$collectionContainerId');\"";
+			}
+			else
+				$onclick = '';
+			
 			$output .= "\n<div class=\"paging_$key\">\n";
 			$output .= "<div class=\"inner\">\n";
 			if (array_key_exists($key, $collection->data["paging"])) {

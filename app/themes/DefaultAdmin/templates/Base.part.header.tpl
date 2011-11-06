@@ -6,5 +6,5 @@
 					<div id="right">
 					{require file='part.menuTop'}
 					<!-- message_bus_adding -->
-
+					<div id="ajaxMessages"></div>
 

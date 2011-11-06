@@ -1,5 +1,9 @@
 {require file='part.header'}
 
+<div id="{$blogposts->containerId}">
+
+{*generate_paging collection=$blogposts showOnlyKeys=prev*}
+
 {if $title and not $notitle}<h1>{$title}</h1>{/if}
 
 {if $blogposts->data.items}
@@ -22,7 +26,9 @@
 	<p>{tg}No posts found.{/tg}</p>
 {/if}
 
-{generate_paging collection=$blogposts}
+{generate_paging collection=$blogposts showOnlyKeys=next}
+
+</div>
 
 {require package=Base file='part.addNewItem' itemPackage=Blog itemController=Posts itemAction=actionNew}
 

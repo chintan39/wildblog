@@ -133,7 +133,7 @@ sessionTimer = function (message, timeout) {
 
 
 /**
- * Use AJAX to get content from page $link using method $useMethod
+ * Use Ajax to get content from page $link using method $useMethod
  * and update element identified with $resultContainer.
  */
 ajaxReplace = function (link, useMethod, resultContainer) {
@@ -142,6 +142,53 @@ ajaxReplace = function (link, useMethod, resultContainer) {
 		parameters: { __request_type__: 'ajax' }
 	});
 	return false;
+}
+
+
+/**
+ * Use Ajax to get content from page $link using method $useMethod
+ * and update element identified with $resultContainer.
+ */
+ajaxAppend = function (link, useMethod, resultContainer) {
+	new Ajax.Updater(resultContainer, link, { 
+		method: useMethod,
+		parameters: { __request_type__: 'ajax' },
+		insertion: 'bottom'
+	});
+	return false;
+}
+
+
+/**
+ * Use Ajax to get content from page $link using method $useMethod
+ * and update element identified with $resultContainer.
+ */
+ajaxPrepend = function (link, useMethod, resultContainer) {
+	new Ajax.Updater(resultContainer, link, { 
+		method: useMethod,
+		parameters: { __request_type__: 'ajax' },
+		insertion: 'top'
+	});
+	return false;
+}
+
+
+/**
+ * Use Ajax to sent form data and display message in messageContainer.
+ */
+ajaxFormMessage = function (form) {
+	new Ajax.Request('/some_url', {
+		method: form.method,
+		parameters: form.serialize(true),
+		onSuccess: function(transport) {
+			var response = transport.responseText || "Form sent OK.";
+			messageContainer = $('ajaxMessages');
+			if (messageContainer)
+				messageContainer.update(response);
+			alert("Success! \n\n" + response);
+		},
+		onFailure: function() { alert('Something went wrong...') }
+	});
 }
 
 /* end of the file */

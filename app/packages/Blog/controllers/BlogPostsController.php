@@ -30,6 +30,7 @@ class BlogPostsController extends AbstractPagesController {
 	 */
 	public function actionPostsList($args) {
 		$items = new ItemCollection("blogposts", $this);
+		$items->setPagingAjax(true);
 		$items->setSorting(array(array("column" => "published", "direction" => "DESC")));
 		$items->setLimit(6);
 		$items->loadCollection();
