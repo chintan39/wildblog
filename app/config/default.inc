@@ -156,4 +156,7 @@ define('CAPTCHA_LENGTH', 5);
 define('CAPTCHA_WIDTH', 150);
 define('CAPTCHA_HEIGHT', 75);
 
+// request type param name
+define('REQUEST_TYPE_PARAM_NAME', '__request_type__');
+
 ?>

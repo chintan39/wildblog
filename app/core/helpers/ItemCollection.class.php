@@ -38,7 +38,9 @@ class ItemCollection {
 	$forceLanguage = false,
 	$modelParams = array(),
 	$dm = null,
-	$sortable = null;
+	$sortable = null,
+	$pagingAjax = false,
+	$containerId;
 	
 	
 	/**
@@ -69,6 +71,7 @@ class ItemCollection {
 		// specify the method, if not set, standard method used
 		$this->dataModelMethod = $dataModelMethod;
 		$this->identifier = $identifier;
+		$this->containerId = "container_$identifier";
 		
 		// buttons can be added after by using public method addButtons
 		if ($buttons !== null) {
@@ -712,6 +715,15 @@ class ItemCollection {
 	
 	public function toLinkCollection() {
 	
+	}
+	
+	
+	/**
+	 * Enables or disables using Ajax by paging.
+	 * @param <bool> $value
+	 */
+	public function setPagingAjax($value) {
+		$this->pagingAjax = $value;
 	}
 }
 

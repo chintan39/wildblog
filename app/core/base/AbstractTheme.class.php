@@ -14,6 +14,8 @@ class AbstractTheme {
 	/**
 	 * Returns list of all templates that are used by the template 
 	 * specified by $tempalte. It works recursively.
+	 * When handling ajax request, we won't use any templates not stamped 
+	 * with {ajax}.
 	 * @param string $template name of the template
 	 * @return array List of templates used by this template
 	 */
@@ -36,6 +38,12 @@ class AbstractTheme {
 			// case if some subtemplates are set
 			$result = array();
 			foreach ($this->templatesDependency[$template] as $subTemplate) {
+				// when we're handling an ajax request and template is not stamped as {ajax}, skip it
+				if (preg_match('/\{ajax\}$/', $subTemplate)) {
+					$subTemplate = str_replace('{ajax}', '', $subTemplate);
+				} elseif (Request::isAjax())
+					continue;
+				
 				$ex = explode('|', $subTemplate);
 				if (count($ex) == 2) {
 					// another Theme is specified (e.g. Base|header.tpl)

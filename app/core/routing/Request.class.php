@@ -17,6 +17,8 @@ class Request {
 
 	static private $uniqueNumber = 0;
 	
+	static private $requestType = 'normal';	/* possible values: 'normal', 'ajax' */
+	
 	/**
 	 * Constructor
 	 */
@@ -143,6 +145,7 @@ class Request {
 			Environment::$smarty->assign('appGenerator', APP_GENERATOR_NAME . ' version ' . APP_VERSION);
 			Environment::$smarty->assign('dirLibs', DIR_LIBS);
 			Environment::$smarty->assign('thisLink', self::getSameLink());
+			Environment::$smarty->assign('requestIsAjax', self::$requestType == 'ajax');
 			
 			Environment::$smarty->assign('frontendLanguages', Language::getLanguages(Themes::FRONT_END));
 			Environment::$smarty->assign('backendLanguages', Language::getLanguages(Themes::BACK_END));
@@ -192,6 +195,11 @@ class Request {
 		$url['base'] = $url['protocol'] . '://' . $url['baseWithoutProtocol'];
 		$qMarkPos = strpos($_SERVER['REQUEST_URI'], '?');
 		$url['pathRaw'] = ($qMarkPos !== false) ? substr($_SERVER['REQUEST_URI'], 0, $qMarkPos) : $_SERVER['REQUEST_URI'];
+		
+		/* check if the request is an ajax call */
+		if (isset($_POST[REQUEST_TYPE_PARAM_NAME]) || isset($_GET[REQUEST_TYPE_PARAM_NAME]))
+			self::$requestType = 'ajax';
+		
 		if (Config::Get('PROJECT_URL')) {
 			$url['pathRaw'] = preg_replace('/^\/' . Config::Get('PROJECT_URL') . '/', '', $url['pathRaw']);
 		}
@@ -423,6 +431,10 @@ class Request {
 	
 	static public function setTemplate($tpl) {
 		self::$action['template'] = $tpl;
+	}
+
+	static public function isAjax() {
+		return self::$requestType == 'ajax';
 	}
 	
 }

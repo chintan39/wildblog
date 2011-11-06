@@ -36,6 +36,9 @@
  */
 function smarty_function_require($params, &$smarty)
 {
+	if (Request::isAjax() && !isset($params['ajax']))
+		return;
+	
 	// create backup to return it after including
 	$thisThemeBackup = $smarty->get_template_vars('thisTheme');
 	

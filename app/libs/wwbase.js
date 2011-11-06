@@ -131,4 +131,17 @@ sessionTimer = function (message, timeout) {
 	}
 }
 
+
+/**
+ * Use AJAX to get content from page $link using method $useMethod
+ * and update element identified with $resultContainer.
+ */
+ajaxReplace = function (link, useMethod, resultContainer) {
+	new Ajax.Updater(resultContainer, link, { 
+		method: useMethod,
+		parameters: { __request_type__: 'ajax' }
+	});
+	return false;
+}
+
 /* end of the file */

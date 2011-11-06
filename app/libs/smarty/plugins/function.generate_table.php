@@ -47,6 +47,7 @@ function smarty_function_generate_table($params, &$smarty)
 	
 	$output = "";
 	$collection = $params["collection"];
+	$collectionContainerId = $collection->containerId;
 	$columnsSortingEnabled = (!isset($params["columns_sorting"]) || $params["columns_sorting"]);
 	$class = isset($params["tableClass"]) ? $params["tableClass"] : "cleantable";
 	$metaData = $collection->dm->getMetaData();

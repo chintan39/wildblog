@@ -45,6 +45,7 @@ function smarty_function_generate_paging($params, &$smarty)
 {
 	$output = "";
 	$collection = $params["collection"];
+	$collectionContainerId = $collection->containerId;
 	$class = isset($params["tableClass"]) ? $params["tableClass"] : "cleantable";
 
 	/* 
@@ -52,6 +53,15 @@ function smarty_function_generate_paging($params, &$smarty)
 	 */
 	$output .= "<div class=\"$class\">";
 	$output .= "<div class=\"paging\">";
+
+	/* 
+	 * paging using ajax
+	 */
+	if ($collection->pagingAjax)
+		$onclick = " onclick=\"return ajaxReplace(this.href, 'get', '$collectionContainerId');\"";
+	else
+		$onclick = '';
+		
 	if ($collection && array_key_exists("paging", $collection->data) && $collection->data["paging"]) {
 		$keys = array('first', 'prev', 'prevList', 'actual', 'nextList', 'next', 'last');
 		foreach ($keys as $key) {
@@ -64,7 +74,7 @@ function smarty_function_generate_paging($params, &$smarty)
 						if (is_array($item) && is_numeric($item["value"])) {
 							$output .= "<a class=\"paging_$key\" href=\"";
 							$output .= $item["link"] ? $item["link"] : $item;
-							$output .= "\" title=\"" . tg("page") . " " . $item["value"] . "\">" . $item["value"] . "</a> ";
+							$output .= "\" title=\"" . tg("page") . " " . $item["value"] . "\"$onclick>" . $item["value"] . "</a> ";
 						}                      
 					}
 				} elseif (is_array($collection->data["paging"][$key])) {
@@ -73,7 +83,7 @@ function smarty_function_generate_paging($params, &$smarty)
 						$output .= "<a class=\"paging_$key\" href=\"";
 						$output .= $item["link"] ? $item["link"] : $item;
 						$value = ($key == 'actual') ? $item["value"] : '';
-						$output .= "\" title=\"" . tg($key . " page") . "\">$value</a> ";
+						$output .= "\" title=\"" . tg($key . " page") . "\"$onclick>$value</a> ";
 					}
 				} else {
 					$output .= "<span class=\"paging_$key\">" . $collection->data["paging"][$key] . "</span> ";

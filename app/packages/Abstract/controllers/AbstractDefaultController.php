@@ -40,6 +40,7 @@ class AbstractDefaultController extends AbstractBasicController{
 	public function actionListing($args) {
 
 		$items = new ItemCollection($this->getMainListIdentifier(), $this);
+		$items->setPagingAjax(true);
 		$items->setQualification(null); // we overload filters - no qualifications are used
 		$items->setDefaultFilters();
 		$items->handleFilters();
