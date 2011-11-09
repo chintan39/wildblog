@@ -30,7 +30,11 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 					$item->id = $item->model = $modelName;
 					if (array_key_exists('table', get_object_vars($model)) && $model->tableBase) {	// if the model has table defined
 						$item->tableBase = $model->tableBase;
-						$item->columns = $model->FindCount($modelName);
+						try {
+							$item->columns = $model->FindCount($modelName);
+						} catch (Exception $e) {
+							$item->columns = -1;
+						}
 					} else {				// the object has no table defined
 						$item->tableBase = 'no table specified';
 						$item->columns = 'no table specified';
