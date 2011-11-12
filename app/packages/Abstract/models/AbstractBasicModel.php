@@ -464,6 +464,9 @@ class AbstractBasicModel {
 		if (Restriction::hasRestrictions($meta->getRestrictions(), Restriction::R_NOT_EMPTY)) {
 			$this->checkFieldNotEmpty($value, $meta);
 		}
+		if (Restriction::hasRestrictions($meta->getRestrictions(), Restriction::R_HTML)) {
+			$this->checkFieldHtml($value, $meta);
+		}
 
 		if ($meta->getType() == Form::FORM_HTML_BBCODE) {
 			$this->checkFieldBBCode($value, $meta);
@@ -493,6 +496,18 @@ class AbstractBasicModel {
 		}
 		if ($notNegative && (float)$value < 0.0) {
 			$this->addMessageField("errors", $meta, tg("cannot be negative")); 
+		}
+	}
+
+	/**
+	 * Checks field's format html.
+	 * @param &$value
+	 * @param &$meta
+	 *                       precision cannot be better then $precision)
+	 */
+	protected function checkFieldHtml(&$value, &$meta) {
+		if (($r = Utilities::checkHTMLFormat($value)) !== true) {
+			$this->addMessageField("errors", $meta, $r); 
 		}
 	}
 

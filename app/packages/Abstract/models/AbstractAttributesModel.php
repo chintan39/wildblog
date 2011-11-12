@@ -59,6 +59,7 @@ abstract class AbstractAttributesModel {
 		return ModelMetaItem::create('text')
 			->setLabel('Text')
 			->setDescription('main content of the item to be displayed')
+			->setRestrictions(Restriction::R_HTML)
 			->setType(Form::FORM_HTML)
 			->setDefaultValue('')
 			->setSqlType('text NOT NULL')

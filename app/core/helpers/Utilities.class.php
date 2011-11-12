@@ -392,18 +392,77 @@ class Utilities {
 
 	
 	/**
-	 * Validates $string as part of HTML.
-	 * TODO: implement
-	 * @return bool True if correct HTML, false if not HTML format.
+	 * Checks if $input is in html format. It checks if all opened tags are closed. 
+	 * Param $allowedTags is a list of tags separated by '|' that can be used 
+	 * in $input. If tag name ends with '/' then no closing tag is expected. 
+	 * We can use <br> and also <br /> variant.
+	 * @todo: allow characters '<' and '>' in tag's param value
+	 * @param <string> $input text in html to check
+	 * @param <string> $allowedTags list of allowed tags separated with '|' (lowercase)
+	 * @return <bool, string> returns true if $input is valid html text, or error message if not
 	 */
-	static public function checkHTMLFormat($string) {
-		// validates HTML format...
-		// reads tag, add it to stock (if not single tag)
-		// when read end, checks the type and removes it from stock
-		// if no tag is in stock in the end, return true, else false
-		return true;
-	}
+	static public function checkHTMLFormat($input, $allowedTags="a|abbr|acronym|address|applet|b|big|blockquote|br/|caption|cite|code|col/|colgroup|dd|del|dfn|div|dl|dt|em|h1|h2|h3|h4|h5|h6|hr/|i|img/|li|link/|ol|p|param/|pre|q|samp|script|small|span|strong|style|sub|sup|table|tbody|td|tfoot|th|thead|title|tr|tt|ul") {
+		$allowedTagsArray = array_flip(explode('|', $allowedTags));
+		$inputLength = strlen($input);
 	
+		// stack to store opened tags
+		$tagStack = array();
+	
+		// actual offset in input
+		$pos = 0;
+		
+		while (($pos = strpos($input, '<', $pos)) !== false) {
+			// if input ends with '<', die
+			if ($inputLength <= $pos+3)
+				return tg('string ended unexpectacly');
+			
+			// check if this is ending tag
+			if ($endingTag = ($input[$pos+1] == '/'))
+				$pos++;
+	
+			// check tag name
+			if (substr($input, $pos+1, 3) == '!--') {
+				if (($pos = strpos($input, '-->', $pos+3)) === false)
+					return tg('comment tag not ended');
+				else 
+					continue;
+			}
+			
+			if (!preg_match('/\w+/', substr($input, $pos+1, 20), $m))
+				return tg('could not found tag name');
+			
+			$tagName = strtolower($m[0]);
+			$tmpTag = null;
+			
+			// pop all tags from stack that can be alone and are not the same as the actual one
+			while ($endingTag && !empty($tagStack) && $tagName != ($tmpTag = array_pop($tagStack)) 
+				&& array_key_exists($tmpTag.'/', $allowedTagsArray));
+			
+			// check if popped tag is the actual one
+			if ($endingTag && $tmpTag != $tagName)
+				return tg('ending tag').' '.$tagName.' '.tg('closes non-opened tag').' '.$tmpTag;
+			
+			$pos += strlen($tagName);
+			if (($tmpPos1 = strpos($input, '>', $pos)) !== false && ($tmpPos2 = strpos($input, '<', $pos)) !== false && $tmpPos2 < $tmpPos1)
+				return tg('tag').' '.$tagName.' '.tg('not closed');
+			
+			$pos = strpos($input, '>', $pos);
+			
+			if ($pos === false)
+				return tg('tag').' '.$tagName.' '.tg('does not end');
+			
+			// tag has valid name
+			if (!array_key_exists($tagName, $allowedTagsArray) && !array_key_exists($tagName.'/', $allowedTagsArray))
+				return tg('tag').' '.$tagName.' '.tg('is not valid tag');			
+	
+			// store it
+			if (!$endingTag)
+				$tagStack[] = $tagName;
+		}
+		return empty($tagStack);
+
+	}
+
 	
 	/**
 	 * Removes values from array, which do not have subkeys corresponding 

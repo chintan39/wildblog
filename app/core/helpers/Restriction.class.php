@@ -26,6 +26,7 @@ class Restriction {
 	const R_SHA1				= 0x00020000;
 	const R_LINK				= 0x00040000;
 	const R_COLOR_RGBHEXA		= 0x00080000;
+	const R_HTML				= 0x00100000;
 	
 	const R_CONFIRM_PREFIX = "confirm_";
 	
