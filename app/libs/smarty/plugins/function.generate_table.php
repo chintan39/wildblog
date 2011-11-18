@@ -179,7 +179,7 @@ function smarty_function_generate_table($params, &$smarty)
 		} 
 	} else {
 		$output .= "<tr><td colspan=\"" . count($collection->data["columns"]) . "\">";
-		$output .= $collection->alternativeText;
+		$output .= tg('No items found.');
 		$output .= "</td></tr>";
 	}
 	$output .= "</tbody>";

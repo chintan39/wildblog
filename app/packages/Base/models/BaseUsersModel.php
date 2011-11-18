@@ -28,7 +28,7 @@ class BaseUsersModel extends AbstractSimpleModel {
 			->setSqlType('TEXT NOT NULL')
 			->setFormTab(Form::TAB_PROPERTIES)
 			->setExtendedTable(false)
-			->setIsVisible(array('main' => false)));
+			->setIsVisible(ModelMetaItem::NEVER));
 	
     }
 

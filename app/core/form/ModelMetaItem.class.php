@@ -22,7 +22,7 @@ class ModelMetaItem {
 	private $restrictions = 0;		// for restrictions @see Restriction::R_...
 	private $isEditable = self::ALWAYS; 	// can be eddited in form true/false/1=only new
 	private $isVisibleInForm = self::UNDEFINED; 	// can be displayed in form (null = undefined, true/false = on/off)
-	private $isVisible = array(); 	// where the item is visible (mostly standard item lists)
+	private $isVisible = true; 	// where the item is visible (mostly standard item lists)
 	private $optionsMethod = '';	// method to be called to select possible values
 	private $optionsModel = '';		// model that is used to select possible values
 	private $sqlType = '';			// type of the value in SQL
@@ -181,10 +181,6 @@ class ModelMetaItem {
     		return $this->isVisible;
         }
    		return $this->isVisible[$identificator];
-    }
-
-    public function getIsVisibleIsDefined($identificator) {
-    	return array_key_exists($identificator, $this->isVisible);
     }
 
     public function setIsVisible($isVisible) {

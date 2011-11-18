@@ -16,14 +16,27 @@ class ItemCollection {
 	const BUTTON_DISABLE = 6;
 	const BUTTON_EXPORT = 7;
 	
-	var 
+	const treeRoot = 1;
+	
+	const treeAncestors = 1;
+	const treeAllDescendants = 2;
+	const treeDirectDescendants = 4;
+	const treeSiblings = 8;
+	const treeAll = 16;
+
+	public
+	$dm = null,
+	$filterForm = false,
+	$data, 				// array with keys items, itemsCount, columns, paging
+	$pagingAjax = false,
+	$containerId;
+	
+	private 
 	$identifier, 
 	$controller, 
-	$data, 				// array with keys items, itemsCount, columns, paging
 	$dataModel, 
 	$buttons, 
 	$buttonsProceeded = false,
-	$alternativeText = 'No items found.',
 	$subCollection = null,
 	$foreignKeyParent = 'parent',
 	$linkAction = null,
@@ -33,14 +46,12 @@ class ItemCollection {
 	$sortingColumns = false,
 	$sortingLinks = false,
 	$filtersSettingsModel = false,
-	$filterForm = false,
 	$limit = -1,
 	$forceLanguage = false,
 	$modelParams = array(),
-	$dm = null,
 	$sortable = null,
-	$pagingAjax = false,
-	$containerId;
+	$treeBase=null,
+	$treePull=self::treeAll;
 	
 	
 	/**
@@ -117,15 +128,15 @@ class ItemCollection {
 		
 		// get qualification
 		if ($this->qualification !== false) {
-			$this->getDm()->tmpQualification = $this->qualification; // set temporary qualification of the items
+			$this->getDm()->setQualification($this->qualification); // set temporary qualification of the items
 		}
 		
 		// sorting
 		$sorting = $this->getSortingFromUrl();
 		if ($sorting['column'] !== '') {
-			$this->getDm()->tmpSorting = array($sorting); // set temporary sorting of the items
+			$this->getDm()->setSorting($sorting); // set temporary sorting of the items
 		} elseif ($this->sorting !== false) {
-			$this->getDm()->tmpSorting = $this->sorting; // set temporary sorting of the items
+			$this->getDm()->setSorting($this->sorting); // set temporary sorting of the items
 		}
 		
 		// if it could be sorted manualy
@@ -138,7 +149,7 @@ class ItemCollection {
 				$limitStart = $paging->getStart($this->identifier);
 				$this->limit = array('start' => $limitStart, 'limit' => $this->limit);
 			}
-			$this->getDm()->tmpLimit = $this->limit; // set temporary limit of the items
+			$this->getDm()->setLimit($this->limit); // set temporary limit of the items
 		}
 		
 		// language
@@ -376,7 +387,7 @@ class ItemCollection {
 	 */
 	public function setDefaultFilters() {
 		$this->filtersSettingsModel = new BaseFiltersModel();
-		foreach ($this->getDm()->getVisibleColumnsInCollection($this->identifier) as $column) {
+		foreach ($this->getDm()->getVisibleColumnsInCollection() as $column) {
 			$type = false;
 			$restrictions = 0;
 			$condition = '__field__ = ?';	// standard condition
@@ -547,22 +558,12 @@ class ItemCollection {
 	
 	
 	/**
-	 * Sets an alternative text, that is displayed if no items are found
-	 * @param 
-	 */
-	public function setAlternativeText($alternativeText) {
-		$this->alternativeText = $alternativeText;
-	}
-	
-	
-	/**
 	 * Recursively creates copies of the collection and connects them to the current collection as a subCollection.
 	 * @param 
 	 */
 	public function setTreeHigh($treeHigh) {
 		if ($treeHigh > 1) {
 			$newCollection = new self($this->identifier, $this->controller, $this->dataModel, $this->dataModelMethod, $this->buttons, $treeHigh-1, $this->linkAction);
-			$newCollection->setAlternativeText($this->alternativeText);
 			$this->subCollection = $newCollection;
 		}
 	}
@@ -725,6 +726,26 @@ class ItemCollection {
 	public function setPagingAjax($value) {
 		$this->pagingAjax = $value;
 	}
+	
+
+	/**
+	 * Sets base item or root
+	 * @param <object> $baseItem
+	 */
+	public function treeBase($baseItem) {
+		$this->treeBase = $baseItem;
+	}
+	
+
+	/**
+	 * Sets what items to pull in tree
+	 * @param <int> $pullSet
+	 */
+	public function treePull($pullSet) {
+		$this->treePull = $pullSet;
+	}
+	
+	
 }
 
 ?>

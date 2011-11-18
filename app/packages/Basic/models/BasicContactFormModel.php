@@ -23,8 +23,8 @@ class BasicContactFormModel extends AbstractPagesModel {
     		->setType(Form::FORM_TEXTAREA)
     		->addRestrictions(Restriction::R_NOT_EMPTY)
     		->setDescription('message you would like to deliver to us');
-    	$this->getMetaData('email')->setIsVisible(array('main' => false));
-    	$this->getMetaData('active')->setIsVisible(array('main' => false));
+    	$this->getMetaData('email')->setIsVisible(ModelMetaItem::NEVER);
+    	$this->getMetaData('active')->setIsVisible(ModelMetaItem::NEVER);
     }
     
 

@@ -22,7 +22,7 @@ class FAQQuestionsModel extends AbstractPagesModel {
 			->setRestrictions(Restriction::R_EMAIL | Restriction::R_EMPTY)
 			->setType(Form::FORM_INPUT_TEXT)
 			->setSqlType('varchar(255) NOT NULL')
-			->setIsVisible(array('main' => false)));
+			->setIsVisible(ModelMetaItem::NEVER));
 		
 		$this->addMetaData(ModelMetaItem::create('author_web')
 			->setLabel('Your web')
@@ -30,7 +30,7 @@ class FAQQuestionsModel extends AbstractPagesModel {
 			->setRestrictions(Restriction::R_LINK | Restriction::R_EMPTY)
 			->setType(Form::FORM_INPUT_TEXT)
 			->setSqlType('varchar(255) NOT NULL')
-			->setIsVisible(array('main' => false)));
+			->setIsVisible(ModelMetaItem::NEVER));
 		
 		$this->addMetaData(ModelMetaItem::create('answer')
 			->setLabel('Answer')
@@ -39,7 +39,7 @@ class FAQQuestionsModel extends AbstractPagesModel {
 			->setSqlIndex('fulltext')
 			->setWysiwygType(Javascript::WYSIWYG_BBCODE)
 			->setExtendedTable(true)
-			->setIsVisible(array('main' => false)));
+			->setIsVisible(ModelMetaItem::NEVER));
 	
     	$this->removeMetaData('description');
     	

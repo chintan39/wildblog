@@ -18,11 +18,12 @@ class BasicMenuController extends AbstractPagesController {
 			$menus = BasicMenuModel::Search('BasicMenuModel', array('all_pages = ?'), array(1));
 			if ($menus) {
 				$allPagesMenus = array();
-				$menuItem = new BasicMenuItemsModel();
 				foreach ($menus as $menu) {
 					$menuName = str_replace('-', '_', $menu->url);
-					//$allPagesMenus[$menuName] = $menuItem->getCollectionItemsTreeNoPaging($menuName);
-					$allPagesMenus[$menuName] = $menuItem->getCollectionItems($menuName, 'BasicMenuItemsModel', array('menu = ?'), array($menu->id), array("order by rank"));
+					$menuItem = new BasicMenuItemsModel();
+					$menuItem->addQualification('menu = ?', $menu->id);
+					$menuItem->setOrder('rank');
+					$allPagesMenus[$menuName] = $menuItem->getCollectionItems();
 				}
 			}
 			$this->saveCache('allPagesMenus', $allPagesMenus, array('BasicMenuModel', 'BasicMenuItemsModel'));

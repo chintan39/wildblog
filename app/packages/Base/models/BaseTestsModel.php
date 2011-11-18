@@ -17,7 +17,7 @@ class BaseTestsModel extends AbstractVirtualModel {
          * @param <type> $limit
          * @return <type>
          */
-	public function getCollectionItems($itemCollectionIdentifier='', $modelName=false, $filters=array(), $values=array(), $extra=array(), $justThese=array(), $order=array(), $limit=DEFAULT_PAGING_LIMIT) {
+	public function getCollectionItems() {
 		$list = array();
 		$list['items'] = array();
 		$list['columns'] = array('id', 'package', 'description');

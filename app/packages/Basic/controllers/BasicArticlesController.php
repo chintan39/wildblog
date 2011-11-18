@@ -5,6 +5,36 @@ class BasicArticlesController extends AbstractPagesController {
 	public $order = 2;				// order of the controller (0-10 asc)
 	var $detailMethodName = 'actionDetail';
 
+
+	/**
+	 * Request handler
+	 * List of items will be stored in ItemCollection object, then data from the collection 
+	 * will be printed with specified buttons, paging, etc.
+	 */
+	public function actionListing($args) {
+
+		$items = new ItemCollection($this->getMainListIdentifier(), $this);
+		$items->setPagingAjax(true);
+		$items->setQualification(null); // we overload filters - no qualifications are used
+		$items->setDefaultFilters();
+		$items->handleFilters();
+		$items->forceLanguage(Language::get(Themes::FRONT_END));
+		$items->treeBase(ItemCollection::treeRoot);
+		$items->treePull(ItemCollection::treeAncestors | ItemCollection::treeDirectDescendants);
+		$items->loadCollection();
+
+		$buttons = $this->getListingButtons();
+		
+		$items->addButtons($buttons);
+		
+		$this->assign($items->getIdentifier(), $items);
+		$this->assign('title', tg('List of ' . strtolower($this->name)));
+		$this->assign('help', tg($this->description));
+		
+		// Top menu
+		$this->addTopMenu();
+	}
+
 	/**
 	 * Request handler
 	 * Personal Info on all pages. 
@@ -126,28 +156,6 @@ class BasicArticlesController extends AbstractPagesController {
 
 	/**
 	 * Request handler
-	 * Articles structure generation. 
-	 */
-	/*
-	public function subactionArticlesTreeOld($args) {
-		Benchmark::log("Begin of creating ArticlesController::subactionArticlesTree");
-		$articlesTree = $this->loadCache('articlesTree');
-		if (!$articlesTree) {
-			$articlesTree = new ItemCollection("articlesTree", $this, null, "getCollectionItemsTree");
-			$articlesTree->setLinks("actionDetail");
-			$articlesTree->setTreeHigh(3);
-			$articlesTree->loadCollection();
-			$articlesTree->addLinks();
-			$this->saveCache('articlesTree', $articlesTree, array('BasicArticlesModel'));
-		}
-
-		$this->assign($articlesTree->getIdentifier(), $articlesTree);
-		Benchmark::log("End of creating ArticlesController::subactionArticlesTree");
-	}
-	*/
-	
-	/**
-	 * Request handler
 	 * Homepage article generation. 
 	 */
 	public function subactionHomepageArticle($args) {
@@ -174,7 +182,6 @@ class BasicArticlesController extends AbstractPagesController {
 		$this->assign('title', $article->title);
 		$this->assign('pageTitle', $article->title . ' | ' . tp('Project Title Short'));
 		$this->assign('article', $article);
-		//$this->display('articleDetail');
 	}
 	
 	
@@ -196,7 +203,6 @@ class BasicArticlesController extends AbstractPagesController {
 		$this->assign('pageTitle', tp('Project Title'));
 		$this->assign('article', $homepageArticle);
 		Benchmark::log('End of creating ArticlesController::actionHomepageArticle');
-		//$this->display('articleDetail');
 	}
 	
 	

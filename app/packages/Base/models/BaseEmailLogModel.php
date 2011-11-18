@@ -13,7 +13,7 @@ class BaseEmailLogModel extends AbstractDefaultModel {
 		$this->addMetaData(ModelMetaItem::create('from')
 			->setLabel('From')
 			->setType(Form::FORM_INPUT_TEXT)
-			->setIsVisible(array('main' => false))
+			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('varchar(255) NOT NULL'));
     	
 		$this->addMetaData(ModelMetaItem::create('to')
@@ -35,7 +35,7 @@ class BaseEmailLogModel extends AbstractDefaultModel {
 		$this->addMetaData(ModelMetaItem::create('reply')
 			->setLabel('Reply')
 			->setType(Form::FORM_INPUT_TEXT)
-			->setIsVisible(array('main' => false))
+			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('varchar(255) NOT NULL'));
 		
 		$this->addMetaData(ModelMetaItem::create('subject')
@@ -46,13 +46,13 @@ class BaseEmailLogModel extends AbstractDefaultModel {
 		$this->addMetaData(ModelMetaItem::create('text')
 			->setLabel('Text')
 			->setType(Form::FORM_TEXTAREA)
-			->setIsVisible(array('main' => false))
+			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('TEXT NOT NULL'));
     	
 		$this->addMetaData(ModelMetaItem::create('alt_text')
 			->setLabel('Alternative text')
 			->setType(Form::FORM_TEXTAREA)
-			->setIsVisible(array('main' => false))
+			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('TEXT NOT NULL'));
 
 		$this->addMetaData(ModelMetaItem::create('send_time')
@@ -60,7 +60,7 @@ class BaseEmailLogModel extends AbstractDefaultModel {
 			->setRestrictions(Restriction::R_TIMESTAMP | Restriction::R_NO_EDIT_ON_EMPTY)
 			->setType(Form::FORM_INPUT_DATETIME)
 			->setIsEditable(ModelMetaItem::NEVER)
-			->setIsVisible(array('main' => false))
+			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP')
 			->setSqlIndex('index')
 			->setAdjustMethod('CurrentDateTimeOnEmpty')

@@ -25,21 +25,13 @@ class NewsletterGroupsModel extends AbstractCodebookModel {
     		foreach ($contacts as $p) {
     			$values[] = $p->id;
     		}
-    		$filters = array(' id in (?' . str_repeat(', ?', count($values)-1) . ')');
-    	} else {
-			$filters = array(' 0 ');
-			$values = array();
+    		$this->addQualification(' id in (?' . str_repeat(', ?', count($values)-1) . ')', $values);
     	}
+    	
+    	$article = new BasicArticlesModel();
+    	$article->setLimit($this->getLimit());
 
-    	$contact = new NewsletterContactsModel();
-    	$contact->tmpLimit = $this->tmpLimit;
-
-    	return $contact->getCollectionItems(
-    		$itemCollectionIdentifier, 
-    		'NewsletterContactsModel',	// model
-    		$filters, // filters
-    		$values // values
-    	);
+    	return $article->getCollectionItems();
     }
     
     

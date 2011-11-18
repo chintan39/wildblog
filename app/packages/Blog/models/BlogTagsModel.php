@@ -25,21 +25,13 @@ class BlogTagsModel extends AbstractCodebookModel {
     		foreach ($posts as $p) {
     			$values[] = $p->id;
     		}
-    		$filters = array(' id in (?' . str_repeat(', ?', count($values)-1) . ')');
-    	} else {
-			$filters = array(' 0 ');
-			$values = array();
+    		$this->addQualification(' id in (?' . str_repeat(', ?', count($values)-1) . ')', $values);
     	}
+    	
+    	$article = new BasicArticlesModel();
+    	$article->setLimit($this->getLimit());
 
-    	$post = new BlogPostsModel();
-    	$post->tmpLimit = $this->tmpLimit;
-
-    	return $post->getCollectionItems(
-    		$itemCollectionIdentifier, 
-    		'BlogPostsModel',	// model
-    		$filters, // filters
-    		$values // values
-    	);
+    	return $article->getCollectionItems();
     }
     
     

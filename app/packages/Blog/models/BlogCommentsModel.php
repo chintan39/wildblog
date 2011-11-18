@@ -26,14 +26,14 @@ class BlogCommentsModel extends AbstractStructuredPagesModel {
 			->setLabel('E-mail')
 			->setRestrictions(Restriction::R_EMAIL | Restriction::R_EMPTY)
 			->setType(Form::FORM_INPUT_TEXT)
-			->setIsVisible(array('main' => false))
+			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('varchar(255) NOT NULL'));
 		
 		$this->addMetaData(ModelMetaItem::create('author_web')
 			->setLabel('Web')
 			->setRestrictions(Restriction::R_LINK | Restriction::R_EMPTY)
 			->setType(Form::FORM_INPUT_TEXT)
-			->setIsVisible(array('main' => false))
+			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('varchar(255) NOT NULL'));
 		
 		$this->getMetaData('url')->setIsEditable(ModelMetaItem::NEVER);

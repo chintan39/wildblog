@@ -7,26 +7,9 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	var $package="Abstract";
 	var $icon="page";
 	var $useInInitDatabase = true;
-	var $qualification=array();		/*	basic definition of the active items (active = 1 for example) */
-	var $tmpQualification=false;	/*	temporary qualifications - if defined, will be used instead 
-										$qualification and cleaned. 
-										Empty Array is defined. 
-										False is undefined.
-									*/
-	
-	var $sorting=array();			/*	basic definition of the sorting items ('column'=>'rank', 'direction'=>'desc' for example) */
-	var $tmpSorting=false;			/*	temporary sorting - if defined, will be used instead 
-										$sorting and cleaned. 
-										Empty string is defined. 
-										False is undefined.
-									*/
-									
-	var $limit=array();				/*	basic definition of the limit of items (5 for example) */
-	var $tmpLimit=false;			/*	temporary limit - if defined, will be used instead 
-										$limit and cleaned. 
-										0 is defined. 
-										False is undefined.
-									*/
+	protected $qualification=array();		/*	basic definition of the active items (active = 1 for example) */
+	protected $sorting=array();			/*	basic definition of the sorting items ('column'=>'rank', 'direction'=>'desc' for example) */
+	protected $limit=array();				/*	basic definition of the limit of items (5 for example) */
 	
     function __construct($id = false, $forceLanguage = false) {
 		$this->id = $id;
@@ -107,31 +90,14 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	 *
 	 * @return
 	 */
-	public function getCollectionItems($itemCollectionIdentifier, $modelName=false, $filters=array(), $values=array(), $extra=array(), $justThese=array(), $order=array(), $limit=DEFAULT_PAGING_LIMIT) {
-		if (!$modelName) {
-			$modelName = get_class($this);
-		}
+	public function getCollectionItems() {
 		$list = array();
-		$backupTmp = $this->storeTmpValues();	// we need to backup tmp values because function getItems will clear them
-		$list["items"] = $this->getItems($modelName, $filters, $values, $extra, $justThese);
-		$this->restoreTmpValues($backupTmp);
-		$list["columns"] = $this->getVisibleColumnsInCollection($itemCollectionIdentifier);
-		$list["itemsCount"] = $this->getItemsCount($modelName, $filters, $values, array(), array());
+		$list["items"] = $this->getItems();
+		$list["columns"] = $this->getVisibleColumnsInCollection();
+		$list["itemsCount"] = $this->getItemsCount();
 		return $list;
 	}
 	
-	private function restoreTmpValues($backupTmp) {
-		$this->tmpQualification = $backupTmp['tmpQualification'];
-		$this->tmpSorting = $backupTmp['tmpSorting'];
-		$this->tmpLimit = $backupTmp['tmpLimit'];
-	}
-	
-	private function storeTmpValues() {
-		return array(
-			'tmpQualification' => $this->tmpQualification,
-			'tmpSorting' => $this->tmpSorting,
-			'tmpLimit' => $this->tmpLimit);
-	}
 	
 	/**
 	 *
@@ -147,9 +113,9 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 		if (!$modelName) {
 			$modelName = get_class($this);
 		}
-		$this->addQualifications($filters, $values);
-		$this->addSorting($extra);
-		$this->addLimit($extra);
+		$this->exportQualifications($filters, $values);
+		$this->exportSorting($extra);
+		$this->exportLimit($extra);
 		return $this->Find($modelName, $filters, $values, $extra, $justThese);
 	}
 	
@@ -163,11 +129,11 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	 *
 	 * @return
 	 */
-	protected function getItemsCount($modelName, $filters=array(), $values=array(), $extra=array(), $justThese=array()) {
+	protected function getItemsCount($modelName=false, $filters=array(), $values=array(), $extra=array(), $justThese=array()) {
 		if (!$modelName) {
 			$modelName = get_class($this);
 		}
-		$this->addQualifications($filters, $values);
+		$this->exportQualifications($filters, $values);
 		return $this->findCount($modelName, $filters, $values, $extra, $justThese);
 	}
 	
@@ -264,20 +230,14 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	 * @param string $collectionIdentifier ID of the collection.
 	 * @return array Visible fields.
 	 */
-	public function getVisibleColumnsInCollection($collectionIdentifier) {
+	public function getVisibleColumnsInCollection() {
 		$visibleColumns = array();
 		$notVisibleTypes = 	array(Form::FORM_SELECT_FOREIGNKEY, Form::FORM_MULTISELECT_FOREIGNKEY, Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE);
 
     	foreach ($this->getMetaData() as $field => $meta) {
-    		$visible = true;
+    		$visible = $meta->getIsVisible();
     		if (in_array($meta->getType(), $notVisibleTypes)) {
     			$visible = false;
-    		}
-   			if ($meta->getIsVisibleIsDefined('all')) {
-    			$visible = $meta->getIsVisible('all');
-    		}
-   			if ($meta->getIsVisibleIsDefined($collectionIdentifier)) {
-    			$visible = $meta->getIsVisible($collectionIdentifier);
     		}
     		if ($visible) {
     			$visibleColumns[] = $field;
@@ -292,20 +252,14 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	
 	
     /**
-     * Adds all qualifications to the $filters and $values.
+     * Exports all qualifications into the $filters and $values.
      * @param &$filters sql query filters
      * @param &$values sql query values
      */
-	protected function addQualifications(&$filters, &$values) {
-		$qual = $this->qualification;
-		if ($this->tmpQualification === null) {
-			$qual = array();
-		} elseif ($this->tmpQualification !== false) {
-			foreach ($this->tmpQualification as $key => $q) {
-				$qual[$key] = $q;
-			}
-		}
-		foreach ($qual as $q) {
+	protected function exportQualifications(&$filters, &$values) {
+		if (!is_array($this->qualification))
+			return;
+		foreach ($this->qualification as $q) {
 			foreach ($q as $f => $v) {
 				$filters[] = '(' . $f . ')';
 				if (is_array($v)) {
@@ -319,7 +273,6 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 				}
 			}
 		}
-		$this->tmpQualification = false;
 	}
 	
 	protected function sortingDefinition() {
@@ -330,13 +283,12 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	}
 
     /**
-     * Adds sort part of the SQL $extra
+     * Exports sort part of the SQL $extra
      * @param &$extra sql query extra
      */
-	protected function addSorting(&$extra) {
-		$sort = $this->getSorting();
+	protected function exportSorting(&$extra) {
 		$tmp = array();
-		foreach ($sort as $s) {
+		foreach ($this->sorting as $s) {
 			if ($s['column'] == 'RAND') {
 				$tmp[] = 'RAND()';
 			} else {
@@ -346,9 +298,6 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 		if ($tmp) {
 			$extra[] = "ORDER BY " . implode(", ", $tmp);
 		}
-		
-		// clear temporary sorting, it is used just once
-		$this->tmpSorting = false;
 	}
 
 	
@@ -358,11 +307,7 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	 * sorting definition is returned.
 	 */
 	public function getSorting() {
-		if ($this->tmpSorting !== false) {
-			return $this->tmpSorting;
-		} else {
-			return $this->sorting;
-		}
+		return $this->sorting;
 	}
 	
 	
@@ -381,24 +326,22 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	}
 	
 	
-    protected function getLimit() {
-		if ($this->tmpLimit !== false) {
-			return $this->tmpLimit;
-		} else {
-			return $this->limit;
-		}
+    public function getLimit() {
+		return $this->limit;
+	}
+	
+    public function getQualifications() {
+		return $this->qualifications;
 	}
 	
     /**
-     * Adds limit to the $extra
+     * Exports limit to the $extra
      * @param &$extra sql query extra
      */
-    protected function addLimit(&$extra) {
-    	$limit = $this->getLimit();
-		if (array_key_exists('limit', $limit) && $limit['limit']) {
-			$extra[] = "LIMIT " . $limit['start']. ", " . $limit['limit'];
+    protected function exportLimit(&$extra) {
+		if (array_key_exists('limit', $this->limit) && $this->limit['limit']) {
+			$extra[] = "LIMIT " . $this->limit['start']. ", " . $this->limit['limit'];
 		}
-		$this->tmpLimit = false;
 	}
 	
 	
@@ -488,6 +431,50 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 		return  MetaDataContainer::getFieldOptions($this->name, $fieldName);
 	}
 
+	/**
+	 * 
+	 */
+	public function addQualification($filter, $value, $ident=false) {
+		if ($ident !== false)
+			$this->qualification[$ident] = array($filter => $value);
+		else
+			$this->qualification[] = array($filter => $value);
+	}
+
+	/**
+	 * 
+	 */
+	public function setQualification($qualifications) {
+		$this->qualification = $qualifications;
+	}
+
+	/**
+	 * 
+	 */
+	public function addSorting($column, $direction) {
+		$this->sorting[] = array('column' => $column, 'direction' => $direction);
+	}
+
+	/**
+	 * 
+	 */
+	public function setSorting($sorting) {
+		$this->sorting = $sorting;
+	}
+
+	/**
+	 * 
+	 */
+	public function addLimit($count, $start) {
+		$this->limit = array('start' => $start, 'limit' => $count);
+	}
+
+	/**
+	 * 
+	 */
+	public function setLimit($limit) {
+		$this->limit = $limit;
+	}
 }
 
 ?>

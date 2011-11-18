@@ -26,7 +26,7 @@ class NewsletterContactsModel extends AbstractSimpleModel {
 			->setLabel('Groups')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
-			->setIsVisible(array('main' => false)));
+			->setIsVisible(ModelMetaItem::NEVER));
 		
 		/*
 		$this->addMetaData(ModelMetaItem::create('messageContactsConnection')

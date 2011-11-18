@@ -7,7 +7,7 @@
 class BaseFiltersModel extends AbstractVirtualModel {
 
 	var $package = 'Base';
-	var $qualifications;
+	private $qualifications;
 	
 	/**
 	 * Computes qualifications
@@ -26,13 +26,6 @@ class BaseFiltersModel extends AbstractVirtualModel {
 		}
 	}
 	
-	/**
-	 * Returns computed qualifications
-	 * @return array qualifications
-	 */
-	public function getQualifications() {
-		return $this->qualifications;
-	}
 	
 	public function getValue($fieldName) {
 		if (!isset($this->values[$fieldName])) {
@@ -41,6 +34,10 @@ class BaseFiltersModel extends AbstractVirtualModel {
 		return $this->values[$fieldName];
 	}
 	
+    public function getQualifications() {
+		return $this->qualifications;
+	}
+
 	/*
 	/**
 	 * Checking of the values sent by form, this overwrittes standard.

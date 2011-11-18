@@ -80,7 +80,7 @@ class ResearchResearchResultsModel extends AbstractVirtualModel {
 		return $list;
 	}
 	
-	public function getVisibleColumnsInCollection($collectionIdentifier) {
+	public function getVisibleColumnsInCollection() {
 		return $this->getColumns();
 	}
 	

@@ -53,11 +53,11 @@ class AbstractProductionProductsModel extends AbstractNodesModel {
 		$this->addMetaData(AbstractAttributesModel::stdPrice()
 			->setName('price_original') 
 			->setLabel('Original price')
-			->setIsVisible(array('main' => false)));
+			->setIsVisible(ModelMetaItem::NEVER));
 		$this->addMetaData(AbstractAttributesModel::stdPrice()
 			->setName('price_without_discount') 
 			->setLabel('Price without discount')
-			->setIsVisible(array('main' => false)));
+			->setIsVisible(ModelMetaItem::NEVER));
 
     }
     

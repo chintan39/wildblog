@@ -44,21 +44,13 @@ class BasicTagsModel extends AbstractCodebookModel {
     		foreach ($articles as $p) {
     			$values[] = $p->id;
     		}
-    		$filters = array(' id in (?' . str_repeat(', ?', count($values)-1) . ')');
-    	} else {
-			$filters = array(' 0 ');
-			$values = array();
+    		$this->addQualification(' id in (?' . str_repeat(', ?', count($values)-1) . ')', $values);
     	}
-
+    	
     	$article = new BasicArticlesModel();
-    	$article->tmpLimit = $this->tmpLimit;
+    	$article->setLimit($this->getLimit());
 
-    	return $article->getCollectionItems(
-    		$itemCollectionIdentifier, 
-    		'BasicArticlesModel',	// model
-    		$filters, // filters
-    		$values // values
-    	);
+    	return $article->getCollectionItems();
     }
     
     
@@ -75,21 +67,13 @@ class BasicTagsModel extends AbstractCodebookModel {
     		foreach ($articles as $p) {
     			$values[] = $p->id;
     		}
-    		$filters = array(' id in (?' . str_repeat(', ?', count($values)-1) . ')');
-    	} else {
-			$filters = array(' 0 ');
-			$values = array();
+    		$this->addQualification(' id in (?' . str_repeat(', ?', count($values)-1) . ')', $values);
     	}
+    	
+    	$article = new BasicArticlesModel();
+    	$article->setLimit($this->getLimit());
 
-    	$news = new BasicNewsModel();
-    	$news->tmpLimit = $this->tmpLimit;
-
-    	return $news->getCollectionItems(
-    		$itemCollectionIdentifier, 
-    		'BasicNewsModel',	// model
-    		$filters, // filters
-    		$values // values
-    	);
+    	return $article->getCollectionItems();
     }
 
 } 

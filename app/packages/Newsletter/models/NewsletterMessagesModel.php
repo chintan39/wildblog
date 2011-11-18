@@ -29,7 +29,7 @@ class NewsletterMessagesModel extends AbstractPagesModel {
 			->setType(Form::FORM_SPECIFIC_NOT_IN_DB)
 			->setOptionsMethod('listSelect')
 			->setRenderObject($this)
-			->setIsVisible(array('main' => false))
+			->setIsVisible(ModelMetaItem::NEVER)
 			);
 		
 		$this->addMetaData(ModelMetaItem::create('messageContactsConnection')

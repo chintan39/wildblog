@@ -40,7 +40,7 @@ class BasicMenuItemsModel extends AbstractCodebookModel {
      * @return array List of items
      */
     public function listSelectTree($itemIdArray=null) {
-   		$tmpCollection = new ItemCollection("listSelectTreeCollection", null, get_class($this), "getCollectionItemsTreeNoPaging");
+   		$tmpCollection = new ItemCollection("listSelectTreeCollection", null, get_class($this), "getCollectionItemsTree");
    		$tmpCollection->setTreeHigh(5);
 		$tmpCollection->loadCollection();
     	return $tmpCollection->toSimpleSelectTree();
@@ -51,33 +51,13 @@ class BasicMenuItemsModel extends AbstractCodebookModel {
 	 *
 	 * @param 
 	 */
-	public function getCollectionItemsTreeNoPaging($itemCollectionIdentifier, &$parentIdArray=array()) {
-		return $this->getCollectionItemsTree($itemCollectionIdentifier, $parentIdArray, 0);
-	}
+	public function getCollectionItemsTree($parentIdArray=array()) {
+    	if (count($parentIdArray))
+    		$this->addQualification(" parent in (?" . str_repeat(", ?", count($parentIdArray)-1) . ")", $parentIdArray);
+    	else
+    		$this->addQualification("parent = ?", 0);
 
-	
-	/**
-	 *
-	 * @param 
-	 */
-	public function getCollectionItemsTree($itemCollectionIdentifier, $parentIdArray=array(), $pagingLimit=DEFAULT_PAGING_LIMIT) {
-    	if (count($parentIdArray)) {
-    		$filters = array(" parent in (?" . str_repeat(", ?", count($parentIdArray)-1) . ")");
-			$values = $parentIdArray;
-    	} else {
-			$filters = array("parent = ?");
-			$values = array(0);
-    	}
-    	return $this->getCollectionItems(
-    		$itemCollectionIdentifier, 
-    		$this,	// model
-    		$filters, // filters
-    		$values, // values
-    		array(), // extras
-    		array(), // just these
-    		array(), // order
-    		$pagingLimit	// limit
-    	);
+    	return $this->getCollectionItems();
 	}
 
 
