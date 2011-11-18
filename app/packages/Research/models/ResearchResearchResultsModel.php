@@ -6,9 +6,6 @@ class ResearchResearchResultsModel extends AbstractVirtualModel {
 	var $columns = null;
 	var $research = null;
 	var $metaDataLoaded = false;
-	var $tmpQualification = array();
-	var $tmpSorting = array();
-	var $tmpLimit = array();
 
 	private function loadQuestionMapColumns() {
 		// load questions and initialize questions map 

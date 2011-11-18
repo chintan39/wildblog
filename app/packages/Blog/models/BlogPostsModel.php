@@ -27,7 +27,7 @@ class BlogPostsModel extends AbstractPagesModel {
     
 
 	protected function sortingDefinition() {
-		$this->sorting = array(array('column' => 'published', 'direction' => 'desc'));
+		$this->sorting = array(new ItemSorting('published', SORTING_DESC));
 	}
     
 	/**

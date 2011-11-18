@@ -21,7 +21,7 @@ class AbstractSimpleModel extends AbstractDefaultModel {
      */
 	protected function qualificationDefinition() {
 		parent::qualificationDefinition();
-		$this->qualification['active'] = array('active = ?' => 1);
+		$this->qualification['active'] = array(new ItemQualification('active = ?', 1));
 	}
 	
 }

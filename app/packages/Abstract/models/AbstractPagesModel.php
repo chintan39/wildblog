@@ -28,7 +28,7 @@ class AbstractPagesModel extends AbstractNodesModel {
      */
 	protected function sortingDefinition() {
 		parent::sortingDefinition();
-		$this->sorting[] = array('column' => 'rank', 'direction' => 'asc');
+		$this->sorting[] = new ItemSorting('rank');
 	}
 }
 

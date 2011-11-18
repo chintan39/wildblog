@@ -8,7 +8,7 @@ class LinkBuildingPartnersController extends AbstractNodesController {
 		$partnersMenu = $this->loadCache('partnersMenu');
 		if (!$partnersMenu) {
 			$partnersMenu = new ItemCollection("partnersMenu", $this);
-			$partnersMenu->setQualification(array("partners" => array("all_pages = ?" => 1)));
+			$partnersMenu->setQualification(array("partners" => array(new ItemQualification("all_pages = ?", 1))));
 			$partnersMenu->loadCollection();
 			$this->saveCache('partnersMenu', $partnersMenu, array('LinkBuildingPartnersModel'));
 		}

@@ -30,9 +30,9 @@ class BasicNewsModel extends AbstractPagesModel {
     
 	protected function sortingDefinition() {
 		if (Config::Get('BASIC_NEWS_SORTABLE')) {
-			$this->sorting = array(array('column' => 'rank', 'direction' => 'desc'));
+			$this->sorting = array(new ItemSorting('rank', SORTING_DESC));
 		} else {
-			$this->sorting = array(array('column' => 'published', 'direction' => 'desc'));
+			$this->sorting = array(new ItemSorting('published', SORTING_DESC));
 		}
 	}
     

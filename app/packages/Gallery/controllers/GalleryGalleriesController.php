@@ -7,7 +7,7 @@ class GalleryGalleriesController extends AbstractPagesController {
 	 */
 	public function actionGalleriesList($args) {
 		$items = new ItemCollection("galleriesList", $this);
-		$items->setSorting(array(array("column" => "published", "direction" => "DESC")));
+		$items->setSorting(array(new ItemSorting("published", SORTING_DESC)));
 		$items->loadCollection();
 		$items->addLinks(null, "actionGalleryDetail");
 		if ($items->data["items"]) {
@@ -27,7 +27,7 @@ class GalleryGalleriesController extends AbstractPagesController {
 	 */
 	public function subactionGalleriesList($args) {
 		$items = new ItemCollection("latestGalleriesList", $this);
-		$items->setSorting(array(array("column" => "published", "direction" => "DESC")));
+		$items->setSorting(array(new ItemSorting("published", SORTING_DESC)));
 		$items->setLimit(Config::Get("GALLERY_GALLERIES_SITE_COUNT"));
 		$items->loadCollection();
 		$items->addLinks(null, "actionGalleryDetail");

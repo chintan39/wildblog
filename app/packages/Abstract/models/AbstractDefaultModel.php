@@ -259,17 +259,17 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	protected function exportQualifications(&$filters, &$values) {
 		if (!is_array($this->qualification))
 			return;
-		foreach ($this->qualification as $q) {
-			foreach ($q as $f => $v) {
-				$filters[] = '(' . $f . ')';
-				if (is_array($v)) {
+		foreach ($this->qualification as $qGroup) {
+			foreach ($qGroup as $q) {
+				$filters[] = '(' . $q->filter . ')';
+				if (is_array($q->value)) {
 					// id values is array
-					foreach ($v as $i) {
+					foreach ($q->value as $i) {
 						$values[] = $i;
 					}
 				} else {
 					// values is not array
-					$values[] = $v;
+					$values[] = $q->value;
 				}
 			}
 		}
@@ -289,10 +289,10 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	protected function exportSorting(&$extra) {
 		$tmp = array();
 		foreach ($this->sorting as $s) {
-			if ($s['column'] == 'RAND') {
+			if ($s->column == 'RAND') {
 				$tmp[] = 'RAND()';
 			} else {
-				$tmp[] = $s['column'] . ' ' . $s['direction'];
+				$tmp[] = $s->column . ' ' . $s->direction;
 			}
 		}
 		if ($tmp) {
@@ -314,8 +314,8 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	public function getSortable() {
 		$sort = $this->getSorting();
 		foreach ($sort as $s) {
-			if ($s['column'] == 'rank') {
-				return $s['direction'];
+			if ($s->column == 'rank') {
+				return $s->direction;
 			}
 		}
 		return null;
@@ -435,10 +435,12 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	 * 
 	 */
 	public function addQualification($filter, $value, $ident=false) {
-		if ($ident !== false)
-			$this->qualification[$ident] = array($filter => $value);
-		else
-			$this->qualification[] = array($filter => $value);
+		if ($ident !== false) {
+			if (empty($this->qualification[$ident]))
+				$this->qualification[$ident] = array();
+			$this->qualification[$ident][] = new ItemQualification($filter, $value);
+		} else 
+			$this->qualification[] = array(new ItemQualification($filter, $value));
 	}
 
 	/**
@@ -451,8 +453,8 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	/**
 	 * 
 	 */
-	public function addSorting($column, $direction) {
-		$this->sorting[] = array('column' => $column, 'direction' => $direction);
+	public function addSorting($column, $direction=SORTING_ASC) {
+		$this->sorting[] = new ItemSorting($column, $direction);
 	}
 
 	/**

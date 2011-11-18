@@ -27,7 +27,7 @@ class BasicArticlesModel extends AbstractStructuredPagesModel {
 
     
 	protected function sortingDefinition() {
-		$this->sorting = array(array('column' => 'rank', 'direction' => 'asc'));
+		$this->sorting = array(new ItemSorting('rank'));
 	}
     
 } 

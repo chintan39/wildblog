@@ -31,7 +31,7 @@ class BlogTagsController extends AbstractNodesController {
 		$tag = $args;
 
 		$items = new ItemCollection("blogposts", $this, null, "tagPosts");
-		$items->setSorting(array(array("column" => "published", "direction" => "DESC")));
+		$items->setSorting(array(new ItemSorting("published", SORTING_DESC)));
 		$items->setLimit(6);
 		$items->loadCollection($tag);
 		$items->addLinks(Environment::getPackage("Blog")->getController("Posts"), "actionDetail");

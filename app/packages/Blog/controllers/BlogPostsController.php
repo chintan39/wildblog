@@ -8,7 +8,7 @@ class BlogPostsController extends AbstractPagesController {
 	public function actionPostsList($args) {
 		$items = new ItemCollection("blogposts", $this);
 		$items->setPagingAjax(true);
-		$items->setSorting(array(array("column" => "published", "direction" => "DESC")));
+		$items->setSorting(array(new ItemSorting("published", SORTING_DESC)));
 		$items->setLimit(6);
 		$items->loadCollection();
 		$items->addLinks(null, "actionDetail");
@@ -16,7 +16,6 @@ class BlogPostsController extends AbstractPagesController {
 		$this->assign("title", "");
 		$this->assign("pageTitle", tp("Project Title"));
 		$this->assign($items->getIdentifier(), $items);
-		//$this->display('blogList');
 	}
 	
 	public function addPostTagsComments(&$items) {
@@ -36,7 +35,7 @@ class BlogPostsController extends AbstractPagesController {
 	 */
 	public function actionRss($args) {
 		$items = new ItemCollection("blogposts", $this);
-		$items->setSorting(array(array("column" => "published", "direction" => "DESC")));
+		$items->setSorting(array(new ItemSorting("published", SORTING_DESC)));
 		$items->loadCollection();
 		$items->addLinks(null, "actionDetail");
 		$this->assign('items', $items);
@@ -126,12 +125,12 @@ class BlogPostsController extends AbstractPagesController {
 	public function actionBlogPostArchivMonth($args) {
 		$items = new ItemCollection("blogposts", $this);
 		$items->setPagingAjax(true);
-		$filters = array("YEAR(published) = ?" => $args["year"]);
+		$filters = array(new ItemQualification("YEAR(published) = ?", $args["year"]));
     	if (array_key_exists("month", $args)) {
-    		$filters["MONTH(published) = ?"] = $args["month"];
+    		$filters[] = new ItemQualification("MONTH(published) = ?", $args["month"]);
     	}
 		$items->setQualification(array("archive" => $filters));
-		$items->setSorting(array(array("column" => "published", "direction" => "DESC")));
+		$items->setSorting(array(new ItemSorting("published", SORTING_DESC)));
 		$items->setLimit(6);
 		$items->loadCollection();
 		$items->addLinks(null, "actionDetail");
@@ -161,7 +160,7 @@ class BlogPostsController extends AbstractPagesController {
 		if (!$recentPosts) {
 			$recentPosts = new ItemCollection("recentPosts", $this);
 			$recentPosts->setLinks("actionDetail");
-			$recentPosts->setSorting(array(array("column" => "published", "direction" => "DESC")));
+			$recentPosts->setSorting(array(new ItemSorting("published", SORTING_DESC)));
 			$recentPosts->setLimit(4);
 			$recentPosts->loadCollection();
 			$recentPosts->addLinks();
@@ -180,7 +179,7 @@ class BlogPostsController extends AbstractPagesController {
 		$searchPosts = new ItemCollection("searchPosts", $this);
 		$searchPosts->setLimit(10);
 		$searchPosts->setLinks("actionDetail");
-		$searchPosts->setQualification(array("fulltext" => array("title LIKE ? OR text LIKE ?" => array('%' . $text . '%', '%' . $text . '%'))));
+		$searchPosts->setQualification(array("fulltext" => array(new ItemQualification("title LIKE ? OR text LIKE ?", array('%' . $text . '%', '%' . $text . '%')))));
 		$searchPosts->loadCollection();
 		$searchPosts->addLinks();
 		if ($searchPosts->data["items"]) {
