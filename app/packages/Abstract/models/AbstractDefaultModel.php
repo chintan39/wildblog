@@ -446,6 +446,16 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	/**
 	 * 
 	 */
+	public function clearQualification($ident=false) {
+		if ($ident !== false) {
+			$this->qualification[$ident] = array();
+		} else 
+			$this->qualification[] = array();
+	}
+
+	/**
+	 * 
+	 */
 	public function setQualification($qualifications) {
 		$this->qualification = $qualifications;
 	}

@@ -39,7 +39,7 @@ class AbstractProductionCategoriesController extends AbstractPagesController {
 	 */
 	public function subactionCategoriesTree($args) {
 		Benchmark::log("Begin of creating CategoriesController::subactionCategoriesTree");
-		$categoriesTree = new ItemCollection("categoriesTree", $this, null, "getCollectionItemsTree");
+		$categoriesTree = new ItemCollectionTree("categoriesTree", $this);
 		$categoriesTree->setLinks("actionCategoryDetail");
 		$categoriesTree->setTreeHigh(3);
 		$categoriesTree->loadCollection();

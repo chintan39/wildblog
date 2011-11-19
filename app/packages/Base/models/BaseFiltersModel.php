@@ -21,7 +21,7 @@ class BaseFiltersModel extends AbstractVirtualModel {
 				}
 				$condition = str_replace('__field__', $field, $this->getMetaData($field)->getValueConditionPattern());
 				$valueAdjusted = str_replace('__value__', $value, $this->getMetaData($field)->getValueAdjustPattern());
-				$this->qualifications['filters'][$condition] = array($valueAdjusted);
+				$this->qualifications['filters'][] = new ItemQualification($condition, array($valueAdjusted));
 			}
 		}
 	}

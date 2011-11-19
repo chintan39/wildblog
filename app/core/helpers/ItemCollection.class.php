@@ -15,21 +15,14 @@ class ItemCollection {
 	const BUTTON_MOVEDOWN = 5;
 	const BUTTON_DISABLE = 6;
 	const BUTTON_EXPORT = 7;
-	
-	const treeRoot = 1;
-	
-	const treeAncestors = 1;
-	const treeAllDescendants = 2;
-	const treeDirectDescendants = 4;
-	const treeSiblings = 8;
-	const treeAll = 16;
 
 	public
 	$dm = null,
 	$filterForm = false,
 	$data, 				// array with keys items, itemsCount, columns, paging
 	$pagingAjax = false,
-	$containerId;
+	$containerId,
+	$dataModelMethod='getCollectionItems';
 	
 	private 
 	$identifier, 
@@ -37,8 +30,6 @@ class ItemCollection {
 	$dataModel, 
 	$buttons, 
 	$buttonsProceeded = false,
-	$subCollection = null,
-	$foreignKeyParent = 'parent',
 	$linkAction = null,
 	$linkAttribute = 'link',
 	$qualification = false,
@@ -48,84 +39,42 @@ class ItemCollection {
 	$filtersSettingsModel = false,
 	$limit = -1,
 	$forceLanguage = false,
-	$modelParams = array(),
-	$sortable = null,
-	$treeBase=null,
-	$treePull=self::treeAll;
+	$sortable = null;
 	
 	
 	/**
 	 * Constructor.
 	 * @param string $identifier
 	 * @param object $controller
-	 * @param string $dataModel
-	 * @param string $dataModelMethod='getCollectionItems'
-	 * @param array $buttons
-	 * @param array|int $subCollection
-	 * @param string $linkAction
 	 */
-	public function __construct($identifier='defaultCollection', $controller, $dataModel=null, $dataModelMethod='getCollectionItems', $buttons=null, $subCollection=null, $linkAction=null) {
+	public function __construct($identifier='defaultCollection', $controller) {
 		$this->controller = $controller;
-		if ($controller) {
-			$this->limit = $controller->getListLimit();
-		} else {
-			$this->limit = Config::Get('DEFAULT_PROJECT_PAGING_LIMIT');
-		}
+		$this->limit = Config::Get('DEFAULT_PROJECT_PAGING_LIMIT');
 		
-		// set dataModel, if not set, default controller's model is used
-		if ($dataModel === null) {
-			$this->dataModel = $this->controller->getModel();
-		} else {
-			$this->dataModel = $dataModel;
-		}
+		$this->dataModel = $this->controller->getModel();
 		
 		// specify the method, if not set, standard method used
-		$this->dataModelMethod = $dataModelMethod;
 		$this->identifier = $identifier;
 		$this->containerId = "container_$identifier";
-		
-		// buttons can be added after by using public method addButtons
-		if ($buttons !== null) {
-			$this->buttons = $buttons;
-		}
-		
-		// link action to make a link by all items
-		$this->linkAction = $linkAction;
-		
-		// to make a tree we can add subCollection (if it is integer, tree structure will be done to the high if the value)
-		if (is_int($subCollection)) {
-			$this->setTreeHigh($subCollection);
-		} else {
-			$this->subCollection = $this->addSubCollection($subCollection);
-		}
 	}
 	
 	/**
 	 * Gets data from Data model and adds a paging items to the list.
 	 */
-	public function loadCollection($itemIdArray=array()) {
-		$this->loadItems($itemIdArray);
+	public function loadCollection() {
+		$this->loadItems();
 		$this->addPagingLinks();
-		
-		// load Items to subCollection if there is one
-		$this->loadSubItems();
 	}
 	
-	private function getDm() {
+	protected function getDm() {
 		if ($this->dm === null) {
 			$this->dm = new $this->dataModel();
 		}
 		return $this->dm;
 	}
-	
-	/**
-	 * Gets data from Data model
-	 */
-	private function loadItems($itemIdArray=array()) {
-		
-		// init
-		$method = $this->dataModelMethod;
-		
+
+
+	protected function passPropertiesToDm() {
 		// get qualification
 		if ($this->qualification !== false) {
 			$this->getDm()->setQualification($this->qualification); // set temporary qualification of the items
@@ -156,9 +105,21 @@ class ItemCollection {
 		if ($this->forceLanguage) {
 			$this->getDm()->forceLanguage($this->forceLanguage);
 		}
+	}
+	
+	
+	/**
+	 * Gets data from Data model
+	 */
+	private function loadItems() {
+		
+		// init
+		$method = $this->dataModelMethod;
+		
+		$this->passPropertiesToDm();
 		
 		// get data
-		$this->data = $this->getDm()->$method($this->identifier, $itemIdArray);
+		$this->data = $this->getDm()->$method($this->identifier);
 	}
 	
 	/**
@@ -181,64 +142,6 @@ class ItemCollection {
 			$this->data['columns'] = array();
 		}
 		$this->data['itemsCount'] = count($itemList);
-	}
-	
-	/**
-	 * Add items to the collection data
-	 */
-	public function addItems($items) {
-		$this->data['items'] = array_merge($this->data['items'], $items);
-	}
-	
-
-	/**
-	 * Add a column to the collection data 
-	 */
-	public function addColumns($columns) {
-		$this->data['columns'] = array_merge($this->data['columns'], $items);
-	}
-	
-	/**
-	 * Add parameters to model for the future.
-	 */
-	public function addModelParams($name, $value) {
-		$this->modelParams[$name] = $value;
-	}
-	
-
-	/**
-	 * Assign parameters to model.
-	 */
-	public function assignModelParams() {
-		$this->getDm()->setLoadParams($this->modelParams);
-	}
-	
-
-	/**
-	 * Loads subitems (items depended on items on the higher level)
-	 * Used by multi-level collections
-	 */
-	private function loadSubItems() {
-		if ($this->subCollection) {
-			$foreignKeyParent = $this->foreignKeyParent;
-			$itemIdArray = array();
-			if (is_array($this->data['items'])) {
-				foreach ($this->data['items'] as $i) {
-					$itemIdArray[$i->id] = $i;
-				}
-			}
-			
-			// loading the sub collection 
-			$this->subCollection->loadCollection(array_keys($itemIdArray));
-			if (is_array($this->subCollection->data['items'])) {
-				foreach ($this->subCollection->data['items'] as $subItem) {
-					if (array_key_exists($subItem->$foreignKeyParent, $itemIdArray)) {
-						$i = $itemIdArray[$subItem->$foreignKeyParent];
-						$i->subItems[] = $subItem;
-					}
-				}
-			}
-		}
 	}
 	
 	
@@ -340,12 +243,9 @@ class ItemCollection {
 	
 	
 	/**
-	 * Parse url and sets the filters to $filters attribute
-	 * @return array $filters same format as qualification
-	 *                        Example:
-	 *                        array('category' => array('category = ?' => 1))
+	 * Handles filters
 	 */
-	private function getFiltersFromUrl() {
+	public function handleFilters() {
 		$form = new Form();
 		$form->setIdentifier('filterForm');
 		$form->setNoRedirect(true);
@@ -354,14 +254,6 @@ class ItemCollection {
 		$form->handleRequest();
 		$this->addQualification($this->filtersSettingsModel->getQualifications());
 		$this->filterForm = $form->toArray();
-	}
-	
-	
-	/**
-	 * Handles filters
-	 */
-	public function handleFilters() {
-		$this->getFiltersFromUrl();
 	}
 	
 	
@@ -465,34 +357,39 @@ class ItemCollection {
 	public function buttonsProceed() {
 		$this->buttonsProceeded = true;
 		$buttonsEnable = false;
-		if (is_array($this->data['items']) && count($this->data['items'])) {
-			foreach ($this->data['items'] as $key => $item) {
-				$buttonsSet = array();
-				foreach ($this->buttons as $buttonType => $action) {
-					if ($this->sortable || ($buttonType != ItemCollection::BUTTON_MOVEUP && $buttonType != ItemCollection::BUTTON_MOVEDOWN)) {
-						// nasty hack to insert a new value instead edditing when id is -1
-						// this is valid only by config now, but has to be solve generally somehow
-						$actionLink = $action;
-						$params = array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE);
-						if ($action == 'actionEdit' && $item->id == -1) {
-							$actionLink = 'actionNew';
-							$params['_pred_'] = array('key' => $item->key);
-						}
-						
-						$buttonsSet[] = array(
-							'link' => Request::getLinkItem($this->controller->package, $this->controller, $actionLink, $item, $params),
-							'action' => $action,
-							'button' => $buttonType);
+		$this->buttonsProceedRecursive($this->data['items'], $buttonsEnable);
+		if ($buttonsEnable) {
+			$this->data['columns'][] = 'buttonsSet';
+		}
+	}
+
+	public function buttonsProceedRecursive(&$items, &$buttonsEnable) {
+		if (!is_array($items) || !count($items))
+			return;
+		foreach ($items as $key => $item) {
+			$buttonsSet = array();
+			foreach ($this->buttons as $buttonType => $action) {
+				if ($this->sortable || ($buttonType != ItemCollection::BUTTON_MOVEUP && $buttonType != ItemCollection::BUTTON_MOVEDOWN)) {
+					// nasty hack to insert a new value instead edditing when id is -1
+					// this is valid only by config now, but has to be solve generally somehow
+					$actionLink = $action;
+					$params = array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE);
+					if ($action == 'actionEdit' && $item->id == -1) {
+						$actionLink = 'actionNew';
+						$params['_pred_'] = array('key' => $item->key);
 					}
-				}
-				if (!empty($buttonsSet)) {
-					$this->data['items'][$key]->setButtonSet($buttonsSet);
-					$buttonsEnable = true;
+					
+					$buttonsSet[] = array(
+						'link' => Request::getLinkItem($this->controller->package, $this->controller, $actionLink, $item, $params),
+						'action' => $action,
+						'button' => $buttonType);
 				}
 			}
-			if ($buttonsEnable) {
-				$this->data['columns'][] = 'buttonsSet';
+			if (!empty($buttonsSet)) {
+				$items[$key]->setButtonSet($buttonsSet);
+				$buttonsEnable = true;
 			}
+			$this->buttonsProceedRecursive($items[$key]->subItems, $buttonsEnable);
 		}
 	}
 	
@@ -521,9 +418,6 @@ class ItemCollection {
 				$a = $this->linkAttribute;
 				$item->$a = Request::getLinkItem($package, $controller, $this->linkAction, $item);
 			}
-			if ($this->subCollection) {
-				$this->subCollection->addLinks();
-			}
 		}
 	}
 	
@@ -548,72 +442,6 @@ class ItemCollection {
 		return $this->data;
 	}
 	
-	/**
-	 * Adds an subcollection
-	 * @param 
-	 */
-	public function addSubCollection($subCollection) {
-		$this->subCollection = $subCollection;
-	}
-	
-	
-	/**
-	 * Recursively creates copies of the collection and connects them to the current collection as a subCollection.
-	 * @param 
-	 */
-	public function setTreeHigh($treeHigh) {
-		if ($treeHigh > 1) {
-			$newCollection = new self($this->identifier, $this->controller, $this->dataModel, $this->dataModelMethod, $this->buttons, $treeHigh-1, $this->linkAction);
-			$this->subCollection = $newCollection;
-		}
-	}
-	
-	
-	/**
-	 * Makes a list prepared into the select tag and displaying as tree.
-	 * Works recursively.
-	 * This is initiation of the recursion.
-	 */
-	public function toSimpleSelectTree() {
-		$output = array();
-   		$output[] = array('id' => 0, 'value' => 'Top');
-   		$this->toSimpleSelectTreeLevel($this->data['items'], $output, 0, false);
-   		return $output;
-	}
-	
-
-	/**
-	 * Makes a list prepared into the select tag and displaying as tree.
-	 * Works recursively.
-	 */
-	public function toSimpleSelectTreeLevel(&$items, &$output, $indent, $disabled) {
-		$requestAction = Request::getRequestAction();
-		$indentStr = $this->getIndent($indent);
-		if ($items) {
-			foreach ($items as $i) {
-				$newItem = array('id' => $i->id, 'value' => $indentStr . $i->makeSelectTitle());
-				$newDisabled = ($disabled || $requestAction['item'] && get_class($requestAction['item']) == get_class($i) && $requestAction['item']->id == $i->id);
-				if ($newDisabled) {
-					$newItem['disabled'] = true;
-				}
-				$output[] = $newItem;
-				if ($i->subItems) {
-					$this->toSimpleSelectTreeLevel($i->subItems, $output, $indent+1, $newDisabled);
-				}
-			}
-		}
-   	}	
-   	
-   	
-	/**
-	 * Returns intent of the lines in tree in select
-	 * @param int $indent
-	 * @return string
-	 */
-	public function getIndent($indent) {
-		return str_repeat('&nbsp;', 4 * $indent) . (($indent > 0) ? '!-' : '');
-	}
-
 	
 	/**
 	 * We can overriden standard qualifications of the items by this function.
@@ -711,11 +539,6 @@ class ItemCollection {
 		$clone = clone $this;
 		$clone->controller = null;
 		return $clone;
-	}
-	
-	
-	public function toLinkCollection() {
-	
 	}
 	
 	

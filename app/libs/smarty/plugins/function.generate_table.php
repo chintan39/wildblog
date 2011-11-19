@@ -129,20 +129,23 @@ function smarty_function_generate_table($params, &$smarty)
 	/* 
 	 * body 
 	 */
-	 $output .= "<tbody>";
-	if (is_array($collection->data["items"]) && count($collection->data["items"])) {
-		foreach ($collection->data["items"] as $item) {
+	$output .= "<tbody>";
+	$indent = 0;
+	
+	function printLines(&$items, &$columns, $indent) {
+		$output = '';
+		foreach ($items as $item) {
 			$output .= "<tr>";
-			foreach ($collection->data["columns"] as $column) {
+			foreach ($columns as $column) {
 				$value = $item->$column;
 				$columnClass = array();
 				
 				$value = $item->getValueView($column);
-				
 				switch ($column) {
 					case "id":
 						$columnClass[] = "align-center";
 						$columnClass[] = "small";
+						$columnClass[] = "indent".$indent;
 						break;
 					case "buttonsSet":
 						$buttons = array();
@@ -176,7 +179,17 @@ function smarty_function_generate_table($params, &$smarty)
 				$output .= "<td$columnClass>" . ($value !== "" ? $value : "&nbsp;") . "</td>";
 			}
 			$output .= "</tr>";
-		} 
+			if (isset($item->subItems) && count($item->subItems))
+				$output .= printLines($item->subItems, $columns, $indent + 1);
+		}
+		return $output;
+	}
+
+	
+	if (is_array($collection->data["items"]) && count($collection->data["items"])) {
+
+		$output .= printLines($collection->data["items"], $collection->data["columns"], 0);
+
 	} else {
 		$output .= "<tr><td colspan=\"" . count($collection->data["columns"]) . "\">";
 		$output .= tg('No items found.');

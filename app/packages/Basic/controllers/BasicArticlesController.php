@@ -13,14 +13,14 @@ class BasicArticlesController extends AbstractPagesController {
 	 */
 	public function actionListing($args) {
 
-		$items = new ItemCollection($this->getMainListIdentifier(), $this);
+		$items = new ItemCollectionTree($this->getMainListIdentifier(), $this);
 		$items->setPagingAjax(true);
 		$items->setQualification(null); // we overload filters - no qualifications are used
 		$items->setDefaultFilters();
 		$items->handleFilters();
 		$items->forceLanguage(Language::get(Themes::FRONT_END));
-		$items->treeBase(ItemCollection::treeRoot);
-		$items->treePull(ItemCollection::treeAncestors | ItemCollection::treeDirectDescendants);
+		$items->treeBase(ItemCollectionTree::treeRoot);
+		$items->treePull(ItemCollectionTree::treeAncestors | ItemCollectionTree::treeDescendants);
 		$items->loadCollection();
 
 		$buttons = $this->getListingButtons();

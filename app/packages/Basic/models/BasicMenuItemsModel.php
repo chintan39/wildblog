@@ -40,6 +40,7 @@ class BasicMenuItemsModel extends AbstractCodebookModel {
      * @return array List of items
      */
     public function listSelectTree($itemIdArray=null) {
+    	throw new Exception("Rebase this");
    		$tmpCollection = new ItemCollection("listSelectTreeCollection", null, get_class($this), "getCollectionItemsTree");
    		$tmpCollection->setTreeHigh(5);
 		$tmpCollection->loadCollection();
@@ -51,7 +52,8 @@ class BasicMenuItemsModel extends AbstractCodebookModel {
 	 *
 	 * @param 
 	 */
-	public function getCollectionItemsTree($parentIdArray=array()) {
+	public function getCollectionItemsTree() {
+		$parentIdArray=array();
     	if (count($parentIdArray))
     		$this->addQualification(" parent in (?" . str_repeat(", ?", count($parentIdArray)-1) . ")", $parentIdArray);
     	else

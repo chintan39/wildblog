@@ -8,6 +8,7 @@ require_once(DIR_CORE_FORM . 'ModelMetaItem.class.php');
 require_once(DIR_CORE_FORM . 'MetaDataContainer.class.php');
 require_once(DIR_CORE_HELPERS . 'Paging.class.php');
 require_once(DIR_CORE_HELPERS . 'ItemCollection.class.php');
+require_once(DIR_CORE_HELPERS . 'ItemCollectionTree.class.php');
 require_once(DIR_CORE_HELPERS . 'ItemQualification.class.php');
 require_once(DIR_CORE_FORM . 'Form.class.php');
 require_once(DIR_CORE_FORM . 'FormField.class.php');

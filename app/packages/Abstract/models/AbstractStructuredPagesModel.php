@@ -6,6 +6,11 @@ class AbstractStructuredPagesModel extends AbstractPagesModel {
 
 	const ALLOWED_RECURSIVE_LEVEL = 10;
 
+	private 
+	$treeBase,
+	$treePull,
+	$treeLevel;
+	
     protected function attributesDefinition() {
 
 		parent::attributesDefinition();
@@ -27,26 +32,164 @@ class AbstractStructuredPagesModel extends AbstractPagesModel {
      * So the items returned will be used by the select list.
      * @return array List of items
      */
-    public function listSelectTree($itemIdArray=null) {
-   		$tmpCollection = new ItemCollection("listSelectTreeCollection", null, get_class($this), "getCollectionItemsTreeNoPaging");
-   		$tmpCollection->setTreeHigh(5);
-		$tmpCollection->loadCollection();
-    	return $tmpCollection->toSimpleSelectTree();
+    public function listSelectTree() {
+    	$this->treeBase = ItemCollectionTree::treeRoot;
+    	$this->treePull = ItemCollectionTree::treeDescendants;
+    	$this->treeLevel = 10;
+		$output = array();
+   		$output[] = array('id' => 0, 'value' => 'Top');
+   		$totalCount=0;
+   		$items = $this->getItemsTree($totalCount);
+		$this->toSimpleSelectTreeLevel($items, $output, 0, false);
+    	return $output;
     }
+
+
+	/**
+	 * Returns intent of the lines in tree in select
+	 * @param int $indent
+	 * @return string
+	 */
+	public function getIndent($indent) {
+		return str_repeat('&nbsp;', 4 * $indent) . (($indent > 0) ? '!-' : '');
+	}
+	
+
+	/**
+	 * Makes a list prepared into the select tag and displaying as tree.
+	 * Works recursively.
+	 */
+	public function toSimpleSelectTreeLevel(&$items, &$output, $indent, $disabled) {
+		$requestAction = Request::getRequestAction();
+		$indentStr = $this->getIndent($indent);
+		if ($items) {
+			foreach ($items as $i) {
+				$newItem = array('id' => $i->id, 'value' => $indentStr . $i->makeSelectTitle());
+				$newDisabled = ($disabled || $requestAction['item'] && get_class($requestAction['item']) == get_class($i) && $requestAction['item']->id == $i->id);
+				if ($newDisabled) {
+					$newItem['disabled'] = true;
+				}
+				$output[] = $newItem;
+				if ($i->subItems) {
+					$this->toSimpleSelectTreeLevel($i->subItems, $output, $indent+1, $newDisabled);
+				}
+			}
+		}
+   	}	
+
+   	
+   	protected function getItemsTree(&$totalCount) {
+		$actualLevel = $this->treeLevel;
+		$totalCount = 0;
+		
+		// get starting items
+		if ($this->treeBase === ItemCollectionTree::treeRoot) {
+			$this->clearQualification('parent');
+			$this->addQualification(" parent  = ? ", array(0), 'parent');
+			$resultItems = $this->getItems();
+		} else {
+			if ($this->treePull & ItemCollectionTree::treeSiblings) {
+				$this->clearQualification('parent');
+				$this->addQualification(" parent  = ? ", array($this->treeBase->parent), 'parent');
+				$resultItems = $this->getItems();
+				$actualLevel++;
+			} else {
+				$resultItems = array($this->treeBase);
+			}
+		}
+		
+		$returnItems = $resultItems;
+		
+		// pulling descendants of all found items
+		while (count($resultItems)) {
+			$resultItemsCount = count($resultItems);
+			$totalCount += $resultItemsCount;
+		
+			// what parents will we find?
+			$parentIdArray = array();
+			foreach ($resultItems as $item) {
+				$parentIdArray[] = $item->id;
+				$item->addNonDbProperty('subItems'); 
+				$item->subItems = array();
+			}
+			
+			if (!$actualLevel--) {
+				break;
+			}
+
+			// find the parents
+			$this->clearQualification('parent');
+			$this->addQualification(" parent in (?" . str_repeat(", ?", count($parentIdArray)-1) . ")", $parentIdArray, 'parent');
+			$tmpItems = $this->getItems();
+			
+			// when nothing new found, we're done
+			if (!$tmpItems)
+				break;
+			
+			// loop through new items and find what parent to assign them to
+			foreach ($tmpItems as $item) {
+				$actualParent = 0;
+				while ($item->parent != $resultItems[$actualParent]->id && $actualParent<$resultItemsCount)
+					$actualParent++;
+				
+				// assign the item to the right parent
+				if ($item->parent == $resultItems[$actualParent]->id)
+					$resultItems[$actualParent]->subItems[] = $item;
+			}
+			$resultItems = $tmpItems;
+		}
+
+		// if we want ancestors, we go from base above
+		if ($this->treePull & ItemCollectionTree::treeAncestors && $this->treeBase !== ItemCollectionTree::treeRoot) {
+			$tmpId = $this->treeBase->parent;
+			while ($tmpId > 0) {
+				$totalCount++;
+				$tmp = new self($tmpId);
+				$tmp->addNonDbProperty('subItems'); 
+				$tmp->subItems = $resultItems;
+				$returnItems = array($tmp);
+				$tmpId = $tmp->parent;
+			}
+		}
+		return $returnItems;
+   	}
+   	
     
 	/**
 	 *
 	 * @param 
 	 */
-	public function getCollectionItemsTree($parentIdArray=array()) {
-    	if (count($parentIdArray))
-    		$this->addQualification(" parent in (?" . str_repeat(", ?", count($parentIdArray)-1) . ")", $parentIdArray);
-    	else
-    		$this->addQualification("parent = ?", 0);
-    	
-    	return $this->getCollectionItems();
+	public function getCollectionItemsTree() {
+
+		$list = array();
+		$totalCount = '';
+		$list["items"] = $this->getItemsTree($totalCount);
+		$list["columns"] = $this->getVisibleColumnsInCollection();
+		$list["itemsCount"] = $totalCount;
+		return $list;
 	}
 
+	
+	/**
+	 * Deprecated.
+	 */
+	protected function getSubItems($parentId) {
+		$result = array();
+		if ($parentId <= 0)
+			return $result;
+		$this->clearQualification('parent');
+		$this->addQualification("parent = ?", array($parentId), 'parent');
+		$tmp = $this->getItems();
+		if ($tmp) {
+			foreach ($tmp as $item) {
+				$item->addNonDbProperty('subItems'); 
+				$item->subItems = $this->getSubItems($item->parent);
+				$result[] = $item;
+			}
+		}
+		return $result;
+	}
+	
 	
 	protected function checkFieldValue(&$meta, &$newData) {
 		// check all basic fields
@@ -92,6 +235,12 @@ class AbstractStructuredPagesModel extends AbstractPagesModel {
 		if ($item->parent != 0) {
 			$this->checkRecursiveCyclusLevel($meta, $level+1, $usedItemsId, $item->parent);
 		}
+	}
+	
+	public function setTreeSpec($root, $pull, $level) {
+		$this->treeBase = $root;
+		$this->treePull = $pull;
+		$this->treeLevel = $level;
 	}
 	
 }
