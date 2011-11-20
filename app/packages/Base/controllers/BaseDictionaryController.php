@@ -9,7 +9,7 @@ class BaseDictionaryController extends AbstractDefaultController {
 		BaseDictionaryModel::KIND_GENERAL => array(),
 		BaseDictionaryModel::KIND_URL_PARTS => array()
 	);
-	var $urlDict= array();
+	private $urlDict= array();
 	
 
 	/**

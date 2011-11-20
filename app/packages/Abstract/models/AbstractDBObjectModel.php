@@ -117,6 +117,7 @@ class AbstractDBObjectModel extends AbstractBasicModel
 				if (DEBUG_PRINT_QUERIES) {
 					echo $query."<br>\n<br>\n";
 				}
+				Benchmark::logQuery($query);
 			$input = dbConnection::getInstance($this->connection)->fetchRow($query, 'assoc');
 			if ($this->import($input) === false) {
 				$input = dbConnection::getInstance($this->connection)->fetchRow($query, 'assoc');
@@ -358,6 +359,7 @@ class AbstractDBObjectModel extends AbstractBasicModel
 		if (DEBUG_PRINT_QUERIES) {
 			echo $query."<br>\n<br>\n";
 		}
+		Benchmark::logQuery($query);
 		$this->id = dbConnection::getInstance($this->connection)->query($query);
 		if ($this->extendedTextsSupport) {
 			$insertfieldsExt = '`item`, `lang`' . $insertfieldsExt;
@@ -366,6 +368,7 @@ class AbstractDBObjectModel extends AbstractBasicModel
 			if (DEBUG_PRINT_QUERIES) {
 				echo $query."<br>\n<br>\n";
 			}
+			Benchmark::logQuery($query);
 			dbConnection::getInstance($this->connection)->query($query);
 			foreach (Language::getAll($this->getLanguage()) as $lang) {
 				$tmpInsertValuesExt = $this->id . ', ' . $lang['id'] . $insertValuesExt;
@@ -373,6 +376,7 @@ class AbstractDBObjectModel extends AbstractBasicModel
 				if (DEBUG_PRINT_QUERIES) {
 					echo $query."<br>\n<br>\n";
 				}
+				Benchmark::logQuery($query);
 				dbConnection::getInstance($this->connection)->query($query);
 			}
 		}
@@ -445,6 +449,7 @@ class AbstractDBObjectModel extends AbstractBasicModel
 				if (DEBUG_PRINT_QUERIES) {
 					echo $query."<br>\n<br>\n";
 				}
+				Benchmark::logQuery($query);
 				dbConnection::getInstance($this->connection)->query($query);
 			}
 			if ($this->extendedTextsSupport && $updateQueryExt) {
@@ -452,6 +457,7 @@ class AbstractDBObjectModel extends AbstractBasicModel
 				if (DEBUG_PRINT_QUERIES) {
 					echo $query."<br>\n<br>\n";
 				}
+				Benchmark::logQuery($query);
 				dbConnection::getInstance($this->connection)->query($query);
 			}
 			$this->changedValues = array(); 
@@ -1294,6 +1300,7 @@ class QueryBuilder
 		if (DEBUG_PRINT_QUERIES) {
 			echo $query."<br>\n<br>\n";
 		}
+		Benchmark::logQuery($query);
 		return($query);
 	}
 
@@ -1311,7 +1318,8 @@ class QueryBuilder
 		if (DEBUG_PRINT_QUERIES) {
 			echo $query."<br>\n<br>\n";
 		}
-		Benchmark::log("SQL: " . $query); // QUERY logger
+		Benchmark::logQuery($query);
+		//Benchmark::log("SQL: " . $query); // QUERY logger
 
 		return dbConnection::getInstance($this->className->connection)->fetchOne($query);
 

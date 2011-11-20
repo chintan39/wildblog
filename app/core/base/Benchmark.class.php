@@ -54,6 +54,16 @@ class Benchmark {
 	}
 	
 	
+	/**
+	 * Log SQL query.
+	 */
+	static public function logQuery($string) {
+		if (Config::Get('DEBUG_MODE')) {
+			Console::logQuery($string);
+		}
+	}
+	
+	
 	static public function getDisplay() {
 		if (!Config::Get('DEBUG_MODE')) {
 			return '';

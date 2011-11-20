@@ -43,6 +43,9 @@ class PhpQuickProfiler {
 				elseif($log['type'] == 'speed') {
 					$logs['console'][$key]['data'] = $this->getReadableTime(($log['data'] - $this->startTime)*1000);
 				}
+				elseif($log['type'] == 'query') {
+					$logs['console'][$key]['data'] = $log['data'];
+				}
 			}
 		}
 		$this->output['logs'] = $logs;
@@ -97,7 +100,23 @@ class PhpQuickProfiler {
 		$queryTotals['count'] = 0;
 		$queryTotals['time'] = 0;
 		$queries = array();
-		
+
+		$logs = Console::getLogs();
+		if($logs['console']) {
+			foreach($logs['console'] as $key => $log) {
+				if($log['type'] == 'query') {
+					$query = array();
+					$query['sql'] = $log['data'];
+					$query['explain'] = '';
+					$query['time'] = 'N/A';
+					$queries[] = $query;
+					$queryTotals['count']++;
+				}
+			}
+		}
+
+		/*
+		 * original query logging
 		if($this->db != '') {
 			$queryTotals['count'] += $this->db->queryCount;
 			foreach($this->db->queries as $key => $query) {
@@ -107,6 +126,7 @@ class PhpQuickProfiler {
 				$queries[] = $query;
 			}
 		}
+		 */
 		
 		$queryTotals['time'] = $this->getReadableTime($queryTotals['time']);
 		$this->output['queries'] = $queries;

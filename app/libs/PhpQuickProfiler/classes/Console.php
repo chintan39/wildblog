@@ -86,14 +86,32 @@ class Console {
 		$GLOBALS['debugger_logs']['speedCount'] += 1;
 	}
 	
+	/*------------------------------------
+	     LOG SQL QUERIES
+	-------------------------------------*/
+
+	public static function logQuery($query = 'SQL Query') {
+		$logItem = array(
+			"data" => $query,
+			"type" => 'query',
+			"name" => 'SQL query'
+		);
+		$GLOBALS['debugger_logs']['console'][] = $logItem;
+		if (!isset($GLOBALS['debugger_logs']['queryCount'])) {
+			$GLOBALS['debugger_logs']['queryCount'] = 0;
+		}
+		$GLOBALS['debugger_logs']['queryCount'] += 1;
+	}
+	
 	/*-----------------------------------
 	     SET DEFAULTS & RETURN LOGS
 	------------------------------------*/
 	
-	public function getLogs() {
+	public static function getLogs() {
 		if(!isset($GLOBALS['debugger_logs']['memoryCount'])) $GLOBALS['debugger_logs']['memoryCount'] = 0;
 		if(!isset($GLOBALS['debugger_logs']['logCount'])) $GLOBALS['debugger_logs']['logCount'] = 0;
 		if(!isset($GLOBALS['debugger_logs']['speedCount'])) $GLOBALS['debugger_logs']['speedCount'] = 0;
+		if(!isset($GLOBALS['debugger_logs']['queryCount'])) $GLOBALS['debugger_logs']['queryCount'] = 0;
 		if(!isset($GLOBALS['debugger_logs']['errorCount'])) $GLOBALS['debugger_logs']['errorCount'] = 0;
 		return $GLOBALS['debugger_logs'];
 	}

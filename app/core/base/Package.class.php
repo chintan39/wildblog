@@ -116,7 +116,6 @@ class Package {
 		$controllersFiles = $this->requireFilesWithExtention($this->packageDirectory . DIR_CONTROLLERS, "php");
 
 		// load project controllers and load them
-		$this->controllers = array();
 		foreach ($controllersFiles as $controllerFile) {
 			$controllerClassName = substr($controllerFile["file"], 0, strrpos($controllerFile["file"], '.'));
 			$controllerName = str_replace('Controller', '', $controllerClassName);
@@ -125,7 +124,8 @@ class Package {
 				throw new Exception("Class of the controller \"$controllerName\" does not exists.");
 				return null;
 			}
-			$this->controllers[$controllerName] = $controllerClassName;
+			if (!array_key_exists($controllerName, $this->controllers))
+				$this->controllers[$controllerName] = $controllerClassName;
 		}
 		$this->controllersLoaded = true;
 	}
