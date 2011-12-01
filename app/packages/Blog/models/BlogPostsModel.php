@@ -14,7 +14,8 @@ class BlogPostsModel extends AbstractPagesModel {
 		$this->addMetaData(ModelMetaItem::create('postTagsConnection')
 			->setLabel('Tags')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
-			->setOptionsMethod('listSelect'));
+			->setOptionsMethod('listSelect')
+			->setLinkNewItem(array('package' => $this->package, 'controller' => 'Tags', 'action' => 'actionSimpleNew', 'actionResult' => 'actionJSONListing')));
 		
     }
     

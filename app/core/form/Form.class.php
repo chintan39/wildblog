@@ -449,7 +449,10 @@ class Form {
 					$this->buttons[] = array('name' => 'save', 'value' => 'Save', 'type' => self::FORM_BUTTON_SAVE);
 					break;
 				case self::FORM_BUTTON_CANCEL:
-					$this->buttons[] = array('name' => 'cancel', 'value' => 'Cancel', 'type' => self::FORM_BUTTON_CANCEL);
+					$b = array('name' => 'cancel', 'value' => 'Cancel', 'type' => self::FORM_BUTTON_CANCEL);
+					if (Request::isAjax())
+						$b['onclick'] = 'Dialog.closeInfo(); return false;';
+					$this->buttons[] = $b;
 					break;
 				case self::FORM_BUTTON_CLEAR:
 					$this->buttons[] = array('name' => 'clear', 'value' => 'Clear', 'type' => self::FORM_BUTTON_CLEAR);

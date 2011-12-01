@@ -59,6 +59,24 @@ class AbstractDefaultController extends AbstractBasicController{
 		$this->addTopMenu();
 	}
 
+	/**
+	 * Request handler
+	 * List of items will be stored in ItemCollection object, then data from the collection 
+	 * will be printed with specified buttons, paging, etc.
+	 */
+	public function actionJSONListing($args) {
+
+		$item = new $this->model();
+		$items = $item->getItems();
+		$jsonItems = array();
+		foreach ($items as $item) {
+			$jsonItems[] = array(
+				'value' => $item->id, 
+				'text' => $item->makeSelectTitle(),
+				); 
+		}
+		$this->assign('jsonValue', json_encode($jsonItems));
+	}
 	
 	protected function addTopMenu() {
 		$adminMenuTop = new LinkCollection();

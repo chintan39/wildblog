@@ -32,6 +32,12 @@ class AbstractAdminRoutes {
 			->setTemplate('Base|defaultList')
 			->setPermission($permission);
 		
+		Router::registerAction($object, 'actionJSONListing')
+			->addRuleUrl($actionsPrefix . 'json-list/$')
+			->setBranch(Themes::BACK_END)
+			->setTemplate('Base|JSONvalue')
+			->setPermission($permission);
+		
 		Router::registerAction($object, 'actionNew')
 			->addRuleUrl($actionsPrefix . 'new/$')
 			->setBranch(Themes::BACK_END)

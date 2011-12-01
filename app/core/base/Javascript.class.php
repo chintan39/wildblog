@@ -404,6 +404,16 @@ class Javascript {
 	}
 	
 	
+	/**
+	 * Include a JS library windows based on prototype
+	 */
+	public static function addWindows() {
+		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'windows/javascripts/window.js');
+		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/default.css'); 
+		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/lighting.css');
+	}
+	
+	
 	public static function addSelectorWindowButton($modelName, $meta, $title, $newButtonName=null) {
 		$selectorInit = Javascript::addSelector($modelName, $meta, Javascript::SELECTOR_SOURCE_AJAX, null, $newButtonName);
 		$linkReady = Request::getLinkSimple('Base', 'Options', 'actionGetMetaOptions', array(

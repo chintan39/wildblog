@@ -65,10 +65,12 @@ function smarty_function_form_button($params, &$smarty)
 			$output .= "<input type=\"submit\" class=\"button positive send\" id=\"form_" . $button["name"] . "\" name=\"" . $button["name"] . "\" value=\"" . tg($button["value"]) . "\"$onclick /> ";
 			break;
 		case Form::FORM_BUTTON_CANCEL: 
-			$output .= "<input type=\"submit\" class=\"button negative delete\" id=\"form_" . $button["name"] . "\" name=\"" . $button["name"] . "\" value=\"" . tg($button["value"]) . "\" /> ";
+			$onclick = (isset($button["onclick"]) && $button["onclick"]) ? " onclick = \"{$button["onclick"]}\"" : "";
+			$output .= "<input type=\"submit\" class=\"button negative delete\" id=\"form_" . $button["name"] . "\" name=\"" . $button["name"] . "\" value=\"" . tg($button["value"]) . "\" $onclick/> ";
 			break;
 		case Form::FORM_BUTTON_CLEAR: 
-			$output .= "<input type=\"submit\" class=\"button negative clear\" id=\"form_" . $button["name"] . "\" name=\"" . $button["name"] . "\" value=\"" . tg($button["value"]) . "\" /> ";
+			$onclick = (isset($button["onclick"]) && $button["onclick"]) ? " onclick = \"{$button["onclick"]}\"" : "";
+			$output .= "<input type=\"submit\" class=\"button negative clear\" id=\"form_" . $button["name"] . "\" name=\"" . $button["name"] . "\" value=\"" . tg($button["value"]) . "\" $onclick/> ";
 			break;
 		case Form::FORM_BUTTON_SAVE_AS: 
 			$onclick = " onclick=\"this.form.action='{$button['action']}'; if (confirm('".tg('This will create another similar item. Are you sure to continue?')."')) { return changeTextAndDisable(this, '" . tg("Sending...") . "'); } else { return false; }\"";

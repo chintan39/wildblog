@@ -29,7 +29,7 @@ abstract class AbstractAdminController {
 			->setBranch(Themes::BACK_END)
 			->setTemplate('Base|defaultList')
 			->setPermission($permission);
-		
+
 		Router::registerAction($object, 'actionNew')
 			->addRuleUrl($actionsPrefix . 'new/$')
 			->setBranch(Themes::BACK_END)

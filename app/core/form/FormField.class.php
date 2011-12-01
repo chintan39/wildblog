@@ -401,9 +401,7 @@ class FormFieldMultiSelect extends FormFieldSelect {
 		
 		if ($this->meta->getLinkNewItem()) {
 			// window selector
-			Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'windows/javascripts/window.js');
-			Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/default.css'); 
-			Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/lighting.css');
+			Javascript::addWindows();
 			$selectorWindowButton = Javascript::addSelectorWindowButton($this->modelName, $this->meta, tg('Add a new item'), 'addButtonFunction');
 		} else {
 			$selectorWindowButton = '';
@@ -415,6 +413,14 @@ class FormFieldMultiSelect extends FormFieldSelect {
 				$this->html .= 'var addButtonFunction=function() {' . $selectorWindowButton . '}' . "\n";
 				$this->html .= $script;
 				$this->html .= "</script>\n";
+			}
+		} else {
+			if ($this->meta->getLinkNewItem()) {
+				Javascript::addWindows();
+				$link = $this->meta->getLinkNewItem();
+				$linkFull = Request::getLinkSimple($link['package'], $link['controller'], $link['action']);
+				$linkReload = Request::getLinkSimple($link['package'], $link['controller'], $link['actionResult']);
+				$this->html .= "<a href=\"#\" onclick=\"return windowPopupAjax('$linkFull', 'get', '".$this->getIdValue()."', '$linkReload')\">".tg('Add new item')."</a>\n";
 			}
 		}
 	}

@@ -177,7 +177,7 @@ ajaxPrepend = function (link, useMethod, resultContainer) {
  * Use Ajax to sent form data and display message in messageContainer.
  */
 ajaxFormMessage = function (form) {
-	new Ajax.Request('/some_url', {
+	new Ajax.Request(form.action, {
 		method: form.method,
 		parameters: form.serialize(true),
 		onSuccess: function(transport) {
@@ -190,5 +190,75 @@ ajaxFormMessage = function (form) {
 		onFailure: function() { alert('Something went wrong...') }
 	});
 }
+
+/**
+ * Use Ajax to update a select box values..
+ */
+ajaxReplaceSelect = function (link, useMethod, resultSelectBox, params) {
+	new Ajax.Request(link, {
+		method: useMethod,
+		parameters: params,
+		onSuccess: function(transport) {
+			var responseItems = transport.responseText.evalJSON();
+			selectBox = $(resultSelectBox);
+			selectedValues={};
+			childs=$(resultSelectBox).childNodes;
+			for (i=0; i<childs.length; i++) {
+				selectedValues[childs[i].value]=childs[i].selected;
+			} 
+			selectBox.innerHTML='';
+			for (i=0; i<responseItems.length; i++) {
+				var el = new Element('option', {value: responseItems[i]['value']});
+				if (selectedValues[responseItems[i]['value']])
+					el.selected = true;
+				el.innerHTML = responseItems[i]['text'];
+				selectBox.appendChild(el);
+			}
+			$('ajax_loader').hide()
+		},
+		onFailure: function() { alert('Something went wrong...') }
+	});
+}
+
+
+/**
+ * Use Ajax to get content from page $link using method $useMethod
+ * and update select element's values identified by $resultContainer.
+ */
+ajaxUpdateSelectBox = function (link, useMethod, resultContainer) {
+	new Ajax.Updater(resultContainer, link, { 
+		method: useMethod,
+		parameters: { __request_type__: 'ajax' }
+	});
+	return false;
+}
+
+
+/**
+ * Opens a new window and defines what should happen when window is closed.
+ * @param _resultAction action called after window is closed. 
+ *        Possible values: 'replace', 'updateSelect'
+ * Example usage: 
+ * <a href="windowPopupAjax('/my/link', 'get', 'contId', 'replace')">add new item</a>
+ * <a href="windowPopupAjax('/my/jsonvalues', 'get', 'selectId', 'updateSelect')">add new item</a>
+ */
+windowPopupAjax = function (_link, _method, _resultContainer, _resultLink) {
+	var win = new Window({
+			className: 'bluelighting', 
+			title: 'title', 
+			width:600, height:500, 
+			url: _link, 
+			showEffectOptions: {duration:1.5}
+	}); 
+	win.setCloseCallback(function() {
+			$('ajax_loader').show()
+			ajaxReplaceSelect(_resultLink, 'get', _resultContainer, null);
+			return true;
+	});
+	win.showCenter(true);
+	return false;
+	
+}
+
 
 /* end of the file */
