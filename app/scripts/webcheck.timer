@@ -1,0 +1,9 @@
+[unit]
+Description=This service checks defined servers and reports the results to user
+
+[Service]
+ExecStart=/var/www/html/wildblog/app/scripts/check-web.sh wild-web.eu
+
+[Timer]
+OnBootSec=180
+
