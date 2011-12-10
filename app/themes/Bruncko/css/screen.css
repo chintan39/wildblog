@@ -210,7 +210,7 @@ hr.invisible {
 	float : left;
 	font-size : 26px;
 	line-height : 1.2em;
-	padding : 0 27px;
+	padding : 0 21px;
 }
 .site-nav ul li a {
 	text-decoration : none;
@@ -371,7 +371,7 @@ hr.invisible {
 	height : auto !important ;
 	height : 713px;
 }
-#content .inner {
+#content .innercontent {
 	padding : 65px 0 40px 94px;
 }
 .inner_copy, .inner_copy a {
@@ -549,6 +549,32 @@ a.addReference {
 a.moreReferences:hover,
 a.addReference:hover {
 	text-decoration: underline;
+}
+
+
+/*
+ * paging 
+ */ 
+
+div.paging div.paging_nextList {
+	width: 30%;
+}
+
+div.paging div.paging_prevList {
+	width: 30%;
+}
+
+div.paging a {
+	color: #ffffff;
+	background-color: #cfbc88;
+}
+
+div.paging a:hover {
+	background-color: #e0d1a8;
+}
+
+div.paging .paging_actual {
+	background-color: #e0d1a8;
 }
 
 /*

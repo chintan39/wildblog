@@ -59,7 +59,8 @@ function smarty_function_generate_paging($params, &$smarty)
 	 */
 	$showOnlyKeys = isset($params['showOnlyKeys']) ? explode('|', $params['showOnlyKeys']) : array();
 		
-	if ($collection && array_key_exists("paging", $collection->data) && $collection->data["paging"]) {
+	if ($collection && array_key_exists("paging", $collection->data) && $collection->data["paging"] 
+		&& isset($collection->data["paging"]['totalPages']) && $collection->data["paging"]['totalPages'] > 1) {
 		
 		if ($showOnlyKeys)
 			$keys = $showOnlyKeys;
@@ -104,7 +105,7 @@ function smarty_function_generate_paging($params, &$smarty)
 					$output .= "<span class=\"paging_$key\">" . $collection->data["paging"][$key] . "</span> ";
 				}
 			}
-			$output .= "\n</div>\n";
+			$output .= "\n<div class=\"clear\"></div>\n</div>\n";
 			$output .= "</div>\n";
 		}
 	}

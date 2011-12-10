@@ -5,6 +5,6 @@
 <div id="content">
 	<div class="top">
 		<div class="bot">
-			<div class="inner">
+			<div class="innercontent">
 				<div class="wrapper">
 					<div class="col-2">

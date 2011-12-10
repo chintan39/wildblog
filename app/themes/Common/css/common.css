@@ -224,7 +224,7 @@ div.paging div.paging_prevList div.inner {
 }
 
 div.paging div.paging_actual {
-	width: auto;
+	width: 6%;
 	float: left;
 }
 
