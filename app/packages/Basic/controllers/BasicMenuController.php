@@ -22,7 +22,7 @@ class BasicMenuController extends AbstractPagesController {
 					$menuName = str_replace('-', '_', $menu->url);
 					$menuItem = new BasicMenuItemsModel();
 					$menuItem->addQualification('menu = ?', $menu->id);
-					$menuItem->setOrder('rank');
+					$menuItem->addSorting('rank');
 					$allPagesMenus[$menuName] = $menuItem->getCollectionItems();
 				}
 			}
