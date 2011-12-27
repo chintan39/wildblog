@@ -569,6 +569,10 @@ class ItemCollection {
 	}
 	
 	
+	public function setDataModelMethod($methodName) {
+		$this->dataModelMethod = $methodName;
+	}
+	
 }
 
 ?>

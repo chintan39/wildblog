@@ -37,9 +37,9 @@ class BlogPostsModel extends AbstractPagesModel {
 	 * @param string $itemCollectionIdentifier
 	 * @param array $postIds array of int (id of the post)
 	 */
-	public function getRelatedPosts($itemCollectionIdentifier, $postIds) {
+	public function getRelatedPosts() {
 		$list = array();
-		$postIds = (int)$postIds[0];
+		$postId = $this->qualification['postId'][1];
 		$limit = 5;
 
 		$postClass = new BlogPostsModel();
@@ -57,10 +57,10 @@ class BlogPostsModel extends AbstractPagesModel {
 			FROM $postsTagsTable
 			LEFT JOIN $postsTable ON $postsTagsTable.post = $postsTable.id
 			$extendedTextsJoin
-			WHERE $postsTable.active = 1 AND $languageSupportWhere $postsTagsTable.post != $postIds AND $postsTagsTable.tag IN (
+			WHERE $postsTable.active = 1 AND $languageSupportWhere $postsTagsTable.post != $postId AND $postsTagsTable.tag IN (
 				SELECT tag
 				FROM $postsTagsTable as pt
-				WHERE pt.post = $postIds
+				WHERE pt.post = $postId
 			)
 			GROUP BY $postsTagsTable.post
 			ORDER BY count(*) DESC, $postsTable.published DESC
@@ -70,7 +70,7 @@ class BlogPostsModel extends AbstractPagesModel {
 			Benchmark::log('getRelatedPosts SQL: ' . $query); // QUERY logger
 		}
 		$list['items'] = AbstractDBObjectModel::importArray($this->name, dbConnection::getInstance()->fetchAll($query));
-		$list['columns'] = $this->getVisibleColumnsInCollection($itemCollectionIdentifier);
+		$list['columns'] = $this->getVisibleColumnsInCollection();
 		$list['itemsCount'] = count($list['items']);
 		return $list;
 	}
