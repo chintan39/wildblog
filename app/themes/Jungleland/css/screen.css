@@ -223,7 +223,7 @@ input.button {
 	margin: 0; padding:  0 5px 0 0;
 	font: bold 11px 'Trebuchet MS', 'Helvetica Neue', Arial, Sans-Serif;
 	color: #897876;
-	width: 400px;
+	width: 600px;
 }
 
 /* RSS Feed */
@@ -300,7 +300,7 @@ input.button {
 	margin: 0; padding: 5px;
 	border: none;
 	background: transparent;
-	color: #4a413c;	
+	color: #cbafa2;	
 }
 #header form#quick-search .tbox {
 	margin: 6px 0 0 5px; 
@@ -488,12 +488,12 @@ input.button {
 }
 .sidemenu ul li {
 	list-style: none;
-	margin: 0;	padding: 8px 5px 8px 19px;
+	margin: 0;	padding: 8px 5px 8px 24px;
 	border-bottom: 1px solid #29201c;
 	font-size: 11px;
 	line-height: 20px;	
 	text-transform: uppercase;	
-	background: url(../images/bullet.gif) no-repeat 0 14px;
+	background: #110c0a url(../images/bullet.gif) no-repeat 5px 14px;
 }
 .sidemenu ul li a:link, 
 .sidemenu ul li a:visited {
