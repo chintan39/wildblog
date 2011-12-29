@@ -9,11 +9,13 @@
 					{require file='part.allPagesMenus' package=Basic menuName='top_menu'}
 				</div>
 
+				{*
 				<div class="sidemenu">
 					{require file='part.partnerLinks' package=LinkBuilding}
 				</div>
 				
 				{require package=Gallery file='part.galleriesList'}
+				*}
 				
 			<!-- /sidebar -->				
 			</div>		
@@ -47,6 +49,10 @@
 			</p>
 		</form>	
 						
+		<div id="namedays">
+			{require file='part.nameDays' package=Basic}
+		</div>
+		
 	<!-- /header -->					
 	</div>
 	

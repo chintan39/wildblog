@@ -20,9 +20,10 @@ class JunglelandTheme extends AbstractTheme {
 			'Basic.part.articlesMenu',
 			'Basic.part.personalInfo',
 			'Basic.part.allPagesMenus',
-			'Gallery.part.galleriesList',
-			'LinkBuilding.part.partnerLinks',
-			'References.part.references',
+			'Basic.part.nameDays',
+			//'Gallery.part.galleriesList',
+			//'LinkBuilding.part.partnerLinks',
+			//'References.part.references',
 		),
 	);
 		

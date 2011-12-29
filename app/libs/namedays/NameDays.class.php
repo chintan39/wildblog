@@ -21,7 +21,8 @@ class NameDays {
 	static public function setLanguage($lang) {
 		$file = $lang.'.php';
 		if (!file_exists($file)) {
-			throw new Exception("File '$file' for lang '$lang' doesn't exist.");
+			$file = 'cs.php';
+			//throw new Exception("File '$file' for lang '$lang' doesn't exist.");
 		}
 		include($file);
 		self::$namedays = $namedays;
@@ -90,6 +91,7 @@ class NameDays {
 				$m = (int)date('m', $datetime);
 				$d = (int)date('d', $datetime);
 			}
+			// TODO: add how many days to the event
 			if (array_key_exists("$m-$d", self::$flowerevents))
 				$result[] = self::$flowerevents["$m-$d"];
 			if (array_key_exists("$date", self::$flowerevents))
