@@ -13,7 +13,7 @@ require_once('RouterAction.class.php');
 
 class Request {
 
-	static public $url, $get, $post, $session, $cookie, $action, $homepageAction, $router, $startTime, $actionLink; 
+	static public $url, $get, $post, $session, $cookie, $action, $homepageAction, $router, $startTime, $actionLink, $implicit=false; 
 
 	static private $uniqueNumber = 0;
 	
@@ -152,7 +152,8 @@ class Request {
 			Environment::$smarty->assign('requestIsAjax', self::isAjax());
 			$today = date('j. XXX Y');
 			$today = str_replace('XXX', Utilities::monthNameLong((int)date('m')), $today);
-			Environment::$smarty->assign("today", $today);
+			Environment::$smarty->assign('today', $today);
+			Environment::$smarty->assign('visitorsCount', Config::GetCond('BASE_VISITORS_COUNT', 0));
 			
 			Environment::$smarty->assign('frontendLanguages', Language::getLanguages(Themes::FRONT_END));
 			Environment::$smarty->assign('backendLanguages', Language::getLanguages(Themes::BACK_END));

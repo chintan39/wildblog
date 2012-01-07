@@ -162,6 +162,7 @@ class Router {
 					'branch' => Themes::FRONT_END,
 				)
 			);
+			Request::$implicit = true;
 		}
 		
 		// store the action for the future use by other controllers (by making the LinkMenu for example).
@@ -199,12 +200,32 @@ class Router {
 		$this->display($action);
 		Benchmark::log('End of ' . get_class($action['controller']) . '->' . $action['method']);
 		Benchmark::log('Begin of hit count for ' . get_class($action['controller']) . '->' . $action['method']);
+		$this->increaseVisitors();
 		$this->storeHit($action);
 		MessageBus::storeBuffer();
 		Benchmark::log('End of hit count for ' . get_class($action['controller']) . '->' . $action['method']);
 		
 	}
 
+	
+	private function increaseVisitors() {
+		// increase visitors count
+		$dateSession = date('Y-m-d H:i:s', strtotime('-10 HOURS'));
+		if (!BaseHitsModel::SearchCount('BaseHitsModel', array('ip = ? AND inserted > ?'), array(Utilities::getRemoteIP(), $dateSession))) {
+			// no hit in last 10 hours
+			$visitors = BaseConfigModel::Search('BaseConfigModel', array('key = ?'), array('BASE_VISITORS_COUNT'));
+			if (!$visitors) {
+				$visitors = new BaseConfigModel();
+				$visitors->key = 'BASE_VISITORS_COUNT';
+				$visitors->text = 0;
+			} else {
+				$visitors = $visitors[0];
+			}
+			$visitors->text++;
+			$visitors->Save();
+		}
+	}
+	
 	
 	private function storeHit($action) {
 		$hit = new BaseHitsModel();
@@ -224,7 +245,10 @@ class Router {
 			$hit->item = '';
 		}
 		$hit->lang = Language::getCode();
-		$hit->Save();
+		if (Request::$implicit)
+			ErrorLogger::log(ErrorLogger::ERR_WARNING, "Implicit request '{$hit->url}'.");
+		else
+			$hit->Save();
 	}
 	
 	/**

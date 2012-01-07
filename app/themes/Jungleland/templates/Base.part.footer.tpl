@@ -121,7 +121,8 @@
 					<a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | 
 		   		<a href="http://validator.w3.org/check/referer">XHTML</a>	|			
 					<a href="{$base}">Home</a> |
-					<strong><a href="#top" class="back-to-top">Back to Top</a></strong>								
+					<strong><a href="#top" class="back-to-top">Back to Top</a></strong><br />								
+				{tg}Visitors{/tg}: {$visitorsCount}
 				</p>
 			</div>
 
