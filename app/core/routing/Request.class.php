@@ -126,6 +126,10 @@ class Request {
 		Benchmark::logSpeed('Getting request action.');
 		// get request action
 		self::$router->getRequestAction();
+		
+		// settings locale
+		setlocale(LC_ALL, 'cs_CZ.utf8');
+		//var_dump(Language::getCode());exit;
 
 		Benchmark::logSpeed('Loading regular dict.');
 		// load dictionary
@@ -146,6 +150,9 @@ class Request {
 			Environment::$smarty->assign('dirLibs', DIR_LIBS);
 			Environment::$smarty->assign('thisLink', self::getSameLink());
 			Environment::$smarty->assign('requestIsAjax', self::isAjax());
+			$today = date('j. XXX Y');
+			$today = str_replace('XXX', Utilities::monthNameLong((int)date('m')), $today);
+			Environment::$smarty->assign("today", $today);
 			
 			Environment::$smarty->assign('frontendLanguages', Language::getLanguages(Themes::FRONT_END));
 			Environment::$smarty->assign('backendLanguages', Language::getLanguages(Themes::BACK_END));

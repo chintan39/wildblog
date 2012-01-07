@@ -1,4 +1,5 @@
 <?php
+		setlocale(LC_ALL, 'cs_CZ.utf8');
 
 require_once('app/config/default.inc');
 

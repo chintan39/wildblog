@@ -1,9 +1,15 @@
-<div class="todayDate">{tg}Today is{/tg} {$today}</div>
+<div class="todayDate">{tg}Today is{/tg} <strong>{$today}</strong></div>
 {if $todayName}
-<div class="todayName">{tg}Name day{/tg}: {$todayName}</div>
+<div class="todayName">{tg}Today name day{/tg}: <strong>{$todayName}</strong></div>
 {/if}
 {if $todayEvent}
-{* TODO: add parameters and use one sentese *}
-<div class="todayEvent">{tg}In{/tg} {$todayEvent->days} {tg}days{/tg}: {$todayEvent->name}</div>
+<div class="todayEvent">
+{strip}
+{foreach from=$todayEvent item=item name=fn}
+{if not $smarty.foreach.fn.first}, {/if}
+{if $item->days}{tg}In{/tg} <strong>{$item->days}</strong> {tg}days{/tg}{else}{tg}Today{/tg}{/if}: <strong>{$item->name}</strong>
+{/foreach}
+{/strip}
+</div>
 {/if}
 

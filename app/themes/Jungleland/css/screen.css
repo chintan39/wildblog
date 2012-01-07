@@ -316,8 +316,10 @@ input.button {
 
 #header #namedays {
 	position: absolute;
-	top: 65px; right: 15px;
-	width: 222px; height: 32px;
+	bottom: 57px; right: 15px;
+	width: 422px; height: auto;
+	line-height: 120%;
+	text-align: right;
 }
 
 /* featured block */

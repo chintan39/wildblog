@@ -130,7 +130,6 @@ class Environment {
 		define("COMMON_IMAGES_PATH", str_replace("[theme]", "Common", DIR_SMARTY_THEME_IMAGES));
 		self::$smarty->assign("commonImagesPath", str_replace("[theme]", "Common", DIR_SMARTY_THEME_IMAGES));
 		self::$smarty->assign("iconsPath", DIR_ICONS_IMAGES_DIR_THUMBS_URL);
-		self::$smarty->assign("today", date('j. F Y'));
 	}
 	
 	

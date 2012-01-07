@@ -15,6 +15,32 @@ class Utilities {
 	
 	
 	/**
+	 * This returns month's long name.
+	 * @return number $number month number
+	 */
+	static public function monthNameLong($number) {
+		$months = array(
+		  'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+		  'September', 'October', 'November', 'December'
+		);
+		return tg($months[$number-1]);
+	}
+	
+	
+	/**
+	 * This returns month's short name.
+	 * @return number $number month number
+	 */
+	static public function monthNameShort($number) {
+		$months = array(
+		  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+		  'Dec' 
+		);
+		return tg($months[$number-1]);
+	}
+	
+	
+	/**
 	 * Convert digit place of the number to the nice form and retuns units as the second parameter.
 	 * For example input 10029 (with precision 1) will be changed to 10.1 and unit will be kB.
 	 * @param float &$value Number to convert (will be changed).

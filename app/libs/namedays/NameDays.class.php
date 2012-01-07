@@ -34,8 +34,8 @@ class NameDays {
 		if (!self::$loaded)
 			throw new Exception('Modul NameDays not loaded.');
 		if ($month === null && $day === null) {
-			$month = date('m');
-			$day = date('d');
+			$month = (int)date('m');
+			$day = (int)date('d');
 		}
 		return "$month-$day";
 	}
@@ -71,8 +71,8 @@ class NameDays {
 		$timeset = true;
 
 		if ($month === null && $day === null) {
-			$month = date('m');
-			$day = date('d');
+			$month = (int)date('m');
+			$day = (int)date('d');
 			$timeset = false;
 		}
 
@@ -92,10 +92,14 @@ class NameDays {
 				$d = (int)date('d', $datetime);
 			}
 			// TODO: add how many days to the event
+			$item = new stdClass();
+			$item->days = $i;
 			if (array_key_exists("$m-$d", self::$flowerevents))
-				$result[] = self::$flowerevents["$m-$d"];
+				$item->name = self::$flowerevents["$m-$d"];
 			if (array_key_exists("$date", self::$flowerevents))
-				$result[] = self::$flowerevents["$date"];
+				$item->name = self::$flowerevents["$date"];
+			if (isset($item->name))
+				$result[] = $item;
 		}
 		return $result;
 	}
