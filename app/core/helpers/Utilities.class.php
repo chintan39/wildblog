@@ -41,6 +41,31 @@ class Utilities {
 	
 	
 	/**
+	 * This returns how old is the timestamp (translated using tg).
+	 * @return number $timestamp time in any format
+	 */
+	static public function dateRelative($timestamp) {
+		$now = date_create();
+		$timestamp = (((int)$timestamp) > 10000) ? date_create('@'.$timestamp) : date_create($timestamp);
+		$prefix = (($timestamp<$now) ? tg('before') : tg('in')) . ' ';
+		$interval = date_diff($timestamp, $now);
+		if ($interval->y)
+			return $prefix.$interval->format('%y '.tg('years'));
+		if ($interval->m)
+			return $prefix.$interval->format('%m '.tg('months'));
+		if ($interval->d)
+			return $prefix.$interval->format('%d '.tg('days'));
+		if ($interval->h)
+			return $prefix.$interval->format('%h '.tg('hours'));
+		if ($interval->i)
+			return $prefix.$interval->format('%i '.tg('minutes'));
+		if ($interval->s)
+			return $prefix.$interval->format('%s '.tg('seconds'));
+		return tg('now');
+	}
+	
+	
+	/**
 	 * Convert digit place of the number to the nice form and retuns units as the second parameter.
 	 * For example input 10029 (with precision 1) will be changed to 10.1 and unit will be kB.
 	 * @param float &$value Number to convert (will be changed).

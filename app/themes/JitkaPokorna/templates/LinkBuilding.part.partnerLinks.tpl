@@ -7,3 +7,5 @@
 </ul>
 {/if}
 
+{require package=Base file='part.addNewItem' itemPackage=LinkBuilding itemController=Partners itemAction=actionNew}
+

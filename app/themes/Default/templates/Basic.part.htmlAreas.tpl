@@ -4,3 +4,5 @@
 {/foreach}
 {/if}
 
+{require package=Base file='part.addNewItem' itemPackage=Basic itemController=HtmlAreas itemAction=actionNew}
+

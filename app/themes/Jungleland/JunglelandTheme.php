@@ -21,9 +21,15 @@ class JunglelandTheme extends AbstractTheme {
 			'Basic.part.personalInfo',
 			'Basic.part.allPagesMenus',
 			'Basic.part.nameDays',
+			'Basic.part.recentNews',
 			//'Gallery.part.galleriesList',
 			//'LinkBuilding.part.partnerLinks',
 			//'References.part.references',
+		),
+		'Basic.articleDetail' => array(
+			'Basic.part.recentNews',
+			'Base.part.header', 
+			'Base.part.footer',
 		),
 	);
 		

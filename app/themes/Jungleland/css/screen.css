@@ -322,6 +322,10 @@ input.button {
 	text-align: right;
 }
 
+#header #namedays strong {
+	color: #f9dacd;
+}
+
 /* featured block */
 #featured {
 	clear: both;
@@ -822,7 +826,9 @@ p.thumbs {
 	height:0; 
 	content: " "; 
 }
-
+.date {
+	font-style: italic;
+}
 
 /* ie fix */
 

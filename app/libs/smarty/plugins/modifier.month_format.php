@@ -33,13 +33,9 @@ function smarty_modifier_month_format($month, $format="%m")
 			return (((int)$month >= 10) ? (int)$month : '0'.(int)$month); 
 			break;
 		case "%name": 
-			static $monthsArray;
-			$monthsArray = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-			return $monthsArray[(int)$month-1];
+			return Utilities::monthNameLong($month);
 		case "%nam": 
-			static $monthsArrayShort;
-			$monthsArray = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
-			return $monthsArray[(int)$month-1];
+			return Utilities::monthNameShort($month);
 		default:
 			break;
 	}
