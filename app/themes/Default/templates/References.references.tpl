@@ -4,6 +4,7 @@
 	
 {if $references->data.items}
 {foreach from=$references->data.items item=item}
+<p class="align-right">{section name=stars start=0 loop=$item->rating}<img src="{$iconsPath}16/favorite.png" alt="*" />{/section}</p>
 <p class="quote">&quot;{$item->text}&quot;</p>
 <p class="align-right">- {$item->firstname} {$item->surname}, {$item->city}</p>
 {/foreach}

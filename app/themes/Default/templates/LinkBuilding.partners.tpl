@@ -10,7 +10,7 @@
 {tg}Nothing was found.{/tg}
 {/if}
 
-{require package=LinkBuilding file='part.editItem' itemPackage=LinkBuilding itemController=Partners itemAction=actionNew}
+{require package=Base file='part.addNewItem' itemPackage=LinkBuilding itemController=Partners itemAction=actionNew}
 
 {require file='part.footer'}
 
