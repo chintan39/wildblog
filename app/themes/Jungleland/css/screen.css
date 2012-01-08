@@ -507,6 +507,9 @@ input.button {
 	text-transform: uppercase;	
 	background: #110c0a url(../images/bullet.gif) no-repeat 5px 14px;
 }
+.sidemenu ul li:hover {
+	background-color: #171314;
+}
 .sidemenu ul li a:link, 
 .sidemenu ul li a:visited {
 	padding-left: 0;	
