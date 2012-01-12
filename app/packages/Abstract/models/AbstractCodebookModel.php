@@ -40,6 +40,13 @@ class AbstractCodebookModel extends AbstractDefaultModel {
 		}
 	}
 
+    /**
+     * Adds rank to sorting property.
+     */
+	protected function sortingDefinition() {
+		parent::sortingDefinition();
+		$this->sorting[] = new ItemSorting('rank');
+	}
 }
 
 ?>
