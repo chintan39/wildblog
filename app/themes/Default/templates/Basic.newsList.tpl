@@ -4,7 +4,7 @@
 
 {if $news->data.items}
 {foreach from=$news->data.items item=item}
-	<div class="article">
+	<div class="news">
 	<h1><a href="{$item->link}">{$item->title}</a></h1>
 	<div class="date">{$item->published|date_format:"%m/%e"}</div>
 	{$item->preview}

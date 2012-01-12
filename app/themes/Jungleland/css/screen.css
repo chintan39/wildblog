@@ -833,6 +833,28 @@ p.thumbs {
 	font-style: italic;
 }
 
+/* news */
+.recentNews div.news {
+	margin: 30px 0 30px 0;
+}
+
+.recentNews div.news div.desc {
+	font-style: italic;
+}
+
+.recentNews div.news a {
+	display: block;
+	width: 100%;
+	font-size: 130%;
+	line-height: 170%;
+}
+
+.recentNews div.news a span.date {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+
 /* ie fix */
 
 /*  ribbon GIF format. ie6 doesn't support transparent PNG */
