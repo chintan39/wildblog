@@ -855,6 +855,14 @@ p.thumbs {
 	top: 0px;
 }
 
+div.news h2 {
+	font-size: 160%;
+}
+
+div.news h2 a:hover {
+	color: #c67114;	
+}
+
 /* ie fix */
 
 /*  ribbon GIF format. ie6 doesn't support transparent PNG */
