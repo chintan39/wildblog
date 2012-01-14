@@ -9,5 +9,9 @@
 {require package=Basic file='part.recentNews'}
 {/if}
 
+{if $article->hasContactForm}
+{require file=part.contactForm package=Basic}
+{/if}
+
 {require file='part.footer'}
 

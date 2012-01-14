@@ -179,6 +179,11 @@ class BasicArticlesController extends AbstractPagesController {
 		if ($article->seo_keywords) {
 			$this->assign('seoKeywords', $article->seo_keywords);
 		}
+		
+		$article->addNonDbProperty('hasContactForm');
+		$article->hasContactForm = (Config::Get('BASIC_ARTICLES_CONTACT_FORM')
+			&& in_array($article->id, explode(':', Config::Get('BASIC_ARTICLES_CONTACT_FORM'))));
+
 		$this->assign('title', $article->title);
 		$this->assign('pageTitle', $article->title . ' | ' . tp('Project Title Short'));
 		$this->assign('article', $article);

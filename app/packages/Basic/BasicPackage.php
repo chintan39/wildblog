@@ -10,18 +10,19 @@ class BasicPackage extends Package {
 	var $icon="basic";
 
 	public function setDefaultConfig() {
-		Config::Set('BASIC_HOMEPAGE_ARTICLE_ID', false, null, Config::INT, true);
-		Config::Set('BASIC_SHORT_CONTACT_ARTICLE_ID', false, null, Config::INT, true);
-		Config::Set('BASIC_PERSONAL_INFO_ARTICLE_ID', false, null, Config::INT, true);
-		Config::Set('BASIC_FOOTER_ARTICLE_ID', false, null, Config::INT, true);
-		Config::Set('BASIC_ARTICLES_ADD_ANCHORS_INTO_SITEMENU', false, null, Config::BOOL, false);
 		Config::Set('BASIC_PACKAGE_ORDER', 3, null, Config::INT, true);
 		Config::Set('BASIC_PACKAGE_LANGUAGE_SUPPORT', false, null, Config::BOOL, false);
 		Config::Set('BASIC_PACKAGE_ALLOW', true, null, Config::BOOL, false);
-		Config::Set('BASIC_NEWS_RECENT_COUNT', 4, null, Config::INT, true);
-		Config::Set('BASIC_NEWS_SORTABLE', false, null, Config::BOOL, true);
+		Config::Set('BASIC_HOMEPAGE_ARTICLE_ID', false, 'ID of the homepage article', Config::INT, true);
+		Config::Set('BASIC_SHORT_CONTACT_ARTICLE_ID', false, 'ID of the article with contacts usualy displayed in footer/sidebar', Config::INT, true);
+		Config::Set('BASIC_PERSONAL_INFO_ARTICLE_ID', false, 'ID of the article with personal data usualy displayed in footer/sidebar', Config::INT, true);
+		Config::Set('BASIC_FOOTER_ARTICLE_ID', false, 'ID of the article used for various purposes usualy displayed in footer/sidebar', Config::INT, true);
+		Config::Set('BASIC_ARTICLES_ADD_ANCHORS_INTO_SITEMENU', false, null, Config::BOOL, false);
+		Config::Set('BASIC_NEWS_RECENT_COUNT', 4, 'Number of recent news displayed in sidebar', Config::INT, true);
+		Config::Set('BASIC_NEWS_SORTABLE', 'If news can be sorted', null, Config::BOOL, true);
 		Config::Set('BASIC_NEWS_PRIMARY_TAG', false, null, Config::INT, true);
-		Config::Set('BASIC_NEWS_LIMIT', 6, null, Config::INT, true);
+		Config::Set('BASIC_NEWS_LIMIT', 6, 'Number of news displayed in sidebar', Config::INT, true);
+		Config::Set('BASIC_ARTICLES_CONTACT_FORM', false, 'Colon-separated article ID values, where contact form should be displayed', Config::STRING, true);
 	}
 	
 	/**

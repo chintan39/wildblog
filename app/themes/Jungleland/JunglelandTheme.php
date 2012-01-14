@@ -28,6 +28,7 @@ class JunglelandTheme extends AbstractTheme {
 		),
 		'Basic.articleDetail' => array(
 			'Basic.part.recentNews',
+			'Basic.part.contactForm',
 			'Base.part.header', 
 			'Base.part.footer',
 		),
