@@ -6,7 +6,7 @@
  */
 class Config {
 
-	static $data = array();
+	public static $data = array();
 	public static $meta = array();
 	
 	const BOOL = 1;

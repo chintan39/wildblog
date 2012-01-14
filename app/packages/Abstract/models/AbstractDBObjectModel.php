@@ -918,42 +918,29 @@ class AbstractDBObjectModel extends AbstractBasicModel
 	 *
 	 * @return mixed $input with replaced values
 	 */
-	public function replace($input, $values) {
+	public function replace($input, &$values, &$i = 0) {
 		//print_r(array($input, $values));
-		$i = 0;
 		foreach ($input as $k => $v) {
 			if ($input[$k] == '') {
 				continue;
 			}
-			$ex = explode("?", $input[$k]);
-			$out = '';
-			$ii = 0;
-			while ($ii < count($ex)-1) {
-				$out .= $ex[$ii];
-				$n = (is_numeric($values[$i])) ? $values[$i] : "'" . dbConnection::getInstance($this->connection)->escapeValue($values[$i]) . "'";
-				$out .= $n;
-				$i++;
-				$ii++;
-			}
-			$out .= $ex[$ii];
-			$input[$k] = $out;
-			
-			/*
-			$o = 0;
-			while ($o < strlen($input[$k]) && ($p = strpos($input[$k], "?", $o)) !== false) {
-				if (!array_key_exists($i,$values)) {
-					throw new Exception ("F");
+			if (is_array($input[$k])) {
+				$input[$k] = $this->replace($input[$k], $values, $i);
+			} else {
+				$ex = explode("?", $input[$k]);
+				$out = '';
+				$ii = 0;
+				while ($ii < count($ex)-1) {
+					$out .= $ex[$ii];
+					$n = (is_numeric($values[$i])) ? $values[$i] : "'" . dbConnection::getInstance($this->connection)->escapeValue($values[$i]) . "'";
+					$out .= $n;
+					$i++;
+					$ii++;
 				}
-				$n = (is_numeric($values[$i])) ? $values[$i] : "'" . dbConnection::getInstance($this->connection)->escapeValue($values[$i]) . "'";
-				print_r($n);
-				$input[$k] = preg_replace("/\\?/", $n, $input[$k], 1);
-				print_r($input[$k]);
-				++$i;
-				$o = $p + strlen($n);
-				//print($o . "=" . strlen($input[$k]) . "|");
-			}*/
+				$out .= $ex[$ii];
+				$input[$k] = $out;
+			}
 		}
-		//print_r($input);
 		return $input;
 	}
 	

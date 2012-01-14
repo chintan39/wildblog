@@ -13,6 +13,7 @@ class GalleryPackage extends Package {
 		Config::Set("GALLERY_PACKAGE_LANGUAGE_SUPPORT", false, null, Config::BOOL, false);
 		Config::Set("GALLERY_PACKAGE_ALLOW", true, null, Config::BOOL, false);
 		Config::Set("GALLERY_GALLERIES_SITE_COUNT", 6, null, Config::INT, true);
+		Config::Set("GALLERY_GALLERIES_LIST_IMAGES_COUNT", 0, 'How many images should be read in galleries list', Config::INT, true);
 	}
 	
 	/**

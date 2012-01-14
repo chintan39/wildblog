@@ -14,9 +14,26 @@ class GalleryGalleriesController extends AbstractPagesController {
 			foreach ($items->data["items"] as $key => $item) {
 				$item->addNonDbProperty("titleimage");
 				$item->titleimage = $item->FindTitleImage("GalleryImagesModel", "GalleryGalleriesImagesModel");
+				$item->addNonDbProperty("firstimages");
+				if (Config::Get('GALLERY_GALLERIES_LIST_IMAGES_COUNT') && ($firstImagesLimit = (Config::Get('GALLERY_GALLERIES_LIST_IMAGES_COUNT') - 1)) > 0) {
+					$images = new ItemCollection("galleriesList", Environment::getPackage($this->getPackage())->getController('Images'));
+					$images->setLimit($firstImagesLimit);
+					// we don't want same images as titleimage
+					$f = array();
+					$v = array();
+					if ($item->titleimage) {
+						$f['GalleryGalleriesModel'] = array("id = ?");
+						$v[] = $item->id;
+						$f[] = 'image <> ?';
+						$v[] = $item->titleimage;
+					}
+					$images->loadItemsFromItems(GalleryImagesModel::Search('GalleryImagesModel', $f, $v, array("LIMIT 0, $firstImagesLimit")));
+					$item->firstimages = $images;
+				} else {
+					$item->firstimages = false;
+				}
 			}
 		}
-
 		$this->assign("title", tp("Galleries list"));
 		$this->assign($items->getIdentifier(), $items);
 	}
