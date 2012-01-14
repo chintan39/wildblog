@@ -22,7 +22,8 @@ class ItemCollection {
 	$data, 				// array with keys items, itemsCount, columns, paging
 	$pagingAjax = false,
 	$containerId,
-	$dataModelMethod='getCollectionItems';
+	$dataModelMethod='getCollectionItems',
+	$loadDataModelName='';
 	
 	private 
 	$identifier, 
@@ -73,6 +74,11 @@ class ItemCollection {
 		return $this->dm;
 	}
 
+	
+	public function setDm($dm) {
+		$this->dm = $dm;
+	}
+
 
 	protected function passPropertiesToDm() {
 		// get qualification
@@ -105,6 +111,9 @@ class ItemCollection {
 		if ($this->forceLanguage) {
 			$this->getDm()->forceLanguage($this->forceLanguage);
 		}
+		
+		if ($this->loadDataModelName)
+			$this->getDm()->setLoadDataModelName($this->loadDataModelName);
 	}
 	
 	
@@ -573,6 +582,12 @@ class ItemCollection {
 		$this->dataModelMethod = $methodName;
 	}
 	
+	/**
+	 * 
+	 */
+	public function setLoadDataModelName($loadDataModelName) {
+		$this->loadDataModelName = $loadDataModelName;
+	}
 }
 
 ?>

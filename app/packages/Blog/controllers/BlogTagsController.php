@@ -7,7 +7,7 @@ class BlogTagsController extends AbstractNodesController {
 
 		$tagsMenu = $this->loadCache('tagsMenu');
 		if (!$tagsMenu) {
-			$tagsMenu = new ItemCollection("tagsMenu", $this, null, "getCollectionItems");
+			$tagsMenu = new ItemCollection("tagsMenu", $this);
 			$tagsMenu->setLinks("actionBlogTagDetail");
 			$tagsMenu->loadCollection();
 			$tagsMenu->addLinks();
@@ -30,10 +30,12 @@ class BlogTagsController extends AbstractNodesController {
 		// post tag detail processing
 		$tag = $args;
 
-		$items = new ItemCollection("blogposts", $this, null, "tagPosts");
+		$items = new ItemCollection("blogposts", $this);
 		$items->setSorting(array(new ItemSorting("published", SORTING_DESC)));
 		$items->setLimit(6);
-		$items->loadCollection($tag);
+		$items->setDm($tag);
+		$items->setLoadDataModelName('BlogPostsModel');
+		$items->loadCollection();
 		$items->addLinks(Environment::getPackage("Blog")->getController("Posts"), "actionDetail");
 		Environment::getPackage("Blog")->getController("Posts")->addPostTagsComments($items);
 
@@ -43,9 +45,6 @@ class BlogTagsController extends AbstractNodesController {
 		// assign to template
 		$this->assign("blogposts", $tag->posts);
 		$this->assign("title", "Posts with tag " . $tag->title);
-		
-		// show template
-		//$this->display('blogList');
 	}
 
 	

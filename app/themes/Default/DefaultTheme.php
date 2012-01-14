@@ -132,6 +132,10 @@ class DefaultTheme extends AbstractTheme {
 			'Base.part.header', 
 			'Base.part.footer',
 			),
+		'LinkBuilding.tagsPartners' => array(
+			'Base.part.header', 
+			'Base.part.footer',
+			),
 		'Newsletter.register' => array(
 			'Base.part.header', 
 			'Base.part.footer',

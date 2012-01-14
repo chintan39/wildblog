@@ -9,7 +9,9 @@ class BasicTagsController extends AbstractNodesController {
 
 		$items = new ItemCollection("articles", $this, null, "tagPosts");
 		$items->setLimit(10);
-		$items->loadCollection($tag);
+		$items->setDm($tag);
+		$items->setLoadDataModelName('BasicArticlesModel');
+		$items->loadCollection();
 		$items->addLinks(Environment::getPackage("Basic")->getController("Articles"), "actionDetail");
 		Environment::getPackage("Basic")->getController("Articles")->addPostTagsComments($items);
 
@@ -29,7 +31,9 @@ class BasicTagsController extends AbstractNodesController {
 
 		$items = new ItemCollection("news", $this, null, "tagNews");
 		$items->setLimit(10);
-		$items->loadCollection($tag);
+		$items->setDm($tag);
+		$items->setLoadDataModelName('BasicNewsModel');
+		$items->loadCollection();
 		$items->addLinks(Environment::getPackage("Basic")->getController("News"), "actionDetail");
 
 		if ($items->data["items"]) {

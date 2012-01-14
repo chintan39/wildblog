@@ -9,8 +9,9 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	var $useInInitDatabase = true;
 	
 	protected $qualification=array();		/*	basic definition of the active items (active = 1 for example) */
-	protected $sorting=array();			/*	basic definition of the sorting items ('column'=>'rank', 'direction'=>'desc' for example) */
+	protected $sorting=array();				/*	basic definition of the sorting items ('column'=>'rank', 'direction'=>'desc' for example) */
 	protected $limit=array();				/*	basic definition of the limit of items (5 for example) */
+	protected $loadDataModelName='';		/*  name of data model to be used in Find method */
 
 	const ALLOWED_RECURSIVE_LEVEL = 10;
 
@@ -120,7 +121,7 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	 */
 	public function getItems($modelName=false, $filters=array(), $values=array(), $extra=array(), $justThese=array()) {
 		if (!$modelName) {
-			$modelName = get_class($this);
+			$modelName = $this->loadDataModelName ? $this->loadDataModelName : get_class($this);
 		}
 		$this->exportQualifications($filters, $values);
 		$this->exportSorting($extra);
@@ -140,7 +141,7 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	 */
 	protected function getItemsCount($modelName=false, $filters=array(), $values=array(), $extra=array(), $justThese=array()) {
 		if (!$modelName) {
-			$modelName = get_class($this);
+			$modelName = $this->loadDataModelName ? $this->loadDataModelName : get_class($this);
 		}
 		$this->exportQualifications($filters, $values);
 		return $this->findCount($modelName, $filters, $values, $extra, $justThese);
@@ -495,6 +496,14 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	 */
 	public function setLimit($limit) {
 		$this->limit = $limit;
+	}
+	
+
+	/**
+	 * 
+	 */
+	public function setLoadDataModelName($loadDataModelName) {
+		$this->loadDataModelName = $loadDataModelName;
 	}
 	
 	

@@ -30,52 +30,6 @@ class BasicTagsModel extends AbstractCodebookModel {
         $this->addCustomRelationMany('BasicNewsModel', 'BasicNewsTagsModel', 'tag', 'news', 'newsTagsConnection'); // define a many:many relation to Tag through BlogTag
     }
     
-
-    /**
-     * The method loads posts related to the tag specified by $tag parameter.
-     * @param string $itemCollectionIdentifier
-     * @param object $article Article model
-     * @return object ItemsCollection
-     */
-    public function tagArticles($itemCollectionIdentifier, &$tag) {
-    	$articles = $tag->Find('BasicArticlesModel', array(), array(), array(), array('id'));
-    	if (count($articles)) {
-    		$values = array();
-    		foreach ($articles as $p) {
-    			$values[] = $p->id;
-    		}
-    		$this->addQualification(' id in (?' . str_repeat(', ?', count($values)-1) . ')', $values);
-    	}
-    	
-    	$article = new BasicArticlesModel();
-    	$article->setLimit($this->getLimit());
-
-    	return $article->getCollectionItems();
-    }
-    
-    
-    /**
-     * The method loads posts related to the tag specified by $tag parameter.
-     * @param string $itemCollectionIdentifier
-     * @param object $article Article model
-     * @return object ItemsCollection
-     */
-    public function tagNews($itemCollectionIdentifier, &$tag) {
-    	$articles = $tag->Find('BasicNewsModel', array(), array(), array(), array('id'));
-    	if (count($articles)) {
-    		$values = array();
-    		foreach ($articles as $p) {
-    			$values[] = $p->id;
-    		}
-    		$this->addQualification(' id in (?' . str_repeat(', ?', count($values)-1) . ')', $values);
-    	}
-    	
-    	$article = new BasicArticlesModel();
-    	$article->setLimit($this->getLimit());
-
-    	return $article->getCollectionItems();
-    }
-
 } 
 
 ?>
