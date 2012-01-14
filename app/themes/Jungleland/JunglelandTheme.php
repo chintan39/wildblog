@@ -31,6 +31,16 @@ class JunglelandTheme extends AbstractTheme {
 			'Base.part.header', 
 			'Base.part.footer',
 		),
+		'Gallery.galleriesList' => array(
+			'References.part.references',
+			'Base.part.header', 
+			'Base.part.footer',
+		),
+		'Gallery.galleryDetail' => array(
+			'References.part.references',
+			'Base.part.header', 
+			'Base.part.footer',
+		),
 	);
 		
 }

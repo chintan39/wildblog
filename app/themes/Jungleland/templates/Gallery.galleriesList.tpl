@@ -17,5 +17,7 @@
 
 {generate_paging collection=$galleriesList}
 
+{require file=part.references package=References}
+
 {require file='part.footer'}
 
