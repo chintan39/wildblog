@@ -109,7 +109,9 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 	 * MetaDataContainer, we have mished up objects, so we use $model to have correct
 	 * model to access.
 	 */
-	public function getFormHTML($meta, $model=0) {
+	public function getFormHTML($formField) {
+		$meta = $formField->getMeta();
+		$model = $formField->getDataModel();
 		$fieldName = $meta->getName();
 		$output = '';
 		if ($fieldName == 'titleimage') {
@@ -117,7 +119,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 				$output .= '<span class="note">' . tg('Title image will be able to select after saving.') . '</span>';
 			} else {
 				// TODO: element ID is not right
-				$output .= '<select id="form_' . $fieldName . '" name="' . $fieldName . '">';
+				$output .= '<select '.$formField->getIdAttr().' name="' . $fieldName . '">';
 				if ($model->id) {
 					$images = $model->Find('GalleryImagesModel');
 				} else {
@@ -137,12 +139,12 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 							'image' => $thumb->getThumbnailImagePath(), 
 							'indent' => 1);
 					}
-					$script = Javascript::addSelector($model->name, $meta, null, $selectorDefinition);
+					$script = Javascript::addSelector($formField, null, $selectorDefinition);
 				}
 		
 				$output .= '</select>'."\n";
 				$output .= '<div class="clear"></div>';
-				$output .= '<div id="form_' . $fieldName . 'Container" class="selector"></div>'."\n";
+				$output .= '<div ' . $formField->getIdAttr('container') . ' class="selector"></div>'."\n";
 				$output .= '<div class="clear"></div>';
 				if (Config::Get('SELECTOR_IMMEDIATELY')) {
 					$output .= '<script type="text/javascript">'."\n";

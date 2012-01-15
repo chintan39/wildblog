@@ -55,8 +55,10 @@ class Javascript {
 	/**
 	 * Adds a Selector definition to be included
 	 */
-	public static function addSelector($modelName, $meta, $fieldsSource=null, $definition=null, $addButtonFuncName=null) {
-		$name = 'form_' . $meta->getName();
+	public static function addSelector($formField, $fieldsSource=null, $definition=null, $addButtonFuncName=null) {
+		$meta = $formField->getMeta();
+		$modelName = $formField->getModelName();
+		$name = $formField->getFormPrefix() . $meta->getName();
 		if (!$definition) {
 			$definition = MetaDataContainer::getFieldOptions($modelName, $meta->getName());
 		}
@@ -414,8 +416,10 @@ class Javascript {
 	}
 	
 	
-	public static function addSelectorWindowButton($modelName, $meta, $title, $newButtonName=null) {
-		$selectorInit = Javascript::addSelector($modelName, $meta, Javascript::SELECTOR_SOURCE_AJAX, null, $newButtonName);
+	public static function addSelectorWindowButton($formField, $title, $newButtonName=null) {
+		$meta = $formField->getMeta();
+		$modelName = $formField->getModelName();
+		$selectorInit = Javascript::addSelector($formField, Javascript::SELECTOR_SOURCE_AJAX, null, $newButtonName);
 		$linkReady = Request::getLinkSimple('Base', 'Options', 'actionGetMetaOptions', array(
 			'model' => $modelName,
 			'field' => $meta->getName()));

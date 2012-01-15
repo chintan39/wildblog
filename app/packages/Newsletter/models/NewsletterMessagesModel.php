@@ -82,7 +82,8 @@ class NewsletterMessagesModel extends AbstractPagesModel {
     	return ($this->reply_to ? $this->reply_to : $this->getDefualtReplytoEmail());
     }
 
-    public function getFormHTML($meta) {
+    public function getFormHTML($formField) {
+    	$meta = $formField->getMeta();
 		$fieldName = $meta->getName();
 		if ($fieldName == 'contactGroups') {
 			if (Config::Get('NEWSLETTER_ALLOW_CHECK_ADDRESSES')) {

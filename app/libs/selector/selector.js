@@ -82,9 +82,9 @@ SelectorMenu.setup = function(params)
    	
     if (selectorMenu.isMultiple()) {
 	  // create container to hold a button for adding a new item
-   	  newClear = new Element('span')
-	  newClear.addClassName('clear')
-	  selectorMenu.getContainerField().appendChild(newClear)
+   	  //newClear = new Element('span')
+	  //newClear.addClassName('clear')
+	  //selectorMenu.getContainerField().appendChild(newClear)
 	  
 	  addItemContainer = new Element('div')
 	  addItemContainer.addClassName('addNewItemButton')

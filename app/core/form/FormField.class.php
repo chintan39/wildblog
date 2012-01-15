@@ -52,6 +52,18 @@ class FormField {
 		}
 		return ' style="' . $this->style . '"';
 	}
+	
+	public function getModelName() {
+		return $this->modelName;
+	}
+	
+	public function getDataModel() {
+		return $this->dataModel;
+	}
+
+	public function getMeta() {
+		return $this->meta;
+	}
 
 	public function getClassAttr() {
 		if (empty($this->classes)) {
@@ -69,7 +81,11 @@ class FormField {
 	}
 
 	public function getIdValue($suffix='') {
-		return 'form' . $this->formIdentifier . '_' . $this->name . ($suffix ? ('_' .  $suffix) : '');
+		return $this->getFormPrefix() . $this->name . ($suffix ? ('_' .  $suffix) : '');
+	}
+	
+	public function getFormPrefix() {
+		return 'form' . $this->formIdentifier . '_';
 	}
 
 	public function removeClass($class) {
@@ -195,7 +211,7 @@ class FormFieldFactory {
 	
 class FormFieldSpecificNotInDb extends FormField {
 	public function setHTML($class, $style, $onclick, $onchange) {
-		$this->html = $this->meta->getRenderObject()->getFormHTML($this->meta, $this->dataModel);
+		$this->html = $this->meta->getRenderObject()->getFormHTML($this);
 	}
 }
 
@@ -356,12 +372,12 @@ class FormFieldSelect extends FormField {
 			Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'windows/javascripts/window.js');
 			Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/default.css'); 
 			Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/lighting.css');
-			$selectorWindowButton = Javascript::addSelectorWindowButton($this->modelName, $this->meta, tg('Add a new item'));
+			$selectorWindowButton = Javascript::addSelectorWindowButton($this, tg('Add a new item'));
 		} else {
 			$selectorWindowButton = '';
 		} 
 		if ($this->meta->getSelector()) {
-			$script = Javascript::addSelector($this->modelName, $this->meta);
+			$script = Javascript::addSelector($this);
 			if (Config::Get('SELECTOR_IMMEDIATELY')) {
 				$this->html .= "<script type=\"text/javascript\">\n";
 				$this->html .= $script;
@@ -396,18 +412,18 @@ class FormFieldMultiSelect extends FormFieldSelect {
 		$this->html .= "</select>";
 		if ($this->meta->getSelector()) {
 			$this->html .= "<div " . $this->getIdAttr('container') . " class=\"selector\"></div>\n";
-			$this->html .= "\n<div class=\"clear\"></div>";
 		}
+		$this->html .= "\n<div class=\"clear\"></div>";
 		
 		if ($this->meta->getLinkNewItem()) {
 			// window selector
 			Javascript::addWindows();
-			$selectorWindowButton = Javascript::addSelectorWindowButton($this->modelName, $this->meta, tg('Add a new item'), 'addButtonFunction');
+			$selectorWindowButton = Javascript::addSelectorWindowButton($this, tg('Add a new item'), 'addButtonFunction');
 		} else {
 			$selectorWindowButton = '';
 		} 
 		if ($this->meta->getSelector()) {
-			$script = Javascript::addSelector($this->modelName, $this->meta, null, null, 'addButtonFunction');
+			$script = Javascript::addSelector($this, null, null, 'addButtonFunction');
 			if (Config::Get('SELECTOR_IMMEDIATELY')) {
 				$this->html .= "<script type=\"text/javascript\">\n";
 				$this->html .= 'var addButtonFunction=function() {' . $selectorWindowButton . '}' . "\n";

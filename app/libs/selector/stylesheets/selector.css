@@ -96,7 +96,8 @@ div.selector div.options a span.clear {
 
 div.selector div.addNewItemButton {
 	display: block;
-	height: 32px;
+	float: left;
+	padding: 10px;
 }
 
 div.selector div.addNewItemButton a {
