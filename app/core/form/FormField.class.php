@@ -526,7 +526,7 @@ class FormFieldLink extends FormField {
 		dataField: '" . $this->getIdValue() . "',
 		triggerElement: '" . $this->getIdValue('button') . "'})});");
 		$this->html .= "<input type=\"text\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" />";
-		$this->html .= "<div id=\"" . $this->getIdValue() . "\"></div>";
+		$this->html .= "<div id=\"" . $this->getIdValue('container') . "\"></div>";
 	}
 }
 
