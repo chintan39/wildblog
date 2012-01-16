@@ -227,7 +227,7 @@ class BasicArticlesController extends AbstractPagesController {
 		$searchPosts = new ItemCollection("searchArticles", $this);
 		$searchPosts->setLimit(10);
 		$searchPosts->setLinks("actionDetail");
-		$searchPosts->setQualification(array("fulltext" => array(new ItemQualification("title LIKE ? OR text LIKE ?", array('%' . $text . '%', '%' . $text . '%')))));
+		$searchPosts->addQualification(array("fulltext" => array(new ItemQualification("title LIKE ? OR text LIKE ?", array('%' . $text . '%', '%' . $text . '%')))));
 		$searchPosts->loadCollection();
 		$searchPosts->addLinks();
 		if ($searchPosts->data["items"]) {

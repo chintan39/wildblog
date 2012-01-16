@@ -271,6 +271,8 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 			return;
 		foreach ($this->qualification as $qGroup) {
 			foreach ($qGroup as $q) {
+				if (!is_object($q))
+					throw new Exception("F");
 				$filters[] = '(' . $q->filter . ')';
 				if (is_array($q->value)) {
 					// id values is array

@@ -73,7 +73,7 @@ class BlogPostsController extends AbstractPagesController {
 		// related posts
 		$related = new ItemCollection("relatedPosts", $this);
 		$related->setDataModelMethod('getRelatedPosts');
-		$related->setQualification(array("postId" => array('id = ?', $post->id)));
+		$related->addQualification(array("postId" => array(new ItemQualification('id = ?', $post->id))));
 		$related->loadCollection();
 		$related->addLinks(null, "actionDetail");
 		$this->assign("relatedPosts", $related);

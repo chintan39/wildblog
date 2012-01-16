@@ -13,6 +13,8 @@
 
 {generate_paging collection=$gallery->images}
 
+{require package=Base file='part.editItem' itemPackage=Gallery itemController=Galleries itemAction=actionEdit itemItem=$gallery}
+
 {require file=part.references package=References}
 
 {require file='part.footer'}

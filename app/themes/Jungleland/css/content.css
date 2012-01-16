@@ -1,0 +1,98 @@
+/* ----------------------------------------------
+	Template Name : Jungleland
+	Template Code : S-0030
+	Version : 1.0   
+	Author : Erwin Aligam
+	Author URI : http://www.styleshout.com/       
+	Last Date Modified : August 31, 2009
+ ------------------------------------------------ */
+ 
+/* ----------------------------------------------
+   HTML ELEMENTS
+------------------------------------------------- */ 
+
+body {
+	font: 12px/170% 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, Sans-Serif;
+	background: #1d140f;
+	color: #91807F; 
+}
+
+.clear { clear: both; }
+
+/* links */
+a:link, a:visited { 
+	text-decoration: none;
+	color: #c67114;	
+}
+a:hover { color: #fff; }
+
+/* headers */
+h1, h2, h3, h4 {
+	font: bold 1em/1.5em 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, Sans-Serif;
+	color: #f0e8e8;
+	margin: 10px 20px 7px 20px;	 
+}
+h1 { font-size: 2.9em; font-weight: bold; letter-spacing: -2px; }
+h2 { font-size: 2.2em; font-weight: bold; letter-spacing: -2px;}
+h3 { font-size: 1.9em; font-weight: normal; letter-spacing: -0.5px; padding-top: 5px; }
+h4 { font-size: 1.7em; }
+
+/* Lists */
+ul, ol {
+	margin: 10px 20px;
+	padding: 0 20px;
+}
+ul { list-style: disc; }
+ol { list-style: decimal; }
+
+dt {
+  font-weight: bold;
+  color: #6f892c;
+}
+dd {
+  padding-left: 20px; 
+}
+p, dl { margin: 10px 20px; }
+
+/* images */
+img {
+	background-color: #150e0b;
+   border: 1px solid #261b15;
+	padding: 8px;	
+}
+
+.center {
+	text-align: center;
+}
+
+
+/* special format classes */
+
+.no-border {
+	border: none;
+}
+
+.float-left  { 
+	float: left; 
+}
+
+.float-right {	
+	float: right;  
+}
+
+.clear {
+	clear: both;
+}
+
+.align-left  {	
+	text-align: left; 
+}
+
+.align-right {	
+	text-align: right; 
+}
+
+.align-center {
+	text-align: center;
+}
+

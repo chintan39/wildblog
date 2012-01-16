@@ -87,11 +87,12 @@ class BasicNewsController extends AbstractPagesController {
 	 */
 	public function actionNewsArchivMonth($args) {
 		$items = new ItemCollection("news", $this);
-		$filters = array("YEAR(published) = ?" => $args["year"]);
+		$filters = array();
+		$filters[] = new ItemQualification("YEAR(published) = ?", $args["year"]);
     	if (array_key_exists("month", $args)) {
-    		$filters["MONTH(published) = ?"] = $args["month"];
+    		$filters[] = new ItemQualification("MONTH(published) = ?", $args["month"]);
     	}
-		$items->setQualification(array("archive" => $filters));
+		$items->addQualification(array("archive" => $filters));
 		$items->setLimit(Config::Get('BASIC_NEWS_LIMIT'));
 		$items->loadCollection();
 		$items->addLinks(null, "actionDetail");
@@ -150,7 +151,7 @@ class BasicNewsController extends AbstractPagesController {
 		$searchNews = new ItemCollection("searchNews", $this);
 		$searchNews->setLimit(Config::Get('BASIC_NEWS_LIMIT'));
 		$searchNews->setLinks("actionDetail");
-		$searchNews->setQualification(array("fulltext" => array("title LIKE ? OR text LIKE ?" => array('%' . $text . '%', '%' . $text . '%'))));
+		$searchNews->addQualification(array("fulltext" => array(new ItemQualification("title LIKE ? OR text LIKE ?", array('%' . $text . '%', '%' . $text . '%')))));
 		$searchNews->loadCollection();
 		$searchNews->addLinks();
 		if ($searchNews->data["items"]) {
