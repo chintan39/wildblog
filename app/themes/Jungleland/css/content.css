@@ -52,7 +52,10 @@ dt {
 dd {
   padding-left: 20px; 
 }
-p, dl { margin: 10px 20px; }
+p, dl, li { margin: 10px 20px; }
+li {
+	list-style-position: inside;
+}
 
 /* images */
 img {

@@ -165,9 +165,6 @@ input.button {
 	text-decoration: none;	
 	color: #fff;
 }
-li {
-	list-style-position: inside;
-}
 #name, #email, #message, #website {
 	width: 470px;
 }
