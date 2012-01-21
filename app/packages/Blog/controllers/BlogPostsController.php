@@ -9,7 +9,7 @@ class BlogPostsController extends AbstractPagesController {
 		$items = new ItemCollection("blogposts", $this);
 		$items->setPagingAjax(true);
 		$items->setSorting(array(new ItemSorting("published", SORTING_DESC)));
-		$items->setLimit(6);
+		$items->setLimit(Config::Get('BLOG_POSTS_LIMIT'));
 		$items->loadCollection();
 		$items->addLinks(null, "actionDetail");
 		$this->addPostTagsComments($items);
@@ -133,7 +133,7 @@ class BlogPostsController extends AbstractPagesController {
     	}
 		$items->setQualification(array("archive" => $filters));
 		$items->setSorting(array(new ItemSorting("published", SORTING_DESC)));
-		$items->setLimit(6);
+		$items->setLimit(Config::Get('BLOG_POSTS_LIMIT'));
 		$items->loadCollection();
 		$items->addLinks(null, "actionDetail");
 		$this->addPostTagsComments($items);

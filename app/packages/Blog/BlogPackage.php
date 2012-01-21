@@ -9,6 +9,7 @@ class BlogPackage extends Package {
 		Config::Set("BLOG_PACKAGE_LANGUAGE_SUPPORT", false, null, Config::BOOL, false);
 		Config::Set("BLOG_PACKAGE_ALLOW", true, null, Config::BOOL, false);
 		Config::Set("BLOG_COMMENTS", true, null, Config::BOOL, false);
+		Config::Set("BLOG_POSTS_LIMIT", 6, null, Config::INT, true);
 	}
 	
 	public function getLinksAdminMenuLeft() {
