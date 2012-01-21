@@ -95,28 +95,29 @@ class BlogPostsController extends AbstractPagesController {
 		$this->assign("post", $post);
 		
 		// handel new comment form
-		$comment = new BlogCommentsModel();
-		$form = new Form();
-		$form->useRecaptcha(true);
-		$form->setIdentifier("commentNewForm");
-		$form->addPredefinedValue("post", $post->id);
-		$form->addPredefinedValue("parent", 0);
-		$form->addPredefinedValue("active", 0);
-		$form->addPredefinedValue("author", 0);
-		$form->addPredefinedValue("description", "");
-		$form->addPredefinedValue("seo_description", "");
-		$form->addPredefinedValue("seo_keywords", "");
-		$form->fill($comment);
-		$form->setLabel(tg("Add New Comment"));
-		$form->setDescription(tg("Note: Comments will be visible after manual check by admin."));
-		// handeling the form request
-		$form->handleRequest(array('all' => array(
-			'package' => $this->package, 
-			'controller' => $this, 
-			'action' => 'actionDetail',
-			'item' => $post)));
-		$this->assign($form->getIdentifier(), $form->toArray());
-
+		if (Config::Get('BLOG_COMMENTS')) {
+			$comment = new BlogCommentsModel();
+			$form = new Form();
+			$form->useRecaptcha(true);
+			$form->setIdentifier("commentNewForm");
+			$form->addPredefinedValue("post", $post->id);
+			$form->addPredefinedValue("parent", 0);
+			$form->addPredefinedValue("active", 0);
+			$form->addPredefinedValue("author", 0);
+			$form->addPredefinedValue("description", "");
+			$form->addPredefinedValue("seo_description", "");
+			$form->addPredefinedValue("seo_keywords", "");
+			$form->fill($comment);
+			$form->setLabel(tg("Add New Comment"));
+			$form->setDescription(tg("Note: Comments will be visible after manual check by admin."));
+			// handeling the form request
+			$form->handleRequest(array('all' => array(
+				'package' => $this->package, 
+				'controller' => $this, 
+				'action' => 'actionDetail',
+				'item' => $post)));
+			$this->assign($form->getIdentifier(), $form->toArray());
+		}
 	}
 	
 	

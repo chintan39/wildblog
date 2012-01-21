@@ -39,7 +39,7 @@ class BlogPostsModel extends AbstractPagesModel {
 	 */
 	public function getRelatedPosts() {
 		$list = array();
-		$postId = $this->qualification['postId'][1];
+		$postId = $this->qualification['postId'][0]->value;
 		$limit = 5;
 
 		$postClass = new BlogPostsModel();

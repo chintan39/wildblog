@@ -153,6 +153,7 @@ class Request {
 			$today = date('j. XXX Y');
 			$today = str_replace('XXX', Utilities::monthNameLong((int)date('m')), $today);
 			Environment::$smarty->assign('today', $today);
+			Environment::$smarty->assign('now', time());
 			Environment::$smarty->assign('visitorsCount', Config::GetCond('BASE_VISITORS_COUNT', 0));
 			
 			Environment::$smarty->assign('frontendLanguages', Language::getLanguages(Themes::FRONT_END));
