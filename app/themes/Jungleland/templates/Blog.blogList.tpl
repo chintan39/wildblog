@@ -7,9 +7,7 @@
 			
 					<h2><a href="{$post->link}">{$post->title}</a></h2>
 					
-					<p class="post-info">Posted by <a href="#">Petra</a></p>
-				
-					{$post->text}
+					{$post->text|strip_tags|truncate:"500"}
 										
 					{if $post->tags}
 					<p class="tags">	
@@ -18,10 +16,6 @@
 					</p>
 					{/if}
 				
-					<p class="postmeta">		
-						<a href="{$post->link}#comments" class="comments">Comments ({$post->commentsCount})</a> |
-						<span class="date">{$post->published|date_format:"%e"}. {$post->published|date_format:"%m"|month_format:"%nam"} {$post->published|date_format:"%Y"}</span> 
-					</p>
 		</div>
 
 {/foreach}
