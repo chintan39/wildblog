@@ -166,7 +166,7 @@ input.button {
 	color: #fff;
 }
 li {
-	margin-left: 20px;
+	list-style-position: inside;
 }
 #name, #email, #message, #website {
 	width: 470px;
