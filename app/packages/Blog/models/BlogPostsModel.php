@@ -75,6 +75,42 @@ class BlogPostsModel extends AbstractPagesModel {
 		return $list;
 	}
 	
+	/**
+	 * Method gets some random posts.
+	 * @param string $itemCollectionIdentifier
+	 * @param array $postIds array of int (id of the post)
+	 */
+	public function getRandomPosts() {
+		$list = array();
+		$postId = $this->qualification['postId'][0]->value;
+		$limit = 5;
+
+		$postClass = new BlogPostsModel();
+		$postTagClass = new BlogPostsTagsModel();
+		$extendedTextsJoin = QueryBuilder::getExtendedTextsJoin($postClass);
+		$languageSupportWhere = QueryBuilder::getLanguageWhere($postClass);
+		if ($languageSupportWhere) {
+			$languageSupportWhere .= ' AND ';
+		}
+		$fieldnames = implode(',', $this->getFieldsSQLArray());
+		$postsTable = '`' . $postClass->getTableName() . '`';
+		$query = "
+			SELECT $fieldnames
+			FROM $postsTable
+			$extendedTextsJoin
+			WHERE $postsTable.active = 1 AND $languageSupportWhere $postsTable.id != $postId 
+			ORDER BY RAND()
+			LIMIT $limit
+			";
+		if (Config::Get('DEBUG_MODE')) {
+			Benchmark::log('getRandomPosts SQL: ' . $query); // QUERY logger
+		}
+		$list['items'] = AbstractDBObjectModel::importArray($this->name, dbConnection::getInstance()->fetchAll($query));
+		$list['columns'] = $this->getVisibleColumnsInCollection();
+		$list['itemsCount'] = count($list['items']);
+		return $list;
+	}
+	
 } 
 
 ?>
