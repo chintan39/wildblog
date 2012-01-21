@@ -519,7 +519,7 @@ div.list a {
 	display: block;
 	position: absolute;
 	top: -2px;
-	right: -50px;
+	left: -50px;
 	font-size: 70%;
 	color: #aa3333;
 	width: 45px;
