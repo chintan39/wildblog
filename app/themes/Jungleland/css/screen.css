@@ -165,7 +165,7 @@ input.button {
 	text-decoration: none;	
 	color: #fff;
 }
-ul {
+li {
 	margin-left: 20px;
 }
 #name, #email, #message, #website {
@@ -898,4 +898,7 @@ p.sub-references {
 div.related img {
 	top: 7px;
 	left: -7px;
+}
+div.related a {
+	display: block;
 }
