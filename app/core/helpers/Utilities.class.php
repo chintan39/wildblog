@@ -455,7 +455,7 @@ class Utilities {
 	static public function checkHTMLFormat($input, $allowedTags="a|abbr|acronym|address|applet|b|big|blockquote|br/|caption|cite|code|col/|colgroup|dd|del|dfn|div|dl|dt|em|h1|h2|h3|h4|h5|h6|hr/|i|img/|li|link/|ol|p|param/|pre|q|samp|script|small|span|strong|style|sub|sup|table|tbody|td|tfoot|th|thead|title|tr|tt|ul") {
 		$allowedTagsArray = array_flip(explode('|', $allowedTags));
 		$inputLength = strlen($input);
-	
+		
 		// stack to store opened tags
 		$tagStack = array();
 	
@@ -510,7 +510,14 @@ class Utilities {
 			if (!$endingTag)
 				$tagStack[] = $tagName;
 		}
-		return empty($tagStack);
+		// clear all left tags that can be alone (without closing partner
+		foreach ($tagStack as $k => $tag) {
+			if (array_key_exists($tagName.'/', $allowedTagsArray))
+				unset($tagStack[$k]);
+		}
+		if (!empty($tagStack))
+			return tg('tag') . ' ' . $tagStack[0] . ' ' . tg('does not end');
+		return true;
 
 	}
 
