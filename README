@@ -1,0 +1,19 @@
+Project WildBlog
+
+Author: Honza Horak <horak.honza@gmail.com>
+
+Description:
+Just another CMS written in PHP. But in comparison to other similar naive 
+projects I've spent much effort to do it right :) Project uses the MVC design 
+and PHP object model (a bit inspired by RoR and another frameworks). 
+The system should be easy to extend, debug and use.
+
+The main aim of the project is to develop a CMS (Content management system) 
+with an advanced framework as its core, which is possible to get to work 
+within a couple of minutes. 
+
+Project uses PHP (object model), MySQL database, standard PHP libraries 
+and some open-source third-party libraries (Smarty, P.O.R.K, TinyMCE, etc.)
+
+Project is licensed under GPLv3+, see gpl-3.0.txt
+
