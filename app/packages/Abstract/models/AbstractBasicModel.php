@@ -47,6 +47,10 @@ class AbstractBasicModel {
 		
 	}
 
+	public function getName() {
+		return $this->name;
+	}
+	
 	/**
 	 * Save data to some object, can be overwritten, but not has to be.
 	 */

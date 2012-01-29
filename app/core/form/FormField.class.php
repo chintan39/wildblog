@@ -19,33 +19,42 @@
 
 class FormField {
 	
-	public $name = null;		// attribute name in form
-	public $actions = array();	// 
-	public $meta = null;		// metadata of the field
-	public $dataModel = null;	// data model doesn't have to be set
-	public $modelName = null;	// name of the data model
-	public $message = null; 	// messages related to this field
-	public $options = null;		// values options
-	public $value = null;		// value of the field
-	public $classes = array();
-	public $style='';
-	public $onclick='';
-	public $onchange='';
-	public $disabled='';
-	public $hasBox = true;
-	public $hasLabel = true;
-	public $html = null;
-	public $lineStyle = '';
-	public $formIdentifier = '';
-	public $optionsFromModel = true;
-	public $isChangeAble = true;
-	public $isVisibleInForm = true;
+	protected $meta = null;			// metadata of the field
+	protected $value = null;			// value of the field
+	protected $dataModel = null;	// data model doesn't have to be set
+	protected $message = null; 		// messages related to this field
+	protected $options = null;		// values options
+	protected $classes = array();
+	protected $style='';
+	protected $onclick='';
+	protected $onchange='';
+	protected $disabled='';
+	protected $hasBox = true;
+	protected $hasLabel = true;
+	protected $html = null;
+	protected $lineStyle = '';
+	protected $formIdentifier = '';
+	protected $optionsFromModel = true;
+	protected $isChangeAble = true;
+	protected $isVisibleInForm = true;
 
 	public function __construct($formIdentifier) {
 		$this->message = new stdClass; 
 		$this->message->error = array();
 		$this->message->warning = array();
 		$this->formIdentifier = $formIdentifier;
+	}
+
+	public function setDataModel($dataModel) {
+		$this->dataModel = $dataModel;
+	}
+	
+	public function setIsChangeAble($isChangeAble) {
+		$this->isChangeAble = $isChangeAble;
+	}
+	
+	public function setIsVisibleInForm($isVisibleInForm) {
+		$this->isVisibleInForm = $isVisibleInForm;
 	}
 	
 	public function addClass($class) {
@@ -62,6 +71,14 @@ class FormField {
 		
 		$this->style .= $style;
 	}
+	
+	public function setWarningMessage($textArray) {
+		$this->message->error = $textArray;
+	}
+	
+	public function setErrorMessage($textArray) {
+		$this->message->warning = $textArray;
+	}
 
 	public function getStyleAttr() {
 		if (empty($this->style)) {
@@ -71,7 +88,7 @@ class FormField {
 	}
 	
 	public function getModelName() {
-		return $this->modelName;
+		return $this->dataModel ? $this->dataModel->getName() : '';
 	}
 	
 	public function getDataModel() {
@@ -82,6 +99,26 @@ class FormField {
 		return $this->meta;
 	}
 
+	public function setMeta($meta) {
+		$this->meta = $meta;
+	}
+
+	public function setValue($value) {
+		$this->value = $value;
+	}
+
+	public function addValue($value) {
+		$this->value[] = $value;
+	}
+
+	public function setOptions($options) {
+		$this->options = $options;
+	}
+	
+	public function setOptionsFromModel($value) {
+		$this->optionsFromModel = $value;
+	}
+	
 	public function getClassAttr() {
 		if (empty($this->classes)) {
 			return '';
@@ -90,7 +127,7 @@ class FormField {
 	}
 
 	public function getNameAttr() {
-		return ' name="' . $this->name . '"';
+		return ' name="' . $this->meta->getName() . '"';
 	}
 
 	public function getIdAttr($suffix='') {
@@ -98,7 +135,7 @@ class FormField {
 	}
 
 	public function getIdValue($suffix='') {
-		return $this->getFormPrefix() . $this->name . ($suffix ? ('_' .  $suffix) : '');
+		return $this->getFormPrefix() . $this->meta->getName() . ($suffix ? ('_' .  $suffix) : '');
 	}
 	
 	public function getFormPrefix() {
@@ -300,17 +337,10 @@ class FormFieldPassword extends FormField {
 		if (Restriction::hasRestrictions($this->meta->getRestrictions(), Restriction::R_CONFIRM_DOUBLE)) {
 			$this->html .= "\n<div class=\"clear\"></div>";
 			$this->html .= "\n</div>";
-			$thisConfirm = new stdClass;
-			$thisConfirm->message = new stdClass; 
-			$thisConfirm->message->error = array();
-			$thisConfirm->message->warning = array();
-			$thisConfirm->meta = AtributesFactory::create("confirm_" . $this->meta->getName())
-				->setLabel(tg("Confirm") . " " . tg($this->meta->getLabel()))
-				->setDescription(tg($this->meta->getDescription()))
-				->setRestrictions($this->meta->getRestrictions());
+			$confirmName = "confirm_" . $this->meta->getName();
 			$this->html .= "\n\n<div class=\"line\" " . $this->getIdAttr('line_confirm') . ">";
 			$this->html .= $this->meta->getLabel();
-			$this->html .= "<input type=\"password\" onchange=\"if (this.value != $('$origFieldId').value) {this.addClassName('error');} else {this.removeClassName('error');}\" " . $this->getIdAttr('confirm') . " name=\"" . $thisConfirm->meta->getName() . "\" value=\"\" class=\"$class\" />";
+			$this->html .= "<input type=\"password\" onchange=\"if (this.value != $('$origFieldId').value) {this.addClassName('error');} else {this.removeClassName('error');}\" " . $this->getIdAttr('confirm') . " name=\"" . $confirmName . "\" value=\"\" class=\"$class\" />";
 		}
 	}
 }
@@ -370,8 +400,8 @@ class FormFieldSelect extends FormField {
 			$this->html .= "<option value=\"\"". ((!$this->value) ? " selected=\"selected\"" : "") . ">" . "[not selected]" . "</option>\n";
 		}
 		$transOpt = $this->meta->getOptionsShouldBeTranslated();
-		if ($this->optionsFromModel && property_exists($this, 'modelName')) {
-			$options = MetaDataContainer::getFieldOptions($this->modelName, $this->meta->getName());
+		if ($this->optionsFromModel) {
+			$options = MetaDataContainer::getFieldOptions($this->getModelName(), $this->meta->getName());
 		} else {
 			$options = $this->meta->getOptions();
 		}
@@ -421,7 +451,7 @@ class FormFieldMultiSelect extends FormFieldSelect {
 		if ($this->meta->getType() == Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE) {
 			$options = $this->options;
 		} else {
-			$options = MetaDataContainer::getFieldOptions($this->modelName, $this->meta->getName());
+			$options = MetaDataContainer::getFieldOptions($this->getModelName(), $this->meta->getName());
 		}
 		foreach ($options as $o) {
 			$this->html .= "<option value=\"" . $o["id"] . "\"". ((in_array($o["id"], $this->value)) ? " selected=\"selected\"" : ""). (array_key_exists("disabled", $o) && $o["disabled"] ? " disabled=\"disabled\"" : "") .">" . $o["value"] . "</option>\n";

@@ -241,7 +241,7 @@ class Form {
 		// generate tabs
 		$tmpTabs = array();
 		foreach ($this->getFields() as $field) {
-			$tabId = $field->meta->getFormTab() ? $field->meta->getFormTab() : self::TAB_BASIC;
+			$tabId = $field->getMeta()->getFormTab() ? $field->getMeta()->getFormTab() : self::TAB_BASIC;
 			if (!array_key_exists($tabId, $tmpTabs)) {
 				$tmpTabs[$tabId] = array(
 					'id' => $tabId,
@@ -341,13 +341,11 @@ class Form {
 				continue;
 			}
 			$field = FormFieldFactory::getInstance($meta->getType(), $this->identifier); 
-			$field->name = $fieldName;
-			$field->isVisibleInForm = $isVisibleInForm;
-			$field->isChangeAble = $isChangeAble;
-			$field->meta = $this->dataModel->getMetaData($fieldName);
-			$field->dataModel = $this->dataModel;
-			$field->value = $this->dataModel->getValue($fieldName);
-			$field->modelName = $modelName;
+			$field->setIsVisibleInForm($isVisibleInForm);
+			$field->setIsChangeAble($isChangeAble);
+			$field->setMeta($this->dataModel->getMetaData($fieldName));
+			$field->setDataModel($this->dataModel);
+			$field->setValue($this->dataModel->getValue($fieldName));
 			
 			// special behaviour of the 1:many relation
 			if (in_array($meta->getType(), array(self::FORM_RADIO_FOREIGNKEY, self::FORM_SELECT_FOREIGNKEY))) {
@@ -355,7 +353,7 @@ class Form {
 				$foreignModelName = $this->dataModel->getRelationModel($fieldName);
 				if (!class_exists($foreignModelName)) throw new Exception("Class '$foreignModelName' used by field '$fieldName' is not defined.");
 				$foreignModel = new $foreignModelName();
-				$field->options = $foreignModel->$listMethodName();
+				$field->setOptions($foreignModel->$listMethodName());
 			}
 			
 			// special behaviour of the many:many relation
@@ -364,24 +362,24 @@ class Form {
 				$foreignModelName = $meta->getOptionsModel();
 				//$connectorModelName = $this->dataModel->relations[$foreignModelName]->connectorClass;
 				//$connectorModel = new $connectorModelName();
-				$field->value = array();
+				$field->setValue(array());
 				if ($this->dataModel->id) {
 					$relatedItems = $this->dataModel->Find($foreignModelName, array(), array(), array(), array("id"));
 					if (is_array($relatedItems)) {
 						foreach ($relatedItems as $item) {
-							$field->value[] = $item->id;
+							$field->addValue($item->id);
 						}
 					}
 				}
 				$foreignModel = new $foreignModelName();
-				$field->options = $foreignModel->$listMethodName();
+				$field->setOptions($foreignModel->$listMethodName());
 			}
 			
 			if (in_array($meta->getType(), array(self::FORM_MULTISELECT))) {
-				$field->value = array();
+				$field->setValue(array());
 				$values = $this->dataModel->getValue($fieldName);
 				foreach (explode(';', $values) as $id) {
-					$field->value[] = $id;
+					$field->addValue($id);
 				}
 			}
 			$this->fields[] = $field;
@@ -401,9 +399,9 @@ class Form {
 					foreach ($properties as $propItem) {
 						if ($propItem->value_name == $fieldName) {
 							switch ($propItem->value_type) {
-							case AbstractPropertiesModel::VALUE_NUMBER: $field->value = $propItem->value_number; break;
-							case AbstractPropertiesModel::VALUE_STRING: $field->value = $propItem->value_string; break;
-							case AbstractPropertiesModel::VALUE_DATETIME: $field->value = $propItem->value_datetime; break;
+							case AbstractPropertiesModel::VALUE_NUMBER: $field->setValue($propItem->value_number); break;
+							case AbstractPropertiesModel::VALUE_STRING: $field->setValue($propItem->value_string); break;
+							case AbstractPropertiesModel::VALUE_DATETIME: $field->setValue($propItem->value_datetime); break;
 							default: break;
 							}
 						}
@@ -421,9 +419,9 @@ class Form {
 	 */
 	private function updateValuesFromReq() {
 		foreach ($this->fields as $name => $field) {
-			$this->fields[$name]->value = $this->req[$field->meta->getName()];
-			$this->fields[$name]->message->error = ((isset($this->messages['errors'][$field->meta->getName()]) && $this->messages['errors'][$field->meta->getName()]) ? $this->messages['errors'][$field->meta->getName()] : '');
-			$this->fields[$name]->message->warning = ((isset($this->messages['warnings'][$field->meta->getName()]) && $this->messages['warnings'][$fieldName['name']]) ? $this->messages['warnings'][$field->meta->getName()] : '');
+			$this->fields[$name]->setValue($this->req[$field->getMeta()->getName()]);
+			$this->fields[$name]->setErrorMessage((isset($this->messages['errors'][$field->getMeta()->getName()]) && $this->messages['errors'][$field->getMeta()->getName()]) ? $this->messages['errors'][$field->getMeta()->getName()] : '');
+			$this->fields[$name]->setWarningMessage((isset($this->messages['warnings'][$field->getMeta()->getName()]) && $this->messages['warnings'][$fieldName['name']]) ? $this->messages['warnings'][$field->getMeta()->getName()] : '');
 		}
 	}
 	
@@ -434,8 +432,8 @@ class Form {
 	 */
 	private function updateValuesFromGet() {
 		foreach ($this->fields as $name => $field) {
-			if (isset(Request::$get['_pred_'][$field->meta->getName()])) {
-				$this->fields[$name]->value = Request::$get['_pred_'][$field->meta->getName()];
+			if (isset(Request::$get['_pred_'][$field->getMeta()->getName()])) {
+				$this->fields[$name]->setValue(Request::$get['_pred_'][$field->getMeta()->getName()]);
 			}
 		}
 	}
@@ -891,28 +889,28 @@ class Form {
 		
 		// form identificator
 		$formId = new FormFieldHidden($this->identifier);
-		$formId->value = $this->identifier;
-		$formId->meta = AtributesFactory::create('form_identifier')
-			->setType(self::FORM_HIDDEN);
+		$formId->setValue($this->identifier);
+		$formId->setMeta(AtributesFactory::create('form_identifier')
+			->setType(self::FORM_HIDDEN));
 		$fieldsExtra = array($formId);
 
 		// captcha item
 		if ($this->useCaptcha && !$this->getCaptchaPassed()) {
 			$formCaptcha = new FormFieldCaptcha($this->identifier);
-			$formCaptcha->value = '';
-			$formCaptcha->meta = AtributesFactory::create('form_captcha')
+			$formCaptcha->setValue('');
+			$formCaptcha->setMeta(AtributesFactory::create('form_captcha')
 				->setLabel(tg('Anti-spam protection'))
 				->setDescription(tg('Write out the result from the image'))
-				->setType(self::FORM_CAPTCHA);
+				->setType(self::FORM_CAPTCHA));
 			$fieldsExtra[] = $formCaptcha;
 		}
 		
 		// Captcha-timer item
 		if ($this->useCaptchaTimer && !$this->getCaptchaPassed()) {
 			$formCaptchaTimer = new FormFieldHidden($this->identifier);
-			$formCaptchaTimer->value = Utilities::simpleEncrypt(time(), Config::Get('CAPTCHA_TIMER_KEY'));
-			$formCaptchaTimer->meta = AtributesFactory::create('captcha_timer_response_field')
-				->setType(self::FORM_HIDDEN);
+			$formCaptchaTimer->setValue(Utilities::simpleEncrypt(time(), Config::Get('CAPTCHA_TIMER_KEY')));
+			$formCaptchaTimer->setMeta(AtributesFactory::create('captcha_timer_response_field')
+				->setType(self::FORM_HIDDEN));
 			$fieldsExtra[] = $formCaptchaTimer;
 		}
 		
@@ -921,11 +919,11 @@ class Form {
 			require_once(DIR_LIBS . 'recaptcha/recaptchalib.php');
 			$publickey = '6LebUwsAAAAAAJDQornmGKt0dVL3oyIEdzgMHh66'; // public key from recaptcha.net
 			$formRecaptcha = new FormFieldRecaptcha($this->identifier);
-			$formRecaptcha->value = recaptcha_get_html($publickey);
-			$formRecaptcha->meta = AtributesFactory::create('recaptcha_response_field')
+			$formRecaptcha->setValue(recaptcha_get_html($publickey));
+			$formRecaptcha->setMeta(AtributesFactory::create('recaptcha_response_field')
 				->setLabel(tg('Anti-spam protection'))
 				->setDescription(tg('Write out the text from the image'))
-				->setType(self::FORM_RECAPTCHA);
+				->setType(self::FORM_RECAPTCHA));
 			$fieldsExtra[] = $formRecaptcha;
 		}
 		
@@ -940,16 +938,16 @@ class Form {
 				$options[] = array('id' => $key, 'value' => $action['title']);
 			}
 			$fieldAlterAct = new FormFieldSelect($this->identifier);
-			$fieldAlterAct->value = $this->getAlternativeActionKey();
-			$fieldAlterAct->optionsFromModel = false;
-			$fieldAlterAct->meta = AtributesFactory::create('form_action')
+			$fieldAlterAct->setValue($this->getAlternativeActionKey());
+			$fieldAlterAct->setOptionsFromModel(false);
+			$fieldAlterAct->setMeta(AtributesFactory::create('form_action')
 				->setLabel(tg('Action after submit'))
 				->setDescription(tg('Select action to continue'))
 				->setType(self::FORM_SELECT)
 				->setOptions($options)
 				->setLineClass('alternativeAction')
 				->setFormTab(self::TAB_NOT_IN_TAB)
-				->setOptionsMustBeSelected(true);
+				->setOptionsMustBeSelected(true));
 			$fieldsExtra[] = $fieldAlterAct;
 		}
 		return array_merge($this->fields, $fieldsExtra);
@@ -1020,7 +1018,7 @@ class Form {
 		// compose and export values from form
 		$values = array();
 		foreach ($this->getFields() as $field) {
-			$meta = $field->meta;
+			$meta = $field->getMeta();
 			if (!in_array($meta->getName(), array('form_captcha', 'captcha_timer_response_field', 'recaptcha_response_field', 'form_identifier', 'form_action'))) {
 				$values[$meta->getName()] = $this->req[$meta->getName()];
 			}
@@ -1118,7 +1116,7 @@ class Form {
 	
 	public function addFieldAttribute($fieldName, $actionType, $actionJSCode) {
 		foreach ($this->fields as $k => $field) {
-			if ($field->meta->getName() == $fieldName) {
+			if ($field->getMeta()->getName() == $fieldName) {
 				$field->attributes[$actionType] = $actionJSCode;
 			}
 		}
