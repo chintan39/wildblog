@@ -22,8 +22,13 @@ class FormField {
 	protected $meta = null;			// metadata of the field
 	protected $value = null;			// value of the field
 	protected $dataModel = null;	// data model doesn't have to be set
+
+	protected $formIdentifier = '';
+	protected $html = null;
 	protected $message = null; 		// messages related to this field
 	protected $options = null;		// values options
+	protected $optionsFromModel = true;
+	
 	protected $classes = array();
 	protected $style='';
 	protected $onclick='';
@@ -31,12 +36,7 @@ class FormField {
 	protected $disabled='';
 	protected $hasBox = true;
 	protected $hasLabel = true;
-	protected $html = null;
 	protected $lineStyle = '';
-	protected $formIdentifier = '';
-	protected $optionsFromModel = true;
-	protected $isChangeAble = true;
-	protected $isVisibleInForm = true;
 
 	public function __construct($formIdentifier) {
 		$this->message = new stdClass; 
@@ -47,14 +47,6 @@ class FormField {
 
 	public function setDataModel($dataModel) {
 		$this->dataModel = $dataModel;
-	}
-	
-	public function setIsChangeAble($isChangeAble) {
-		$this->isChangeAble = $isChangeAble;
-	}
-	
-	public function setIsVisibleInForm($isVisibleInForm) {
-		$this->isVisibleInForm = $isVisibleInForm;
 	}
 	
 	public function addClass($class) {
@@ -186,7 +178,8 @@ class FormField {
 		$onclick = $this->onclick ? " onclick=\"{$this->onclick}\"": '';
 		$onchange = $this->onchange ? " onchange=\"{$this->onchange}\"": '';
 		$style = $this->style ? " style=\"{$this->style}\"": '';
-		$this->disabled = $this->isChangeAble ? '' : " disabled=\"disabled\"";
+		$this->disabled = $this->meta->isChangeAble(isset($this->dataModel->id) ? $this->dataModel->id : null) 
+			? '' : " disabled=\"disabled\"";
 		if ($this->html === null) {
 			$this->setHTML($this->getClassAttr(), $this->getStyleAttr(), $onclick, $onchange);
 		}

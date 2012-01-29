@@ -85,32 +85,6 @@ class AbstractBasicModel {
     protected function attributesDefinition() {
     }
     
-	/**
-	 * Getter for metadata.
-	 * @param string $attrName Name of the attribute, if false, all metadata are returned.
-	 * @return array metadata for specific $attrName or all, if $attrName is set false
-	 */
-	public function getMetadata($attrName=false) {
-		return MetaDataContainer::getMetaData($this->name, $attrName);
-
-		/*
-		if ($attrName === false) {
-			return self::$metaData;
-		} else {
-			return self::$metaData[$attrName];
-		}
-		*/
-	}
-
-	/**
-	 * Returns true if metadata exists.
-	 * @param string $attrName Name of the attribute, if false, all metadata are returned.
-	 * @return bool Returns true if metadata exists.
-	 */
-	public function hasMetadata($attrName=false) {
-		return MetaDataContainer::hasMetaData($this->name, $attrName);
-	}
-
 	protected function propertiesDefinition() {
 	}
 	
@@ -188,13 +162,41 @@ class AbstractBasicModel {
 	}
 
 	
-	public function setMetaData($metaItemName, $paramName, $value) {
-		MetaDataContainer::setMetaData($this->name, $metaItemName, $paramName, $value);
+	/**
+	 * Setter for metadata.
+	 * @param string $attrName Name of the attribute, if false, all metadata are returned.
+	 * @param string $paramName Name of the parameter of the attribute.
+	 * @param mixed $value Metadata definition.
+	 */
+	public function setMetaData($attrName, $paramName, $value) {
+		MetaDataContainer::setMetaData($this->name, $attrName, $paramName, $value);
 	}
 	
 		
-	public function removeMetaData($metaName) {
-		MetaDataContainer::removeMetaData($this->name, $metaName);
+	/**
+	 * Removes metadata.
+	 * @param string $attrName Name of the attribute, if false, all metadata are returned.
+	 */
+	public function removeMetaData($attrName) {
+		MetaDataContainer::removeMetaData($this->name, $attrName);
+	}
+
+	/**
+	 * Getter for metadata.
+	 * @param string $attrName Name of the attribute, if false, all metadata are returned.
+	 * @return array metadata for specific $attrName or all, if $attrName is set false
+	 */
+	public function getMetadata($attrName=false) {
+		return MetaDataContainer::getMetaData($this->name, $attrName);
+	}
+
+	/**
+	 * Returns true if metadata exists.
+	 * @param string $attrName Name of the attribute, if false, all metadata are returned.
+	 * @return bool Returns true if metadata exists.
+	 */
+	public function hasMetadata($attrName=false) {
+		return MetaDataContainer::hasMetaData($this->name, $attrName);
 	}
 
 	

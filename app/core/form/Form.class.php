@@ -341,8 +341,6 @@ class Form {
 				continue;
 			}
 			$field = FormFieldFactory::getInstance($meta->getType(), $this->identifier); 
-			$field->setIsVisibleInForm($isVisibleInForm);
-			$field->setIsChangeAble($isChangeAble);
 			$field->setMeta($this->dataModel->getMetaData($fieldName));
 			$field->setDataModel($this->dataModel);
 			$field->setValue($this->dataModel->getValue($fieldName));
