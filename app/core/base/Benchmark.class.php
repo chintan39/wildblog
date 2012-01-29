@@ -88,6 +88,7 @@ class Benchmark {
 		foreach (Environment::$smarty->get_template_vars() as $k => $v) {
 			self::logMemory($v, "Smarty variable '$k'");
 		} 
+		self::logMemory(serialize(MetaDataContainer::$data), "MetaDataContainer size estimation");
 		global $__wwClassesLoaded;
 		self::log("Total classes autoloaded: $__wwClassesLoaded");
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'PhpQuickProfiler/css/pQp.css');
