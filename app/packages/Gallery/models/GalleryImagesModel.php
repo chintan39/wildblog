@@ -26,8 +26,8 @@ class GalleryImagesModel extends AbstractNodesModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdImage());
-		$this->addMetaData(AbstractAttributesModel::stdDescription());
+    	$this->addMetaData(AtributesFactory::stdImage());
+		$this->addMetaData(AtributesFactory::stdDescription());
 		
 		$this->addMetaData(ModelMetaItem::create('imageGalleryConnection')
 			->setLabel('Galleries')

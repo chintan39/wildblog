@@ -26,8 +26,8 @@ class BasicNewsModel extends AbstractPagesModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdPublished());
-    	$this->addMetaData(AbstractAttributesModel::stdColorRGBHexa());
+    	$this->addMetaData(AtributesFactory::stdPublished());
+    	$this->addMetaData(AtributesFactory::stdColorRGBHexa());
     	
 		$this->addMetaData(ModelMetaItem::create('newsTagsConnection')
 			->setLabel('Tags')

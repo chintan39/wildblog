@@ -30,7 +30,7 @@ class BaseLostPasswordModel extends AbstractSimpleModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdToken());
+    	$this->addMetaData(AtributesFactory::stdToken());
     	
 		$this->addMetaData(ModelMetaItem::create('user')
 			->setLabel('User')

@@ -28,7 +28,7 @@ class BasicMenuItemsModel extends AbstractStructuredCodebookModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(AbstractAttributesModel::stdLink());
+		$this->addMetaData(AtributesFactory::stdLink());
 		
 		$this->addMetaData(ModelMetaItem::create('menu')
 			->setLabel('Menu')

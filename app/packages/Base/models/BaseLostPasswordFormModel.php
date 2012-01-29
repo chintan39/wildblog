@@ -26,7 +26,7 @@ class BaseLostPasswordFormModel extends AbstractVirtualModel {
 	var $user;
 
     protected function attributesDefinition() {
-    	$this->addMetaData(AbstractAttributesModel::stdLoginEmail());
+    	$this->addMetaData(AtributesFactory::stdLoginEmail());
 	}
 	
 	/**

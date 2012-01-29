@@ -34,11 +34,11 @@ class AbstractPropertiesModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
 		
-		AbstractAttributesModel::stdPropertyValueName();
-		AbstractAttributesModel::stdPropertyValueType();
-		AbstractAttributesModel::stdPropertyValueNumber();
-		AbstractAttributesModel::stdPropertyValueString();
-		AbstractAttributesModel::stdPropertyValueDateTime();
+		AtributesFactory::stdPropertyValueName();
+		AtributesFactory::stdPropertyValueType();
+		AtributesFactory::stdPropertyValueNumber();
+		AtributesFactory::stdPropertyValueString();
+		AtributesFactory::stdPropertyValueDateTime();
     }
     
     protected function relationsDefinition() {

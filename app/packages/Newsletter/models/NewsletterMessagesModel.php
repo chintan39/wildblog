@@ -29,13 +29,13 @@ class NewsletterMessagesModel extends AbstractPagesModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdEmail()
+    	$this->addMetaData(AtributesFactory::stdEmail()
     		->setName('from')
 			->setLabel('From')
 			->setDescription('e-mail of sender, if empty the following is used: ' . $this->getDefualtFromEmail())
     		);
     	
-    	$this->addMetaData(AbstractAttributesModel::stdEmail()
+    	$this->addMetaData(AtributesFactory::stdEmail()
     		->setName('reply_to')
 			->setLabel('Reply to')
 			->setDescription('e-mail to reply, if empty the following is used: ' . $this->getDefualtReplytoEmail())

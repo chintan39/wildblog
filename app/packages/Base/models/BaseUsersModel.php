@@ -32,12 +32,12 @@ class BaseUsersModel extends AbstractSimpleModel {
     	
     	parent::attributesDefinition();
 
-    	$this->addMetaData(AbstractAttributesModel::stdAccountEmail());
-    	$this->addMetaData(AbstractAttributesModel::stdFirstname());
-    	$this->addMetaData(AbstractAttributesModel::stdSurname());
-    	$this->addMetaData(AbstractAttributesModel::stdAccountpassword());
-    	$this->addMetaData(AbstractAttributesModel::stdAccountPermissions());
-    	$this->addMetaData(AbstractAttributesModel::stdLastLogged());
+    	$this->addMetaData(AtributesFactory::stdAccountEmail());
+    	$this->addMetaData(AtributesFactory::stdFirstname());
+    	$this->addMetaData(AtributesFactory::stdSurname());
+    	$this->addMetaData(AtributesFactory::stdAccountpassword());
+    	$this->addMetaData(AtributesFactory::stdAccountPermissions());
+    	$this->addMetaData(AtributesFactory::stdLastLogged());
 
 		$this->addMetaData(ModelMetaItem::create('private_config')
 			->setLabel('Private config')

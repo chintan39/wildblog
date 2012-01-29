@@ -23,9 +23,9 @@ class BaseLoginModel extends AbstractVirtualModel {
 	var $user = false;
 	
     protected function attributesDefinition() {
-    	$this->addMetaData(AbstractAttributesModel::stdId());
-    	$this->addMetaData(AbstractAttributesModel::stdLoginEmail());
-    	$this->addMetaData(AbstractAttributesModel::stdLoginPassword());
+    	$this->addMetaData(AtributesFactory::stdId());
+    	$this->addMetaData(AtributesFactory::stdLoginEmail());
+    	$this->addMetaData(AtributesFactory::stdLoginPassword());
 	}
 	
 	/**

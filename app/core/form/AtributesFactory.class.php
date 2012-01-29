@@ -22,7 +22,7 @@
  * Attributes will be then added by special methods.
  * TODO: multiple keys should be defined by dictionary, ... what?
  */
-abstract class AbstractAttributesModel {
+abstract class AtributesFactory {
 
 	/**
 	 * Attribute ID is default primary key.

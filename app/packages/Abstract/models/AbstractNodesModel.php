@@ -26,8 +26,8 @@ class AbstractNodesModel extends AbstractSimpleModel {
 		
 		parent::attributesDefinition();
 		
-		$this->addMetaData(AbstractAttributesModel::stdTitle());
-		$this->addMetaData(AbstractAttributesModel::stdUrl());
+		$this->addMetaData(AtributesFactory::stdTitle());
+		$this->addMetaData(AtributesFactory::stdUrl());
 	}
 
 	/**

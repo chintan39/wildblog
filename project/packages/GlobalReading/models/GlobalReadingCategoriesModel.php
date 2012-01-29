@@ -10,7 +10,7 @@ class GlobalReadingCategoriesModel extends AbstractCodebookModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdText()
+    	$this->addMetaData(AtributesFactory::stdText()
     		->setName('example')
     		->setLabel('Example')
     		->setType(Form::FORM_TEXTAREA)

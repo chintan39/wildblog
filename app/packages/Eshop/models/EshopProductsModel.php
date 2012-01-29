@@ -41,8 +41,8 @@ class EshopProductsModel extends AbstractNodesModel {
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
 		
-		$this->addMetaData(AbstractAttributesModel::stdText());
-		$this->addMetaData(AbstractAttributesModel::stdImage());
+		$this->addMetaData(AtributesFactory::stdText());
+		$this->addMetaData(AtributesFactory::stdImage());
     }
     
     protected function relationsDefinition() {

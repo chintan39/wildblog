@@ -27,7 +27,7 @@ class NewsletterGetTokenModel extends AbstractVirtualModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdAccountEmail()
+    	$this->addMetaData(AtributesFactory::stdAccountEmail()
     		->setDescription('your e-mail to send the token to')
     		->addRestrictions(Restriction::R_NOT_EMPTY));
     	

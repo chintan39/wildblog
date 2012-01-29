@@ -51,8 +51,8 @@ class AbstractProductionProductsModel extends AbstractNodesModel {
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect'));
 		
-		$this->addMetaData(AbstractAttributesModel::stdText());
-		$this->addMetaData(AbstractAttributesModel::stdImage());
+		$this->addMetaData(AtributesFactory::stdText());
+		$this->addMetaData(AtributesFactory::stdImage());
 
 		$this->addMetaData(ModelMetaItem::create('unit')
 			->setLabel('Unit')
@@ -66,12 +66,12 @@ class AbstractProductionProductsModel extends AbstractNodesModel {
 			->setOptionsMethod('listSelect')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\''));
 
-		$this->addMetaData(AbstractAttributesModel::stdPrice());
-		$this->addMetaData(AbstractAttributesModel::stdPrice()
+		$this->addMetaData(AtributesFactory::stdPrice());
+		$this->addMetaData(AtributesFactory::stdPrice()
 			->setName('price_original') 
 			->setLabel('Original price')
 			->setIsVisible(ModelMetaItem::NEVER));
-		$this->addMetaData(AbstractAttributesModel::stdPrice()
+		$this->addMetaData(AtributesFactory::stdPrice()
 			->setName('price_without_discount') 
 			->setLabel('Price without discount')
 			->setIsVisible(ModelMetaItem::NEVER));

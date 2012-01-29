@@ -72,7 +72,7 @@ class BaseMessagesModel extends AbstractDefaultModel {
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType('INT(11) NOT NULL'));
 		
-		$this->addMetaData(AbstractAttributesModel::stdText()->setIsEditable(ModelMetaItem::NEVER));
+		$this->addMetaData(AtributesFactory::stdText()->setIsEditable(ModelMetaItem::NEVER));
     }
     
     

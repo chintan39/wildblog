@@ -25,12 +25,12 @@ class AbstractPagesModel extends AbstractNodesModel {
 
 		parent::attributesDefinition();
 		
-		$this->addMetaData(AbstractAttributesModel::stdAuthor());
-		$this->addMetaData(AbstractAttributesModel::stdText());
-		$this->addMetaData(AbstractAttributesModel::stdDescription());
-		$this->addMetaData(AbstractAttributesModel::stdSEODescription());
-		$this->addMetaData(AbstractAttributesModel::stdSEOKeywords());
-		$this->addMetaData(AbstractAttributesModel::stdRank());
+		$this->addMetaData(AtributesFactory::stdAuthor());
+		$this->addMetaData(AtributesFactory::stdText());
+		$this->addMetaData(AtributesFactory::stdDescription());
+		$this->addMetaData(AtributesFactory::stdSEODescription());
+		$this->addMetaData(AtributesFactory::stdSEOKeywords());
+		$this->addMetaData(AtributesFactory::stdRank());
 	}
 
     protected function relationsDefinition() {

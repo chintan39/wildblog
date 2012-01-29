@@ -17,7 +17,7 @@
 */
 
 
-require_once('AbstractAttributesModel.php');
+require_once(DIR_CORE_FORM . 'AtributesFactory.class.php');
 
 class AbstractDefaultModel extends AbstractDBObjectModel {
 	
@@ -67,7 +67,7 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdId());
+    	$this->addMetaData(AtributesFactory::stdId());
     }
     
 	/**

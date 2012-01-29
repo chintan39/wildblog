@@ -39,7 +39,7 @@ class BaseDatabaseTableModel extends AbstractBasicModel {
 		$this->addMetaData(ModelMetaItem::create('columns')
 			->setLabel('Columns'));
 
-    	$this->addMetaData(AbstractAttributesModel::stdText()->setType(Form::FORM_TEXTAREA));
+    	$this->addMetaData(AtributesFactory::stdText()->setType(Form::FORM_TEXTAREA));
 
     }
 

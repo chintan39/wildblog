@@ -26,9 +26,9 @@ class LinkBuildingContactsModel extends AbstractSimpleModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdAccountEmail());
-    	$this->addMetaData(AbstractAttributesModel::stdFirstname());
-    	$this->addMetaData(AbstractAttributesModel::stdSurname());
+    	$this->addMetaData(AtributesFactory::stdAccountEmail());
+    	$this->addMetaData(AtributesFactory::stdFirstname());
+    	$this->addMetaData(AtributesFactory::stdSurname());
     	
     }
 

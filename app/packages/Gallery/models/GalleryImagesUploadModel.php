@@ -26,9 +26,9 @@ class GalleryImagesUploadModel extends AbstractVirtualModel {
     	
     	parent::attributesDefinition();
 
-    	$this->addMetaData(AbstractAttributesModel::stdTitle());
-    	$this->addMetaData(AbstractAttributesModel::stdDescription());
-    	$this->addMetaData(AbstractAttributesModel::stdUploadFile()
+    	$this->addMetaData(AtributesFactory::stdTitle());
+    	$this->addMetaData(AtributesFactory::stdDescription());
+    	$this->addMetaData(AtributesFactory::stdUploadFile()
     		->setUploadDir(Utilities::concatPath(DIR_PROJECT_PATH_MEDIA, isset(Request::$get['dir']) ? Request::$get['dir'] : '')));
     	
     }

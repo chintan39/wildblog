@@ -27,7 +27,7 @@ class AbstractProductionVatModel extends AbstractCodebookModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdRatio());
+    	$this->addMetaData(AtributesFactory::stdRatio());
     	
     }
     

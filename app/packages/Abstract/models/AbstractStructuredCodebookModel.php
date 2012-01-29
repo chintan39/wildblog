@@ -26,7 +26,7 @@ class AbstractStructuredCodebookModel extends AbstractCodebookModel {
 
 		parent::attributesDefinition();
 		
-		$this->addMetaData(AbstractAttributesModel::stdParent());
+		$this->addMetaData(AtributesFactory::stdParent());
 	}
 
     protected function relationsDefinition() {

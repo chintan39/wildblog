@@ -51,7 +51,7 @@ class BaseDictionaryModel extends AbstractDefaultModel {
 		
 		$this->addIndex('key_language', 'unique', array('key|' . DICTIONARY_KEY_LENGTH, 'language', 'kind'));
 		
-    	$this->addMetaData(AbstractAttributesModel::stdText()
+    	$this->addMetaData(AtributesFactory::stdText()
     		->setType(Form::FORM_TEXTAREA) 
     		->setLabel('Translation')
     		->setDescription('Your translation of the text or phrase'));

@@ -26,8 +26,8 @@ class CalendarEventsModel extends AbstractPagesModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdDateTimeFrom());
-    	$this->addMetaData(AbstractAttributesModel::stdDateTimeTo());
+    	$this->addMetaData(AtributesFactory::stdDateTimeFrom());
+    	$this->addMetaData(AtributesFactory::stdDateTimeTo());
 		
 		$this->addMetaData(ModelMetaItem::create('postTagsConnection')
 			->setLabel('Tags')

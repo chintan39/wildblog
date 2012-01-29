@@ -26,7 +26,7 @@ class GalleryImagesNewDirModel extends AbstractVirtualModel {
     	
     	parent::attributesDefinition();
 
-    	$this->addMetaData(AbstractAttributesModel::stdUrl());
+    	$this->addMetaData(AtributesFactory::stdUrl());
     	
     }
 

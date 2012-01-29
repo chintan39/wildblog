@@ -26,7 +26,7 @@ class BaseLostPasswordChangeFormModel extends AbstractVirtualModel {
 	var $token = null;
 
     protected function attributesDefinition() {
-    	$this->addMetaData(AbstractAttributesModel::stdAccountpassword());
+    	$this->addMetaData(AtributesFactory::stdAccountpassword());
 	}
 	
 	/**

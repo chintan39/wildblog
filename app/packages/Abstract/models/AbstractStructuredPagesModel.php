@@ -25,7 +25,7 @@ class AbstractStructuredPagesModel extends AbstractPagesModel {
 
 		parent::attributesDefinition();
 		
-		$this->addMetaData(AbstractAttributesModel::stdParent());
+		$this->addMetaData(AtributesFactory::stdParent());
 	}
 	
 

@@ -26,10 +26,10 @@ class AbstractCodebookModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdTitle());
-    	$this->addMetaData(AbstractAttributesModel::stdUrl());
-    	$this->addMetaData(AbstractAttributesModel::stdText()->setType(Form::FORM_INPUT_TEXT));
-		$this->addMetaData(AbstractAttributesModel::stdRank());
+    	$this->addMetaData(AtributesFactory::stdTitle());
+    	$this->addMetaData(AtributesFactory::stdUrl());
+    	$this->addMetaData(AtributesFactory::stdText()->setType(Form::FORM_INPUT_TEXT));
+		$this->addMetaData(AtributesFactory::stdRank());
     	
     }
     

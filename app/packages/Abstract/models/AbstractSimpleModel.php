@@ -27,9 +27,9 @@ class AbstractSimpleModel extends AbstractDefaultModel {
 
 		parent::attributesDefinition();
 		
-		$this->addMetaData(AbstractAttributesModel::stdInserted());
-		$this->addMetaData(AbstractAttributesModel::stdUpdated());
-		$this->addMetaData(AbstractAttributesModel::stdActive());
+		$this->addMetaData(AtributesFactory::stdInserted());
+		$this->addMetaData(AtributesFactory::stdUpdated());
+		$this->addMetaData(AtributesFactory::stdActive());
     }
 
     /**

@@ -54,9 +54,9 @@ class BaseConfigModel extends AbstractDefaultModel {
 			->setIsVisibleInForm(ModelMetaItem::ALWAYS)
 			->setIsEditable(ModelMetaItem::ON_NEW));
 
-    	$this->addMetaData(AbstractAttributesModel::stdText()->setType(Form::FORM_TEXTAREA));
+    	$this->addMetaData(AtributesFactory::stdText()->setType(Form::FORM_TEXTAREA));
     	
-    	$this->addMetaData(AbstractAttributesModel::stdDescription());
+    	$this->addMetaData(AtributesFactory::stdDescription());
     	
     }
     

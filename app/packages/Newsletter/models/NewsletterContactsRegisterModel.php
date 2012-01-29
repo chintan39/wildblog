@@ -25,7 +25,7 @@ class NewsletterContactsRegisterModel extends NewsletterContactsModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(AbstractAttributesModel::stdYesNoRadio()
+		$this->addMetaData(AtributesFactory::stdYesNoRadio()
 			->setName('unsubscribe')
 			->setLabel('Unsubscribe')
 			->setDescription('Choose Yes if you would like to unsubscribe'));

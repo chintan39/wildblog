@@ -74,8 +74,8 @@ class BaseHitsModel extends AbstractDefaultModel {
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType('VARCHAR(10) NOT NULL'));
 
-		$this->addMetaData(AbstractAttributesModel::stdInserted()->setIsEditable(ModelMetaItem::NEVER));
-    	$this->addMetaData(AbstractAttributesModel::stdIP()->setIsEditable(ModelMetaItem::NEVER));
+		$this->addMetaData(AtributesFactory::stdInserted()->setIsEditable(ModelMetaItem::NEVER));
+    	$this->addMetaData(AtributesFactory::stdIP()->setIsEditable(ModelMetaItem::NEVER));
     }
     
     

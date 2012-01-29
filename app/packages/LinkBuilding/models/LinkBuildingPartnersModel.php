@@ -26,8 +26,8 @@ class LinkBuildingPartnersModel extends AbstractNodesModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdLink());
-    	$this->addMetaData(AbstractAttributesModel::stdDescription());
+    	$this->addMetaData(AtributesFactory::stdLink());
+    	$this->addMetaData(AtributesFactory::stdDescription());
 
 		$this->addMetaData(ModelMetaItem::create('all_pages')
 			->setLabel('All pages')

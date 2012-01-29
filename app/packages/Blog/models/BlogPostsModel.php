@@ -26,7 +26,7 @@ class BlogPostsModel extends AbstractPagesModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdPublished());
+    	$this->addMetaData(AtributesFactory::stdPublished());
     	
 		$this->addMetaData(ModelMetaItem::create('postTagsConnection')
 			->setLabel('Tags')

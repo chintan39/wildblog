@@ -26,10 +26,10 @@ class AbstractProductionManofacturersModel extends AbstractNodesModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(AbstractAttributesModel::stdLink());
-		$this->addMetaData(AbstractAttributesModel::stdImage());
+		$this->addMetaData(AtributesFactory::stdLink());
+		$this->addMetaData(AtributesFactory::stdImage());
 
-		$this->addMetaData(AbstractAttributesModel::stdText());
+		$this->addMetaData(AtributesFactory::stdText());
 		$this->getMetadata('text')->setWysiwygType(Javascript::WYSIWYG_LITE);
 		
     }

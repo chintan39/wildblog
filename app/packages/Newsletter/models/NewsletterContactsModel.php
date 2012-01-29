@@ -26,17 +26,17 @@ class NewsletterContactsModel extends AbstractSimpleModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdAccountEmail()
+    	$this->addMetaData(AtributesFactory::stdAccountEmail()
     		->setDescription('e-mail to send news to')
     		->addRestrictions(Restriction::R_NOT_EMPTY | Restriction::R_UNIQUE));
     	
-    	$this->addMetaData(AbstractAttributesModel::stdFirstname());
+    	$this->addMetaData(AtributesFactory::stdFirstname());
     	
-    	$this->addMetaData(AbstractAttributesModel::stdSurname());
+    	$this->addMetaData(AtributesFactory::stdSurname());
     	
-		$this->addMetaData(AbstractAttributesModel::stdAgreement());
+		$this->addMetaData(AtributesFactory::stdAgreement());
 		
-		$this->addMetaData(AbstractAttributesModel::stdToken()
+		$this->addMetaData(AtributesFactory::stdToken()
 			->setDescription('your unique character string, you can find it in your last e-mail'));
 
 		$this->addMetaData(ModelMetaItem::create('contactGroupsConnection')

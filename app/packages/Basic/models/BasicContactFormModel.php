@@ -28,9 +28,9 @@ class BasicContactFormModel extends AbstractPagesModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AbstractAttributesModel::stdFirstname());
-    	$this->addMetaData(AbstractAttributesModel::stdSurname());
-    	$this->addMetaData(AbstractAttributesModel::stdEmail()->addRestrictions(Restriction::R_NOT_EMPTY));
+    	$this->addMetaData(AtributesFactory::stdFirstname());
+    	$this->addMetaData(AtributesFactory::stdSurname());
+    	$this->addMetaData(AtributesFactory::stdEmail()->addRestrictions(Restriction::R_NOT_EMPTY));
     	
     	$this->removeMetaData('description');
     	$this->removeMetaData('seo_description');
