@@ -16,6 +16,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * This is a basic model, all models are inherited from this and it contains 
+ * many basic methods for both - virtual and DB models.
+ */
 
 class AbstractBasicModel {
 
@@ -55,6 +59,10 @@ class AbstractBasicModel {
 	 * Save data to some object, can be overwritten, but not has to be.
 	 */
 	public function Save() {
+		$this->handleUploadedFile();
+	}
+
+	protected function handleUploadedFile() {
     	foreach ($this->getMetaData() as $field => $meta) {
     		if ($meta->getType() == Form::FORM_UPLOAD_FILE) {
     			$newFileName = Utilities::concatPath($meta->getUploadDir(), Utilities::getUniqueFileName(Utilities::makeFileNameFormat($_FILES[$meta->getName()]['name']), $meta->getUploadDir()));
@@ -80,14 +88,21 @@ class AbstractBasicModel {
 	
 	/**
 	 * Attributes definition
-	 * Must be overwritten.
+	 * Should be overwritten.
 	 */
     protected function attributesDefinition() {
     }
     
+	/**
+	 * Properties definition
+	 * Could be overwritten.
+	 */
 	protected function propertiesDefinition() {
 	}
 	
+	/**
+	 * Returns properties model.
+	 */
 	public function getPropertiesModel() {
 		if ($this->propertiesModelName) {
 			return new $this->propertiesModelName();

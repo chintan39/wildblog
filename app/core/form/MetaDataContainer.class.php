@@ -16,6 +16,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**
+ * This class only keeps metadata for particular models.
+ * We could use static array to keep this data, but it doesn't work well 
+ * unless we have a specific static variable by particular inherited models 
+ * (which is not possible).
+ * So we simply keep the metadata under model name.
+ */
 
 class MetaDataContainer {
 	

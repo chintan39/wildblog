@@ -18,8 +18,8 @@
 
 
 /**
- * Class handles metadata about models.
- * It includes DB and fields settings.
+ * Class handles metadata about models (it describes attributes of the model).
+ * It includes DB connections and properties' settings.
  */
 
 class ModelMetaItem {
