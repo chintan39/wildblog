@@ -39,14 +39,14 @@ class NewsletterContactsModel extends AbstractSimpleModel {
 		$this->addMetaData(AtributesFactory::stdToken()
 			->setDescription('your unique character string, you can find it in your last e-mail'));
 
-		$this->addMetaData(ModelMetaItem::create('contactGroupsConnection')
+		$this->addMetaData(AtributesFactory::create('contactGroupsConnection')
 			->setLabel('Groups')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
 			->setIsVisible(ModelMetaItem::NEVER));
 		
 		/*
-		$this->addMetaData(ModelMetaItem::create('messageContactsConnection')
+		$this->addMetaData(AtributesFactory::create('messageContactsConnection')
 			->setLabel('Messages')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

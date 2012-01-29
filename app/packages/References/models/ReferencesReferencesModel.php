@@ -39,7 +39,7 @@ class ReferencesReferencesModel extends AbstractPagesModel {
 		for ($i=1; $i<=5; $i++)
 			$options[] = array('id' => $i, 'value' => $i);
 
-    	$this->addMetaData(ModelMetaItem::create('rating')
+    	$this->addMetaData(AtributesFactory::create('rating')
 			->setLabel('Rating')
 			->setDescription('how much do you like it')
 			->setType(Form::FORM_SELECT)

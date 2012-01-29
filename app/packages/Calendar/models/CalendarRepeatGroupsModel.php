@@ -34,13 +34,13 @@ class CalendarRepeatGroupsModel extends AbstractDefaultModel {
 			array('id' => 4, 'value' => 'years'),
 			);
 		
-		$this->addMetaData(ModelMetaItem::create('repeat_period')
+		$this->addMetaData(AtributesFactory::create('repeat_period')
 			->setLabel('repeat_period')
 			->setType(Form::FORM_SELECT)
 			->setOptions($periodOptions)
 			->setSqltype('int(11) NOT NULL DEFAULT \'0\''));
 
-		$this->addMetaData(ModelMetaItem::create('repeat_times')
+		$this->addMetaData(AtributesFactory::create('repeat_times')
 			->setLabel('repeat_times')
 			->setType(Form::FORM_INPUT_NUMBER)
 			->setSqltype('int(11) NOT NULL DEFAULT \'0\''));

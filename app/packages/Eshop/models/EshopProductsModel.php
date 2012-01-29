@@ -27,14 +27,14 @@ class EshopProductsModel extends AbstractNodesModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('manofacturer')
+		$this->addMetaData(AtributesFactory::create('manofacturer')
 			->setLabel('Manofacturer')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
     	
-		$this->addMetaData(ModelMetaItem::create('category')
+		$this->addMetaData(AtributesFactory::create('category')
 			->setLabel('Category')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

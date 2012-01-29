@@ -29,7 +29,7 @@ class LinkBuildingPartnersModel extends AbstractNodesModel {
     	$this->addMetaData(AtributesFactory::stdLink());
     	$this->addMetaData(AtributesFactory::stdDescription());
 
-		$this->addMetaData(ModelMetaItem::create('all_pages')
+		$this->addMetaData(AtributesFactory::create('all_pages')
 			->setLabel('All pages')
 			->setDescription('Visible on all pages')
 			->setRestrictions(Restriction::R_BOOL)
@@ -37,7 +37,7 @@ class LinkBuildingPartnersModel extends AbstractNodesModel {
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
     	
-		$this->addMetaData(ModelMetaItem::create('partnersTagsConnection')
+		$this->addMetaData(AtributesFactory::create('partnersTagsConnection')
 			->setLabel('Tags')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

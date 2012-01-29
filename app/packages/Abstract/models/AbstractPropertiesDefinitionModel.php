@@ -26,20 +26,20 @@ class AbstractPropertiesDefinitionModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
 		
-		$this->addMetaData(ModelMetaItem::create('prop_label')
+		$this->addMetaData(AtributesFactory::create('prop_label')
 			->setLabel('Label')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setSqlType('varchar(255) NOT NULL')
 			->setSqlIndex('index'));
 
-		$this->addMetaData(ModelMetaItem::create('prop_name')
+		$this->addMetaData(AtributesFactory::create('prop_name')
 			->setLabel('Name')
 			->setRestrictions(Restriction::R_URL_PART | Restriction::R_UNIQUE)
 			->setType(Form::FORM_INPUT_TEXT)
 			->setSqlType('varchar(255) NOT NULL')
 			->setSqlIndex('unique'));
     	
-		$this->addMetaData(ModelMetaItem::create('prop_description')
+		$this->addMetaData(AtributesFactory::create('prop_description')
 			->setLabel('Description')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setSqlType('varchar(255) NOT NULL'));
@@ -57,7 +57,7 @@ class AbstractPropertiesDefinitionModel extends AbstractDefaultModel {
 			array('id' => Form::FORM_INPUT_IMAGE, 'value' => 'Image'),
 			);
 		
-		$this->addMetaData(ModelMetaItem::create('prop_type')
+		$this->addMetaData(AtributesFactory::create('prop_type')
 			->setLabel('Type')
 			->setType(Form::FORM_SELECT)
 			->setOptions($typeOptions)

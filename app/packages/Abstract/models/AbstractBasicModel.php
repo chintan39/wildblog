@@ -119,7 +119,7 @@ class AbstractBasicModel {
 	
 	protected function loadPropertiesDefinition($propertiesDefinitionModelName, $propertiesOptionsModelName) {
 		foreach ($this->getPropertiesDefinition($propertiesDefinitionModelName) as $property) {
-			$metaData = ModelMetaItem::create($property->prop_name)
+			$metaData = AtributesFactory::create($property->prop_name)
 				->setLabel($property->prop_label)
 				->setDescription($property->prop_description)
 				->setType($property->prop_type)

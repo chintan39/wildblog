@@ -26,11 +26,11 @@ class NewsletterContactsGroupsModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('contact')
+		$this->addMetaData(AtributesFactory::create('contact')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
 
-		$this->addMetaData(ModelMetaItem::create('group')
+		$this->addMetaData(AtributesFactory::create('group')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
 

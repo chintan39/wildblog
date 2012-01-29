@@ -29,7 +29,7 @@ class BasicNewsModel extends AbstractPagesModel {
     	$this->addMetaData(AtributesFactory::stdPublished());
     	$this->addMetaData(AtributesFactory::stdColorRGBHexa());
     	
-		$this->addMetaData(ModelMetaItem::create('newsTagsConnection')
+		$this->addMetaData(AtributesFactory::create('newsTagsConnection')
 			->setLabel('Tags')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect'));

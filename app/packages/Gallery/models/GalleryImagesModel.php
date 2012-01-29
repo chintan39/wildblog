@@ -29,7 +29,7 @@ class GalleryImagesModel extends AbstractNodesModel {
     	$this->addMetaData(AtributesFactory::stdImage());
 		$this->addMetaData(AtributesFactory::stdDescription());
 		
-		$this->addMetaData(ModelMetaItem::create('imageGalleryConnection')
+		$this->addMetaData(AtributesFactory::create('imageGalleryConnection')
 			->setLabel('Galleries')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect'));

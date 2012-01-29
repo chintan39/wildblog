@@ -26,11 +26,11 @@ class BasicArticlesTagsModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('article')
+		$this->addMetaData(AtributesFactory::create('article')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
 
-		$this->addMetaData(ModelMetaItem::create('tag')
+		$this->addMetaData(AtributesFactory::create('tag')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
 

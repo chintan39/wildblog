@@ -30,7 +30,7 @@ class BasicMenuItemsModel extends AbstractStructuredCodebookModel {
     	
 		$this->addMetaData(AtributesFactory::stdLink());
 		
-		$this->addMetaData(ModelMetaItem::create('menu')
+		$this->addMetaData(AtributesFactory::create('menu')
 			->setLabel('Menu')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

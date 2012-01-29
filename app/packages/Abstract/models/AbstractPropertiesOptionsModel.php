@@ -27,7 +27,7 @@ class AbstractPropertiesOptionsModel extends AbstractCodebookModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('property')
+		$this->addMetaData(AtributesFactory::create('property')
 			->setLabel('Property')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

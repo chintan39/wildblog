@@ -32,13 +32,13 @@ class BaseLanguagesModel extends AbstractCodebookModel {
     	
     	parent::attributesDefinition();
     	
-   		$this->addMetaData(ModelMetaItem::create('front_end')
+   		$this->addMetaData(AtributesFactory::create('front_end')
 			->setLabel('Front-end')
 			->setRestrictions(Restriction::R_BOOL)
 			->setType(Form::FORM_CHECKBOX)
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\''));
     	
-   		$this->addMetaData(ModelMetaItem::create('back_end')
+   		$this->addMetaData(AtributesFactory::create('back_end')
 			->setLabel('Back-end')
 			->setRestrictions(Restriction::R_BOOL)
 			->setType(Form::FORM_CHECKBOX)

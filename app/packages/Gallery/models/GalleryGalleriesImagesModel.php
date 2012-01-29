@@ -26,11 +26,11 @@ class GalleryGalleriesImagesModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('gallery')
+		$this->addMetaData(AtributesFactory::create('gallery')
 			->setSqltype('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlindex('index'));
 
-		$this->addMetaData(ModelMetaItem::create('image')
+		$this->addMetaData(AtributesFactory::create('image')
 			->setSqltype('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlindex('index'));
 
@@ -38,7 +38,7 @@ class GalleryGalleriesImagesModel extends AbstractDefaultModel {
 		 * This label will be set to 1 if this image should be the title image 
 		 * of the gallery. Only one image should be set as title image.
 		 */
-		$this->addMetaData(ModelMetaItem::create('titleimage')
+		$this->addMetaData(AtributesFactory::create('titleimage')
 			->setSqltype('tinyint(2) NOT NULL DEFAULT \'0\''));
 
     }

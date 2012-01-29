@@ -26,14 +26,14 @@ class FAQQuestionsModel extends AbstractPagesModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('author_name')
+		$this->addMetaData(AtributesFactory::create('author_name')
 			->setLabel('Your name')
 			->setDescription('Name or a nickname is compulsory')
 			->setRestrictions(Restriction::R_NOT_EMPTY)
 			->setType(Form::FORM_INPUT_TEXT)
 			->setSqlType('varchar(255) NOT NULL'));
 		
-		$this->addMetaData(ModelMetaItem::create('author_email')
+		$this->addMetaData(AtributesFactory::create('author_email')
 			->setLabel('Your e-mail')
 			->setDescription('E-mail is compulsory because of answer')
 			->setRestrictions(Restriction::R_EMAIL | Restriction::R_EMPTY)
@@ -41,7 +41,7 @@ class FAQQuestionsModel extends AbstractPagesModel {
 			->setSqlType('varchar(255) NOT NULL')
 			->setIsVisible(ModelMetaItem::NEVER));
 		
-		$this->addMetaData(ModelMetaItem::create('author_web')
+		$this->addMetaData(AtributesFactory::create('author_web')
 			->setLabel('Your web')
 			->setDescription('If you have a website, you can fill it in')
 			->setRestrictions(Restriction::R_LINK | Restriction::R_EMPTY)
@@ -49,7 +49,7 @@ class FAQQuestionsModel extends AbstractPagesModel {
 			->setSqlType('varchar(255) NOT NULL')
 			->setIsVisible(ModelMetaItem::NEVER));
 		
-		$this->addMetaData(ModelMetaItem::create('answer')
+		$this->addMetaData(AtributesFactory::create('answer')
 			->setLabel('Answer')
 			->setType(Form::FORM_HTML_BBCODE)
 			->setSqlType('text NOT NULL')

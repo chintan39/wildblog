@@ -27,13 +27,13 @@ class BaseTestsPackageModel extends AbstractBasicModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('id')
+		$this->addMetaData(AtributesFactory::create('id')
 			->setLabel('ID'));
     	
-		$this->addMetaData(ModelMetaItem::create('description')
+		$this->addMetaData(AtributesFactory::create('description')
 			->setLabel('Description'));
     	
-		$this->addMetaData(ModelMetaItem::create('package')
+		$this->addMetaData(AtributesFactory::create('package')
 			->setLabel('Package'));
 
     }

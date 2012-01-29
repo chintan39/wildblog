@@ -29,7 +29,7 @@ class AbstractProductionProductsModel extends AbstractNodesModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('manofacturer')
+		$this->addMetaData(AtributesFactory::create('manofacturer')
 			->setLabel('Manofacturer')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
@@ -46,7 +46,7 @@ class AbstractProductionProductsModel extends AbstractNodesModel {
 			));
 		*/
 		
-		$this->addMetaData(ModelMetaItem::create('categoriesProductsConnection')
+		$this->addMetaData(AtributesFactory::create('categoriesProductsConnection')
 			->setLabel('Categories')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect'));
@@ -54,13 +54,13 @@ class AbstractProductionProductsModel extends AbstractNodesModel {
 		$this->addMetaData(AtributesFactory::stdText());
 		$this->addMetaData(AtributesFactory::stdImage());
 
-		$this->addMetaData(ModelMetaItem::create('unit')
+		$this->addMetaData(AtributesFactory::create('unit')
 			->setLabel('Unit')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\''));
 
-		$this->addMetaData(ModelMetaItem::create('vat')
+		$this->addMetaData(AtributesFactory::create('vat')
 			->setLabel('Vat')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

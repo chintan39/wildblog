@@ -39,7 +39,7 @@ class BaseUsersModel extends AbstractSimpleModel {
     	$this->addMetaData(AtributesFactory::stdAccountPermissions());
     	$this->addMetaData(AtributesFactory::stdLastLogged());
 
-		$this->addMetaData(ModelMetaItem::create('private_config')
+		$this->addMetaData(AtributesFactory::create('private_config')
 			->setLabel('Private config')
 			->setType(Form::FORM_TEXTAREA)
 			->setSqlType('TEXT NOT NULL')

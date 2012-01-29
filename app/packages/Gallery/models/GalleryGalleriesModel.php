@@ -28,14 +28,14 @@ class GalleryGalleriesModel extends AbstractPagesModel {
     	
     	$this->addMetaData(AtributesFactory::stdPublished());
 
-		$this->addMetaData(ModelMetaItem::create('imageGalleryConnection')
+		$this->addMetaData(AtributesFactory::create('imageGalleryConnection')
 			->setLabel('Images')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelectSelector')
 			->setSelector(true)
 			->setSelectorDisplayMode(Javascript::SELECTOR_DIPLAY_MODE_IMAGES));
 		
-		$this->addMetaData(ModelMetaItem::create('titleimage')
+		$this->addMetaData(AtributesFactory::create('titleimage')
 			->setLabel('Title image')
 			->setType(Form::FORM_SPECIFIC_NOT_IN_DB)
 			->setOptionsMethod('listSelectSelector')

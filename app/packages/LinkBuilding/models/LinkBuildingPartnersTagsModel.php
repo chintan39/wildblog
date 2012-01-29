@@ -26,11 +26,11 @@ class LinkBuildingPartnersTagsModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('partner')
+		$this->addMetaData(AtributesFactory::create('partner')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
 
-		$this->addMetaData(ModelMetaItem::create('tag')
+		$this->addMetaData(AtributesFactory::create('tag')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
 

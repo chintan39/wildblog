@@ -9,7 +9,7 @@ class GlobalReadingFormsModel extends AbstractPagesModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('category')
+		$this->addMetaData(AtributesFactory::create('category')
 			->setLabel('Category')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

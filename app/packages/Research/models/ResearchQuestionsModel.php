@@ -27,7 +27,7 @@ class ResearchQuestionsModel extends AbstractCodebookModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('research')
+		$this->addMetaData(AtributesFactory::create('research')
 			->setLabel('Research')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
@@ -43,7 +43,7 @@ class ResearchQuestionsModel extends AbstractCodebookModel {
 			array('id' => Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, 'value' => 'Multeselect from options interactive'),
 			array('id' => Form::FORM_RADIO_FOREIGNKEY, 'value' => 'Radio'),
 			);
-		$this->addMetaData(ModelMetaItem::create('type')
+		$this->addMetaData(AtributesFactory::create('type')
 			->setLabel('Type')
 			->setType(Form::FORM_SELECT)
 			->setOptions($typeOptions)
@@ -51,7 +51,7 @@ class ResearchQuestionsModel extends AbstractCodebookModel {
 			->setSqlIndex('index')
 			->setOptionsMustBeSelected(true));
 
-		$this->addMetaData(ModelMetaItem::create('required')
+		$this->addMetaData(AtributesFactory::create('required')
 			->setLabel('Required')
 			->setType(Form::FORM_CHECKBOX)
 			->setSqlType('tinyint(2) NOT NULL DEFAULT \'0\''));

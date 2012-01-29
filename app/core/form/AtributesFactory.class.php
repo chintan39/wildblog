@@ -25,10 +25,18 @@
 abstract class AtributesFactory {
 
 	/**
+	 * Static constructor
+	 */
+	public static function create($name) {
+		return new ModelMetaItem($name);
+	}
+
+
+	/**
 	 * Attribute ID is default primary key.
 	 */
 	static public function stdId() {
-		return ModelMetaItem::create('id')
+		return self::create('id')
 			->setLabel('ID')
 			->setRestrictions(Restriction::R_PRIMARY)
 			->setType(Form::FORM_ID)
@@ -41,7 +49,7 @@ abstract class AtributesFactory {
 	 * Attribute Title (for example title of the blog post).
 	 */
 	static public function stdTitle() {
-		return ModelMetaItem::create('title')
+		return self::create('title')
 			->setLabel('Title')
 			->setDescription('main title of the item')
 			->setType(Form::FORM_INPUT_TEXT)
@@ -55,7 +63,7 @@ abstract class AtributesFactory {
 	 * Attribute Url (for example part of the Url of the page).
 	 */
 	static public function stdUrl() {
-		return ModelMetaItem::create('url')
+		return self::create('url')
 			->setLabel('Url')
 			->setDescription('this value will be used as a part of URL')
 			->setRestrictions(Restriction::R_URL_PART | Restriction::R_UNIQUE)
@@ -73,7 +81,7 @@ abstract class AtributesFactory {
 	 * Attribute Html Text (for example text of the page).
 	 */
 	static public function stdText() {
-		return ModelMetaItem::create('text')
+		return self::create('text')
 			->setLabel('Text')
 			->setDescription('main content of the item to be displayed')
 			->setRestrictions(Restriction::R_HTML)
@@ -89,7 +97,7 @@ abstract class AtributesFactory {
 	 * Attribute Description Text (for example text of the page).
 	 */
 	static public function stdDescription() {
-		return ModelMetaItem::create('description')
+		return self::create('description')
 			->setLabel('Description')
 			->setDescription('short description of the item')
 			->setFormTab(Form::TAB_PROPERTIES)
@@ -104,7 +112,7 @@ abstract class AtributesFactory {
 	 * Attribute SEO Description Text (text of the meta tag description).
 	 */
 	static public function stdSEODescription() {
-		return ModelMetaItem::create('seo_description')
+		return self::create('seo_description')
 			->setLabel('SEO Description')
 			->setDescription('this text will be displayed in html head as meta informations about page')
 			->setFormTab(Form::TAB_SEO)
@@ -118,7 +126,7 @@ abstract class AtributesFactory {
 	 * Attribute SEO Keywords (text of the meta tag keywords).
 	 */
 	static public function stdSEOKeywords() {
-		return ModelMetaItem::create('seo_keywords')
+		return self::create('seo_keywords')
 			->setLabel('SEO Keywords')
 			->setDescription('keywords separated by comma: \',\'')
 			->setFormTab(Form::TAB_SEO)
@@ -132,7 +140,7 @@ abstract class AtributesFactory {
 	 * Attribute author foreign key.
 	 */
 	static public function stdAuthor() {
-		return ModelMetaItem::create('author')
+		return self::create('author')
 			->setLabel('Author')
 			->setDescription('who is author of the item')
 			->setFormTab(Form::TAB_PROPERTIES)
@@ -147,7 +155,7 @@ abstract class AtributesFactory {
 	 * Attribute inserted timestamp.
 	 */
 	static public function stdInserted() {
-		return ModelMetaItem::create('inserted')
+		return self::create('inserted')
 			->setLabel('Inserted')
 			->setDescription('when the item was inserted first time')
 			->setRestrictions(Restriction::R_TIMESTAMP | Restriction::R_NO_EDIT_ON_EMPTY)
@@ -166,7 +174,7 @@ abstract class AtributesFactory {
 	 * Attribute updated timestamp.
 	 */
 	static public function stdUpdated() {
-		return ModelMetaItem::create('updated')
+		return self::create('updated')
 			->setLabel('Updated')
 			->setDescription('when the item was updated the last time')
 			->setRestrictions(Restriction::R_TIMESTAMP)
@@ -185,7 +193,7 @@ abstract class AtributesFactory {
 	 * Attribute activity (1 or 0).
 	 */
 	static public function stdActive() {
-		return ModelMetaItem::create('active')
+		return self::create('active')
 			->setLabel('Active')
 			->setDescription('If not checked, item will exist only in administration.')
 			->setFormTab(Form::TAB_BASIC)
@@ -199,7 +207,7 @@ abstract class AtributesFactory {
 	 * Attribute Agreement (1 or 0).
 	 */
 	static public function stdAgreement() {
-		return ModelMetaItem::create('agreement')
+		return self::create('agreement')
 			->setLabel('Agreement')
 			->setDescription('Agreement with the personal data processing.')
 			->setFormTab(Form::TAB_BASIC)
@@ -213,7 +221,7 @@ abstract class AtributesFactory {
 	 * Attribute parrent - foreign key to the same table.
 	 */
 	static public function stdParent() {
-		return ModelMetaItem::create('parent')
+		return self::create('parent')
 			->setLabel('Parent')
 			->setDescription('parent of this item in the tree')
 			->setFormTab(Form::TAB_PROPERTIES)
@@ -228,7 +236,7 @@ abstract class AtributesFactory {
 	 * Attribute Email for logging.
 	 */
 	static public function stdLoginEmail() {
-		return ModelMetaItem::create('email')
+		return self::create('email')
 			->setLabel('E-mail')
 			->setDescription('write your e-mail')
 			->setType(Form::FORM_INPUT_TEXT)
@@ -240,7 +248,7 @@ abstract class AtributesFactory {
 	 * Attribute password for ligging.
 	 */
 	static public function stdLoginPassword() {
-		return ModelMetaItem::create('password')
+		return self::create('password')
 			->setLabel('Password')
 			->setDescription('write your private password')
 			->setType(Form::FORM_INPUT_PASSWORD)
@@ -251,7 +259,7 @@ abstract class AtributesFactory {
 	 * Attribute for account - email.
 	 */
 	static public function stdAccountEmail() {
-		return ModelMetaItem::create('email')
+		return self::create('email')
 			->setLabel('E-mail')
 			->setDescription('e-mail to login')
 			->setRestrictions(Restriction::R_EMAIL | Restriction::R_UNIQUE)
@@ -266,7 +274,7 @@ abstract class AtributesFactory {
 	 * Attribute simple email.
 	 */
 	static public function stdEmail() {
-		return ModelMetaItem::create('email')
+		return self::create('email')
 			->setLabel('E-mail')
 			->setDescription('e-mail to contact')
 			->setIsVisible(ModelMetaItem::NEVER)
@@ -281,7 +289,7 @@ abstract class AtributesFactory {
 	 * Attribute Firstname
 	 */
 	static public function stdFirstname() {
-		return ModelMetaItem::create('firstname')
+		return self::create('firstname')
 			->setLabel('Firstname')
 			->setDescription('first name of the person')
 			->setType(Form::FORM_INPUT_TEXT)
@@ -293,7 +301,7 @@ abstract class AtributesFactory {
 	 * Attribute Surname
 	 */
 	static public function stdSurname() {
-		return ModelMetaItem::create('surname')
+		return self::create('surname')
 			->setLabel('Surname')
 			->setDescription('surname of the person')
 			->setType(Form::FORM_INPUT_TEXT)
@@ -305,7 +313,7 @@ abstract class AtributesFactory {
 	 * Attribute City
 	 */
 	static public function stdCity() {
-		return ModelMetaItem::create('city')
+		return self::create('city')
 			->setLabel('City')
 			->setDescription('city where a person lives')
 			->setType(Form::FORM_INPUT_TEXT)
@@ -317,7 +325,7 @@ abstract class AtributesFactory {
 	 * Attribute for account - email.
 	 */
 	static public function stdAccountpassword() {
-		return ModelMetaItem::create('password')
+		return self::create('password')
 			->setLabel('Password')
 			->setDescription('secret password')
 			->setRestrictions(Restriction::R_CONFIRM_DOUBLE | Restriction::R_NO_EDIT_ON_EMPTY)
@@ -339,7 +347,7 @@ abstract class AtributesFactory {
 			array('id' => Permission::$REGISTERED_VISITOR, 'value' => 'Registred visitor'),
 			);
 		
-		return ModelMetaItem::create('permissions')
+		return self::create('permissions')
 			->setLabel('Permissions')
 			->setDescription('every user must be assigned to one role')
 			->setType(Form::FORM_SELECT)
@@ -355,7 +363,7 @@ abstract class AtributesFactory {
 	 * Attribute last logged.
 	 */
 	static public function stdLastLogged() {
-		return ModelMetaItem::create('last_logged')
+		return self::create('last_logged')
 			->setLabel('Last Logged')
 			->setDescription('when a user was logged the last time')
 			->setType(Form::FORM_INPUT_DATETIME)
@@ -368,7 +376,7 @@ abstract class AtributesFactory {
 	 * Attribute Published - timestamp
 	 */
 	static public function stdPublished() {
-		return ModelMetaItem::create('published')
+		return self::create('published')
 			->setLabel('Published')
 			->setDescription('when should be the topic published')
 			->setType(Form::FORM_INPUT_DATETIME)
@@ -383,7 +391,7 @@ abstract class AtributesFactory {
 	 * Attribute Date/Time from - timestamp
 	 */
 	static public function stdDateTimeFrom() {
-		return ModelMetaItem::create('datetime_from')
+		return self::create('datetime_from')
 			->setLabel('Date/Time from')
 			->setDescription('write or select a time using an icon')
 			->setType(Form::FORM_INPUT_DATETIME)
@@ -398,7 +406,7 @@ abstract class AtributesFactory {
 	 * Attribute Date/Time to - timestamp
 	 */
 	static public function stdDateTimeTo() {
-		return ModelMetaItem::create('datetime_to')
+		return self::create('datetime_to')
 			->setLabel('Date/Time to')
 			->setDescription('write or select a time using an icon')
 			->setType(Form::FORM_INPUT_DATETIME)
@@ -413,7 +421,7 @@ abstract class AtributesFactory {
 	 * Attribute Link - URL
 	 */
 	static public function stdLink() {
-		return ModelMetaItem::create('link')
+		return self::create('link')
 			->setLabel('Link')
 			->setDescription('write or select a link')
 			->setType(Form::FORM_LINK)
@@ -425,7 +433,7 @@ abstract class AtributesFactory {
 	 * Attribute Image
 	 */
 	static public function stdImage() {
-		return ModelMetaItem::create('image')
+		return self::create('image')
 			->setLabel('Image')
 			->setDescription('type a path of image or select it using an icon')
 			->setType(Form::FORM_INPUT_IMAGE)
@@ -437,7 +445,7 @@ abstract class AtributesFactory {
 	 * Attribute rank (integer, smaller more important (soon in the list)).
 	 */
 	static public function stdRank() {
-		return ModelMetaItem::create('rank')
+		return self::create('rank')
 			->setLabel('Rank')
 			->setDescription('rank of the item to define an order')
 			->setRestrictions(Restriction::R_UNIQUE | Restriction::R_NO_EDIT_ON_EMPTY)
@@ -458,7 +466,7 @@ abstract class AtributesFactory {
 	 * @param bool|array $overload if array, some metadata will be overloaded
 	 */
 	static public function stdPrice() {
-		return ModelMetaItem::create('price')
+		return self::create('price')
 			->setLabel('Price')
 			->setDescription('price of the item')
 			->setRestrictions(Restriction::R_PRICE)
@@ -474,7 +482,7 @@ abstract class AtributesFactory {
 	 * Attribute Property name.
 	 */
 	static public function stdPropertyValueName() {
-		return ModelMetaItem::create('value_name')
+		return self::create('value_name')
 			->setLabel('Name')
 			->setDescription('any value')
 			->setType(Form::FORM_INPUT_TEXT)
@@ -488,7 +496,7 @@ abstract class AtributesFactory {
 	 * Attribute Property Value type.
 	 */
 	static public function stdPropertyValueType() {
-		return ModelMetaItem::create('value_type')
+		return self::create('value_type')
 			->setLabel('Value Type')
 			->setDescription('type of the property value')
 			->setType(Form::FORM_INPUT_NUMBER)
@@ -502,7 +510,7 @@ abstract class AtributesFactory {
 	 * Attribute Property Value Number.
 	 */
 	static public function stdPropertyValueNumber() {
-		return ModelMetaItem::create('value_number')
+		return self::create('value_number')
 			->setLabel('Value Number')
 			->setDescription('number value')
 			->setType(Form::FORM_INPUT_NUMBER)
@@ -516,7 +524,7 @@ abstract class AtributesFactory {
 	 * Attribute Property Value String.
 	 */
 	static public function stdPropertyValueString() {
-		return ModelMetaItem::create('value_string')
+		return self::create('value_string')
 			->setLabel('Value String')
 			->setDescription('string value')
 			->setType(Form::FORM_INPUT_NUMBER)
@@ -529,7 +537,7 @@ abstract class AtributesFactory {
 	 * Attribute Property Value DateTime.
 	 */
 	static public function stdPropertyValueDateTime() {
-		return ModelMetaItem::create('value_datetime')
+		return self::create('value_datetime')
 			->setLabel('Value DateTime')
 			->setDescription('write date and time or select it using an icon')
 			->setType(Form::FORM_INPUT_DATETIME)
@@ -540,7 +548,7 @@ abstract class AtributesFactory {
 	
 	
 	static public function stdRatio() {
-		return ModelMetaItem::create('ratio')
+		return self::create('ratio')
 			->setLabel('Ratio')
 			->setDescription('')
 			->setRestrictions(Restriction::R_PRICE)
@@ -553,7 +561,7 @@ abstract class AtributesFactory {
 	
 	
 	static public function stdToken() {
-		return ModelMetaItem::create('token')
+		return self::create('token')
 			->setLabel('Token')
 			->setDescription('token is used to identify various data')
 			->setRestrictions(Restriction::R_SHA1)
@@ -567,7 +575,7 @@ abstract class AtributesFactory {
 	}
 	
 	static public function stdColorRGBHexa() {
-		return ModelMetaItem::create('color')
+		return self::create('color')
 			->setLabel('Color')
 			->setRestrictions(Restriction::R_COLOR_RGBHEXA)
 			->setType(Form::FORM_COLOR_RGBHEXA)
@@ -584,7 +592,7 @@ abstract class AtributesFactory {
 			array('id' => 1, 'value' => 'Yes'),
 			);
 		
-		return ModelMetaItem::create('yes_no')
+		return self::create('yes_no')
 			->setLabel('Yes / No')
 			->setType(Form::FORM_RADIO)
 			->setDefaultValue(0)
@@ -597,7 +605,7 @@ abstract class AtributesFactory {
 	
 	
 	static public function stdUploadFile() {
-		return ModelMetaItem::create('upload_file')
+		return self::create('upload_file')
 			->setLabel('Upload file')
 			->setType(Form::FORM_UPLOAD_FILE)
 			->setDefaultValue(0)
@@ -611,7 +619,7 @@ abstract class AtributesFactory {
 	 * Attribute IP address, longer for IPv6
 	 */
 	static public function stdIP() {
-		return ModelMetaItem::create('ip')
+		return self::create('ip')
 			->setLabel('IP')
 			->setDescription('IP address')
 			->setType(Form::FORM_INPUT_TEXT)

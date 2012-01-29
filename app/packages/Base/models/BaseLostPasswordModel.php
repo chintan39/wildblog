@@ -32,7 +32,7 @@ class BaseLostPasswordModel extends AbstractSimpleModel {
     	
     	$this->addMetaData(AtributesFactory::stdToken());
     	
-		$this->addMetaData(ModelMetaItem::create('user')
+		$this->addMetaData(AtributesFactory::create('user')
 			->setLabel('User')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

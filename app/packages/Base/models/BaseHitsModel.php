@@ -32,43 +32,43 @@ class BaseHitsModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('action')
+		$this->addMetaData(AtributesFactory::create('action')
 			->setLabel('Action')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType('VARCHAR(64) NOT NULL'));
 
-		$this->addMetaData(ModelMetaItem::create('item')
+		$this->addMetaData(AtributesFactory::create('item')
 			->setLabel('Item ID')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType('VARCHAR(255) NOT NULL'));
 
-		$this->addMetaData(ModelMetaItem::create('url')
+		$this->addMetaData(AtributesFactory::create('url')
 			->setLabel('Request URL')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType('VARCHAR(255) NOT NULL'));
 
-		$this->addMetaData(ModelMetaItem::create('referer')
+		$this->addMetaData(AtributesFactory::create('referer')
 			->setLabel('Referer')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType('VARCHAR(255) NOT NULL'));
 
-		$this->addMetaData(ModelMetaItem::create('generation_time')
+		$this->addMetaData(AtributesFactory::create('generation_time')
 			->setLabel('Generation time')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType("DECIMAL(12,4) NOT NULL DEFAULT '0.0'"));
 
-		$this->addMetaData(ModelMetaItem::create('memory_consumption')
+		$this->addMetaData(AtributesFactory::create('memory_consumption')
 			->setLabel('Memory consumption')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType("DECIMAL(12,4) NOT NULL DEFAULT '0.0'"));
 
-		$this->addMetaData(ModelMetaItem::create('lang')
+		$this->addMetaData(AtributesFactory::create('lang')
 			->setLabel('Language')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsEditable(ModelMetaItem::NEVER)

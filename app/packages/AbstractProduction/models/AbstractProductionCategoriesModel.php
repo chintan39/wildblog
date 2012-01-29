@@ -26,13 +26,13 @@ class AbstractProductionCategoriesModel extends AbstractStructuredPagesModel {
     	
     	parent::attributesDefinition();
 		
-		$this->addMetaData(ModelMetaItem::create('group')
+		$this->addMetaData(AtributesFactory::create('group')
 			->setLabel('Properties Group')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\''));
 		
-		$this->addMetaData(ModelMetaItem::create('categoriesProductsConnection')
+		$this->addMetaData(AtributesFactory::create('categoriesProductsConnection')
 			->setLabel('Products')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect'));

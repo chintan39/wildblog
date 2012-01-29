@@ -26,11 +26,11 @@ class BlogPostsTagsModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('post')
+		$this->addMetaData(AtributesFactory::create('post')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
 
-		$this->addMetaData(ModelMetaItem::create('tag')
+		$this->addMetaData(AtributesFactory::create('tag')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
 

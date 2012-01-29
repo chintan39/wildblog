@@ -27,7 +27,7 @@ class BasicArticlesModel extends AbstractStructuredPagesModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('articlesTagsConnection')
+		$this->addMetaData(AtributesFactory::create('articlesTagsConnection')
 			->setLabel('Tags')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect'));

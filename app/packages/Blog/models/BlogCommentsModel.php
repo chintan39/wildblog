@@ -26,27 +26,27 @@ class BlogCommentsModel extends AbstractStructuredPagesModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('post')
+		$this->addMetaData(AtributesFactory::create('post')
 			->setLabel('Post')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
 
-		$this->addMetaData(ModelMetaItem::create('author_name')
+		$this->addMetaData(AtributesFactory::create('author_name')
 			->setLabel('Name')
 			->setRestrictions(Restriction::R_NOT_EMPTY)
 			->setType(Form::FORM_INPUT_TEXT)
 			->setSqlType('varchar(255) NOT NULL'));
 		
-		$this->addMetaData(ModelMetaItem::create('author_email')
+		$this->addMetaData(AtributesFactory::create('author_email')
 			->setLabel('E-mail')
 			->setRestrictions(Restriction::R_EMAIL | Restriction::R_EMPTY)
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('varchar(255) NOT NULL'));
 		
-		$this->addMetaData(ModelMetaItem::create('author_web')
+		$this->addMetaData(AtributesFactory::create('author_web')
 			->setLabel('Web')
 			->setRestrictions(Restriction::R_LINK | Restriction::R_EMPTY)
 			->setType(Form::FORM_INPUT_TEXT)

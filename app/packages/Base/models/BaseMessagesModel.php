@@ -32,25 +32,25 @@ class BaseMessagesModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('sender')
+		$this->addMetaData(AtributesFactory::create('sender')
 			->setLabel('Sender')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType('VARCHAR(64) NOT NULL'));
 
-		$this->addMetaData(ModelMetaItem::create('recipient')
+		$this->addMetaData(AtributesFactory::create('recipient')
 			->setLabel('Recipient')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType('VARCHAR(64) NOT NULL'));
 
-		$this->addMetaData(ModelMetaItem::create('segment')
+		$this->addMetaData(AtributesFactory::create('segment')
 			->setLabel('Segment')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType('VARCHAR(64) NOT NULL'));
 
-		$this->addMetaData(ModelMetaItem::create('whenread')
+		$this->addMetaData(AtributesFactory::create('whenread')
 			->setLabel('When read')
 			->setDescription('when the item was read')
 			->setRestrictions(Restriction::R_TIMESTAMP | Restriction::R_NO_EDIT_ON_EMPTY)
@@ -60,13 +60,13 @@ class BaseMessagesModel extends AbstractDefaultModel {
 			->setSqlType("timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'")
 			->setSqlIndex('index'));
 
-		$this->addMetaData(ModelMetaItem::create('storing')
+		$this->addMetaData(AtributesFactory::create('storing')
 			->setLabel('Storing')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType('INT(11) NOT NULL'));
 
-		$this->addMetaData(ModelMetaItem::create('type')
+		$this->addMetaData(AtributesFactory::create('type')
 			->setLabel('Type')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setIsEditable(ModelMetaItem::NEVER)

@@ -29,13 +29,13 @@ class CalendarEventsModel extends AbstractPagesModel {
     	$this->addMetaData(AtributesFactory::stdDateTimeFrom());
     	$this->addMetaData(AtributesFactory::stdDateTimeTo());
 		
-		$this->addMetaData(ModelMetaItem::create('postTagsConnection')
+		$this->addMetaData(AtributesFactory::create('postTagsConnection')
 			->setLabel('Tags')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect'));
 		
     	
-		$this->addMetaData(ModelMetaItem::create('repeat_group')
+		$this->addMetaData(AtributesFactory::create('repeat_group')
 			->setLabel('Repeat group')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

@@ -27,7 +27,7 @@ class AbstractProductionPropertiesGroupsModel extends AbstractCodebookModel {
     	
     	parent::attributesDefinition();
 		
-		$this->addMetaData(ModelMetaItem::create('groupDefinitionConnection')
+		$this->addMetaData(AtributesFactory::create('groupDefinitionConnection')
 			->setLabel('Property')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect'));

@@ -41,7 +41,7 @@ class NewsletterMessagesModel extends AbstractPagesModel {
 			->setDescription('e-mail to reply, if empty the following is used: ' . $this->getDefualtReplytoEmail())
     		);
     	
-		$this->addMetaData(ModelMetaItem::create('contactGroups')
+		$this->addMetaData(AtributesFactory::create('contactGroups')
 			->setLabel('Contact groups')
 			->setType(Form::FORM_SPECIFIC_NOT_IN_DB)
 			->setOptionsMethod('listSelect')
@@ -49,7 +49,7 @@ class NewsletterMessagesModel extends AbstractPagesModel {
 			->setIsVisible(ModelMetaItem::NEVER)
 			);
 		
-		$this->addMetaData(ModelMetaItem::create('messageContactsConnection')
+		$this->addMetaData(AtributesFactory::create('messageContactsConnection')
 			->setLabel('Contacts')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE)
 			->setOptionsMethod('listSelect'));

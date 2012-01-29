@@ -27,7 +27,7 @@ class ResearchFillingsModel extends AbstractSimpleModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('research')
+		$this->addMetaData(AtributesFactory::create('research')
 			->setLabel('Research')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

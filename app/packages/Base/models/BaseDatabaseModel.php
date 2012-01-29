@@ -250,11 +250,11 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		$metadata = $model->getMetadata();
 		$extraIndexes = array();
 		if ($ext) {
-			$metadata[] = ModelMetaItem::create('lang')
+			$metadata[] = AtributesFactory::create('lang')
 				->setType(Form::FORM_INPUT_TEXT)
 				->setExtendedTable(true)
 				->setSqlType('INT(11) NOT NULL DEFAULT 1');
-			$metadata[] = ModelMetaItem::create('item')
+			$metadata[] = AtributesFactory::create('item')
 				->setType(Form::FORM_INPUT_TEXT)
 				->setExtendedTable(true)
 				->setSqlType('INT(11) NOT NULL DEFAULT 0');
@@ -265,7 +265,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 				}
 			}
 		} elseif ($model->languageSupportAllowed) {
-			$metadata[] = ModelMetaItem::create('lang')
+			$metadata[] = AtributesFactory::create('lang')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setSqlType('INT(11) NOT NULL DEFAULT 1');
 		}

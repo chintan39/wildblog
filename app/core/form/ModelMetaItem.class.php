@@ -80,13 +80,6 @@ class ModelMetaItem {
 		return $this->$name;
 	}
 	
-	/**
-	 * Static constructor
-	 */
-	public static function create($name) {
-		return new self($name);
-	}
-	
 	
 	public function isChangeAble($id) {
 		return $this->getIsEditable() == self::ALWAYS 

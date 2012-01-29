@@ -304,7 +304,7 @@ class FormFieldPassword extends FormField {
 			$thisConfirm->message = new stdClass; 
 			$thisConfirm->message->error = array();
 			$thisConfirm->message->warning = array();
-			$thisConfirm->meta = ModelMetaItem::create("confirm_" . $this->meta->getName())
+			$thisConfirm->meta = AtributesFactory::create("confirm_" . $this->meta->getName())
 				->setLabel(tg("Confirm") . " " . tg($this->meta->getLabel()))
 				->setDescription(tg($this->meta->getDescription()))
 				->setRestrictions($this->meta->getRestrictions());

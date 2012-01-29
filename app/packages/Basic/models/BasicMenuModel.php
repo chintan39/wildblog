@@ -27,14 +27,14 @@ class BasicMenuModel extends AbstractCodebookModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('all_pages')
+		$this->addMetaData(AtributesFactory::create('all_pages')
 			->setLabel('All pages')
 			->setRestrictions(Restriction::R_BOOL)
 			->setType(Form::FORM_CHECKBOX)
 			->setSqlType('tinyint(2) NOT NULL DEFAULT \'0\'')
 			->setDescription('If checked, menu will be available on all pages.'));
 		
-		$this->addMetaData(ModelMetaItem::create('menuItemsConnection')
+		$this->addMetaData(AtributesFactory::create('menuItemsConnection')
 			->setLabel('Menu items')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

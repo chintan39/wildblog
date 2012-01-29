@@ -354,7 +354,7 @@ class ItemCollection {
 				break;
 			}
 			if ($type) {
-				$this->filtersSettingsModel->addMetaData(ModelMetaItem::create($column)
+				$this->filtersSettingsModel->addMetaData(AtributesFactory::create($column)
 					->setLabel($this->getDm()->getMetaData($column)->getLabel())
 					->setDescription($this->getDm()->getMetaData($column)->getDescription())
 					->setRestrictions($restrictions)

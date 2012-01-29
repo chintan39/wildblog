@@ -26,11 +26,11 @@ class CalendarEventsTagsModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('event')
+		$this->addMetaData(AtributesFactory::create('event')
 			->setSqltype('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlindex('index'));
 
-		$this->addMetaData(ModelMetaItem::create('tag')
+		$this->addMetaData(AtributesFactory::create('tag')
 			->setSqltype('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlindex('index'));
 

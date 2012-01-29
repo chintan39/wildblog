@@ -27,14 +27,14 @@ class ResearchAnswersModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
 
-		$this->addMetaData(ModelMetaItem::create('value')
+		$this->addMetaData(AtributesFactory::create('value')
 			->setLabel('Value')
 			->setType(Form::FORM_TEXTAREA)
 			->setSqlType('varchar(255) NOT NULL')
 			->setSqlIndex('fulltext')
 			);
     	
-		$this->addMetaData(ModelMetaItem::create('filling')
+		$this->addMetaData(AtributesFactory::create('filling')
 			->setLabel('Filling')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
@@ -42,7 +42,7 @@ class ResearchAnswersModel extends AbstractDefaultModel {
 			->setSqlIndex('index')
 			->setOptionsMustBeSelected(true));
 		
-		$this->addMetaData(ModelMetaItem::create('question')
+		$this->addMetaData(AtributesFactory::create('question')
 			->setLabel('Question')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

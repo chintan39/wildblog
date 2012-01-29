@@ -42,13 +42,13 @@ class BaseConfigController extends AbstractDefaultController {
 		$filters = new BaseFiltersModel();
 		$condition = '__field__';
 		$valueAdjust = '.*__value__.*';
-		$filters->addMetaData(ModelMetaItem::create('key')
+		$filters->addMetaData(AtributesFactory::create('key')
 			->setLabel('Key')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setValueConditionPattern($condition)
 			->setValueAdjustPattern($valueAdjust));
 		$filters->values['key'] = '';
-		$filters->addMetaData(ModelMetaItem::create('text')
+		$filters->addMetaData(AtributesFactory::create('text')
 			->setLabel('Value')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setValueConditionPattern($condition)

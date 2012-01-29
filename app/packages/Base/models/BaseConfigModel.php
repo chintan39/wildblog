@@ -42,7 +42,7 @@ class BaseConfigModel extends AbstractDefaultModel {
 		
 		Utilities::arrayValueSort($options, 'value', 'asc', 'arraystring');
 
-		$this->addMetaData(ModelMetaItem::create('key')
+		$this->addMetaData(AtributesFactory::create('key')
 			->setLabel('Key')
 			->setType(Form::FORM_SELECT)
 			->setSqlType('VARCHAR(64) NOT NULL')

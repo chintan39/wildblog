@@ -26,7 +26,7 @@ class AbstractProductionPropertiesModel extends AbstractPropertiesModel {
     	
     	parent::attributesDefinition();
 		
-		$this->addMetaData(ModelMetaItem::create('product')
+		$this->addMetaData(AtributesFactory::create('product')
 			->setLabel('Product')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

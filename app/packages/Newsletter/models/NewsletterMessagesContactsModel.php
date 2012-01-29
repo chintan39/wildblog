@@ -26,15 +26,15 @@ class NewsletterMessagesContactsModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('message')
+		$this->addMetaData(AtributesFactory::create('message')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
 
-		$this->addMetaData(ModelMetaItem::create('contact')
+		$this->addMetaData(AtributesFactory::create('contact')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlIndex('index'));
 
-		$this->addMetaData(ModelMetaItem::create('sent_time')
+		$this->addMetaData(AtributesFactory::create('sent_time')
 			->setLabel('Sent time')
 			->setDescription('when the item was sent')
 			->setRestrictions(Restriction::R_TIMESTAMP)
@@ -42,7 +42,7 @@ class NewsletterMessagesContactsModel extends AbstractDefaultModel {
 			->setSqlType('timestamp NOT NULL DEFAULT \'0000-00-00 00:00:00\'')
 			->setSqlIndex('index'));
 
-		$this->addMetaData(ModelMetaItem::create('email_log')
+		$this->addMetaData(AtributesFactory::create('email_log')
 			->setLabel('E-mail log')
 			->setDescription('item in e-mail log with details obout sending')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)

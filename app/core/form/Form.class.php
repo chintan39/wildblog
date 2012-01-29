@@ -892,7 +892,7 @@ class Form {
 		// form identificator
 		$formId = new FormFieldHidden($this->identifier);
 		$formId->value = $this->identifier;
-		$formId->meta = ModelMetaItem::create('form_identifier')
+		$formId->meta = AtributesFactory::create('form_identifier')
 			->setType(self::FORM_HIDDEN);
 		$fieldsExtra = array($formId);
 
@@ -900,7 +900,7 @@ class Form {
 		if ($this->useCaptcha && !$this->getCaptchaPassed()) {
 			$formCaptcha = new FormFieldCaptcha($this->identifier);
 			$formCaptcha->value = '';
-			$formCaptcha->meta = ModelMetaItem::create('form_captcha')
+			$formCaptcha->meta = AtributesFactory::create('form_captcha')
 				->setLabel(tg('Anti-spam protection'))
 				->setDescription(tg('Write out the result from the image'))
 				->setType(self::FORM_CAPTCHA);
@@ -911,7 +911,7 @@ class Form {
 		if ($this->useCaptchaTimer && !$this->getCaptchaPassed()) {
 			$formCaptchaTimer = new FormFieldHidden($this->identifier);
 			$formCaptchaTimer->value = Utilities::simpleEncrypt(time(), Config::Get('CAPTCHA_TIMER_KEY'));
-			$formCaptchaTimer->meta = ModelMetaItem::create('captcha_timer_response_field')
+			$formCaptchaTimer->meta = AtributesFactory::create('captcha_timer_response_field')
 				->setType(self::FORM_HIDDEN);
 			$fieldsExtra[] = $formCaptchaTimer;
 		}
@@ -922,7 +922,7 @@ class Form {
 			$publickey = '6LebUwsAAAAAAJDQornmGKt0dVL3oyIEdzgMHh66'; // public key from recaptcha.net
 			$formRecaptcha = new FormFieldRecaptcha($this->identifier);
 			$formRecaptcha->value = recaptcha_get_html($publickey);
-			$formRecaptcha->meta = ModelMetaItem::create('recaptcha_response_field')
+			$formRecaptcha->meta = AtributesFactory::create('recaptcha_response_field')
 				->setLabel(tg('Anti-spam protection'))
 				->setDescription(tg('Write out the text from the image'))
 				->setType(self::FORM_RECAPTCHA);
@@ -942,7 +942,7 @@ class Form {
 			$fieldAlterAct = new FormFieldSelect($this->identifier);
 			$fieldAlterAct->value = $this->getAlternativeActionKey();
 			$fieldAlterAct->optionsFromModel = false;
-			$fieldAlterAct->meta = ModelMetaItem::create('form_action')
+			$fieldAlterAct->meta = AtributesFactory::create('form_action')
 				->setLabel(tg('Action after submit'))
 				->setDescription(tg('Select action to continue'))
 				->setType(self::FORM_SELECT)

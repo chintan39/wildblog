@@ -36,13 +36,13 @@ class BaseDictionaryModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('key')
+		$this->addMetaData(AtributesFactory::create('key')
 			->setLabel('Pattern')
 			->setDescription('Text or phrase to translate')
 			->setType(Form::FORM_TEXTAREA)
 			->setSqlType('BLOB NOT NULL'));
 
-		$this->addMetaData(ModelMetaItem::create('language')
+		$this->addMetaData(AtributesFactory::create('language')
 			->setLabel('Language')
 			->setDescription('Language of the translated text')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
@@ -61,13 +61,13 @@ class BaseDictionaryModel extends AbstractDefaultModel {
 			array('id' => self::KIND_GENERAL, 'value' => 'General'),
 			array('id' => self::KIND_URL_PARTS, 'value' => 'URL parts'),
 		);
-		$this->addMetaData(ModelMetaItem::create('kind')
+		$this->addMetaData(AtributesFactory::create('kind')
 			->setLabel('Kind')
 			->setType(Form::FORM_SELECT)
 			->setOptions($kindOptions)
 			->setSqlType('int(3) NOT NULL DEFAULT \'1\''));
 		
-		$this->addMetaData(ModelMetaItem::create('automatic')
+		$this->addMetaData(AtributesFactory::create('automatic')
 			->setLabel('Automatic')
 			->setDescription('Need to be checked or changed')
 			->setType(Form::FORM_CHECKBOX)

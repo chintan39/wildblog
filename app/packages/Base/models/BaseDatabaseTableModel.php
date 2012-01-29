@@ -27,16 +27,16 @@ class BaseDatabaseTableModel extends AbstractBasicModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('id')
+		$this->addMetaData(AtributesFactory::create('id')
 			->setLabel('ID'));
     	
-		$this->addMetaData(ModelMetaItem::create('table')
+		$this->addMetaData(AtributesFactory::create('table')
 			->setLabel('Table'));
     	
-		$this->addMetaData(ModelMetaItem::create('model')
+		$this->addMetaData(AtributesFactory::create('model')
 			->setLabel('Model'));
 
-		$this->addMetaData(ModelMetaItem::create('columns')
+		$this->addMetaData(AtributesFactory::create('columns')
 			->setLabel('Columns'));
 
     	$this->addMetaData(AtributesFactory::stdText()->setType(Form::FORM_TEXTAREA));

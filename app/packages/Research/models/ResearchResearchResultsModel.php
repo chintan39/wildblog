@@ -99,13 +99,13 @@ class ResearchResearchResultsModel extends AbstractVirtualModel {
 	}
 	
 	private function loadMetaData() {
-		$this->addMetaData(ModelMetaItem::create('filled')
+		$this->addMetaData(AtributesFactory::create('filled')
 			->setLabel('Filled')
 			->setType(Form::FORM_INPUT_DATETIME));
 		$questions = $this->getResearch()->getQuestions();
 		$questionsMap = $this->getQuestionsMap();
 		foreach ($questions as $q) {
-			$this->addMetaData(ModelMetaItem::create($questionsMap[$q->id])
+			$this->addMetaData(AtributesFactory::create($questionsMap[$q->id])
 				->setLabel($q->title)
 				->setType($q->type));
 		}

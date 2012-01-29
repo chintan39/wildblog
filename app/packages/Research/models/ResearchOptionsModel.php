@@ -27,7 +27,7 @@ class ResearchOptionsModel extends AbstractCodebookModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('question')
+		$this->addMetaData(AtributesFactory::create('question')
 			->setLabel('Question')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

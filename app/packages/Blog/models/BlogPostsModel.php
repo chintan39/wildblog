@@ -28,7 +28,7 @@ class BlogPostsModel extends AbstractPagesModel {
     	
     	$this->addMetaData(AtributesFactory::stdPublished());
     	
-		$this->addMetaData(ModelMetaItem::create('postTagsConnection')
+		$this->addMetaData(AtributesFactory::create('postTagsConnection')
 			->setLabel('Tags')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')

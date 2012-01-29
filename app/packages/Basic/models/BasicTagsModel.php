@@ -26,12 +26,12 @@ class BasicTagsModel extends AbstractCodebookModel {
     	
     	parent::attributesDefinition();
     	
-		$this->addMetaData(ModelMetaItem::create('articlesTagsConnection')
+		$this->addMetaData(AtributesFactory::create('articlesTagsConnection')
 			->setLabel('Articles')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect'));
 		
-		$this->addMetaData(ModelMetaItem::create('newsTagsConnection')
+		$this->addMetaData(AtributesFactory::create('newsTagsConnection')
 			->setLabel('News')
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect'));
