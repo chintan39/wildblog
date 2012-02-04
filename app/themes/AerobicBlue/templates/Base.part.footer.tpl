@@ -91,7 +91,7 @@
 
 <div class="footer-left">
 {require file='part.shortContact' package=Basic}
-<a href="http://www.facebook.com/profile.php?id=100000013252832&ref=search" rel="external" class="facebook"><img src="{$commonImagesPath}ico/64/facebook.png" alt="Facebook" /></a>
+<a href="http://www.facebook.com/profile.php?id=100000013252832&ref=search" rel="external" class="facebook"><img src="{$iconsPath}64/facebook.png" alt="Facebook" /></a>
 </div>
 
 <div class="footer-left">
