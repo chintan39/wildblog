@@ -332,8 +332,8 @@ div#topmenu a {
 	height: 58px;
 	margin-right: 4px;
 	color: #ffffff;	
-	padding: 0px 4px;
-	font-size: 148%;
+	padding: 0px 3px;
+	font-size: 143%;
 	font-family: "Trebuchet MS", "Geneva CE", lucida, sans-serif;
 	letter-spacing: -1px;
 }
@@ -496,7 +496,7 @@ div.faq-delim {
 a.faq-add-question {
 	display: block;
 	padding-left: 50px;
-	background: url('/media/.ico/32/comment_add.png') 8px center no-repeat;
+	background: url('../../Common/images/ico/32/comment_add.png') 8px center no-repeat;
 	height: 32px;
 	line-height: 32px;
 }

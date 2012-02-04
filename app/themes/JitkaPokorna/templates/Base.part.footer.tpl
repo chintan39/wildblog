@@ -9,7 +9,7 @@
 
 <div class="box">
 <h2>Kdy a kde cvičím</h2>
-<a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='10'}" class="cal"><br /><br />Klikněte zde pro zobrazení celého kalendáře s&nbsp;pravidelnými hodinami</a>
+<a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='18'}" class="cal"><br /><br />Klikněte zde pro zobrazení celého kalendáře s&nbsp;pravidelnými hodinami</a>
 
 <hr class="invisible" />
 </div> <!-- box -->
@@ -43,12 +43,12 @@
 <span class="clear"></span><!-- clear flaoting -->
 
 </div><!-- contentwrap -->
-
 <div id="headwrap">
+<!--
 <div id="header">
 <h2><a href="{$base}">{tp}header top title{/tp}</a></h2>
 <p>{tp}header top subtitle{/tp}</p>
-</div><!-- header -->
+</div>--><!-- header -->
 
 <div id="topmenu">
 <ul>
@@ -60,9 +60,9 @@
 <li><a href="{linkto package=Blog controller=Posts action=actionPostsList}">Blog</a></li>*}
 <li><a href="{linkto package=FAQ controller=Questions action=actionQuestionsList}">Vzkazník</a></li>
 {*<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='8'}">Kde se cvičí</a></li>*}
-<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='10'}">Rozvrh</a></li>
+<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='18'}">Rozvrh</a></li>
 {*<li><a href="#">Akce</a></li>*}
-<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='7'}">Náš tým</a></li>
+<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='17'}">Individiální lekce</a></li>
 <li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='9'}">Styly cvičení</a></li>
 <li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='1'}">Certifikáty</a></li>
 <li><a href="{linkto package=Gallery controller=Galleries action=actionGalleriesList}">Fotogalerie</a></li>
@@ -91,7 +91,7 @@
 
 <div class="footer-left">
 {require file='part.shortContact' package=Basic}
-<a href="http://www.facebook.com/profile.php?id=100000013252832&ref=search" rel="external" class="facebook"><img src="{$iconsPath}64/facebook.png" alt="Facebook" /></a>
+<a href="http://www.facebook.com/profile.php?id=100000013252832&ref=search" rel="external" class="facebook"><img src="{$commonImagesPath}ico/64/facebook.png" alt="Facebook" /></a>
 </div>
 
 <div class="footer-left">

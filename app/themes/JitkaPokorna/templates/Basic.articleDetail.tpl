@@ -1,4 +1,4 @@
-{if $article and $article->id eq 10 or $article and $article->id eq 10} {*only for rozvrh*}
+{if $article and $article->id eq 10 or $article and $article->id eq 15 or $article and $article->id eq 18} {*only for rozvrh*}
 {assign var=widepage value=1}
 {/if}
 {require file='part.header'}
