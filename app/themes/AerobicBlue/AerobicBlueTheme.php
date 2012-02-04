@@ -20,9 +20,9 @@
 /**
  * Default front-end theme.
  */
-class JitkaPokornaTheme extends AbstractTheme {
+class AerobicBlueTheme extends AbstractTheme {
 	
-	var $name = 'JitkaPokorna';
+	var $name = 'AerobicBlue';
 	
 	var $templatesDependency = array(
 		'Base.part.header' => array(

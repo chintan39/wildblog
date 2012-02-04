@@ -1,0 +1,36 @@
+/**
+ * Style: Jitka Pokorna Web | print version
+ * Author: Jan Horak, horak.jan@centrum.cz
+ * Date: 2010/05/30
+ */
+ 
+@import "default.css";
+
+/**
+ *------------------------------------------------
+ * not printed 
+ *------------------------------------------------
+ */ 
+
+html, body {
+	font-size: 13px;
+	color: #000000;
+}
+
+div#rightpanel, div#headwrap, div.paging,
+div#footer-middle div.footer-left, div#footer-middle div.footer-right {
+	display: none;
+}
+
+hr.invisible {
+	display: block;
+}
+
+
+/**
+ *------------------------------------------------
+ * end 
+ *------------------------------------------------
+ */ 
+
+

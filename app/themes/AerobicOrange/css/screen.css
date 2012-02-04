@@ -1,0 +1,543 @@
+/**
+ * Style: Jitka Pokorna Web | screen version
+ * Author: Jan Horak, horak.jan@centrum.cz
+ * Date: 2010/05/30
+ */
+ 
+@import "default.css";
+@import "../../Common/css/cleanform.css";
+
+/**
+ * Layout 
+ */ 
+
+* {
+	padding: 0px;
+	margin: 0px;
+	position: relative;
+	border: 0;
+}
+
+body {
+	background: #ffffff;
+	color: #000000;
+	font-size: 12px;
+	line-height: 150%;
+	text-align: center;
+}
+
+table {
+	font-size: 12px;
+}
+
+table th {
+	background: #c7ebed;
+	color: #0198e7;
+}
+
+a {
+	color: #0198e7;
+	text-decoration: underline;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+hr.invisible {
+	display: none;
+}
+
+ul {
+	padding-left: 20px;
+}
+
+input, textarea, select {
+	border: 1px solid #84d9f1;
+	font-size: 95%;
+}
+
+textarea {
+	padding: 3px;
+}
+
+input.submit {
+	cursor: pointer;
+	background: #cccccc;
+}
+
+input.submit:hover {
+	background-color: #eeeeee;
+}
+
+div#page {
+	width: 990px;
+	text-align: left;
+	margin: 0px auto;
+}
+
+div#page div.padding {
+	height: 308px;
+}
+
+/**
+ * Content
+ */
+div#contentwrap {
+	width: 990px;
+	background: url('../images/page-middle.png')  left top repeat-y;
+}
+
+div#contentwrap.wide {
+	background: url('../images/page-middle-wide.png')  left top repeat-y;
+}
+
+div#contentwrap.wide div.top {
+	height: 20px;
+	background: url('../images/page-middle-wide-top.png')  left top no-repeat;
+}
+
+div#contentwrap.wide div.bottom {
+	height: 20px;
+	background: url('../images/page-middle-wide-bottom.png')  left top no-repeat;
+}
+
+div#contentpanel {
+	width: 500px;
+	float: left;
+	margin-left: 65px; /* TODO: problem IE */
+	_margin-left: 33px; /* TODO: problem IE */
+	color: #555555;
+	line-height: 170%;
+}
+
+div#contentpanel p {
+	margin: 10px 0px;
+	letter-spacing: .5px;
+}
+
+div#widecontentpanel {
+	margin-left: 65px; /* TODO: problem IE */
+	margin-right: 33px;
+}
+
+div#widecontentpanel table {
+	width: 100%;
+	_width: auto;
+	border-collapse: collapse;
+}
+
+div#widecontentpanel table td, div#widecontentpanel table th {
+}
+
+div#widecontentpanel table td {
+	text-align: center;
+	width: 122px;
+}
+
+div#widecontentpanel table th {
+	text-align: center;
+	width: 122px;
+}
+
+/**
+ * Right panel
+ */
+div#rightpanel {
+	width: 360px;
+	float: right;
+	margin-right: 33px;
+	_margin-right: 18px;
+}
+
+div#rightpanel div.box {
+	padding-bottom: 20px;
+	background: url('../images/right-sep.png') center bottom no-repeat;
+}
+
+div#rightpanel h2 {
+	color: #0198e7;
+	font-size: 170%;
+	margin: 30px 0px 10px 0px;
+}
+
+div#rightpanel a.button {
+	margin: 10px 0px;
+	background: url('../images/button.png') center 0px no-repeat;
+	color: #ffffff;
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	text-decoration: none;
+}
+
+div#rightpanel a.button:hover {
+	background-position: center -50px;
+}
+
+div#rightpanel a.arrow {
+	font-size: 120%;
+	margin: 10px 0px;
+	background: url('../images/arrow.png') left center no-repeat;
+	color: #0198e7;
+	display: block;
+	padding-left: 35px;
+	text-decoration: none;
+}
+
+div#rightpanel a.arrow:hover {
+	color: #ffb400;
+}
+
+div#rightpanel a.cal {
+	font-size: 120%;
+	margin: 10px 0px;
+	background: url('../images/cal.png') left center no-repeat;
+	color: #0198e7;
+	padding-left: 145px;
+	text-decoration: none;
+	height: 128px;
+	display: block;
+}
+
+div#rightpanel a.cal:hover {
+	color: #ffb400;
+}
+
+div#rightpanel a img {
+	border: 2px solid #aaaaaa;
+	margin: 0 5px 5px 0px;
+}
+
+div#rightpanel a:hover img {
+	border-color: #ffb400;
+}
+
+div#rightpanel div.cal {
+	
+}
+
+div#rightpanel div.event {
+	padding-top: 15px;
+	padding: 10px 5px;
+	margin: 15px 0px;
+	background: url('../images/event.png') 314px 4px no-repeat;
+}
+
+div#rightpanel div.event h3 {
+	font-size: 150%;
+}
+div#rightpanel div.event h3 a {
+	color: #777777;
+	text-decoration: none;
+}
+
+div#rightpanel div.event h3 a:hover {
+	color: #555555;
+}
+
+div#rightpanel div.event p.date {
+	color: #888888;
+	position: absolute;
+	top: 0px;
+	left: 5px;
+}
+
+div#rightpanel div.partners {
+
+}
+
+div#rightpanel div.partners ul {
+	padding: 0px;
+}
+
+div#rightpanel div.partners ul li {
+	list-style: none;
+}
+
+div#rightpanel div.partners a {
+	text-decoration: none;
+}
+
+div#rightpanel div.partners a:hover {
+	text-decoration: underline;
+}
+
+/**
+ * Head panel
+ */
+div#headwrap {
+	width: 100%;
+	height: 308px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: url('../images/header.jpg')  center bottom no-repeat;
+}
+
+div#header {
+	width: 670px;
+	height: 200px;
+	position: absolute;
+	top: 55px;
+	left: 65px;
+	color: #ffffff;
+	
+}
+
+div#header h2 {
+	font-family: serif; 
+	font-size: 450%;
+	line-height: 50px;
+	height: 50px;
+	letter-spacing: 6px;
+	margin: 0px;
+	color: #ffffff;
+}
+
+div#header h2 a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+div#header h2 a:hover {
+	text-decoration: none;
+}
+
+div#header p {
+	font-family: serif; 
+	font-size: 170%;
+	line-height: 18px;
+	height: 18px;
+	width: 400px;
+	letter-spacing: 6px;
+	margin: 0px 0px 0px 30px;
+	color: #ffffff;
+}
+
+div#topmenu {
+	position: absolute;
+	top: 245px;
+	left: 30px;
+	height: 62px;
+	width: 980px;
+}
+
+div#topmenu a {
+	display: block;
+	_display: inline;
+	text-decoration: none;
+	line-height: 58px;
+	height: 58px;
+	margin-right: 4px;
+	color: #ffffff;	
+	padding: 0px 3px;
+	font-size: 143%;
+	font-family: "Trebuchet MS", "Geneva CE", lucida, sans-serif;
+	letter-spacing: -1px;
+}
+
+div#topmenu a:hover, div#topmenu a.actual {
+	/*background: url('../images/topmenu-hover.png')  left center repeat-x;*/
+	background: url('../images/25transp.png');
+	_color: #000000;
+}
+
+div#topmenu a.highlight {
+	color: #ffeb46;
+}
+
+div#topmenu ul {
+	height: 58px;
+	padding: 0px;
+}
+
+div#topmenu ul li {
+	display: block;
+	_display: inline;
+	float: left;
+	height: 58px;
+	line-height: 58px;
+	list-style: none;
+}	
+
+div#header-search {
+	width: 260px;
+	height: 40px;
+	position: absolute;
+	top: 15px;
+	left: 740px;
+	font-size: 120%;
+}
+
+div#header-search input {
+	border: 1px solid #bbbbbb;
+	padding: 0px 4px;
+	height: 24px;
+	line-height: 24px;
+}
+
+div#header-search input.submit {
+	background: #acde65;
+	border: 1px solid #82b84b;
+	height: 25px;
+	line-height: 25px;
+	top: 1px;
+}
+
+div#header-search input.submit:hover {
+	background: #ffb400;
+	border: 1px solid #cf960c;
+}
+
+/**
+ * footer 
+ */
+div.footwrap {
+}
+
+div.footwrap a {
+	text-decoration: none;
+	color: #ffffff;
+}
+ 
+div.footwrap a:hover {
+	text-decoration: underline;
+}
+ 
+div.footer {
+	width: 994px;
+	text-align: left;
+	margin: 0px auto;
+} 
+
+div.footer-top {
+	background: url('../images/footer-top.png') center top no-repeat;
+	height: 42px;
+}
+
+div.footwrap.second div.footer-top {
+	background: url('../images/footer-top-grey.png') center top no-repeat;
+	height: 15px;
+}
+
+div.footer-middle {
+	background: url('../images/footer-center.png') center center repeat-y;
+	padding: 0px 60px 10px 30px;
+	color: #ffffff;
+}
+
+div.footwrap.second div.footer-middle {
+	background-image: url('../images/footer-center-grey.png');
+}
+
+div.footer-bottom {
+	background: url('../images/footer-bottom.png') center top no-repeat;
+	height: 7px;
+	margin-bottom: 5px;
+} 
+
+div.footwrap.second div.footer-bottom {
+	background-image: url('../images/footer-bottom-grey.png');
+}
+
+div.footer-middle div.footer-right {
+	width: 400px;
+	float: right;
+}
+
+div.footer-middle div.footer-left {
+	width: 240px;
+	float: left;
+}
+
+div.footer-middle div.footer-left h2 {
+	color: #ffffff;
+	margin: 5px 0px 5px 20px;
+}
+
+div.footer-middle div.footer-left ul {
+	padding: 0px 0px 0px 20px;
+}
+
+div.footer-middle div.footer-left p {
+	margin-left: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.footer-middle div.footer-left ul li {
+	list-style: none;
+}
+
+div.footwrap div.copy {
+	text-align: right;
+	margin-left: 30px;
+}
+
+textarea#form_text {
+	width: 458px;
+}
+
+p.question-title {
+	font-weight: bold;
+}
+
+p.question-text {
+	font-style: italic;
+}
+
+div.faq-delim {
+	height: 1px;
+	background: #777777;
+}
+
+a.faq-add-question {
+	display: block;
+	padding-left: 50px;
+	background: url('../../Common/images/ico/32/comment_add.png') 8px center no-repeat;
+	height: 32px;
+	line-height: 32px;
+}
+
+div.footwrap a.facebook {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+div.footwrap a.facebook img {
+	border: none;
+}
+
+div.addthis_default_style {
+	margin: 30px 0px;
+}
+
+
+/**
+ * edit/add new icon 
+ */ 
+div.admin_edit {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	z-index: 100;
+}
+
+div.admin_edit a {
+}
+
+div.admin_edit a img {
+	background: #ffffff;
+	border: 2px solid #bbbbbb;
+}
+
+div.admin_edit a:hover img {
+	border: 2px solid #cc5500;
+}
+
+/**
+ * end 
+ */ 
