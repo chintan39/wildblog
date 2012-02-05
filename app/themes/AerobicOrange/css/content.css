@@ -84,6 +84,11 @@ img.float-right, span.float-right {
 	text-align: center;
 }
 
+.color-ae, .color-pw, .color-pi {
+	letter-spacing: -1px;
+	line-height: 130%;
+}
+
 .color-ae {
 	background: #ffb400;
 	_background: none;

@@ -36,6 +36,7 @@
 <hr class="invisible" />
 </div> <!-- box -->
 
+{*
 <div class="box">
 
 <div class="partners">
@@ -55,6 +56,7 @@
 
 <hr class="invisible" />
 </div> <!-- box -->
+*}
 
 </div><!-- leftpanel -->
 {else} {*wide page end*}
