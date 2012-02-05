@@ -278,6 +278,7 @@ div #leftmenu ul ul li a {
 	text-indent: 30px;
 }
 
+div #leftmenu ul ul li a.active,
 div #leftmenu ul ul li a:hover {
 	background: #ff6041;
 }
@@ -301,6 +302,7 @@ div #leftmenu li a {
 	text-indent: 10px;
 }
 
+div #leftmenu li a.active,
 div #leftmenu li a:hover {
 	background: #ec401e;
 }

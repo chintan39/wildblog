@@ -43,7 +43,11 @@ class BasicMenuController extends AbstractPagesController {
 					$menuTree->setDm(new BasicMenuItemsModel());
 					//$menuTree->treePull(ItemCollectionTree::treeAncestors | ItemCollectionTree::treeSiblings);
 					$menuTree->loadCollection();
-					$allPagesMenus[$menuName] = $menuTree;
+					$menuLinkTree = new LinkCollection();
+					$menuLinkTree->setIgnorePermissionDenied(true);
+					$menuLinkTree->getContentFromItemCollection($menuTree);
+					$menuLinkTree->markAllLinks();
+					$allPagesMenus[$menuName] = $menuLinkTree;
 				}
 			}
 			$this->saveCache('allPagesMenus', $allPagesMenus, array('BasicMenuModel', 'BasicMenuItemsModel'));

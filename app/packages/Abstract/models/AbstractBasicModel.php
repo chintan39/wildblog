@@ -387,7 +387,21 @@ class AbstractBasicModel {
 			}
 		}
 	}
-	
+    
+    
+    /**
+     * Method creates the title used in the select box.
+     * Should be overwritten.
+     * @return string title of the item to use in the select box
+     */
+    public function makeSelectTitle() {
+    	if ($this->hasMetaData('title')) {
+    		return $this->title; // TODO: make better
+    	}
+    	return sprintf("%s object [%d]", get_class($this), $this->id);
+    }
+
+
 	/**
 	 * Adjusts values of the field (for example checkbox is 1, if it is set, 0 if not).
 	 * @param &$value

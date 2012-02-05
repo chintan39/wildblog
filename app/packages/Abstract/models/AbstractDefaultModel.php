@@ -233,19 +233,6 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
     	return $selectItems; 
     }
     
-    
-    /**
-     * Method creates the title used in the select box.
-     * Should be overwritten.
-     * @return string title of the item to use in the select box
-     */
-    public function makeSelectTitle() {
-    	if (array_key_exists('title', $this->getMetaData())) {
-    		return $this->title; // TODO: make better
-    	}
-    	return sprintf("%s object [%d]", get_class($this), $this->id);
-    }
-    
 
 	/**
 	 * Returns array of fields, that should be visible in the specified collection.

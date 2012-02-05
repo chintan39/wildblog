@@ -239,6 +239,44 @@ class Request {
 	}
 	
 	
+	static public function getRequestLocationFromString($str) {
+		if (preg_match('/(\w+)::(\w+)::(\w+)::(\d{1,9})/', $str, $matches)) {
+			$requestLocation = new RequestLocation();
+			$requestLocation->package = $matches[1];
+			$requestLocation->controller = $matches[2];
+			$requestLocation->method = $matches[3];
+			//$modelName = $matches[1] . $matches[2] . "Model";
+			//$requestLocation->item = new $modelName($matches[4]);
+			$requestLocation->item = $matches[4];
+			return $requestLocation;
+		}
+		if (preg_match('/(\w+)::(\w+)::(\w+)/', $str, $matches)) {
+			$requestLocation = new RequestLocation();
+			$requestLocation->package = $matches[1];
+			$requestLocation->controller = $matches[2];
+			$requestLocation->method = $matches[3];
+			return $requestLocation;
+		}
+		ErrorLogger::log(ErrorLogger::ERR_WARNING, "Action being converted to Link does not have right format: '$str'.");
+		return null;
+	}
+	
+	
+	static public function getLinkString($str) {
+		$requestLocation = self::getRequestLocationFromString($str);
+		return self::getLinkFromRequestLocation($requestLocation);
+	}
+	
+	
+	static public function getLinkFromRequestLocation($requestLocation) {
+		if ($requestLocation && $requestLocation->item)
+			return self::getLinkItem($requestLocation->package, $requestLocation->controller, $requestLocation->method, $requestLocation->item);
+		if ($requestLocation)
+			return self::getLinkSimple($requestLocation->package, $requestLocation->controller, $requestLocation->method);
+		return '';
+	}
+	
+	
 	/**
 	 * Generates the link to the item, specified by the item itself.
 	 * @param string|null $package Package name or empty (not have to be defined, 

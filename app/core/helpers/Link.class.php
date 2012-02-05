@@ -18,6 +18,14 @@
 
 
 /**
+ * Request location
+ */
+class RequestLocation {
+	var $package, $controller, $method, $item;
+}
+
+
+/**
  * class Link
  * Link object to represent link
  */

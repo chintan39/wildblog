@@ -96,6 +96,13 @@ class ItemCollection {
 		$this->dm = $dm;
 	}
 
+	
+	public function getItems() {
+		if ($this->data && $this->data['items'])
+			return $this->data['items'];
+		return array();
+	}
+	
 
 	protected function passPropertiesToDm() {
 		// get qualification

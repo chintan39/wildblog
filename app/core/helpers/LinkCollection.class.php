@@ -105,6 +105,42 @@ class LinkCollection {
 	
 
 	/**
+	 * Gets content from item collection
+	 */
+	protected function getContentFromItemCollectionRecursive($items) {
+		if (!$items)
+			return array();
+		$links = array();
+		foreach ($items as $item) {
+			if (!$item->hasMetadata('link')) {
+				throw new Exception('Item being converted to LinkCollection does not have attribute link');
+			}
+			$requestLocation = Request::getRequestLocationFromString($item->link);
+			$newLink = new Link(array(
+				'link' => Request::getLinkFromRequestLocation($requestLocation), 
+				'label' => $item->makeSelectTitle(),
+				'title' => $item->makeSelectTitle(), 
+				'action' => array(
+					'package' => $requestLocation->package, 
+					'controller' => $requestLocation->controller, 
+					'action' => $requestLocation->method,
+					'item' => $requestLocation->item)));
+			$newLink->addSubLinks(self::getContentFromItemCollectionRecursive($item->subItems));
+			$links[] = $newLink;
+		}
+		return $links;
+	}
+	
+	
+	/**
+	 * Gets content from item collection
+	 */
+	public function getContentFromItemCollection($linkCollection) {
+		$this->links = self::getContentFromItemCollectionRecursive($linkCollection->getItems());
+	}
+	
+	
+	/**
 	 * Removes not access-able links from array.
 	 */
 	private function eraseDeniedLinks(&$links) {
