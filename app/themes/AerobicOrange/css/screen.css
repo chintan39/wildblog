@@ -36,7 +36,7 @@ table th {
 }
 
 a {
-	color: #0198e7;
+	color: #e33f13;
 	text-decoration: underline;
 }
 
@@ -77,7 +77,7 @@ div#page {
 }
 
 div#page div.padding {
-	height: 308px;
+	height: 245px;
 }
 
 /**
@@ -85,28 +85,24 @@ div#page div.padding {
  */
 div#contentwrap {
 	width: 990px;
-	background: url('../images/page-middle.png')  left top repeat-y;
 }
 
 div#contentwrap.wide {
-	background: url('../images/page-middle-wide.png')  left top repeat-y;
 }
 
 div#contentwrap.wide div.top {
 	height: 20px;
-	background: url('../images/page-middle-wide-top.png')  left top no-repeat;
 }
 
 div#contentwrap.wide div.bottom {
 	height: 20px;
-	background: url('../images/page-middle-wide-bottom.png')  left top no-repeat;
 }
 
 div#contentpanel {
-	width: 500px;
-	float: left;
-	margin-left: 65px; /* TODO: problem IE */
-	_margin-left: 33px; /* TODO: problem IE */
+	width: 600px;
+	float: right;
+	margin-right: 65px; /* TODO: problem IE */
+	_margin-right: 33px; /* TODO: problem IE */
 	color: #555555;
 	line-height: 170%;
 }
@@ -143,25 +139,25 @@ div#widecontentpanel table th {
 /**
  * Right panel
  */
-div#rightpanel {
-	width: 360px;
-	float: right;
-	margin-right: 33px;
-	_margin-right: 18px;
+div#leftpanel {
+	width: 260px;
+	float: left;
+	margin-left: 33px;
+	_margin-left: 18px;
 }
 
-div#rightpanel div.box {
+div#leftpanel div.box {
 	padding-bottom: 20px;
 	background: url('../images/right-sep.png') center bottom no-repeat;
 }
 
-div#rightpanel h2 {
-	color: #0198e7;
+div#leftpanel h2 {
+	color: #e33f13;
 	font-size: 170%;
 	margin: 30px 0px 10px 0px;
 }
 
-div#rightpanel a.button {
+div#leftpanel a.button {
 	margin: 10px 0px;
 	background: url('../images/button.png') center 0px no-repeat;
 	color: #ffffff;
@@ -172,104 +168,151 @@ div#rightpanel a.button {
 	text-decoration: none;
 }
 
-div#rightpanel a.button:hover {
+div#leftpanel a.button:hover {
 	background-position: center -50px;
 }
 
-div#rightpanel a.arrow {
+div#leftpanel a.arrow {
 	font-size: 120%;
 	margin: 10px 0px;
 	background: url('../images/arrow.png') left center no-repeat;
-	color: #0198e7;
+	color: #e33f13;
 	display: block;
 	padding-left: 35px;
 	text-decoration: none;
 }
 
-div#rightpanel a.arrow:hover {
+div#leftpanel a.arrow:hover {
 	color: #ffb400;
 }
 
-div#rightpanel a.cal {
+div#leftpanel a.cal {
 	font-size: 120%;
 	margin: 10px 0px;
 	background: url('../images/cal.png') left center no-repeat;
-	color: #0198e7;
+	color: #e33f13;
 	padding-left: 145px;
 	text-decoration: none;
 	height: 128px;
 	display: block;
 }
 
-div#rightpanel a.cal:hover {
+div#leftpanel a.cal:hover {
 	color: #ffb400;
 }
 
-div#rightpanel a img {
+div#leftpanel a img {
 	border: 2px solid #aaaaaa;
 	margin: 0 5px 5px 0px;
 }
 
-div#rightpanel a:hover img {
+div#leftpanel a:hover img {
 	border-color: #ffb400;
 }
 
-div#rightpanel div.cal {
+div#leftpanel div.cal {
 	
 }
 
-div#rightpanel div.event {
+div#leftpanel div.event {
 	padding-top: 15px;
 	padding: 10px 5px;
 	margin: 15px 0px;
 	background: url('../images/event.png') 314px 4px no-repeat;
 }
 
-div#rightpanel div.event h3 {
+div#leftpanel div.event h3 {
 	font-size: 150%;
 }
-div#rightpanel div.event h3 a {
+div#leftpanel div.event h3 a {
 	color: #777777;
 	text-decoration: none;
 }
 
-div#rightpanel div.event h3 a:hover {
+div#leftpanel div.event h3 a:hover {
 	color: #555555;
 }
 
-div#rightpanel div.event p.date {
+div#leftpanel div.event p.date {
 	color: #888888;
 	position: absolute;
 	top: 0px;
 	left: 5px;
 }
 
-div#rightpanel div.partners {
+div#leftpanel div.partners {
 
 }
 
-div#rightpanel div.partners ul {
+div#leftpanel div.partners ul {
 	padding: 0px;
 }
 
-div#rightpanel div.partners ul li {
+div#leftpanel div.partners ul li {
 	list-style: none;
 }
 
-div#rightpanel div.partners a {
+div#leftpanel div.partners a {
 	text-decoration: none;
 }
 
-div#rightpanel div.partners a:hover {
+div#leftpanel div.partners a:hover {
 	text-decoration: underline;
 }
+
+/**
+ * Left menu
+ */
+ 
+div #leftmenu {
+	color: #ffffff;
+}
+
+div #leftmenu ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+div #leftmenu ul ul li a {
+	background: #ec401e;
+	text-indent: 30px;
+}
+
+div #leftmenu ul ul li a:hover {
+	background: #ff6041;
+}
+
+div #leftmenu ul ul ul li a {
+	text-indent: 50px;
+}
+
+div #leftmenu li {
+	padding: 1px 0px 0px 0px;
+	display: block;
+}
+
+div #leftmenu li a {
+	text-decoration: none;
+	font-size: 130%;
+	line-height: 200%;
+	display: block;
+	color: #ffffff;
+	background: #cb2100;
+	text-indent: 10px;
+}
+
+div #leftmenu li a:hover {
+	background: #ec401e;
+}
+
+
 
 /**
  * Head panel
  */
 div#headwrap {
 	width: 100%;
-	height: 308px;
+	height: 245px;
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -278,10 +321,10 @@ div#headwrap {
 
 div#header {
 	width: 670px;
-	height: 200px;
+	height: 245px;
 	position: absolute;
-	top: 55px;
-	left: 65px;
+	top: 0px;
+	left: 0px;
 	color: #ffffff;
 	
 }
@@ -367,7 +410,7 @@ div#header-search {
 	height: 40px;
 	position: absolute;
 	top: 15px;
-	left: 740px;
+	left: 700px;
 	font-size: 120%;
 }
 
@@ -379,8 +422,9 @@ div#header-search input {
 }
 
 div#header-search input.submit {
-	background: #acde65;
-	border: 1px solid #82b84b;
+	background: #e33f13;
+	border: 1px solid #e33f13;
+	color: #ffffff;
 	height: 25px;
 	line-height: 25px;
 	top: 1px;

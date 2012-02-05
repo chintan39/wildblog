@@ -37,10 +37,13 @@ class BasicMenuController extends AbstractPagesController {
 				$allPagesMenus = array();
 				foreach ($menus as $menu) {
 					$menuName = str_replace('-', '_', $menu->url);
-					$menuItem = new BasicMenuItemsModel();
-					$menuItem->addQualification('menu = ?', $menu->id);
-					$menuItem->addSorting('rank');
-					$allPagesMenus[$menuName] = $menuItem->getCollectionItems();
+					$menuTree = new ItemCollectionTree($menuName, $this);
+					$menuTree->addQualification(array('menu' => array(new ItemQualification('menu = ?', array($menu->id)))));
+					$menuTree->setSorting(array(new ItemSorting('rank')));
+					$menuTree->setDm(new BasicMenuItemsModel());
+					//$menuTree->treePull(ItemCollectionTree::treeAncestors | ItemCollectionTree::treeSiblings);
+					$menuTree->loadCollection();
+					$allPagesMenus[$menuName] = $menuTree;
 				}
 			}
 			$this->saveCache('allPagesMenus', $allPagesMenus, array('BasicMenuModel', 'BasicMenuItemsModel'));

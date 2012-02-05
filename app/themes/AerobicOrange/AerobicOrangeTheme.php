@@ -36,6 +36,7 @@ class AerobicOrangeTheme extends AbstractTheme {
 			'Gallery.part.galleriesList',
 			'Basic.part.htmlAreas',
 			'Basic.part.recentNews',
+			'Basic.part.allPagesMenus',
 		),
 		'FAQ.questions' => array(
 			'Base.part.header',

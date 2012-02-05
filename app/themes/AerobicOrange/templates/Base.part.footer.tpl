@@ -3,9 +3,31 @@
 
 </div><!-- contentpanel -->
 
-<div id="rightpanel">
+<div id="leftpanel">
 
-{*require package=Basic file='part.recentNews'*}
+<div id="leftmenu">
+{require file='part.allPagesMenus' package=Basic menuName='left_menu'}
+{*
+<ul>
+<li><a href="{linkto package=Basic controller=News action=actionNewsPrimaryTag}">Aktuálně</a></li>
+<li><a href="{linkto package=Basic controller=Articles action=actionHomepageArticle}">O mně</a></li>
+<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='9'}">Styly cvičení</a></li>
+<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='18'}">Rozvrh</a></li>
+<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='17'}">Individiální lekce</a></li>
+<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='11'}">Sportovní akce</a></li>
+<li><a href="{linkto package=Basic controller=Tags action=actionNewsTagDetail dataItem='1'}">Jednodenní akce</a></li>
+<li><a href="{linkto package=Basic controller=Tags action=actionNewsTagDetail dataItem='2'}">Víkendové pobyty</a></li>
+<li><a href="{linkto package=Blog controller=Posts action=actionPostsList}">Blog</a></li>
+<li><a href="{linkto package=FAQ controller=Questions action=actionQuestionsList}">Vzkazník</a></li>
+{*<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='8'}">Kde se cvičí</a></li>*}
+{*<li><a href="#">Akce</a></li>
+<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='1'}">Certifikáty</a></li>
+<li><a href="{linkto package=Gallery controller=Galleries action=actionGalleriesList}">Fotogalerie</a></li>
+<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='6'}">Ceník</a></li>
+<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='5'}">Kontakt</a></li>
+</ul>
+*}
+</div><!-- leftmenu -->
 
 <div class="box">
 <h2>Kdy a kde cvičím</h2>
@@ -34,7 +56,7 @@
 <hr class="invisible" />
 </div> <!-- box -->
 
-</div><!-- rightpanel -->
+</div><!-- leftpanel -->
 {else} {*wide page end*}
 </div><!-- widecontentpanel -->
 <div class="bottom"></div>
@@ -50,27 +72,6 @@
 <p>{tp}header top subtitle{/tp}</p>
 </div>--><!-- header -->
 
-<div id="topmenu">
-<ul>
-<li><a href="{linkto package=Basic controller=Articles action=actionHomepageArticle}">O mně</a></li>
-<li><a href="{linkto package=Basic controller=News action=actionNewsPrimaryTag}">Aktuálně</a></li>
-<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='11'}">Sportovní akce</a></li>
-{*<li><a href="{linkto package=Basic controller=Tags action=actionNewsTagDetail dataItem='1'}">Jednodenní akce</a></li>
-<li><a href="{linkto package=Basic controller=Tags action=actionNewsTagDetail dataItem='2'}">Víkendové pobyty</a></li>
-<li><a href="{linkto package=Blog controller=Posts action=actionPostsList}">Blog</a></li>*}
-<li><a href="{linkto package=FAQ controller=Questions action=actionQuestionsList}">Vzkazník</a></li>
-{*<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='8'}">Kde se cvičí</a></li>*}
-<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='18'}">Rozvrh</a></li>
-{*<li><a href="#">Akce</a></li>*}
-<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='17'}">Individiální lekce</a></li>
-<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='9'}">Styly cvičení</a></li>
-<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='1'}">Certifikáty</a></li>
-<li><a href="{linkto package=Gallery controller=Galleries action=actionGalleriesList}">Fotogalerie</a></li>
-<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='6'}"
->Ceník</a></li>
-<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='5'}">Kontakt</a></li>
-</ul>
-</div><!-- topmenu -->
 
 <div id="header-search">
 <form action="{$base}search/" method="get">
