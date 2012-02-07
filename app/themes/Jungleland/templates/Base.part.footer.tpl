@@ -6,7 +6,7 @@
 							
                 <div class="sidemenu">
 					<h3>{tg}Main menu{/tg}</h3>
-					{require file='part.allPagesMenusTree' package=Basic menuName='top_menu'}
+					{require file='part.allPagesMenus' package=Basic menuName='top_menu'}
 				</div>
 
 				{*
