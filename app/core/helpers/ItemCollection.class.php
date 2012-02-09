@@ -570,7 +570,6 @@ class ItemCollection {
 	 */
 	public function removeNeedlessParts() {
 		$clone = clone $this;
-		$clone->controller = null;
 		return $clone;
 	}
 	
