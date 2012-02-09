@@ -332,7 +332,7 @@ class Router {
 	 * @return mixed Actions, which are aplied for the current request.
 	 */
 	private function getRequestActions(&$routesActions) {
-		
+
 		$actions = array();
 		foreach ($routesActions as $package => $packageActions) {
 			foreach ($packageActions as $controllerRoutes) {

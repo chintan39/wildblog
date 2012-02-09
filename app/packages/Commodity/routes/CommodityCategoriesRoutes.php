@@ -19,6 +19,8 @@
 
 class CommodityCategoriesRoutes extends AbstractProductionCategoriesRoutes {
 
+	var $abstract=false;
+
 }
 
 ?>

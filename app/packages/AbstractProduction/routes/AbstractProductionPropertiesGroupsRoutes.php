@@ -19,6 +19,7 @@
 
 class AbstractProductionPropertiesGroupsRoutes extends AbstractCodebookRoutes {
 
+	var $abstract=true;
 
 }
 

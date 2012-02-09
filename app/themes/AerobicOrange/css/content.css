@@ -15,9 +15,9 @@ span.clear {
 
 
 h1, h2, h3 {
-	font-weight: normal;
-	font-family: "Trebuchet MS", "Geneva CE", lucida, sans-serif;
-	color: #4d4d4d;
+	font-weight: bold;
+	font-family: "Comic Sans", "Trebuchet MS", "Geneva CE", lucida, sans-serif;
+	color: #ff3600;
 }
 
 h1 {

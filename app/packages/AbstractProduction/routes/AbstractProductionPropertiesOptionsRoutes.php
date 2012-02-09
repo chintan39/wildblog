@@ -19,6 +19,8 @@
 
 class AbstractProductionPropertiesOptionsRoutes extends AbstractPropertiesOptionsRoutes {
 	
+	var $abstract=true;
+
 }
 
 ?>

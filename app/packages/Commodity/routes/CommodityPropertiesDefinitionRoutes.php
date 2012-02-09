@@ -19,6 +19,8 @@
 
 class CommodityPropertiesDefinitionRoutes extends AbstractProductionPropertiesDefinitionRoutes {
 
+	var $abstract=false;
+
 }
 
 ?>

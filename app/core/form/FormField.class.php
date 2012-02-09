@@ -506,13 +506,13 @@ class FormFieldFile extends FormField {
 			. "\" />";
 	}
 	
-	private function getBrowserType() {
+	protected function getBrowserType() {
 		return 'file';
 	}
 }
 
 class FormFieldImage extends FormFieldFile {
-	private function getBrowserType() {
+	protected function getBrowserType() {
 		return 'image';
 	}
 }

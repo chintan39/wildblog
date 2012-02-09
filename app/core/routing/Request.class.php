@@ -129,7 +129,7 @@ class Request {
 		Benchmark::logSpeed('Setting controllers\' routes.');
 		// setting all routes to router
 		foreach (Environment::getRoutes() as $routes) {
-			if ($routes->abstract) 
+			if ($routes->abstract)
 				continue;
 			$routes->setRouter();
 		}

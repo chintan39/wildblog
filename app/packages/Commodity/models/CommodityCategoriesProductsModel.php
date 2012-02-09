@@ -17,7 +17,7 @@
 */
 
 
-class CommodityPropertiesGroupsDefinitionModel extends AbstractProductionPropertiesGroupsDefinitionModel {
+class CommodityCategoriesProductsModel extends AbstractProductionCategoriesProductsModel {
 
 	var $package = 'Commodity';
 

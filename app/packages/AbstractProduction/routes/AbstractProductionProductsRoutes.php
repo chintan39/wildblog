@@ -19,6 +19,8 @@
 
 class AbstractProductionProductsRoutes extends AbstractPagesRoutes {
 	
+	var $abstract=true;
+
 	var $productsCategoriesModelName = 'AbstractProductionCategoriesModel';
 	
 	/**

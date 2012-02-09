@@ -19,6 +19,8 @@
 
 class CommodityVatRoutes extends AbstractProductionVatRoutes {
 
+	var $abstract=false;
+
 }
 
 ?>

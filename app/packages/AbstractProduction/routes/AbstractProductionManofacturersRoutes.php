@@ -19,6 +19,8 @@
 
 class AbstractProductionManofacturersRoutes extends AbstractNodesRoutes {
 	
+	var $abstract=true;
+
 	/**
 	 * This is overloaded method, to specify the definitions of the request 
 	 * route mapping to the data.

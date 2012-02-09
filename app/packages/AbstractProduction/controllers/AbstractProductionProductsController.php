@@ -20,6 +20,7 @@
 class AbstractProductionProductsController extends AbstractPagesController {
 	
 	var $productsCategoriesModelName = 'AbstractProductionCategoriesModel';
+	var $detailMethodName = 'actionDetail';
 	
 	public function getLinksAdminMenuLeft() {
 		return AbstractAdminController::getLinksAdminMenuLeft($this);
