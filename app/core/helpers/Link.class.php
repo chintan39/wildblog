@@ -120,7 +120,7 @@ class Link {
 	public function checkSuperiorActiveActions($actualAction) {
 		foreach ($this->superiorActiveActions as $action) {
 			if ($action["package"] == $actualAction["package"] 
-				&& $action["controller"] == $actualAction["controller"]->getName() 
+				&& $action["controller"] == $actualAction["controller"] 
 				&& $action["method"] == $actualAction["method"]) {
 				return true;
 			}

@@ -139,7 +139,7 @@ class AbstractDefaultController extends AbstractBasicController{
 
 		// new action if specified
 		if ($this->newMethodName) {
-			$form->setSaveAsAction(Request::getLinkSimple($this->package, $this, $this->newMethodName));
+			$form->setSaveAsAction(Request::getLinkSimple($this->package, $this->name, $this->newMethodName));
 		}
 		
 		$form->fill($item, $this->getEditButtons());
@@ -156,12 +156,12 @@ class AbstractDefaultController extends AbstractBasicController{
 		
 		// detail action if specified
 		if ($this->detailMethodName) {
-			$this->assign('detailLink', Request::getLinkItem($this->package, $this, $this->detailMethodName, $item));
+			$this->assign('detailLink', Request::getLinkItem($this->package, $this->name, $this->detailMethodName, $item));
 		}
 		
 		// detail action if specified
 		if ($this->removeMethodName) {
-			$this->assign('removeLink', Request::getLinkItem($this->package, $this, $this->removeMethodName, $item));
+			$this->assign('removeLink', Request::getLinkItem($this->package, $this->name, $this->removeMethodName, $item));
 		}
 		
 		// Top menu
@@ -217,7 +217,7 @@ class AbstractDefaultController extends AbstractBasicController{
 	public function actionRemove($args) {
 		$item = $args;
 		$item->DeleteYourself();
-		Request::redirect(Request::getLinkSimple($this->package, $this, 'actionListing'));
+		Request::redirect(Request::getLinkSimple($this->package, $this->name, 'actionListing'));
 	}
 	
 	

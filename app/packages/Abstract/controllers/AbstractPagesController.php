@@ -48,12 +48,12 @@ class AbstractPagesController extends AbstractNodesController {
 	
 	public function actionMoveUp($arg) {
 		$this->moveItem($arg, 'up');
-		Request::redirect(Request::getLinkSimple($this->package, $this, "actionListing", array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE)));
+		Request::redirect(Request::getLinkSimple($this->package, $this->name, "actionListing", array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE)));
 	}
 	
 	public function actionMoveDown($arg) {
 		$this->moveItem($arg, 'down');
-		Request::redirect(Request::getLinkSimple($this->package, $this, "actionListing", array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE)));
+		Request::redirect(Request::getLinkSimple($this->package, $this->name, "actionListing", array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE)));
 	}
 	
 	protected function getListingButtons() {

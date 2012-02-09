@@ -172,7 +172,7 @@ class Router {
 			$actions = array(
 				array(
 					'package' => 'Base', 
-					'controller' => Environment::getPackage('Base')->getController('Implicit'), 
+					'controller' => 'Implicit', 
 					'method' => 'actionImplicit', 
 					'item' => null,
 					'template' => 'notFound',
@@ -206,21 +206,21 @@ class Router {
 		// handle subactions (we can sort them, but not necessary at pressent time)
 		$subactions = $this->getRequestSubctions();
 		foreach ($subactions as $subaction) {
-			Benchmark::logSpeed('Fire subaction ' . $subaction['package'] . '::' . $subaction['controller']->getName() . '::' . $subaction['method'] . '.');
+			Benchmark::logSpeed('Fire subaction ' . $subaction['package'] . '::' . $subaction['controller'] . '::' . $subaction['method'] . '.');
 			$this->fireAction($subaction);
 		}
 
 		Benchmark::logSpeed('Fire the main action.');
-		Benchmark::log('Begin of ' . get_class($action['controller']) . '->' . $action['method']);
+		Benchmark::log('Begin of ' . $action['controller'] . '->' . $action['method']);
 		
 		$this->fireAction($action);
 		$this->display($action);
-		Benchmark::log('End of ' . get_class($action['controller']) . '->' . $action['method']);
-		Benchmark::log('Begin of hit count for ' . get_class($action['controller']) . '->' . $action['method']);
+		Benchmark::log('End of ' . $action['controller'] . '->' . $action['method']);
+		Benchmark::log('Begin of hit count for ' . $action['controller'] . '->' . $action['method']);
 		$this->increaseVisitors();
 		$this->storeHit($action);
 		MessageBus::storeBuffer();
-		Benchmark::log('End of hit count for ' . get_class($action['controller']) . '->' . $action['method']);
+		Benchmark::log('End of hit count for ' . $action['controller'] . '->' . $action['method']);
 		
 	}
 
@@ -247,7 +247,7 @@ class Router {
 	private function storeHit($action) {
 		$hit = new BaseHitsModel();
 		$hit->url = Request::$url['pathAll'];
-		$hit->action = $action['package'] . '::' . get_class($action['controller']) . '::' . $action['method'];
+		$hit->action = $action['package'] . '::' . $action['controller'] . '::' . $action['method'];
 		$hit->ip = Utilities::getRemoteIP();
 		$hit->referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 		$hit->memory_consumption = memory_get_usage(true) / (1024.0 * 1024.0);
@@ -320,9 +320,9 @@ class Router {
 		$controller = $action['controller'];
 		$method = $action['method'];
 		$item = $action['item'];
-		Benchmark::log('Begin of ' . get_class($action['controller']) . '->' . $method);
-		$controller->$method($item);
-		Benchmark::log('End of ' . get_class($action['controller']) . '->' . $method);
+		Benchmark::log('Begin of ' . $action['controller'] . '->' . $method);
+		Environment::getPackage($package)->getController($controller)->$method($item);
+		Benchmark::log('End of ' . $action['controller'] . '->' . $method);
 	}
 	
 	
@@ -353,7 +353,7 @@ class Router {
 							// save the action
 							$actions[] = array(
 								'package' => $package, 
-								'controller' => Environment::getPackage($route->package)->getController($route->routesObject->name), 
+								'controller' => $route->routesObject->name, 
 								'method' => $method, 
 								'item' => $item,
 								'branch' => $route->branch,
@@ -363,7 +363,7 @@ class Router {
 							if ($route->order == RouterRule::RULE_ACTION) {
 								// TODO: redirect storing make more complex, define in some class as static method
 								$_SESSION['login_redirect'] = $package . '::' . $route->routesObject->getName() . '::' . $method . (($item) ? ('::' . implode(',', $filters) . '::' . implode(',', $values)) : '');
-								Request::redirect(Request::getLinkSimple('Base', Environment::getPackage('Base')->getController('Users'), 'actionLogin'));
+								Request::redirect(Request::getLinkSimple('Base', 'Users', 'actionLogin'));
 							}
 						}
 					}
@@ -398,7 +398,7 @@ class Router {
 					if (array_key_exists($package . '.' . $route->template, $subtemplates) && Permission::check($route->permission)) {
 						$actions[] = array(
 							'package' => $package, 
-							'controller' => Environment::getPackage($package)->getController($route->routesObject->getName()), 
+							'controller' => $route->routesObject->getName(), 
 							'method' => $method, 
 							'item' => false,
 							'branch' => $route->branch,
@@ -470,17 +470,21 @@ class Router {
 	
 	/**
 	 * Returns the route which is defined with the controller's action specified.
+	 * @param string $package
+	 * @param string $controller
+	 * @param string $method
+	 * @param string|object $item
 	 */
 	public function getLinkItem($package, $controller, $method, $item, $args=null) {
-		$route = $this->getRoute($package, $controller->getName(), $method);
+		$route = $this->getRoute($package, $controller, $method);
 		if (!$route) { 
-			throw new Exception("Unsupported Request route \"$method\" in controller ".get_class($controller));
+			throw new Exception("Unsupported Request route \"$method\" in controller $controller");
 			return "";
 		}
 
 		// if we have only ID, we load the item from DB (we use controller from route)
 		if (!is_object($item) && !is_array($item) && preg_match('/^\w+$/', $item)) {
-			$item = $controller->getItem($item);
+			$item = Environment::getPackage($package)->getController($controller)->getItem($item);
 		}
 		return $this->getRouteItemLink($route, $item, $args);
 	}
@@ -491,9 +495,9 @@ class Router {
 	 * @see getLinkItem
 	 */
 	public function getLinkFilter($package, $controller, $method, $filters, $values, $args=null) {
-		$route = $this->getRoute($package, $controller->getName(), $method);
+		$route = $this->getRoute($package, $controller, $method);
 		if (!$route) { 
-			throw new Exception("Unsupported Request route \"$method\" in controller ".get_class($controller));
+			throw new Exception("Unsupported Request route \"$method\" in controller $controller");
 			return '';
 		}
 		$item = $route->routesObject->getItemFilter($filters, $values);
@@ -510,9 +514,9 @@ class Router {
 	 * @see getLinkItem
 	 */
 	public function getLinkSimple($package, $controller, $method, $args=null) {
-		$route = $this->getRoute($package, $controller->getName(), $method);
+		$route = $this->getRoute($package, $controller, $method);
 		if (!$route) {
-			throw new Exception("Unsupported Request route \"$method\" in controller ".get_class($controller));
+			throw new Exception("Unsupported Request route \"$method\" in controller $controller");
 			return "";
 		}
 		return $this->getRouteLink($route, $args);

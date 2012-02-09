@@ -413,7 +413,7 @@ class ItemCollection {
 					}
 					
 					$buttonsSet[] = array(
-						'link' => Request::getLinkItem($this->controller->package, $this->controller, $actionLink, $item, $params),
+						'link' => Request::getLinkItem($this->controller->package, $this->controller->getName(), $actionLink, $item, $params),
 						'action' => $action,
 						'button' => $buttonType);
 				}
@@ -449,7 +449,7 @@ class ItemCollection {
 			foreach ($this->data['items'] as $key => $item) {
 				$item->addNonDbProperty($this->linkAttribute);
 				$a = $this->linkAttribute;
-				$item->$a = Request::getLinkItem($package, $controller, $this->linkAction, $item);
+				$item->$a = Request::getLinkItem($package, $controller->getName(), $this->linkAction, $item);
 			}
 		}
 	}

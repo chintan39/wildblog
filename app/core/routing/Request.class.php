@@ -279,21 +279,15 @@ class Request {
 	
 	/**
 	 * Generates the link to the item, specified by the item itself.
-	 * @param string|null $package Package name or empty (not have to be defined, 
+	 * @param string $package Package name or empty (not have to be defined, 
 	 * if controller is an instance), must be defined if controller is string
-	 * @param string|object $controller Controller name or instance
+	 * @param string $controller Controller name or instance
 	 * @param string $method Controller method name
 	 * @param object $dataItem Item to link to
 	 * @param array $args additional arguments, for more info @see Router::makeLink
 	 * @return string Returns link to the specific method as string
 	 */
 	static public function getLinkItem($package, $controller, $method, $dataItem, $args=null) {
-		if (is_string($controller)) {
-			$controller = Environment::getPackage($package)->getController($controller);
-		} elseif ($package === null) {
-			$package = $controller->package;
-		}
-
 		return self::$router->getLinkItem($package, $controller, $method, $dataItem, $args);
 	}
 	
@@ -301,38 +295,28 @@ class Request {
 	/**
 	 * Generates the link to the item, specified by filters and values, that 
 	 * specify the item.
-	 * @param string|null $package Package name or empty (not have to be defined, 
+	 * @param string $package Package name or empty (not have to be defined, 
 	 * if controller is an instance), must be defined if controller is string
-	 * @param string|object $controller Controller name or instance
+	 * @param string $controller Controller name or instance
 	 * @param string $method Controller method name
 	 * @param array $filters Filters for specification of the item
 	 * @param array $values Values for specification of the item
 	 * @return string Returns link to the specific method as string
 	 */
 	static public function getLinkFilter($package, $controller, $method, $filters, $values, $args=null) {
-		if (is_string($controller)) {
-			$controller = Environment::getPackage($package)->getController($controller);
-		} elseif ($package === null) {
-			$package = $controller->package;
-		}
 		return self::$router->getLinkFilter($package, $controller, $method, $filters, $values, $args);
 	}
 	
 	
 	/**
 	 * Generates the link to the method of the specified controller.
-	 * @param string|null $package Package name or empty (not have to be defined, 
+	 * @param string $package Package name or empty (not have to be defined, 
 	 * if controller is an instance), must be defined if controller is string
-	 * @param string|object $controller Controller name or instance
+	 * @param string $controller Controller name or instance
 	 * @param string $method Controller method name
 	 * @return string Returns link to the specific method as string
 	 */
 	static public function getLinkSimple($package, $controller, $method, $args=null) {
-		if (is_string($controller)) {
-			$controller = Environment::getPackage($package)->getController($controller);
-		} elseif ($package === null) {
-			$package = $controller->package;
-		}
 		return self::$router->getLinkSimple($package, $controller, $method, $args);
 	}
 	
@@ -396,7 +380,7 @@ class Request {
 	
 	/**
 	 * Sets and saves the action which is aplied for the current request.
-	 * @param mixed $action Assoc array with keys: controller(object), method(string), item(object)..
+	 * @param mixed $action Assoc array with keys: package(string), controller(string), method(string), item(object)..
 	 */
 	static public function storeRequestAction(&$action) {
 		self::$action = $action;
@@ -428,18 +412,12 @@ class Request {
 	/**
 	 * Checks if the homepage action is the same as the action defined by the parameters.
 	 * Actions are equal if package, controller and action are equal.
-	 * @param $package object or string
-	 * @param $controller object or string
-	 * @param $action string
+	 * @param string $package 
+	 * @param string $controller 
+	 * @param string $action
 	 * @return bool True if actions are equal.
 	 */
 	static public function checkHomepageAction($package, $controller, $action) {
-		if (is_object($package)) {
-			$package = str_replace('Package', '', get_class($package));
-		}
-		if (is_object($controller)) {
-			$controller = preg_replace('/^'.$package.'(.*)Controller$/', '$1', get_class($controller));
-		}
 		return (self::$homepageAction['action'] == $action
 			&& self::$homepageAction['controller'] == $controller
 			&& self::$homepageAction['package'] == $package);

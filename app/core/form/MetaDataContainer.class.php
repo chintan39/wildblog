@@ -51,7 +51,7 @@ class MetaDataContainer {
 	}
 	
 	static public function addMetaData($modelName, $metaItem) {
-		if (!is_object($metaItem)) throw new Exception("F");
+		if (!is_object($metaItem)) throw new Exception("$metaItem is not an object");
 		self::$data[$modelName][$metaItem->getName()] = $metaItem;
 	}
 	
