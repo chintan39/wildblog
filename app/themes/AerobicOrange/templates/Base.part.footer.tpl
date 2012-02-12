@@ -29,6 +29,7 @@
 *}
 </div><!-- leftmenu -->
 
+{*
 <div class="box">
 <h2>Kdy a kde cvičím</h2>
 <a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='18'}" class="cal"><br /><br />Klikněte zde pro zobrazení celého kalendáře s&nbsp;pravidelnými hodinami</a>
@@ -36,7 +37,6 @@
 <hr class="invisible" />
 </div> <!-- box -->
 
-{*
 <div class="box">
 
 <div class="partners">

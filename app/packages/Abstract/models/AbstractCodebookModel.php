@@ -48,7 +48,7 @@ class AbstractCodebookModel extends AbstractDefaultModel {
 			$source = $this->nameShort;
 		}
 		if ($value == '') {
-			$value = Utilities::makeUrlPartFormat();
+			$value = Utilities::makeUrlPartFormat('');
 		}
 		$suffix = 0;
 		while ($this->fieldIsNotUnique($value, $meta) || $this->fieldIsEmpty($value, $meta)) {

@@ -72,7 +72,7 @@ class AbstractProductionProductsController extends AbstractPagesController {
 	
 	public function getProducts($category=false, $manofacturer=false) {
 		$items = new ItemCollection("products", $this);
-		$items->setSorting(array(array("column" => "inserted", "direction" => "DESC")));
+		$items->setSorting(array(new ItemSorting("inserted", SORTING_DESC)));
 		if ($category) {
 			$categoryModel = $this->getPackageObject()->getController("Categories")->model;
 			$cat = new $categoryModel($category);
@@ -81,13 +81,12 @@ class AbstractProductionProductsController extends AbstractPagesController {
     		foreach ($productIds as $p) {
     			$values[] = $p->id;
     		}
-    		$filters = " id in (?" . str_repeat(", ?", count($values)-1) . ")";
-			$items->setQualification(array("category" => array($filters => $values)));
+			$items->setQualification(array("category" => array(new ItemQualification(" id in (?" . str_repeat(", ?", count($values)-1) . ")", $values))));
 		}
 		if ($manofacturer) {
 			$items->setQualification(array("manofacturer" => array("manofacturer = ?" => $manofacturer)));
 		}
-		$items->setSorting(array(array('column' => 'inserted', 'direction' => 'desc')));
+		$items->setSorting(array(new ItemSorting("inserted", SORTING_DESC)));
 		$items->setLimit(6);
 		$items->loadCollection();
 		$items->addLinks(null, "actionDetail");
@@ -125,7 +124,7 @@ class AbstractProductionProductsController extends AbstractPagesController {
 	public function actionRss($args) {
 		$items = new ItemCollection("products", $this);
 		$items->setLimit(20);
-		$items->setSorting(array(array("column" => "updated", "direction" => "DESC")));
+		$items->setSorting(array(new ItemSorting("inserted", SORTING_DESC)));
 		$items->loadCollection();
 		
 		if ($items->data["items"]) {

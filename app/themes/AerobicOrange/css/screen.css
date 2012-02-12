@@ -589,6 +589,14 @@ div.admin_edit a:hover img {
 	border: 2px solid #cc5500;
 }
 
+p.price {
+	font-style: italic;
+}
+
+span.price {
+	font-weight: bold;
+}
+
 /**
  * end 
  */ 

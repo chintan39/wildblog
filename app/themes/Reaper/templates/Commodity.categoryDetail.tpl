@@ -6,5 +6,7 @@
 
 {require file=part.productList package=Commodity products=$category->products}
 
+{require file=part.contactForm package=Basic}
+			
 {require file='part.footer'}
 

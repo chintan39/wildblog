@@ -8,10 +8,11 @@
 </a>
 {/if}
 
-{$product->text}
-<p class="price">{tg}Price including WAT{/tg}: <span class="price">{$product->price|price}&nbsp;Kč</span></p>
-
 <div class="clear"></div>
+
+{$product->text}
+
+{require file=part.contactForm package=Basic}
 
 {require file='part.footer'}
 

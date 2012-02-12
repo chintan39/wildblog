@@ -66,7 +66,7 @@ class AbstractProductionCategoriesController extends AbstractPagesController {
 	}
 		
 	public function getLinksSitemap() {
-		return $this->getItemsLinksDefault(array('actionCategoryDetail' => tg('Product category')), array());
+		return $this->getItemsLinksDefault(array(), array('actionCategoryDetail' => tg('Product category')));
 	}
 }
 

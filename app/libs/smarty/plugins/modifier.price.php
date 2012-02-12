@@ -42,7 +42,8 @@ function smarty_modifier_price($string, $decimalPlaces=2, $thousandDivider='&nbs
     	$partSig = '';
     }
     // separate decimal part and cut to proper decimal places
-	$partDec = str_replace('0.', '', sprintf("%.{$decimalPlaces}f", $string - floor($string)));
+	$partDec = preg_replace('/^0[\.,]/', '', sprintf("%.{$decimalPlaces}f", $string - floor($string)));
+
 	// separate integer part
 	$partInt = (int)floor($string);
 	

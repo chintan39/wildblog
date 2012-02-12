@@ -127,6 +127,50 @@ class DefaultTheme extends AbstractTheme {
 		'Blog.rss' => array(
 			'Base.rss',
 			),
+		'Commodity.referenceAdd' => array(
+			'Base.part.header',
+			'Common|Base.part.cleanForm',
+			'Base.part.footer',
+			),
+		'Commodity.part.favourites' => array(),
+		'Commodity.categoryDetail' => array(
+			'Base.part.header',
+			'Commodity.part.productList',
+			'Base.part.footer',
+			),
+		'Commodity.references' => array(
+			'Base.part.header',
+			'Base.part.footer',
+			),
+		'Commodity.productList' => array(
+			'Base.part.header',
+			'Commodity.part.productList',
+			'Base.part.footer',
+			),
+		'Commodity.part.productList' => array(),
+		'Commodity.productDetail' => array(
+			'Base.part.header',
+			'Base.part.footer',
+			),
+		'Commodity.part.references' => array(),
+		'Commodity.part.manofacturersList' => array(),
+		'Commodity.part.categoriesMenu' => array(
+			'Base.part.itemLinkTree',
+			),
+		'Commodity.part.actions' => array(),
+		'Commodity.manofacturersList' => array(
+			'Base.part.header',
+			'Base.part.footer',
+			),
+		'Commodity.manofacturerDetail' => array(
+			'Base.part.header',
+			'Commodity.part.productList',
+			'Base.part.footer',
+			),
+		'Commodity.productDetail' => array(
+			'Base.part.header',
+			'Base.part.footer',
+			),
 		'FAQ.questionAdd' => array(
 			'Base.part.header', 
 			'Base.part.footer',
