@@ -592,9 +592,28 @@ class PDOAdapter implements dbConnectionAdapter
 	 */
 	public function escapeValue($value)
 	{
-		return mysql_real_escape_string($value);
+		return $this->mysql_escape_mimic($value);
+		//return mysql_real_escape_string($value);
 	}
 
+	/**
+	 * Just a little function which mimics the original 
+	 * mysql_real_escape_string but which doesn't need an active mysql 
+	 * connection. 
+	 * Could be implemented as a static function in a database class.
+	 * Original: http://www.php.net/manual/en/function.mysql-real-escape-string.php#101248
+	 */
+	private function mysql_escape_mimic($inp) {
+		if(is_array($inp))
+			return array_map(__METHOD__, $inp);
+
+		if(!empty($inp) && is_string($inp)) {
+		return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $inp);
+		}
+
+		return $inp;
+	}
+	
 	/**
 	 * PDOAdapter::connect()
 	 * 

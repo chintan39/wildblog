@@ -17,7 +17,7 @@ cd ../..
 echo "Cleaning ${EXPORTDIR}${NAMEDATE} and ${EXPORTDIR}${NAMEZIP} ..."
 rm -rf "${EXPORTDIR}${NAMEDATE}" "${EXPORTDIR}${NAMEZIP}"
 echo "Exporting app ..."
-git archive --format zip --output="${EXPORTDIR}${NAMEZIP}" master app
+git archive --format zip --output="${EXPORTDIR}${NAMEZIP}" master 
 echo "Unpacking ${EXPORTDIR}${NAMEZIP} into ${EXPORTDIR}${NAMEDATE} ..."
 mkdir -p "${EXPORTDIR}${NAMEDATE}"
 unzip "${EXPORTDIR}${NAMEZIP}" -d "${EXPORTDIR}${NAMEDATE}" >/dev/null
