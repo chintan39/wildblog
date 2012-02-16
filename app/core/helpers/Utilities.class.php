@@ -643,7 +643,8 @@ class Utilities {
 	 * Concats two or more elements into one path.
 	 */
 	static public function concatPath() {
-		$res = implode('/', func_get_args());
+		$args = func_get_args();
+		$res = implode('/', $args);
 		while (strpos($res, '//') !== FALSE) {
 			$res = str_replace('//', '/', $res);
 		}

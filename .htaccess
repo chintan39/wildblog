@@ -1,4 +1,5 @@
-php_flag magic_quotes_gpc off
+# not allowed to change magic_quotes_gpc on some hostings
+# php_flag magic_quotes_gpc off
 RewriteEngine On 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ index.php [QSA,L]
