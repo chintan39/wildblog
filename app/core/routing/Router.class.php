@@ -478,6 +478,7 @@ class Router {
 	public function getLinkItem($package, $controller, $method, $item, $args=null) {
 		$route = $this->getRoute($package, $controller, $method);
 		if (!$route) { 
+			if (is_object($controller))throw new Exception('Controller is object');
 			throw new Exception("Unsupported Request route \"$method\" in controller $controller");
 			return "";
 		}

@@ -143,7 +143,7 @@ class NewsletterMessagesController extends AbstractPagesController {
 	protected function getEditActionsAfterHandlin() {
 		return array(Form::FORM_BUTTON_SEND => array(
 			'package' => $this->package, 
-			'controller' => $this, 
+			'controller' => $this->name, 
 			'action' => 'actionCheckSending'));
 	}
 }

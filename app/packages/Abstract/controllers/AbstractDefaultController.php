@@ -248,7 +248,7 @@ class AbstractDefaultController extends AbstractBasicController{
 		// handeling the form request
 		$form->handleRequest(array('all' => array(
 			'package' => $this->package, 
-			'controller' => $this, 
+			'controller' => $this->name, 
 			'action' => $actionAfterSubmit)));
 		$this->assign('form', $form->toArray());
 		

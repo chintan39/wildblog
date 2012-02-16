@@ -133,7 +133,7 @@ class BlogPostsController extends AbstractPagesController {
 			// handeling the form request
 			$form->handleRequest(array('all' => array(
 				'package' => $this->package, 
-				'controller' => $this, 
+				'controller' => $this->name, 
 				'action' => 'actionDetail',
 				'item' => $post)));
 			$this->assign($form->getIdentifier(), $form->toArray());
