@@ -44,12 +44,12 @@ a:hover img {
 }
 
 
-img.float-left, span.float-left {
+img.float-left, span.float-left, a.float-left {
 	margin-right: 10px;
 	margin-bottom: 5px;
 }
 
-img.float-right, span.float-right {
+img.float-right, span.float-right, a.float-right {
 	margin-left: 10px;
 	margin-bottom: 5px;
 }
