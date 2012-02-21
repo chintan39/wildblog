@@ -139,7 +139,7 @@ class BasicNewsController extends AbstractPagesController {
 	
 
 	public function getLinksSitemap() {
-		return $this->getItemsLinksDefault(array('actionNewsList' => tg('List of news')), array('actionDetail' => tg('News')));
+		return $this->getItemsLinksDefault(array('actionNewsList' => tg('List of news'), 'actionNewsPrimaryTag' => tg('News with primary tag')), array('actionDetail' => tg('News')));
 	}
 	
 	
