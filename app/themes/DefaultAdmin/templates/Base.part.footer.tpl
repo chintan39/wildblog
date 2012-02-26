@@ -32,4 +32,3 @@
 		</div>
 	</div>
 {require file='part.footer' theme=Common}
-
