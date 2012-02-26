@@ -886,7 +886,7 @@ class AbstractBasicModel {
 			case Form::FORM_TEXTAREA: 
 			case Form::FORM_HTML: 
 			case Form::FORM_HTML_BBCODE:
-				$value = htmlspecialchars(Utilities::truncate(strip_tags($value), 50));
+				$value = htmlspecialchars(Utilities::truncate(strip_tags($value), 150));
 				break;
 			case Form::FORM_SELECT:
 				$newValue = $value;
