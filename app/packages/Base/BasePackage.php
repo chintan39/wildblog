@@ -27,6 +27,7 @@ class BasePackage extends Package {
 		Config::Set('BASE_PACKAGE_ORDER', 8, null, Config::INT, true);
 		Config::Set('BASE_PACKAGE_LANGUAGE_SUPPORT', false, null, Config::BOOL, false);
 		Config::Set('BASE_PACKAGE_ALLOW', true, null, Config::BOOL, false);
+		Config::Set('BASE_STORE_HITS', false, null, Config::BOOL, false);
 
 	}
 

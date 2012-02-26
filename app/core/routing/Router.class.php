@@ -218,7 +218,8 @@ class Router {
 		Benchmark::log('End of ' . $action['controller'] . '->' . $action['method']);
 		Benchmark::log('Begin of hit count for ' . $action['controller'] . '->' . $action['method']);
 		$this->increaseVisitors();
-		$this->storeHit($action);
+		if (Config::Get('BASE_STORE_HITS'))
+			$this->storeHit($action);
 		MessageBus::storeBuffer();
 		Benchmark::log('End of hit count for ' . $action['controller'] . '->' . $action['method']);
 		
