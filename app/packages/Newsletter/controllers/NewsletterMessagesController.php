@@ -93,26 +93,31 @@ class NewsletterMessagesController extends AbstractPagesController {
 				// sending the email
 				$sent = $mail->Send();
 				
-				$logID = (int)$mail->logId;
-				$currentTime = Utilities::now();
-				$contactID = $recipient->id;
-				$query = "
-					UPDATE $messageContactsTable 
-					SET email_log = $logID, 
-					sent_time = '$currentTime' 
-					WHERE
-					message = $messageID AND contact = $contactID
-					";
+				if ($sent) {
+					$logID = (int)$mail->logId;
+					$currentTime = Utilities::now();
+					$contactID = $recipient->id;
+					$query = "
+						UPDATE $messageContactsTable 
+						SET email_log = $logID, 
+						sent_time = '$currentTime' 
+						WHERE
+						message = $messageID AND contact = $contactID
+						";
+						
+					if (Config::Get('DEBUG_MODE')) {
+						Benchmark::log('sending newsletter e-mail SQL: ' . $query); // QUERY logger
+					}
 					
-				if (Config::Get('DEBUG_MODE')) {
-					Benchmark::log('sending newsletter e-mail SQL: ' . $query); // QUERY logger
-				}
-				
-				$result1 = dbConnection::getInstance()->query($query);
-				if (!$result1) {
-					$errorEmails[] = $recipient->email;
+					$result1 = dbConnection::getInstance()->query($query);
+					
+					if (!$result1) {
+						$errorEmails[] = $recipient->email;
+					} else {
+						$successEmails[] = $recipient->email;
+					}
 				} else {
-					$successEmails[] = $recipient->email;
+					$errorEmails[] = $recipient->email;
 				}
 				$result &= $sent;
 			}
