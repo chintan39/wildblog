@@ -315,6 +315,14 @@ class Utilities {
 	
 	
 	/**
+	 * Hash function to hash the password with salt.
+	 */
+	static public function hashPasswordSalt($text, $salt) {
+		return crypt($text, $salt);
+	}
+	
+	
+	/**
 	 * Returns the element (specified by $key) from the array $array, shortening the array by that element.
 	 * If no element is found, $default value is used to return.
 	 */
