@@ -264,7 +264,15 @@ class FormFieldSpecificNotInDb extends FormField {
 
 class FormFieldHidden extends FormField {
 	public function setHTML($class, $style, $onclick, $onchange) {
-		$this->html = "<p class=\"nodisplay\"><input type=\"hidden\"" . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" /></p>";
+		$this->html = '';
+		$changeExpected = strpos($this->getMeta()->getName(), 'captcha') !== false;
+		if ($changeExpected)
+			$this->html .= "\n<!-- webdiffer-no-log-begin -->\n";
+			
+		$this->html .= "<p class=\"nodisplay\"><input type=\"hidden\"" . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" /></p>";
+
+		if ($changeExpected)
+			$this->html .= "\n<!-- webdiffer-no-log-end -->\n";
 	}
 	public function getHTML() {
 		if ($this->html === null) {

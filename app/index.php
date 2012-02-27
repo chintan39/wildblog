@@ -33,6 +33,7 @@ try {
 	}	
 	
 	// we will use sessions by default
+	session_set_cookie_params(0);
 	session_start();
 	
 	// initialize the global environment object

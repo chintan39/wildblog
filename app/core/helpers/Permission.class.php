@@ -102,7 +102,7 @@ class Permission {
 	static public function refreshSession() {
 		// set session's cookie lifetime to 30min
 		if (!isset($_SESSION['timeout_idle'])) {
-			throw new Exception("timeout_idle session value not defined");
+//			throw new Exception("timeout_idle session value not defined");
 			$_SESSION['timeout_idle'] = time() + Config::Get('SESSION_TIMEOUT');
 		} else {
 			if ($_SESSION['timeout_idle'] < time()) {   
