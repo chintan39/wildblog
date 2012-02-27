@@ -73,7 +73,8 @@ var tinymce_bbcode = tinymce_add_arrays(tinymce_base, {
 	add_unload_trigger : false,
 	remove_linebreaks : false,
 	inline_styles : false,
-	convert_fonts_to_spans : false
+	convert_fonts_to_spans : false,
+	height : "250"
 });
 
 var tinymce_lite = tinymce_add_arrays(tinymce_base, {
@@ -81,7 +82,8 @@ var tinymce_lite = tinymce_add_arrays(tinymce_base, {
 	theme_advanced_buttons1 : "undo,redo,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
 	theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,bullist,numlist,|,blockquote,|,link,unlink,anchor,image,insertfile,insertthumb,emotions,cleanup,code,|,forecolor,backcolor,|,fullscreen,preview,help",
 	theme_advanced_buttons3 : "tablecontrols,|,removeformat,|,sub,sup,|,charmap,iespell,media,advhr,styleprops",
-	theme_advanced_buttons4 : ""
+	theme_advanced_buttons4 : "",
+	height : "250"
 });
 
 var tinymce_micro = tinymce_add_arrays(tinymce_base, {
