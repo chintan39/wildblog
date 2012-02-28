@@ -8,9 +8,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="robots" content="index, follow" />
   <meta name="rating" content="general" />
-  <meta name="author" content="Jan Horák; mailto:horak.jan@centrum.cz" />
+  <meta name="author" content="Honza Horák; mailto:horak.jan@centrum.cz" />
   <meta name="generator" content="{$appGenerator}" />
-  <meta name="copyright" content="Jan Horák" />
+  <meta name="copyright" content="Honza Horák" />
   <link rel="stylesheet" media="screen,projection" type="text/css" href="{$base}app/themes/Common/css/common.css" />
   <link rel="stylesheet" media="print" type="text/css" href="{$base}app/themes/{$generalTheme}/css/print.css" />
   <link rel="stylesheet" media="screen,projection" type="text/css" href="{$base}app/themes/{$generalTheme}/css/screen.css" />

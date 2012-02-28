@@ -67,11 +67,11 @@
 	</div><!-- left -->
 	<div class="float-right">
 		<a href="http://validator.w3.org/check?uri=referer" title="Tyto stránky jsou validní podle XHTML 1.0.">
-		<img src="app/themes/Default/images/valid-xhtml10.gif" alt="Valid XHTML 1.0" /></a>
+		<img src="{$commonImagesPath}valid-xhtml10.gif" alt="Valid XHTML 1.0" /></a>
 		<a href="http://jigsaw.w3.org/css-validator/" title="Tyto stránky jsou validní podle CSS2.">
-		<img src="app/themes/Default/images/valid-css2.gif" alt="Valid CSS2" /></a>
+		<img src="{$commonImagesPath}valid-css2.gif" alt="Valid CSS2" /></a>
 		<a href="http://validator.w3.org/feed/check.cgi?uri=referer" title="Valid RSS 2.0.">
-		<img src="app/themes/Default/images/valid-rss.gif" alt="Valid RSS 2.0" /></a>
+		<img src="{$commonImagesPath}valid-rss.gif" alt="Valid RSS 2.0" /></a>
 	</div><!-- right -->
 	<div class="clear"></div>
   </div><!-- footer-copy -->
