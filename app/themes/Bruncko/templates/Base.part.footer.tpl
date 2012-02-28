@@ -37,7 +37,7 @@
 <div id="footer">
 	<hr class="invisible" />
 	<div class="indent">
-		<div class="fleft">&copy; Jozef Bruncko 2010, Powered by <a href="http://code.google.com/p/wildblog/" title="wild-blog">wildblog project</a>
+		<div class="fleft">&copy; Jozef Bruncko {$now|date_format:"%Y"}, Powered by <a href="http://code.google.com/p/wildblog/" title="wild-blog">wildblog project</a>
 		| <a href="http://www.wild-web.eu" title="Wild-web">Jan Horák</a>
 		| <a href="{linkto controller=Sitemap action=actionSitemap}">Mapa webu</a>
 		| <a href="{$base}admin/">Admin</a>
