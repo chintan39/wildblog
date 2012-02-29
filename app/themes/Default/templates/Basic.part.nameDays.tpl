@@ -1,3 +1,4 @@
+<!-- webdiffer-no-log-begin -->
 <div class="todayDate">{tg}Today is{/tg} <strong>{$today}</strong></div>
 {if $todayName}
 <div class="todayName">{tg}Today name day{/tg}: <strong>{$todayName}</strong></div>
@@ -12,4 +13,5 @@
 {/strip}
 </div>
 {/if}
+<!-- webdiffer-no-log-end -->
 

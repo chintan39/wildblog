@@ -122,7 +122,7 @@
 		   		<a href="http://validator.w3.org/check/referer">XHTML</a>	|			
 					<a href="{$base}">Home</a> |
 					<strong><a href="#top" class="back-to-top">Back to Top</a></strong><br />								
-				{tg}Visitors{/tg}: {$visitorsCount}
+				{tg}Visitors{/tg}: <!-- webdiffer-no-log-begin -->{$visitorsCount}<!-- webdiffer-no-log-end -->
 				</p>
 			</div>
 
