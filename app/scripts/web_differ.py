@@ -31,7 +31,7 @@ Configuration is stored in ~/.webdiffer.cfg and its format is a simple init
 file:
 
 [Wildweblocal]
-disabled=0
+enabled=1
 sitemapurl=http://wild-web.web/sitemap.xml
 
 """
@@ -47,7 +47,12 @@ def print_welcome():
 
 def print_help():
 	print_welcome()
-	print(sys.argv[0] + ' [ -c configfile ] [ -d cachedirectory ] [ -h ]')
+	print(sys.argv[0] + ' OPTIONS')
+	print('  [ -c | --config-file configfile ]    sets configuration file')
+	print('  [ -d | --cache_dir cachedirectory ]  sets cache directory')
+	print('  [ -e | --enable website ]            force enable web')
+	print('  [ -l | --list ]                      shows configuration')
+	print('  [ -h | --help ]                      shows this help')
 	
 def remove_nologs(s):
 	lparent = '<!-- webdiffer-no-log-begin -->'
@@ -87,10 +92,10 @@ def parse_config_file(config_file):
 		sys.exit(1)
 	return config
 
-def check_web(web, config, cache_dir, debug_limit):
+def check_web(web, config, cache_dir, debug_limit, enabled):
 	print("Section {0}".format(web));
-	if str(config.get(web, 'disabled')) == '1':
-		print('Skipping while dissabled.')
+	if not enabled:
+		print('Skipping: dissabled.')
 		return
 	sitemapurl = config.get(web, 'sitemapurl')
 	try:
@@ -119,7 +124,8 @@ def check_web(web, config, cache_dir, debug_limit):
 			page_diff = os.path.join(cache_dir, web + '.' + pagefile + '.diff')
 			u = urllib.urlopen(page)
 			file_new = open(page_new, 'w')
-			content = u.read()
+			content = "Page: {0}\n==============================================\n".format(page)
+			content += u.read()
 			content = remove_nologs(content)
 			#content = re.sub(r'<!-- webdiffer-no-log-begin -->.*<!-- webdiffer-no-log-end -->', '', content)
 			file_new.write(content)
@@ -142,16 +148,25 @@ def main():
 	cache_dir = os.path.join(home, '.webdiffer_cache')
 	
 	i = 0
+	force_enabled = {}
+	print_config = False
+	indent = "    "
+	
 	while i < len(sys.argv):
 		if i == 0:
 			i+=1
 			continue
-		if sys.argv[i] == '-c' and i+1<len(sys.argv):
+		if (sys.argv[i] == '-c' or sys.argv[i] == '--config-file') and i+1<len(sys.argv):
 			config_file = sys.argv[i+1]
 			i+=1
-		elif sys.argv[i] == '-d' and i+1<len(sys.argv):
+		elif (sys.argv[i] == '-d' or sys.argv[i] == '--cache-dir') and i+1<len(sys.argv):
 			cache_dir = sys.argv[i+1]
 			i+=1
+		elif (sys.argv[i] == '-e' or sys.argv[i] == '--enable') and i+1<len(sys.argv):
+			force_enabled[sys.argv[i+1]] = 1
+			i+=1
+		elif (sys.argv[i] == '-l' or sys.argv[i] == '--list'):
+			print_config=True
 		else:
 			print_help()
 			exit(1)
@@ -164,7 +179,14 @@ def main():
 	config = parse_config_file(config_file)
 	
 	for web in config.sections():
-		check_web(web, config, cache_dir, debug_limit)
+		enabled = str(config.get(web, 'enabled')) == '1' or force_enabled.has_key(web) or force_enabled.has_key('all')
+		if print_config:
+			print
+			print("Website: {0}".format(web));
+			print("{0}{1}".format(indent, 'Enabled' if enabled else 'Dissabled'))
+			print("{0}Sitemap URL: {1}".format(indent, config.get(web, 'sitemapurl')))
+		else:	
+			check_web(web, config, cache_dir, debug_limit, enabled)
 
 if __name__ == "__main__":
     main()
