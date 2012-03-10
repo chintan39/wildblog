@@ -55,7 +55,6 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_TEXT)
 			->setDefaultValue('')
 			->setSqlType('varchar(255) NOT NULL')
-			->setSqlindex(ModelMetaIndex::INDEX)
 			->setExtendedTable(true);
 	}
 		
@@ -72,7 +71,7 @@ abstract class AtributesFactory {
 			->setDefaultValue('')
 			->setFormTab(Form::TAB_SEO)
 			->setSqlType('varchar(255) NOT NULL')
-			->setSqlindex(ModelMetaIndex::UNIQUE)
+			->setSqlindex(ModelMetaIndex::UNIQUE, true)
 			->setIsAutoFilled(ModelMetaItem::ON_NEW)
 			->setExtendedTable(true);
 	}
@@ -88,7 +87,6 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_HTML)
 			->setDefaultValue('')
 			->setSqlType('text NOT NULL')
-			->setSqlindex(ModelMetaIndex::FULLTEXT)
 			->setWysiwygType(Javascript::WYSIWYG_LITE)
 			->setExtendedTable(true);
 	}
@@ -104,7 +102,6 @@ abstract class AtributesFactory {
 			->setIsVisible(ModelMetaItem::NEVER)
 			->setType(Form::FORM_TEXTAREA)
 			->setSqlType('varchar(255) NOT NULL')
-			->setSqlindex(ModelMetaIndex::FULLTEXT)
 			->setExtendedTable(true);
 	}
 	

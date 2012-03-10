@@ -18,8 +18,7 @@
 
 
 /**
- * Class handles metadata about models (it describes attributes of the model).
- * It includes DB connections and properties' settings.
+ * Class represents general DB index.
  */
 
 class ModelMetaIndex {
@@ -38,15 +37,37 @@ class ModelMetaIndex {
 	 * @param string|array $columns
 	 * @param string $type
 	 * @param array $lengths how long text keys should be
+	 * @param string $indexName use this name instead of original
 	 */
-	function __construct($columns, $type=self::INDEX, $lengths=array()) {
+	function __construct($columns, $type=self::INDEX, $lengths=array(), $indexName='') {
 		if (!is_array($columns))
 			$columns = array($columns);
 		
-		$this->name = $type . '_' . implode('_', $columns);
+		$this->name = $indexName ? strtolower($indexName) : ($type == self::PRIMARY ? 'primary' : ($type . '_' . implode('_', $columns)));
 		$this->type = $type;
 		$this->columns = $columns;
 		$this->lengths = $lengths;
+	}
+}
+
+
+/**
+ * Class represents general DB column.
+ */
+
+class ModelMetaColumn {
+	
+	public $name;
+	public $type;
+	
+	/**
+	 * Constructor
+	 * @param string $name
+	 * @param string $type
+	 */
+	function __construct($name, $type) {
+		$this->name = $name;
+		$this->type = $type;
 	}
 }
 

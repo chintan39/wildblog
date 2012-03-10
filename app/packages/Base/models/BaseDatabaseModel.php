@@ -216,7 +216,12 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		$database = dbConnection::getInstance()->adapter->database;
 		$query = "SELECT * FROM `information_schema`.`COLUMNS` where `TABLE_NAME` LIKE '$table' AND `TABLE_SCHEMA` LIKE '$database'";
 		$columns = dbConnection::getInstance()->fetchAll($query);
-		return $columns ? $columns : array();
+		$columns = $columns ? $columns : array();
+		$result = array();
+		foreach ($columns as $column) {
+			$result[] = new ModelMetaColumn(strtolower($column['COLUMN_NAME']), strtolower(preg_replace('/^\s*(\w+)\W*(.*)$/', '$1', $column['COLUMN_TYPE'])));
+		}
+		return $result;
 	}
 
 
@@ -257,11 +262,32 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		
 		/* now loop through temporary structure and create true index objects */
 		$result = array();
-		foreach ($tmpIndexes as $index) {
-			$result[] = new ModelMetaIndex($index['columns'], $index['type'], $index['lengths']);
+		foreach ($tmpIndexes as $indexName => $index) {
+			$result[] = new ModelMetaIndex($index['columns'], $index['type'], $index['lengths'], $indexName);
 		}
 		
 		return $result;
+	}
+	
+	
+	static private function getIndexDropSQL($index, $table) {
+		return 'DROP INDEX `' . $index->name . '` ON `' . $table . '`;';
+	}
+	
+	
+	static private function getIndexCreateSQL($index, $table, $ext) {
+		$tmpColumns = array();
+		foreach ($index->columns as $column) {
+			$tmpColumns[] = '`' . $column . '`' . (isset($index->lengths[$column]) ? ('(' . $index->lengths[$column] . ')') : '');
+		}
+		$type = '';
+		if ($index->type == ModelMetaIndex::UNIQUE)
+			$type = 'UNIQUE';
+		elseif ($index->type == ModelMetaIndex::FULLTEXT)
+			$type = 'FULLTEXT';
+		if ($type == 'FULLTEXT' && !$ext)
+			return '/* Cannot create FULLTEXT INDEX `' . $index->name . '` ON `' . $table . '` because table type doesn\'t support it */';
+		return 'CREATE ' . $type . ' INDEX `' . $index->name . '` ON `' . $table . '` (' . implode(', ', $tmpColumns) . ');';
 	}
 	
 
@@ -314,12 +340,14 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 				->setType(Form::FORM_INPUT_TEXT)
 				->setExtendedTable(true)
 				->setSqlType('INT(11) NOT NULL DEFAULT 0');
-			$extraIndexes['primary key'] = array('PRIMARY' => array('lang', 'item'));
+			$index = new ModelMetaIndex(array('lang', 'item'), ModelMetaIndex::PRIMARY);
+			$extraIndexes[$index->name] = $index;
+			/*
 			foreach ($metadata as $meta) {
 				if ($meta->getExtendedTable() && $meta->hasRestrictions(Restriction::R_UNIQUE)) {
-					$extraIndexes['unique'] = array($meta->getName() => array($meta->getName(), 'lang'));
+					$extraIndexes[] = new ModelMetaIndex(array($meta->getName(), 'lang'), ModelMetaIndex::UNIQUE);
 				}
-			}
+			}*/
 		} elseif ($model->languageSupportAllowed) {
 			$metadata[] = AtributesFactory::create('lang')
 			->setType(Form::FORM_INPUT_TEXT)
@@ -328,11 +356,13 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		// get table columns
 		$dbColumns = self::getColumns($table);
 		$dbIndexes = self::getIndexesFromTable($table);
-		$modelIndexes = $model->getIndexes();
+		$modelIndexes = array_merge($model->getIndexes($ext), $extraIndexes);
 
 		$sqlItems = array();
-		$sqlIndex = array();
+		$sqlIndexCreate = array();
+		$sqlIndexDrop = array();
 		
+		// Compare columns in DB and columns according model definition 
 		foreach ($metadata as $meta) {
 			if (in_array($meta->getType(), array(Form::FORM_MULTISELECT_FOREIGNKEY,
 				Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_SPECIFIC_NOT_IN_DB))) {
@@ -346,60 +376,14 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 			}
 			$found = false;
 			foreach ($dbColumns as $key => $column) {
-				if ($column['COLUMN_NAME'] == $meta->getName()) {
+				if ($column->name == $meta->getName()) {
 					unset($dbColumns[$key]);
 					$found = true;
 					$type = preg_replace('/^\s*(\w+)\W*(.*)$/', '$1', $meta->getSqlType());
-					$typeNow = preg_replace('/^\s*(\w+)\W*(.*)$/', '$1', $column['COLUMN_TYPE']);
+					$typeNow = preg_replace('/^\s*(\w+)\W*(.*)$/', '$1', $column->type);
 					if (strcmp(strtolower($typeNow), strtolower($type)) !== 0) {
 						// typy nesouhlasi
 						$sqlItems[] = 'CHANGE `' . $meta->getName() . '` `' . $meta->getName() . '` ' . $meta->getSqlType() . " /* should be $type, but $typeNow is */";
-					}
-					if ($meta->getSqlIndex()) {
-						switch ($meta->getSqlIndex()) {
-							case ModelMetaIndex::PRIMARY: 
-								if ($column['COLUMN_KEY'] != 'PRI') {
-									// index in not correct
-									if ($column['COLUMN_KEY'] != '') {
-										// index exists but is bad
-										$sqlIndex[] = 'DROP INDEX `' . $meta->getName() . '`';
-									}
-									$sqlIndex[] = 'ADD PRIMARY (`' . $meta->getName() . '`)'; 
-								}
-								break;
-							case ModelMetaIndex::INDEX: 
-								if ($column['COLUMN_KEY'] != 'MUL') {
-									// index in not correct
-									if ($column['COLUMN_KEY'] != '') {
-										// index exists but is bad
-										$sqlIndex[] = 'DROP INDEX `' . $meta->getName() . '`';
-									}
-									$sqlIndex[] = 'ADD KEY (`' . $meta->getName() . '`)';
-								}
-								break;
-							case ModelMetaIndex::UNIQUE: 
-								if ($column['COLUMN_KEY'] != 'UNI' && $column['COLUMN_KEY'] != 'MUL') {
-									// index in not correct
-									if ($column['COLUMN_KEY'] != '') {
-										// index exists but is bad
-										$sqlIndex[] = 'DROP INDEX `' . $meta->getName() . '`';
-									}
-									$keyLength = ((stripos($meta->getSqlType(), 'text') !== false) ? ' (255)' : '');
-									$sqlIndex[] = 'ADD UNIQUE (`' . $meta->getName() . '`' . $keyLength . ')';
-								}
-								break;
-							case ModelMetaIndex::FULLTEXT: 
-								if ($model->extendedTextsSupport && $meta->getExtendedTable() && $column['COLUMN_KEY'] != 'MUL') {
-									// index in not correct
-									if ($column['COLUMN_KEY'] != '') {
-										// index exists but is bad
-										$sqlIndex[] = 'DROP INDEX `' . $meta->getName() . '`';
-									}
-									$sqlIndex[] = 'ADD FULLTEXT (`' . $meta->getName() . '`)';
-								}
-								break;
-							default: break;
-						}
 					}
 				}
 			}
@@ -407,113 +391,63 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 				$sqlItems[] = 'ADD `' . $meta->getName() . '` ' . $meta->getSqlType();
 			}
 		}
-		// drop what is not needed
+		
+		// drop columns which are not needed
 		foreach ($dbColumns as $key => $column) {
-				$sqlItems[] = 'DROP `' . $column['COLUMN_NAME'] . '`';
+				$sqlItems[] = 'DROP `' . $column->name . '`';
 		}
-		// checking multi-columns indexes:
-		if (isset($model->indexes) && count($model->indexes) || $ext) {
-			$query = "SELECT * FROM `information_schema`.`KEY_COLUMN_USAGE` where `TABLE_NAME` LIKE '$table' AND `TABLE_SCHEMA` LIKE '$database'";
-			$indexes = dbConnection::getInstance()->fetchAll($query);
-			if (!$indexes) {
-				$indexes = array();
-			}
-			$constraints = array();
-			foreach ($indexes as $ind) {
-				if (!isset($constraints[$ind['CONSTRAINT_NAME']])) {
-					$constraints[$ind['CONSTRAINT_NAME']] = array();
-				}
-				$constraints[$ind['CONSTRAINT_NAME']][] = $ind['COLUMN_NAME'];
-			}
-			// get all constraints to table
-			$query = "SELECT * FROM `information_schema`.`TABLE_CONSTRAINTS` where `TABLE_NAME` LIKE '$table' AND `TABLE_SCHEMA` LIKE '$database'";
-			$constrQ = dbConnection::getInstance()->fetchAll($query);
-			if (!$constrQ) {
-				$constrQ = array();
-			}
-			// unset all single-column keys
-			foreach ($constraints as $k => $c) {
-				if (count($c) == 1) {
-					foreach ($constrQ as $constrK => $constr) {
-						if (strcasecmp($constr['CONSTRAINT_NAME'], $k) == 0) {
-							unset($constrQ[$constrK]);
-						}
+		
+		
+		// Compare indexes in DB and indexes according model definition
+		foreach ($modelIndexes as $modelIndex) {
+			$found = false;
+			foreach ($dbIndexes as $key => $dbIndex) {
+				if ($dbIndex->name == $modelIndex->name) {
+					unset($dbIndexes[$key]);
+					$found = true;
+					if ($modelIndex->columns === $dbIndex->columns) {
+						// columns don't correspond
+						$sqlIndexDrop[] = self::getIndexDropSQL($dbIndex, $table) . " /* columns should be " . implode(', ', $modelIndex->columns) . ", but currently are " . implode(', ', $dbIndex->columns) . " */";
+						$found = false;
+					} else if (strcmp($modelIndex->type, $dbIndex->type)) {
+						// type doesn't correspond
+						$sqlIndexDrop[] = self::getIndexDropSQL($dbIndex, $table) . " /* type should be {$modelIndex->type}, but currently is {$dbIndex->type} */";
+						$found = false;
 					}
-					unset($constraints[$k]);
 				}
 			}
-			// loop the metaData indexes types
-			//var_dump(array_merge($model->indexes, $extraIndexes));
-			/* $model->indexes or $extraIndexes has the following structure:
-			   array(
-			       'index_type' => array(
-			           'index_name' => array('column1', 'column2', ...)))
-			 */
-			foreach (array_merge($model->indexes, $extraIndexes) as $metaIndexesType => $metaIndexes) {
-				// loop the metaData indexes
-				foreach ($metaIndexes as $metaIdexName => $metaIndexColumns) {
-					// loop the db indexes
-					$found = false;
-					$constrColumns = array();
-					foreach ($metaIndexColumns as $mc) {
-						$mcexpl = explode("|", $mc);
-						if (count($mcexpl) > 1) {
-							$constrColumns[] = '`' . $mcexpl[0] . '` (' . $mcexpl[1] . ')';
-						} else {
-							$constrColumns[] = '`' . $mc . '`';
-						} 
-					}
-					$constrColumns = implode(', ', $constrColumns);
-					foreach ($constrQ as $constrK => $constr) {
-						//echo "{$constr['CONSTRAINT_NAME']} vs $metaIdexName\n";
-						if (strcasecmp($constr['CONSTRAINT_NAME'], $metaIdexName) != 0) {
-							continue;
-						}
-						//echo "Deleting ";print_r($constrQ[$constrK]);echo"\n";
-						unset($constrQ[$constrK]);
-						$found = true;
-						// if more than one column in db index
-						if (is_array($constraints[$constr['CONSTRAINT_NAME']]) && count($constraints[$constr['CONSTRAINT_NAME']]) > 1) {
-							// if not the same
-							$tmp1 = $constraints[$constr['CONSTRAINT_NAME']];
-							$tmp2 = $metaIndexColumns;
-							sort($tmp1);
-							sort($tmp2);
-							/*
-							echo "equal? $metaIndexesType and {$constr['CONSTRAINT_TYPE']}"; print_r(preg_replace('/(\|\d+)/', '', implode(',',$metaIndexColumns))); echo " and "; print_r(implode(',', $constraints[$constr['CONSTRAINT_NAME']]));
-							echo (strcasecmp($metaIndexesType, $constr['CONSTRAINT_TYPE']) != 0)?'1':'0';
-							echo (preg_replace('/(\|\d+)/', '', implode(',', $tmp2)) != implode(',', $tmp1))?'1':'0';
-							echo "\n";
-							*/
-							if (strcasecmp($metaIndexesType, $constr['CONSTRAINT_TYPE']) != 0 || preg_replace('/(\|\d+)/', '', implode(',', $tmp2)) != implode(',', $tmp1)) {
-								$sqlIndex[] = "DROP INDEX `{$constr['CONSTRAINT_NAME']}`";
-								$sqlIndex[] = "ADD " . strtoupper($metaIndexesType) . " `$metaIdexName` ($constrColumns)";
-							}
-						}
-					}
-					if (!$found) {
-						$sqlIndex[] = "ADD " . strtoupper($metaIndexesType) . " `$metaIdexName` ($constrColumns)";
-					}
-
-				}
-			}
-			foreach ($constrQ as $constrK => $constr) {
-				$sqlIndex[] = "DROP INDEX `{$constr['CONSTRAINT_NAME']}`";
+			if (!$found) {
+				$sqlIndexCreate[] = self::getIndexCreateSQL($modelIndex, $table, $ext);
 			}
 		}
 		
+		// drop indexes which are not needed
+		foreach ($dbIndexes as $key => $dbIndex) {
+			$sqlIndexDrop[] = self::getIndexDropSQL($dbIndex, $table) . " /* index {$dbIndex->name} is not defined in model */";
+		}
 
-		if (empty($sqlItems) && empty($sqlIndex)) {
+		if (empty($sqlItems) && empty($sqlIndexCreate) && empty($sqlIndexDrop)) {
 			$text .= '-- No changes needed in the table ' . $table . '.' . "\n\n";
 		} else {
 			$text .= "\n\n";
 			$text .= "-- --------------------------------------------\n";
 			$text .= "-- Table changes SQL for table $table.\n";
 			$text .= "-- --------------------------------------------\n";
-			$text .= "ALTER TABLE `$table` \n";
-			$text .= implode(",\n", array_merge($sqlItems, $sqlIndex));
-			$text .= ";";
-			$text .= "\n\n";
+			if (!empty($sqlItems)) {
+				$text .= "ALTER TABLE `$table` \n";
+				$text .= implode(",\n", $sqlItems);
+				$text .= ";\n";
+			}
+			$text .= "\n";
+			if (!empty($sqlIndexDrop)) {
+				$text .= implode("\n", $sqlIndexDrop);
+				$text .= "\n\n";
+			}
+			if (!empty($sqlIndexCreate)) {
+				$text .= implode("\n", $sqlIndexCreate);
+				$text .= "\n";
+			}
+			$text .= "\n";
 		}
 		return $text;
 	}

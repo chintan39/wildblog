@@ -26,8 +26,8 @@ class AbstractPagesModel extends AbstractNodesModel {
 		parent::attributesDefinition();
 		
 		$this->addMetaData(AtributesFactory::stdAuthor());
-		$this->addMetaData(AtributesFactory::stdText());
-		$this->addMetaData(AtributesFactory::stdDescription());
+		$this->addMetaData(AtributesFactory::stdText()->setSqlindex(ModelMetaIndex::FULLTEXT));
+		$this->addMetaData(AtributesFactory::stdDescription()->setSqlindex(ModelMetaIndex::FULLTEXT));
 		$this->addMetaData(AtributesFactory::stdSEODescription());
 		$this->addMetaData(AtributesFactory::stdSEOKeywords());
 		$this->addMetaData(AtributesFactory::stdRank());

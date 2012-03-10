@@ -233,8 +233,16 @@ class ModelMetaItem {
         return $this->sqlIndex;
     }
 
-    public function setSqlIndex($type) {
-        $this->sqlIndex = new ModelMetaIndex($this->name, $type);
+    public function setSqlIndex($type, $langUnique=false) {
+    	$columns = array($this->name);
+    	if ($langUnique)
+    		$columns[] = 'lang';
+        $this->sqlIndex = new ModelMetaIndex($columns, $type);
+        return $this;
+    }
+
+    public function removeSqlIndex() {
+        $this->sqlIndex = null;
         return $this;
     }
 

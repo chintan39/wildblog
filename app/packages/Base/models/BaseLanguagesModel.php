@@ -44,7 +44,8 @@ class BaseLanguagesModel extends AbstractCodebookModel {
 			->setType(Form::FORM_CHECKBOX)
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\''));
  	
-	
+		$this->setMetaData('url', 'sqlIndex', null);
+		
     }
     
     public function loadLanguages() {

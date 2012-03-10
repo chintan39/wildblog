@@ -274,14 +274,18 @@ class AbstractBasicModel {
 	
 	
 	/**
-	 * Adds a multi-column index to the table.
+	 * Returns indexes from a model
 	 * @param object $index instance of ModelMetaIndex
+	 * @param bool $ext true if we need indexes from ext table, false otherwise
 	 */
-	public function getIndexes() {
+	public function getIndexes($ext) {
 		$result = $this->indexes;
 		foreach ($this->getMetadata() as $meta) {
-			if ($meta->hasSqlIndex())
-				$result[$meta->getSqlIndex()->name] = $meta->getSqlIndex();
+			if (!$meta->hasSqlIndex() || 
+				$this->extendedTextsSupport && 
+				($ext && !$meta->getExtendedTable() || !$ext && $meta->getExtendedTable()))
+				continue;
+			$result[$meta->getSqlIndex()->name] = $meta->getSqlIndex();
 		}
 		return $result;
 	}
