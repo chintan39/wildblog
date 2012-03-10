@@ -546,8 +546,8 @@ class PDOAdapter
 	public function tableExists($table)
 	{
 		try {
-			$input = $this->fetchOne("SELECT 1 FROM `{$table}`");
-			return true;
+			$input = $this->fetchOne('SELECT 1 FROM '.$this->quotName($table));
+			return ($input !== false);
 		} catch (DBQueryException $e) {
 			return false;
 		}
@@ -659,7 +659,7 @@ class PDOAdapter
 	 * @return SQL to drop index.
 	 */
 	public function getIndexDropSQL($index, $table) {
-		return 'DROP INDEX `' . $index->name . '` ON `' . $table . '`;';
+		return 'DROP INDEX ' . $this->quotName($index->name) . ' ON ' . $this->quotName($table) . ';';
 	}
 	
 	
@@ -669,9 +669,25 @@ class PDOAdapter
 	 * @return string
 	 */
 	public function getEngineSQL($ext) {
-		return $ext ? "ENGINE=MyISAM" : "ENGINE=InnoDB";
+		if ($this->dbtype == 'mysql')
+			return $ext ? "ENGINE=MyISAM" : "ENGINE=InnoDB";
+		else
+			return '';
 	}
 	
+
+	public function quotName($value) {
+		return ($this->dbtype == 'pgsql') ? ('"'.$value.'"') : ('`'.$value.'`');
+	}
+
+
+	public function getAutoIncrement($column) {
+		if ($this->dbtype == 'pgsql')
+			return '';
+		else
+			return 'AUTO_INCREMENT';
+	}
+
 	
 	/**
 	 * Returns SQL to create index.
@@ -683,7 +699,7 @@ class PDOAdapter
 	public function getIndexCreateSQL($index, $table, $ext) {
 		$tmpColumns = array();
 		foreach ($index->columns as $column) {
-			$tmpColumns[] = '`' . $column . '`' . (isset($index->lengths[$column]) ? ('(' . $index->lengths[$column] . ')') : '');
+			$tmpColumns[] = $this->quotName($column) . (isset($index->lengths[$column]) ? ('(' . $index->lengths[$column] . ')') : '');
 		}
 		$type = '';
 		if ($index->type == ModelMetaIndex::UNIQUE)
@@ -691,10 +707,10 @@ class PDOAdapter
 		elseif ($index->type == ModelMetaIndex::FULLTEXT)
 			$type = 'FULLTEXT';
 		elseif ($index->type == ModelMetaIndex::PRIMARY)
-			return 'ALTER TABLE `' . $table . '` ADD PRIMARY KEY (' . implode(', ', $tmpColumns) . ');';
+			return 'ALTER TABLE ' . $this->quotName($table) . ' ADD PRIMARY KEY (' . implode(', ', $tmpColumns) . ');';
 		if ($type == 'FULLTEXT' && !$ext)
-			return '/* Cannot create FULLTEXT INDEX `' . $index->name . '` ON `' . $table . '` because table type doesn\'t support it */';
-		return 'CREATE ' . $type . ' INDEX `' . $index->name . '` ON `' . $table . '` (' . implode(', ', $tmpColumns) . ');';
+			return '/* Cannot create FULLTEXT INDEX ' . $this->quotName($index->name) . ' ON ' . $this->quotName($table) . ' because table type doesn\'t support it */';
+		return 'CREATE ' . $type . ' INDEX ' . $this->quotName($index->name) . ' ON ' . $this->quotName($table) . ' (' . implode(', ', $tmpColumns) . ');';
 	}
 }
 

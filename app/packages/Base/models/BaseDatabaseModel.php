@@ -266,12 +266,6 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 				->setSqlType('INT(11) NOT NULL DEFAULT 0');
 			$index = new ModelMetaIndex(array('lang', 'item'), ModelMetaIndex::PRIMARY);
 			$extraIndexes[$index->name] = $index;
-			/*
-			foreach ($metadata as $meta) {
-				if ($meta->getExtendedTable() && $meta->hasRestrictions(Restriction::R_UNIQUE)) {
-					$extraIndexes[] = new ModelMetaIndex(array($meta->getName(), 'lang'), ModelMetaIndex::UNIQUE);
-				}
-			}*/
 		} elseif ($model->languageSupportAllowed) {
 			$metadata[] = AtributesFactory::create('lang')
 			->setType(Form::FORM_INPUT_TEXT)

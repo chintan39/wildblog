@@ -55,6 +55,7 @@ class ErrorLogger {
 	 */
 	static public function init($handleAllErrors=true) {
 		self::loadConfig();
+
 		self::$logFile = DIR_PROJECT_PATH . self::$config['log_file'];
 		self::$logFile = str_replace('[Y]', date('Y'), self::$logFile);
 		self::$logFile = str_replace('[m]', date('m'), self::$logFile);
