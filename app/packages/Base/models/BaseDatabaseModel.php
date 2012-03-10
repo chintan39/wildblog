@@ -78,11 +78,20 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 	static public function getConstructSQL($testDatabase=false) {
 		$tmp = new self();
 		$items = $tmp->getCollectionItems();
+		$checkSQL = '';
+		foreach ($items['items'] as $dmItem) {
+			$checkSQL .= self::getCheckTable($dmItem->id, false, $testDatabase);
+		}
+		return $checkSQL;
+		/*
+		$tmp = new self();
+		$items = $tmp->getCollectionItems();
 		$constructSQL = '';
 		foreach ($items['items'] as $dmItem) {
 			$constructSQL .= self::getConstructTable($dmItem->id, null, $testDatabase);
 		}
 		return $constructSQL;
+		*/
 	}
 	
 
@@ -202,113 +211,26 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		self::doMultipleQueries($constructSQL, $errors, true);
 		return count($errors) > 0; 
 	}
-
-
-	static private function tableExists($table) {
-		$database = dbConnection::getInstance()->adapter->database;
-		$query = "SELECT COUNT(*) as count FROM `information_schema`.`TABLES` where `TABLE_NAME` LIKE '$table' AND `TABLE_SCHEMA` LIKE '$database'";
-		$tables = dbConnection::getInstance()->fetchRow($query);
-		return ($tables && $tables['count']);
-	}
-	
-	
-	static private function getColumns($table) {
-		$database = dbConnection::getInstance()->adapter->database;
-		$query = "SELECT * FROM `information_schema`.`COLUMNS` where `TABLE_NAME` LIKE '$table' AND `TABLE_SCHEMA` LIKE '$database'";
-		$columns = dbConnection::getInstance()->fetchAll($query);
-		$columns = $columns ? $columns : array();
-		$result = array();
-		foreach ($columns as $column) {
-			$result[] = new ModelMetaColumn(strtolower($column['COLUMN_NAME']), strtolower(preg_replace('/^\s*(\w+)\W*(.*)$/', '$1', $column['COLUMN_TYPE'])));
-		}
-		return $result;
-	}
-
-
-	static private function getIndexesFromTable($table) {
-		/* read indexes from db */
-		$query = "SHOW INDEX FROM $table";
-		$indexes = dbConnection::getInstance()->fetchAll($query);
-		$indexes = $indexes ? $indexes : array();
-
-		/* create temp structure:
-		  'index_name' => array
-		    'columns' => array
-		      1 => 'column_name1'
-		      2 => 'column_name2'
-		    'type' => ModelMetaIndex::INDEX
-		    'lengths' => array
-		      'column_name2' => 255
-		 */
-		$tmpIndexes = array();
-		foreach ($indexes as $index) {
-			if (!strcmp($index['Index_type'], 'FULLTEXT'))
-				$indexType = ModelMetaIndex::FULLTEXT;
-			elseif (!strcmp($index['Key_name'], 'PRIMARY'))
-				$indexType = ModelMetaIndex::PRIMARY;
-			elseif (!strcmp($index['Non_unique'], '0'))
-				$indexType = ModelMetaIndex::UNIQUE;
-			else
-				$indexType = ModelMetaIndex::INDEX;
-			
-			$indexName = $index['Key_name'];
-			if (!isset($tmpIndexes[$indexName])) $tmpIndexes[$indexName] = array(
-				'columns' => array(), 
-				'type' => $indexType,
-				'length' => array());
-			$tmpIndexes[$indexName]['columns'][(int)$index['Seq_in_index']] = $index['Column_name'];
-			$tmpIndexes[$indexName]['lengths'][$index['Column_name']] = $index['Sub_part'];
-		}
-		
-		/* now loop through temporary structure and create true index objects */
-		$result = array();
-		foreach ($tmpIndexes as $indexName => $index) {
-			$result[] = new ModelMetaIndex($index['columns'], $index['type'], $index['lengths'], $indexName);
-		}
-		
-		return $result;
-	}
-	
-	
-	static private function getIndexDropSQL($index, $table) {
-		return 'DROP INDEX `' . $index->name . '` ON `' . $table . '`;';
-	}
-	
-	
-	static private function getIndexCreateSQL($index, $table, $ext) {
-		$tmpColumns = array();
-		foreach ($index->columns as $column) {
-			$tmpColumns[] = '`' . $column . '`' . (isset($index->lengths[$column]) ? ('(' . $index->lengths[$column] . ')') : '');
-		}
-		$type = '';
-		if ($index->type == ModelMetaIndex::UNIQUE)
-			$type = 'UNIQUE';
-		elseif ($index->type == ModelMetaIndex::FULLTEXT)
-			$type = 'FULLTEXT';
-		if ($type == 'FULLTEXT' && !$ext)
-			return '/* Cannot create FULLTEXT INDEX `' . $index->name . '` ON `' . $table . '` because table type doesn\'t support it */';
-		return 'CREATE ' . $type . ' INDEX `' . $index->name . '` ON `' . $table . '` (' . implode(', ', $tmpColumns) . ');';
-	}
 	
 
-	static private function getCheckTable($modelName) {
+	static private function getCheckTable($modelName, $checkExisting=true, $testDatabase=false) {
 		$model = new $modelName();
 		$text = '';
 		if (array_key_exists("table", get_object_vars($model)) && $model->tableBase && $model->useInInitDatabase) {	// if the model has table defined
-			$table = $model->getTableName();
-			if (self::tableExists($table)) {
+			$table = dbConnection::getInstance($testDatabase ? 'TestDatabase' : null)->tablePrefix() . $model->getTableName(false);
+			if ($checkExisting && dbConnection::getInstance()->tableExists($table)) {
 				$text .= self::getTableChanges($table, dbConnection::getInstance()->adapter->database, $model, false);
 			} else {
 				// table is not created
-				$text .= self::getConstructTable($modelName, false);
+				$text .= self::getTableCreate($table, dbConnection::getInstance()->adapter->database, $model, false);
 			}
 			if ($model->extendedTextsSupport) {
-				$tableExt = $model->getTableExtName();
-				if (self::tableExists($tableExt)) {
+				$tableExt = dbConnection::getInstance($testDatabase ? 'TestDatabase' : null)->tablePrefix() . $model->getTableExtName(false);
+				if ($checkExisting && dbConnection::getInstance()->tableExists($tableExt)) {
 					$text .= self::getTableChanges($tableExt, dbConnection::getInstance()->adapter->database, $model, true);
 				} else {
 					// table is not created
-					$text .= self::getConstructTable($modelName, true);
+					$text .= self::getTableCreate($tableExt, dbConnection::getInstance()->adapter->database, $model, true);
 				}
 			}
 		} else {
@@ -316,7 +238,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		}
 		return $text;
 	}	
-
+	
 	
 	/**
 	 * Checks the database and returns the changes.
@@ -354,8 +276,8 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 			->setSqlType('INT(11) NOT NULL DEFAULT 1');
 		}
 		// get table columns
-		$dbColumns = self::getColumns($table);
-		$dbIndexes = self::getIndexesFromTable($table);
+		$dbColumns = dbConnection::getInstance()->getColumns($table);
+		$dbIndexes = dbConnection::getInstance()->getIndexesFromTable($table);
 		$modelIndexes = array_merge($model->getIndexes($ext), $extraIndexes);
 
 		$sqlItems = array();
@@ -407,23 +329,23 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 					$found = true;
 					if ($modelIndex->columns === $dbIndex->columns) {
 						// columns don't correspond
-						$sqlIndexDrop[] = self::getIndexDropSQL($dbIndex, $table) . " /* columns should be " . implode(', ', $modelIndex->columns) . ", but currently are " . implode(', ', $dbIndex->columns) . " */";
+						$sqlIndexDrop[] = dbConnection::getInstance()->getIndexDropSQL($dbIndex, $table) . " /* columns should be " . implode(', ', $modelIndex->columns) . ", but currently are " . implode(', ', $dbIndex->columns) . " */";
 						$found = false;
 					} else if (strcmp($modelIndex->type, $dbIndex->type)) {
 						// type doesn't correspond
-						$sqlIndexDrop[] = self::getIndexDropSQL($dbIndex, $table) . " /* type should be {$modelIndex->type}, but currently is {$dbIndex->type} */";
+						$sqlIndexDrop[] = dbConnection::getInstance()->getIndexDropSQL($dbIndex, $table) . " /* type should be {$modelIndex->type}, but currently is {$dbIndex->type} */";
 						$found = false;
 					}
 				}
 			}
 			if (!$found) {
-				$sqlIndexCreate[] = self::getIndexCreateSQL($modelIndex, $table, $ext);
+				$sqlIndexCreate[] = dbConnection::getInstance()->getIndexCreateSQL($modelIndex, $table, $ext);
 			}
 		}
 		
 		// drop indexes which are not needed
 		foreach ($dbIndexes as $key => $dbIndex) {
-			$sqlIndexDrop[] = self::getIndexDropSQL($dbIndex, $table) . " /* index {$dbIndex->name} is not defined in model */";
+			$sqlIndexDrop[] = dbConnection::getInstance()->getIndexDropSQL($dbIndex, $table) . " /* index {$dbIndex->name} is not defined in model */";
 		}
 
 		if (empty($sqlItems) && empty($sqlIndexCreate) && empty($sqlIndexDrop)) {
@@ -443,6 +365,88 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 				$text .= implode("\n", $sqlIndexDrop);
 				$text .= "\n\n";
 			}
+			if (!empty($sqlIndexCreate)) {
+				$text .= implode("\n", $sqlIndexCreate);
+				$text .= "\n";
+			}
+			$text .= "\n";
+		}
+		return $text;
+	}
+
+	
+	/**
+	 * Create table SQL.
+	 * @param string $table Name of the table to check
+	 * @param string $database Name of the database
+	 * @param object $model Model
+	 * @param bool $ext if true table_ext is checked, if false table is checked
+	 * @return string SQL changes queries
+	 */
+	static private function getTableCreate($table, $database, &$model, $ext) {
+		
+		$text = '';
+		$metadata = $model->getMetadata();
+		$extraIndexes = array();
+		if ($ext) {
+			$metadata[] = AtributesFactory::create('lang')
+				->setType(Form::FORM_INPUT_TEXT)
+				->setExtendedTable(true)
+				->setSqlType('INT(11) NOT NULL DEFAULT 1');
+			$metadata[] = AtributesFactory::create('item')
+				->setType(Form::FORM_INPUT_TEXT)
+				->setExtendedTable(true)
+				->setSqlType('INT(11) NOT NULL DEFAULT 0');
+			$index = new ModelMetaIndex(array('lang', 'item'), ModelMetaIndex::PRIMARY);
+			$extraIndexes[$index->name] = $index;
+		} elseif ($model->languageSupportAllowed) {
+			$metadata[] = AtributesFactory::create('lang')
+			->setType(Form::FORM_INPUT_TEXT)
+			->setSqlType('INT(11) NOT NULL DEFAULT 1');
+		}
+		// get table columns
+		$modelIndexes = array_merge($model->getIndexes($ext), $extraIndexes);
+
+		$sqlItems = array();
+		$sqlIndexCreate = array();
+		
+		// Compare columns in DB and columns according model definition 
+		foreach ($metadata as $meta) {
+			if (in_array($meta->getType(), array(Form::FORM_MULTISELECT_FOREIGNKEY,
+				Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_SPECIFIC_NOT_IN_DB))) {
+				continue;
+			}
+			if ($model->extendedTextsSupport && ($ext && !$meta->getExtendedTable() || !$ext && $meta->getExtendedTable())) {
+				continue;
+			}
+			if ($meta->getSqlType() === null) {
+				continue;
+			}
+			$sqlItems[] = '`' . $meta->getName() . '` ' . $meta->getSqlType();
+		}
+		
+		// Compare indexes in DB and indexes according model definition
+		foreach ($modelIndexes as $modelIndex) {
+			// primary key is defined in column specification during creating table
+			if ($modelIndex->type != ModelMetaIndex::PRIMARY)
+				$sqlIndexCreate[] = dbConnection::getInstance()->getIndexCreateSQL($modelIndex, $table, $ext);
+		}
+		
+		$engine = dbConnection::getInstance()->getEngineSQL($ext);
+
+		if (empty($sqlItems) && empty($sqlIndexCreate) && empty($sqlIndexDrop)) {
+			$text .= '-- No changes needed for the table ' . $table . '.' . "\n\n";
+		} else {
+			$text .= "\n\n";
+			$text .= "-- --------------------------------------------\n";
+			$text .= "-- Table create SQL for table $table.\n";
+			$text .= "-- --------------------------------------------\n";
+			if (!empty($sqlItems)) {
+				$text .= "CREATE TABLE `$table` (\n";
+				$text .= implode(",\n", $sqlItems);
+				$text .= ") $engine ;\n";
+			}
+			$text .= "\n";
 			if (!empty($sqlIndexCreate)) {
 				$text .= implode("\n", $sqlIndexCreate);
 				$text .= "\n";
@@ -486,10 +490,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		if (array_key_exists("table", get_object_vars($model)) && $model->tableBase && $model->useInInitDatabase) {	// if the model has table defined
 			if ($ext === false || $ext === null) {
 				// table InnoDB - keys
-				if ($testDatabase)
-					$table = dbConnection::getInstance('TestDatabase')->tablePrefix() . $model->getTableName(false);
-				else
-					$table = $model->getTableName();
+				$table = dbConnection::getInstance($testDatabase ? 'TestDatabase' : '')->tablePrefix() . $model->getTableName(false);
 				// buffer for table InnoDB - keys
 				$sqlItems = array();
 				$sqlIndex = array();
@@ -501,10 +502,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 			
 			if ($ext === true || $ext === null) {
 				// table MyISAM - strings
-				if ($testDatabase)
-					$tableExt = dbConnection::getInstance('TestDatabase')->tablePrefix() . $model->getTableExtName(false);
-				else
-					$tableExt = $model->getTableExtName();
+				$tableExt = dbConnection::getInstance($testDatabase ? 'TestDatabase' : '')->tablePrefix() . $model->getTableExtName(false);
 				// buffer for table MyISAM - strings
 				$extSqlItems = array();
 				$extSqlIndex = array();

@@ -23,6 +23,11 @@
  * @version 2.0
  * @access public
  */
+ 
+class DBException extends Exception { }
+class DBConnectException extends DBException { }
+class DBQueryException extends DBException { }
+ 
 class dbConnection
 {	
 	 public  $adapter, $insertID, $log;
@@ -44,8 +49,10 @@ class dbConnection
 	 * Usage: DbConnection::getInstance($name)->fetchAll("show tables");
 	 * @return DbConnection instance
 	 */
-	public static function getInstance($instanceName='ProductionDatabase')
+	public static function getInstance($instanceName=null)
     {
+    	if ($instanceName === null)
+    		$instanceName = 'ProductionDatabase';
 		static $instances = array();
 		if (!array_key_exists($instanceName, $instances)) 
 		{
@@ -92,7 +99,7 @@ class dbConnection
 		}
 		else
 		{
-			throw new Exception(get_class($this) . ': Could not connect to db.');
+			throw new DBConnectException(get_class($this) . ': Could not connect to db.');
 		}
 		return false;
 	}
@@ -123,7 +130,7 @@ class dbConnection
 	function query($query)
 	{
 		if($this->adapter->connection == false) {
-			throw new Exception(get_class($this) . ': Not connected.');
+			throw new DBConnectException(get_class($this) . ': Not connected.');
 			return false;
 		}
 				
@@ -133,7 +140,7 @@ class dbConnection
 		{
 			$error = $this->adapter->getError();
 			if (Config::Get('PROJECT_STATUS') == PROJECT_READY) {
-				throw new Exception("Error '{$error}' during execution of query {$query}");
+				throw new DBQueryException("Error '{$error}' during execution of query {$query}");
 			}
 			return false;
 		}
@@ -287,278 +294,40 @@ class dbConnection
 		return($this->adapter->connectionHash());
 	}
 
-
-}
-
-/**
- *  dbConnectionAdapter interface.
- *
- *  Defines all the functions a database adapter should have to be working with Pork.dbObject
- * 
- * @package Pork
- * @author Jelle Ursem 
- * @copyright Jelle Ursem 2009
- * @version 1.0
- * @access public
- */
-interface dbConnectionAdapter 
-{
-	public function __construct($info);
-	public function connect($host, $username, $password, $engine=null);
-	public function escapeValue($value);
-	public function fetchOne($query=false);
-	public function fetchRow($query=false, $type='assoc');
-	public function fetchAll($query=false, $type='assoc');	
-	public function getError();    
-	public function getInsertID();
-	public function numRows();
-	public function numAffected();
-	public function query($query);
-	public function selectDatabase($db);	
-	public function tableExists($table);
-	public function tablePrefix();
-	public function connectionHash();
-}
-
-/**
- * MySQLAdapter
- * 
- * @package Pork
- * @author Jelle Ursem 
- * @copyright Jelle Ursem 2009
- * @version 1.0
- * @access public
- */
-class MySQLAdapter implements dbConnectionAdapter
-{
-	public $connection;
-	public $result;
-	public $database;
-	public $queries;
-	public $dbtype='mysql';
-	public $prefix;
-	public $connectionHash;
-
-	/**
-	 * MySQLAdapter::__construct()
-	 * 
-	 * @param mixed $info
-	 * @return void
-	 */
-	public function __construct($info)
-	{
-		$this->database = $info['database'];
-		$this->connection = $this->connect($info['host'], $info['username'], $info['password']);
-		$this->prefix = $info['tablesprefix'];
-		$this->queries = array();
-		$this->connectionHash = md5($info['host'] . $info['username']);
+	
+	public function getIndexCreateSQL($index, $table, $ext) {
+		return($this->adapter->getIndexCreateSQL($index, $table, $ext));
 	}
 
-	/**
-	 * MySQLAdapter::escapeValue()
-	 * 
-	 * @param mixed $value
-	 * @return
-	 */
-	public function escapeValue($value)
-	{
-		return mysql_real_escape_string($value);
-	}
 
-	/**
-	 * MySQLAdapter::connect()
-	 * 
-	 * @param mixed $host
-	 * @param mixed $username
-	 * @param mixed $password
-	 * @return
-	 */
-	public function connect($host, $username, $password, $engine=null)
-	{	
-		$resource = mysql_connect($host, $username, $password);
-		if ($resource)	
-		{
-			mysql_query('SET NAMES "utf8"');
-			return $resource;
-		}
-		else
-		{
-			throw new Exception(get_class($this).' : could not connect');
-		}
-		return false;
-	}
-
-	/**
-	 * MySQLAdapter::query()
-	 * 
-	 * @param mixed $query
-	 * @return
-	 */
-	public function query($query)
-	{
-		$this->queries[] = $query;
-		if(!$this->selectDatabase($this->database)) return false;
-		$this->result = mysql_query($query, $this->connection);
-		if (!$this->result && Config::Get('PROJECT_STATUS') == PROJECT_READY) {
-			throw new Exception("Error during execution of query {$query}: " . mysql_error());
-		}
-		return($this->result);
-	}
-
-	/**
-	 * MySQLAdapter::fetchOne()
-	 * 
-	 * @param bool $query
-	 * @return
-	 */
-	public function fetchOne($query=false)
-	{	
-		if($query != false) $this->query($query);
-		if($this->result != false && mysql_num_rows($this->result) > 0 && mysql_num_fields($this->result) > 0)
-		{
-			return( mysql_result($this->result,0) );
-		}
-		return false;
-	}
-
-	/**
-	 * MySQLAdapter::fetchRow()
-	 * 
-	 * @param bool $query
-	 * @param string $type
-	 * @return
-	 */
-	/**
-	 * MySQLAdapter::fetchRow()
-	 * 
-	 * @param bool $query
-	 * @param string $type
-	 * @return
-	 */
-	public function fetchRow($query=false, $type='assoc')
-	{
-		if($query != false) $this->query($query);
-		if($this->result != false)
-		{
-			$func = "mysql_fetch_{$type}";
-			return($func($this->result));
-		}
-		return false;
-	}
-
-	/**
-	 * MySQLAdapter::fetchAll()
-	 * 
-	 * @param bool $query
-	 * @param string $type
-	 * @return
-	 */
-	public function fetchAll($query=false, $type='assoc')
-	{
-		if($query != false) $this->query($query);
-		if($this->result !== false)
-		{
-			$func = "mysql_fetch_{$type}";
-			$output = array();	
-			while ($row = $func($this->result))
-			{
-				$output[] = $row;
-			}
-			return $output;
-		}
-		return false;
+	public function getEngineSQL($ext) {
+		return($this->adapter->getEngineSQL($ext));
 	}
 	
-	/**
-	 * MySQLAdapter::getInsertID()
-	 * 
-	 * @return
-	 */
-	public function getInsertID()
-	{
-		return mysql_insert_id($this->connection);
+	
+	public function getIndexDropSQL($index, $table) {
+		return($this->adapter->getIndexDropSQL($index, $table));
 	}
-
-	/**
-	 * MySQLAdapter::numRows()
-	 * 
-	 * @return
-	 */
-	public function numRows()
-	{
-		return ($this->result) ? mysql_num_rows($this->result) : 0;
+	
+	
+	public function getIndexesFromTable($table) {
+		return($this->adapter->getIndexesFromTable($table));
 	}
-
-	/**
-	 * MySQLAdapter::numAffected()
-	 * 
-	 * @return
-	 */
-	public function numAffected()
-	{
-		return ($this->result) ? @mysql_affected_rows($this->result) : 0;
+	
+	
+	public function getColumns($table) {
+		return($this->adapter->getColumns($table));
 	}
-
-	/**
-	 * MySQLAdapter::selectDatabase()
-	 * 
-	 * @param mixed $db
-	 * @return
-	 */
-	public function selectDatabase($db)
-	{
-		return mysql_select_db($db, $this->connection);
-	}
-
-	/**
-	 * MySQLAdapter::tableExists()
-	 * 
-	 * @param mixed $table
-	 * @return
-	 */
-	public function tableExists($table)
-	{
-		$input = $this->fetchOne("SHOW TABLES FROM {$this->database} LIKE '{$table}'");
-		return($input != false);
-	}
-
-	/**
-	 * MySQLAdapter::getError()
-	 * 
-	 * @return
-	 */
-	public function getError()
-	{
-		return mysql_error($this->connection);
-	}
-
-	/**
-	 * MySQLAdapter::tablePrefix()
-	 * 
-	 * @return
-	 */
-	public function tablePrefix()
-	{
-		return $this->prefix;
-	}
-
-	/**
-	 * MySQLAdapter::connectionHash()
-	 * 
-	 * @return
-	 */
-	public function connectionHash()
-	{
-		return $this->connectionHash;
-	}
+	
 }
+
 
 /**
  * PDO Adapter
  * 
  * @access public
  */
-class PDOAdapter implements dbConnectionAdapter
+class PDOAdapter
 {
 	public $connection;
 	public $result;
@@ -633,7 +402,7 @@ class PDOAdapter implements dbConnectionAdapter
 		}
 		else
 		{
-			throw new Exception(get_class($this).' : could not connect');
+			throw new DBConnectException(get_class($this).' : could not connect');
 		}
 		return false;
 	}
@@ -650,7 +419,7 @@ class PDOAdapter implements dbConnectionAdapter
 		//if(!$this->selectDatabase($this->database)) return false;
 		$this->result = $this->connection->query($query);
 		if (!$this->result && Config::Get('PROJECT_STATUS') == PROJECT_READY) {
-			throw new Exception("Error during execution of query {$query}: " . implode("; ", $this->connection->errorInfo()));
+			throw new DBQueryException("Error during execution of query {$query}: " . implode("; ", $this->connection->errorInfo()));
 		}
 		return($this->result);
 	}
@@ -777,8 +546,12 @@ class PDOAdapter implements dbConnectionAdapter
 	 */
 	public function tableExists($table)
 	{
-		$input = $this->fetchOne("SHOW TABLES FROM {$this->database} LIKE '{$table}'");
-		return ($input != false);
+		try {
+			$input = $this->fetchOne("SELECT 1 FROM `{$table}`");
+			return true;
+		} catch (DBQueryException $e) {
+			return false;
+		}
 	}
 
 	/**
@@ -810,228 +583,134 @@ class PDOAdapter implements dbConnectionAdapter
 	{
 		return $this->connectionHash;
 	}
-}
-
-
-/**
- * SQLiteAdapter
- *
- * @package Pork
- * @author Jelle Ursem 
- * @copyright Jelle Ursem 2009
- * @version 1.0
- * @access public
- */
-class SQLiteAdapter implements dbConnectionAdapter
-{
-	public $connection, $result, $database, $queries;
-	public $dbtype='sqlite';
-	public $prefix;
-	public $connectionHash;
-
-	/**
-	 * SQLiteAdapter::__construct()
-	 * 
-	 * @param mixed $info
-	 * @return void
-	 */
-	public function __construct($info)
-	{
-		$error = false;
-		$this->database = $info['database'];
-		$this->connection = $this->connect($info['database'], $info['mode'],$error);
-		$this->prefix = $info['tablesprefix'];
-		$this->connectionHash = md5($info['database']);
-		if($error != false)
-		{
-			echo print_array($error, 'SQLITE connection error');
-		}
-	}
-
-	/**
-	 * SQLiteAdapter::escapeValue()
-	 * 
-	 * @param mixed $value
-	 * @return
-	 */
-	public function escapeValue($value)
-	{
-		return sqlite_escape_string($value);
-	}
 
 
 	/**
-	 * SQLiteAdapter::connect()
-	 * 
-	 * @param mixed $host
-	 * @param mixed $username
-	 * @param mixed $password
-	 * @return
+	 * Returns true if table exists in current DB.
+	 * @param string $table
+	 * @return bool
 	 */
-	public function connect($host, $username, $password, $engine=null)
-	{	
-		return sqlite_open($host, $username, $password);
-	}
-
-	/**
-	 * SQLiteAdapter::query()
-	 * 
-	 * @param mixed $query
-	 * @return
-	 */
-	public function query($query)
-	{
-		$this->result = sqlite_query($query, $this->connection);
-		if (!$this->result && Config::Get('PROJECT_STATUS') == PROJECT_READY) {
-			throw new Exception("Error during execution of query {$query}");
-		}
-		return($this->result);
-	}
-
-	/**
-	 * SQLiteAdapter::fetchOne()
-	 * 
-	 * @param bool $query
-	 * @return
-	 */
-	public function fetchOne($query=false)
-	{	
-		if ($query != false) $this->query($query);
-		if($this->result !== false)
-		{
-			return( sqlite_fetch_single($this->result) );
-		}
-		return false;
-	}
-
-	/**
-	 * SQLiteAdapter::fetchRow()
-	 * 
-	 * @param bool $query
-	 * @param string $type
-	 * @return
-	 */
-	public function fetchRow($query=false, $type='assoc')
-	{
-		if ($query != false) $this->query($query);
-		if($this->result !== false)
-		{
-			$func = "sqlite_fetch_{$type}";
-			return( $func($this->result, 0));
-		}
-		return false;
-	}
-
-	/**
-	 * SQLiteAdapter::fetchAll()
-	 * 
-	 * @param bool $query
-	 * @param string $type
-	 * @return
-	 */
-	public function fetchAll($query=false, $type='assoc')
-	{
-		if ($query != false) $this->query($query);
-		if($this->result !== false)
-		{
-			if($type == 'assoc') return(sqlite_fetch_all($this->result, SQLITE_ASSOC));
-			if($type == 'object') 
-			{
-				$output = array();	
-				while ($row = sqlite_fetch_object($this->result))
-				{
-					$output[] = $row;
-				}
-			}
-			return $output;
-		}
-		return false;
-	}
-
-	/**
-	 * SQLiteAdapter::getInsertID()
-	 * 
-	 * @return
-	 */
-	public function getInsertID()
-	{
-		return sqlite_last_insert_rowid($this->connection);
-	}
+	/*public function tableExists($table) {
+		$database = dbConnection::getInstance()->adapter->database;
+		$query = "SELECT COUNT(*) as count FROM `information_schema`.`TABLES` where `TABLE_NAME` LIKE '$table' AND `TABLE_SCHEMA` LIKE '$database'";
+		$tables = dbConnection::getInstance()->fetchRow($query);
+		return ($tables && $tables['count']);
+	}*/
+	
 	
 	/**
-	 * SQLiteAdapter::numRows()
-	 * 
-	 * @return
+	 * Returns array of columns in the table $table. Columns are instances of class ModelMetaColumn.
+	 * @param string $table
+	 * @return array of ModelMetaColumn
 	 */
-	public function numRows()
-	{
-		return ($this->result) ? sqlite_num_rows($this->result) : 0;
+	public function getColumns($table) {
+		$database = dbConnection::getInstance()->adapter->database;
+		$query = "SELECT * FROM `information_schema`.`COLUMNS` where `TABLE_NAME` LIKE '$table' AND `TABLE_SCHEMA` LIKE '$database'";
+		$columns = dbConnection::getInstance()->fetchAll($query);
+		$columns = $columns ? $columns : array();
+		$result = array();
+		foreach ($columns as $column) {
+			$result[] = new ModelMetaColumn(strtolower($column['COLUMN_NAME']), strtolower(preg_replace('/^\s*(\w+)\W*(.*)$/', '$1', $column['COLUMN_TYPE'])));
+		}
+		return $result;
 	}
 
-	/**
-	 * SQLiteAdapter::numAffected()
-	 * 
-	 * @return
-	 */
-	public function numAffected()
-	{
-		//return ($this->result) ? @mysql_affected_rows($this->result) : 0;
-		return 0;
-	}
 
 	/**
-	 * SQLiteAdapter::selectDatabase()
-	 * 
-	 * @param mixed $db
-	 * @return
+	 * Returns array of indexes in the table $table. Indexes are instances of class ModelMetaIndex.
+	 * @param string $table
+	 * @return array of ModelMetaIndex
 	 */
-	public function selectDatabase($db)
-	{
-		return $this->connect($db);
-	}
+	public function getIndexesFromTable($table) {
+		/* read indexes from db */
+		$query = "SHOW INDEX FROM $table";
+		$indexes = dbConnection::getInstance()->fetchAll($query);
+		$indexes = $indexes ? $indexes : array();
 
-	/**
-	 * SQLiteAdapter::getError()
-	 * 
-	 * @return
-	 */
-	public function getError()
-	{
-		return sqlite_error_string(sqlite_last_error($this->connection));
-
-	}
-
-	/**
-	 * SQLiteAdapter::tableExists()
-	 * 
-	 * @param mixed $table
-	 * @return
-	 */
-	public function tableExists($table)
-	{
-		$input = $this->fetchOne("SELECT count(name) FROM sqlite_master WHERE type='table' and name='{$table}'");
-		return($input == 1);
+		/* create temp structure:
+		  'index_name' => array
+		    'columns' => array
+		      1 => 'column_name1'
+		      2 => 'column_name2'
+		    'type' => ModelMetaIndex::INDEX
+		    'lengths' => array
+		      'column_name2' => 255
+		 */
+		$tmpIndexes = array();
+		foreach ($indexes as $index) {
+			if (!strcmp($index['Index_type'], 'FULLTEXT'))
+				$indexType = ModelMetaIndex::FULLTEXT;
+			elseif (!strcmp($index['Key_name'], 'PRIMARY'))
+				$indexType = ModelMetaIndex::PRIMARY;
+			elseif (!strcmp($index['Non_unique'], '0'))
+				$indexType = ModelMetaIndex::UNIQUE;
+			else
+				$indexType = ModelMetaIndex::INDEX;
+			
+			$indexName = $index['Key_name'];
+			if (!isset($tmpIndexes[$indexName])) $tmpIndexes[$indexName] = array(
+				'columns' => array(), 
+				'type' => $indexType,
+				'length' => array());
+			$tmpIndexes[$indexName]['columns'][(int)$index['Seq_in_index']] = $index['Column_name'];
+			$tmpIndexes[$indexName]['lengths'][$index['Column_name']] = $index['Sub_part'];
+		}
+		
+		/* now loop through temporary structure and create true index objects */
+		$result = array();
+		foreach ($tmpIndexes as $indexName => $index) {
+			$result[] = new ModelMetaIndex($index['columns'], $index['type'], $index['lengths'], $indexName);
+		}
+		
+		return $result;
 	}
 	
+	
 	/**
-	 * SQLiteAdapter::tablePrefix()
-	 * 
-	 * @return
+	 * Returns SQL to drop index.
+	 * @param object $index
+	 * @param string $table
+	 * @return SQL to drop index.
 	 */
-	public function tablePrefix()
-	{
-		return $this->prefix;
+	public function getIndexDropSQL($index, $table) {
+		return 'DROP INDEX `' . $index->name . '` ON `' . $table . '`;';
 	}
-
+	
+	
 	/**
-	 * SQLiteAdapter::connectionHash()
-	 * 
-	 * @return
+	 * Returns suffix to specify engine in create table command.
+	 * @param bool $ext 
+	 * @return string
 	 */
-	public function connectionHash()
-	{
-		return $this->connectionHash;
+	public function getEngineSQL($ext) {
+		return $ext ? "ENGINE=MyISAM" : "ENGINE=InnoDB";
+	}
+	
+	
+	/**
+	 * Returns SQL to create index.
+	 * @param object $index
+	 * @param string $table
+	 * @param bool $ext true if table is extended one
+	 * @return SQL to create index.
+	 */
+	public function getIndexCreateSQL($index, $table, $ext) {
+		$tmpColumns = array();
+		foreach ($index->columns as $column) {
+			$tmpColumns[] = '`' . $column . '`' . (isset($index->lengths[$column]) ? ('(' . $index->lengths[$column] . ')') : '');
+		}
+		$type = '';
+		if ($index->type == ModelMetaIndex::UNIQUE)
+			$type = 'UNIQUE';
+		elseif ($index->type == ModelMetaIndex::FULLTEXT)
+			$type = 'FULLTEXT';
+		elseif ($index->type == ModelMetaIndex::PRIMARY)
+			return 'ALTER TABLE `' . $table . '` ADD PRIMARY KEY (' . implode(', ', $tmpColumns) . ');';
+		if ($type == 'FULLTEXT' && !$ext)
+			return '/* Cannot create FULLTEXT INDEX `' . $index->name . '` ON `' . $table . '` because table type doesn\'t support it */';
+		return 'CREATE ' . $type . ' INDEX `' . $index->name . '` ON `' . $table . '` (' . implode(', ', $tmpColumns) . ');';
 	}
 }
+
 
 ?>

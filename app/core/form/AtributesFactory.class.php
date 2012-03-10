@@ -41,7 +41,7 @@ abstract class AtributesFactory {
 			->setRestrictions(Restriction::R_PRIMARY)
 			->setType(Form::FORM_ID)
 			->setIsEditable(ModelMetaItem::NEVER)
-			->setSqlType('int(11) NOT NULL AUTO_INCREMENT')
+			->setSqlType('int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY')
 			->setSqlindex(ModelMetaIndex::PRIMARY);
 	}
 
