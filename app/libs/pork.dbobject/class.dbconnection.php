@@ -543,7 +543,6 @@ class PDOAdapter
 	 * @param string $table
 	 * @return bool
 	 */
-	 */
 	public function tableExists($table)
 	{
 		try {
