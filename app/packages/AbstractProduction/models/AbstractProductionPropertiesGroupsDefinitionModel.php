@@ -28,11 +28,11 @@ class AbstractProductionPropertiesGroupsDefinitionModel extends AbstractDefaultM
     	
 		$this->addMetaData(AtributesFactory::create('property')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlIndex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
 
 		$this->addMetaData(AtributesFactory::create('group')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlIndex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
 
     }
     

@@ -40,7 +40,7 @@ class CalendarEventsModel extends AbstractPagesModel {
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
 			->setSqltype('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlindex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
     }
     
     protected function relationsDefinition() {

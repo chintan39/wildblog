@@ -32,14 +32,14 @@ class EshopProductsModel extends AbstractNodesModel {
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlIndex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
     	
 		$this->addMetaData(AtributesFactory::create('category')
 			->setLabel('Category')
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlIndex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
 		
 		$this->addMetaData(AtributesFactory::stdText());
 		$this->addMetaData(AtributesFactory::stdImage());

@@ -32,7 +32,7 @@ class ResearchQuestionsModel extends AbstractCodebookModel {
 			->setType(Form::FORM_SELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlIndex('index')
+			->setSqlindex(ModelMetaIndex::INDEX)
 			->setOptionsMustBeSelected(true));
 		
 		$typeOptions = array(
@@ -48,7 +48,7 @@ class ResearchQuestionsModel extends AbstractCodebookModel {
 			->setType(Form::FORM_SELECT)
 			->setOptions($typeOptions)
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlIndex('index')
+			->setSqlindex(ModelMetaIndex::INDEX)
 			->setOptionsMustBeSelected(true));
 
 		$this->addMetaData(AtributesFactory::create('required')

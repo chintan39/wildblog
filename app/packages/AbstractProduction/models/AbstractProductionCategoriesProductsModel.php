@@ -28,11 +28,11 @@ class AbstractProductionCategoriesProductsModel extends AbstractDefaultModel {
     	
 		$this->addMetaData(AtributesFactory::create('category')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlIndex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
 
 		$this->addMetaData(AtributesFactory::create('product')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlIndex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
 
     }
     

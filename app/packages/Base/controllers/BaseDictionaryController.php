@@ -195,8 +195,6 @@ class BaseDictionaryController extends AbstractDefaultController {
 
 		$this->assign("title", "Dictionary texts analyse");
 		$this->assign("text", $text);
-		
-		//$this->display("index", Themes::BACK_END);
 	}
 	
 
@@ -215,8 +213,6 @@ class BaseDictionaryController extends AbstractDefaultController {
 
 		$this->assign("title", "Dictionary texts removing");
 		$this->assign("text", $text);
-		
-		//$this->display("index", Themes::BACK_END);
 	}
 	
 
@@ -236,8 +232,6 @@ class BaseDictionaryController extends AbstractDefaultController {
 
 		$this->assign("title", "Dictionary texts adding");
 		$this->assign("text", $text);
-		
-		//$this->display("index", Themes::BACK_END);
 	}
 	
 	function getFirst($input) {

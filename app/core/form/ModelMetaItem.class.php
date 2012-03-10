@@ -43,7 +43,7 @@ class ModelMetaItem {
 	private $optionsMethod = '';	// method to be called to select possible values
 	private $optionsModel = '';		// model that is used to select possible values
 	private $sqlType = '';			// type of the value in SQL
-	private $sqlIndex = ''; 		// index in SQL should be defined (possible values: index, fulltext, unique)
+	private $sqlIndex = null; 		// index in SQL (see ModelMetaIndex class)
 	private $adjustMethod = null;		// value should be adjusted before checking
 	private $adjustBeforeSavingMethod = null;
 	private $isAutoFilled = self::NEVER;	// null means only on the inserting a new item
@@ -225,12 +225,16 @@ class ModelMetaItem {
         return $this;
     }
 
+    public function hasSqlIndex() {
+        return $this->sqlIndex !== null;
+    }
+
     public function getSqlIndex() {
         return $this->sqlIndex;
     }
 
-    public function setSqlIndex($sqlIndex) {
-        $this->sqlIndex = $sqlIndex;
+    public function setSqlIndex($type) {
+        $this->sqlIndex = new ModelMetaIndex($this->name, $type);
         return $this;
     }
 

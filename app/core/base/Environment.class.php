@@ -22,6 +22,7 @@
  */
 require_once(DIR_CORE_HELPERS . 'Utilities.class.php');
 require_once(DIR_CORE_FORM . 'ModelMetaItem.class.php');
+require_once(DIR_CORE_FORM . 'ModelMetaIndex.class.php');
 require_once(DIR_CORE_FORM . 'MetaDataContainer.class.php');
 require_once(DIR_CORE_HELPERS . 'Paging.class.php');
 require_once(DIR_CORE_HELPERS . 'ItemCollection.class.php');

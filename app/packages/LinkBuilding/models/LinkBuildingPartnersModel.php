@@ -35,7 +35,7 @@ class LinkBuildingPartnersModel extends AbstractNodesModel {
 			->setRestrictions(Restriction::R_BOOL)
 			->setType(Form::FORM_CHECKBOX)
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlIndex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
     	
 		$this->addMetaData(AtributesFactory::create('partnersTagsConnection')
 			->setLabel('Tags')

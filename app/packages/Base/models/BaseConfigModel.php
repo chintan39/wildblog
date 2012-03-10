@@ -46,7 +46,7 @@ class BaseConfigModel extends AbstractDefaultModel {
 			->setLabel('Key')
 			->setType(Form::FORM_SELECT)
 			->setSqlType('VARCHAR(64) NOT NULL')
-			->setSqlIndex('unique')
+			->setSqlindex(ModelMetaIndex::UNIQUE)
 			->setOptions($options)
 			->setOptionsMustBeSelected(true)
 			->setOptionsShouldBeTranslated(true)

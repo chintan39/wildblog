@@ -79,7 +79,7 @@ class BaseEmailLogModel extends AbstractDefaultModel {
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP')
-			->setSqlIndex('index')
+			->setSqlindex(ModelMetaIndex::INDEX)
 			->setAdjustMethod('CurrentDateTimeOnEmpty')
 			->setIsAutoFilled(ModelMetaItem::ON_NEW));
 
@@ -88,7 +88,7 @@ class BaseEmailLogModel extends AbstractDefaultModel {
 			->setRestrictions(Restriction::R_BOOL)
 			->setType(Form::FORM_CHECKBOX)
 			->setSqlType('int(11) NOT NULL DEFAULT \'1\'')
-			->setSqlIndex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
 		
 		$this->addMetaData(AtributesFactory::create('send_error')
 			->setLabel('Send Error')

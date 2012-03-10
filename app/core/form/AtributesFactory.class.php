@@ -42,7 +42,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_ID)
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType('int(11) NOT NULL AUTO_INCREMENT')
-			->setSqlIndex('primary');
+			->setSqlindex(ModelMetaIndex::PRIMARY);
 	}
 
 	/**
@@ -55,7 +55,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_TEXT)
 			->setDefaultValue('')
 			->setSqlType('varchar(255) NOT NULL')
-			->setSqlIndex('index')
+			->setSqlindex(ModelMetaIndex::INDEX)
 			->setExtendedTable(true);
 	}
 		
@@ -72,7 +72,7 @@ abstract class AtributesFactory {
 			->setDefaultValue('')
 			->setFormTab(Form::TAB_SEO)
 			->setSqlType('varchar(255) NOT NULL')
-			->setSqlIndex('unique')
+			->setSqlindex(ModelMetaIndex::UNIQUE)
 			->setIsAutoFilled(ModelMetaItem::ON_NEW)
 			->setExtendedTable(true);
 	}
@@ -88,7 +88,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_HTML)
 			->setDefaultValue('')
 			->setSqlType('text NOT NULL')
-			->setSqlIndex('fulltext')
+			->setSqlindex(ModelMetaIndex::FULLTEXT)
 			->setWysiwygType(Javascript::WYSIWYG_LITE)
 			->setExtendedTable(true);
 	}
@@ -104,7 +104,7 @@ abstract class AtributesFactory {
 			->setIsVisible(ModelMetaItem::NEVER)
 			->setType(Form::FORM_TEXTAREA)
 			->setSqlType('varchar(255) NOT NULL')
-			->setSqlIndex('fulltext')
+			->setSqlindex(ModelMetaIndex::FULLTEXT)
 			->setExtendedTable(true);
 	}
 	
@@ -148,7 +148,7 @@ abstract class AtributesFactory {
 			->setDefaultValue(0)
 			->setOptionsMethod('listSelect')
 			->setSqlType('int(11) NOT NULL')
-			->setSqlIndex('index');
+			->setSqlindex(ModelMetaIndex::INDEX);
 	}
 
 	/**
@@ -165,7 +165,7 @@ abstract class AtributesFactory {
 			->setIsVisibleInForm(ModelMetaItem::NEVER)
 			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP')
-			->setSqlIndex('index')
+			->setSqlindex(ModelMetaIndex::INDEX)
 			->setAdjustMethod('CurrentDateTimeOnEmpty')
 			->setIsAutoFilled(ModelMetaItem::ON_NEW);
 	}
@@ -184,7 +184,7 @@ abstract class AtributesFactory {
 			->setIsVisible(ModelMetaItem::NEVER)
 			->setIsVisibleInForm(ModelMetaItem::NEVER)
 			->setSqlType('timestamp NOT NULL DEFAULT \'0000-00-00 00:00:00\'')
-			->setSqlIndex('index')
+			->setSqlindex(ModelMetaIndex::INDEX)
 			->setAdjustMethod('CurrentDateTime')
 			->setIsAutoFilled(ModelMetaItem::ALWAYS);
 	}
@@ -229,7 +229,7 @@ abstract class AtributesFactory {
 			->setDefaultValue(0)
 			->setOptionsMethod('listSelectTree')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlIndex('index');
+			->setSqlindex(ModelMetaIndex::INDEX);
 	}
 	
 	/**
@@ -266,7 +266,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_TEXT)
 			->setDefaultValue('')
 			->setSqlType('varchar(64) NOT NULL')
-			->setSqlIndex('unique')
+			->setSqlindex(ModelMetaIndex::UNIQUE)
 			->setAdjustMethod('ToLower');
 	}
 
@@ -333,7 +333,7 @@ abstract class AtributesFactory {
 			->setDefaultValue('')
 			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('varchar(32) NOT NULL')
-			->setSqlIndex('index');
+			->setSqlindex(ModelMetaIndex::INDEX);
 	}
 	
 	/**
@@ -382,7 +382,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_DATETIME)
 			->setDefaultValue('0000-00-00 00:00:00')
 			->setSqlType('timestamp NOT NULL DEFAULT \'0000-00-00 00:00:00\'')
-			->setSqlIndex('index')
+			->setSqlindex(ModelMetaIndex::INDEX)
 			->setAdjustMethod('CurrentDateTimeOnEmpty')
 			->setIsAutoFilled(ModelMetaItem::ON_NEW);
 	}
@@ -397,7 +397,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_DATETIME)
 			->setDefaultValue('0000-00-00 00:00:00')
 			->setSqlType('timestamp NOT NULL DEFAULT \'0000-00-00 00:00:00\'')
-			->setSqlIndex('index')
+			->setSqlindex(ModelMetaIndex::INDEX)
 			->setAdjustMethod('CurrentDateTimeOnEmpty')
 			->setIsAutoFilled(ModelMetaItem::ALWAYS);
 	}
@@ -412,7 +412,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_DATETIME)
 			->setDefaultValue('0000-00-00 00:00:00')
 			->setSqlType('timestamp NOT NULL DEFAULT \'0000-00-00 00:00:00\'')
-			->setSqlIndex('index')
+			->setSqlindex(ModelMetaIndex::INDEX)
 			->setAdjustMethod('CurrentDateTimeOnEmpty')
 			->setIsAutoFilled(ModelMetaItem::ALWAYS);
 	}
@@ -455,7 +455,7 @@ abstract class AtributesFactory {
 			->setIsVisibleInForm(ModelMetaItem::NEVER)
 			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('int(11) NOT NULL DEFAULT \'1\'')
-			->setSqlIndex('unique')
+			->setSqlindex(ModelMetaIndex::UNIQUE)
 			->setAdjustMethod('NewMaxOnEmpty')
 			->setIsAutoFilled(ModelMetaItem::ON_NEW);
 	}
@@ -473,7 +473,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_NUMBER)
 			->setDefaultValue(0)
 			->setSqlType('decimal(12,4) NULL DEFAULT NULL')
-			->setSqlIndex('index')
+			->setSqlindex(ModelMetaIndex::INDEX)
 			->setAdjustMethod('Number');
 	}
 	
@@ -488,7 +488,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_TEXT)
 			->setDefaultValue('')
 			->setSqlType('varchar(255) NOT NULL DEFAULT \'\'')
-			->setSqlIndex('index');
+			->setSqlindex(ModelMetaIndex::INDEX);
 	}
 	
 	
@@ -502,7 +502,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_NUMBER)
 			->setDefaultValue(0)
 			->setSqlType('int(11) NOT NULL DEFAULT 0')
-			->setSqlIndex('index');
+			->setSqlindex(ModelMetaIndex::INDEX);
 	}
 	
 	
@@ -516,7 +516,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_NUMBER)
 			->setDefaultValue(0)
 			->setSqlType('decimal(12,4) NULL DEFAULT NULL')
-			->setSqlIndex('index');
+			->setSqlindex(ModelMetaIndex::INDEX);
 	}
 	
 	
@@ -543,7 +543,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_DATETIME)
 			->setDefaultValue('0000-00-00 00:00:00')
 			->setSqlType('datetime NULL DEFAULT NULL')
-			->setSqlIndex('index');
+			->setSqlindex(ModelMetaIndex::INDEX);
 	}
 	
 	
@@ -555,7 +555,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_NUMBER)
 			->setDefaultValue(0)
 			->setSqlType('decimal(12,4) NULL DEFAULT NULL')
-			->setSqlIndex('index')
+			->setSqlindex(ModelMetaIndex::INDEX)
 			->setAdjustMethod('Number');
 	}
 	
@@ -568,7 +568,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_TEXT)
 			->setDefaultValue('')
 			->setSqlType('varchar(40) NULL DEFAULT \'\'')
-			->setSqlIndex('index')
+			->setSqlindex(ModelMetaIndex::INDEX)
 			->setIsVisible(ModelMetaItem::NEVER)
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setAdjustBeforeSavingMethod('NewTokenOnNew');

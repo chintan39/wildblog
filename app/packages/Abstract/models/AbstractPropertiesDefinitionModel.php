@@ -30,14 +30,14 @@ class AbstractPropertiesDefinitionModel extends AbstractDefaultModel {
 			->setLabel('Label')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setSqlType('varchar(255) NOT NULL')
-			->setSqlIndex('index'));
+			->setSqlIndex(ModelMetaIndex::INDEX));
 
 		$this->addMetaData(AtributesFactory::create('prop_name')
 			->setLabel('Name')
 			->setRestrictions(Restriction::R_URL_PART | Restriction::R_UNIQUE)
 			->setType(Form::FORM_INPUT_TEXT)
 			->setSqlType('varchar(255) NOT NULL')
-			->setSqlIndex('unique'));
+			->setSqlIndex(ModelMetaIndex::UNIQUE));
     	
 		$this->addMetaData(AtributesFactory::create('prop_description')
 			->setLabel('Description')

@@ -28,11 +28,11 @@ class GalleryGalleriesImagesModel extends AbstractDefaultModel {
     	
 		$this->addMetaData(AtributesFactory::create('gallery')
 			->setSqltype('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlindex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
 
 		$this->addMetaData(AtributesFactory::create('image')
 			->setSqltype('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlindex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
 
 		/* 
 		 * This label will be set to 1 if this image should be the title image 

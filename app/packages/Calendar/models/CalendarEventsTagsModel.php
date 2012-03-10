@@ -28,11 +28,11 @@ class CalendarEventsTagsModel extends AbstractDefaultModel {
     	
 		$this->addMetaData(AtributesFactory::create('event')
 			->setSqltype('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlindex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
 
 		$this->addMetaData(AtributesFactory::create('tag')
 			->setSqltype('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlindex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
 
     }
     

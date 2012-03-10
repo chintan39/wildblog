@@ -49,7 +49,7 @@ class BaseDictionaryModel extends AbstractDefaultModel {
 			->setOptionsMethod('listSelect')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\''));
 		
-		$this->addIndex('key_language', 'unique', array('key|' . DICTIONARY_KEY_LENGTH, 'language', 'kind'));
+		$this->addIndex(new ModelMetaIndex(array('key', 'language', 'kind'), ModelMetaIndex::UNIQUE, array('key' => DICTIONARY_KEY_LENGTH)));
 		
     	$this->addMetaData(AtributesFactory::stdText()
     		->setType(Form::FORM_TEXTAREA) 

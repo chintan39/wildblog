@@ -28,11 +28,11 @@ class BasicNewsTagsModel extends AbstractDefaultModel {
     	
 		$this->addMetaData(AtributesFactory::create('news')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlIndex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
 
 		$this->addMetaData(AtributesFactory::create('tag')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setSqlIndex('index'));
+			->setSqlindex(ModelMetaIndex::INDEX));
 
     }
     

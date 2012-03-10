@@ -218,6 +218,51 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		$columns = dbConnection::getInstance()->fetchAll($query);
 		return $columns ? $columns : array();
 	}
+
+
+	static private function getIndexesFromTable($table) {
+		/* read indexes from db */
+		$query = "SHOW INDEX FROM $table";
+		$indexes = dbConnection::getInstance()->fetchAll($query);
+		$indexes = $indexes ? $indexes : array();
+
+		/* create temp structure:
+		  'index_name' => array
+		    'columns' => array
+		      1 => 'column_name1'
+		      2 => 'column_name2'
+		    'type' => ModelMetaIndex::INDEX
+		    'lengths' => array
+		      'column_name2' => 255
+		 */
+		$tmpIndexes = array();
+		foreach ($indexes as $index) {
+			if (!strcmp($index['Index_type'], 'FULLTEXT'))
+				$indexType = ModelMetaIndex::FULLTEXT;
+			elseif (!strcmp($index['Key_name'], 'PRIMARY'))
+				$indexType = ModelMetaIndex::PRIMARY;
+			elseif (!strcmp($index['Non_unique'], '0'))
+				$indexType = ModelMetaIndex::UNIQUE;
+			else
+				$indexType = ModelMetaIndex::INDEX;
+			
+			$indexName = $index['Key_name'];
+			if (!isset($tmpIndexes[$indexName])) $tmpIndexes[$indexName] = array(
+				'columns' => array(), 
+				'type' => $indexType,
+				'length' => array());
+			$tmpIndexes[$indexName]['columns'][(int)$index['Seq_in_index']] = $index['Column_name'];
+			$tmpIndexes[$indexName]['lengths'][$index['Column_name']] = $index['Sub_part'];
+		}
+		
+		/* now loop through temporary structure and create true index objects */
+		$result = array();
+		foreach ($tmpIndexes as $index) {
+			$result[] = new ModelMetaIndex($index['columns'], $index['type'], $index['lengths']);
+		}
+		
+		return $result;
+	}
 	
 
 	static private function getCheckTable($modelName) {
@@ -281,7 +326,9 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 			->setSqlType('INT(11) NOT NULL DEFAULT 1');
 		}
 		// get table columns
-		$columns = self::getColumns($table);
+		$dbColumns = self::getColumns($table);
+		$dbIndexes = self::getIndexesFromTable($table);
+		$modelIndexes = $model->getIndexes();
 
 		$sqlItems = array();
 		$sqlIndex = array();
@@ -298,9 +345,9 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 				continue;
 			}
 			$found = false;
-			foreach ($columns as $key => $column) {
+			foreach ($dbColumns as $key => $column) {
 				if ($column['COLUMN_NAME'] == $meta->getName()) {
-					unset($columns[$key]);
+					unset($dbColumns[$key]);
 					$found = true;
 					$type = preg_replace('/^\s*(\w+)\W*(.*)$/', '$1', $meta->getSqlType());
 					$typeNow = preg_replace('/^\s*(\w+)\W*(.*)$/', '$1', $column['COLUMN_TYPE']);
@@ -310,7 +357,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 					}
 					if ($meta->getSqlIndex()) {
 						switch ($meta->getSqlIndex()) {
-							case "primary": 
+							case ModelMetaIndex::PRIMARY: 
 								if ($column['COLUMN_KEY'] != 'PRI') {
 									// index in not correct
 									if ($column['COLUMN_KEY'] != '') {
@@ -320,7 +367,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 									$sqlIndex[] = 'ADD PRIMARY (`' . $meta->getName() . '`)'; 
 								}
 								break;
-							case "index": 
+							case ModelMetaIndex::INDEX: 
 								if ($column['COLUMN_KEY'] != 'MUL') {
 									// index in not correct
 									if ($column['COLUMN_KEY'] != '') {
@@ -330,7 +377,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 									$sqlIndex[] = 'ADD KEY (`' . $meta->getName() . '`)';
 								}
 								break;
-							case "unique": 
+							case ModelMetaIndex::UNIQUE: 
 								if ($column['COLUMN_KEY'] != 'UNI' && $column['COLUMN_KEY'] != 'MUL') {
 									// index in not correct
 									if ($column['COLUMN_KEY'] != '') {
@@ -341,7 +388,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 									$sqlIndex[] = 'ADD UNIQUE (`' . $meta->getName() . '`' . $keyLength . ')';
 								}
 								break;
-							case "fulltext": 
+							case ModelMetaIndex::FULLTEXT: 
 								if ($model->extendedTextsSupport && $meta->getExtendedTable() && $column['COLUMN_KEY'] != 'MUL') {
 									// index in not correct
 									if ($column['COLUMN_KEY'] != '') {
@@ -361,7 +408,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 			}
 		}
 		// drop what is not needed
-		foreach ($columns as $key => $column) {
+		foreach ($dbColumns as $key => $column) {
 				$sqlItems[] = 'DROP `' . $column['COLUMN_NAME'] . '`';
 		}
 		// checking multi-columns indexes:
@@ -558,9 +605,9 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 				// add index to buffer
 				if ($meta->getSqlIndex()) {
 					switch ($meta->getSqlIndex()) {
-						case "primary": $index[] = 'PRIMARY KEY (`' . $meta->getName() . '`)'; break;
-						case "index": $index[] = 'KEY (`' . $meta->getName() . '`)'; break;
-						case "unique":
+						case ModelMetaIndex::PRIMARY: $index[] = 'PRIMARY KEY (`' . $meta->getName() . '`)'; break;
+						case ModelMetaIndex::INDEX: $index[] = 'KEY (`' . $meta->getName() . '`)'; break;
+						case ModelMetaIndex::UNIQUE:
 							$keyLength = ((stripos($meta->getSqlType(), 'text') !== false) ? ' (255)' : '');
 							if ($meta->getExtendedTable() && $model->extendedTextsSupport) {
 								// lang column should be added to index
@@ -570,7 +617,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 								// simple one column unique index
 								$index[] = 'UNIQUE KEY (`' . $meta->getName() . '`' . $keyLength . ')'; break;
 							}
-						case "fulltext": $index[] = 'FULLTEXT KEY (`' . $meta->getName() . '`)'; break;
+						case ModelMetaIndex::FULLTEXT: $index[] = 'FULLTEXT KEY (`' . $meta->getName() . '`)'; break;
 						default: break;
 					}
 				}
@@ -592,8 +639,8 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 					$constrColumns = implode(', ', $constrColumns);
 					switch ($metaIndexesType) {
 						default:
-						case 'index': $metaIndexesType = "KEY"; break;
-						case 'unique': $metaIndexesType = "UNIQUE KEY"; break;
+						case ModelMetaIndex::INDEX: $metaIndexesType = "KEY"; break;
+						case ModelMetaIndex::UNIQUE: $metaIndexesType = "UNIQUE KEY"; break;
 					}
 					$sqlIndex[] = $metaIndexesType . " `$metaIdexName` ($constrColumns)";
 				}

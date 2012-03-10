@@ -28,7 +28,6 @@ class AbstractBasicModel {
 	
 	var $buttonsSet;
 	var $attrOrder=0;
-	var $indexes = array();
 	var $name;
 	var $nameShort;
 	var $messages=array("errors" => array(), "warnings" => array());
@@ -38,6 +37,8 @@ class AbstractBasicModel {
 	var $databaseValues = array();
 	var $languageSupport = null;
 	var $predefinedValues = array();
+
+	public $indexes = array();	// TODO: change to private
 	
 	static public $propertiesDefinitionCache = false;	// property cache - not to load each when creating the new object
 	static public $propertiesOptionsCache = false;		// properties options cache - not to load each when creating the new object
@@ -265,18 +266,24 @@ class AbstractBasicModel {
 	
 	/**
 	 * Adds a multi-column index to the table.
-	 * @param string $indexName
-	 * @param string $indexType UNIQUE, INDEX, ..
-	 * @param array $columns array of strings (column names)
+	 * @param object $index instance of ModelMetaIndex
 	 */
-	public function addIndex($indexName, $indexType, $columns) {
-		if (!isset($this->indexes)) {
-			$this->indexes = array();
+	public function addIndex($index) {
+		$this->indexes[$index->name] = $index;
+	}
+	
+	
+	/**
+	 * Adds a multi-column index to the table.
+	 * @param object $index instance of ModelMetaIndex
+	 */
+	public function getIndexes() {
+		$result = $this->indexes;
+		foreach ($this->getMetadata() as $meta) {
+			if ($meta->hasSqlIndex())
+				$result[$meta->getSqlIndex()->name] = $meta->getSqlIndex();
 		}
-		if (!isset($this->indexes[$indexType])) {
-			$this->indexes[$indexType] = array();
-		}
-		$this->indexes[$indexType][$indexName] = $columns;
+		return $result;
 	}
 	
 	/**

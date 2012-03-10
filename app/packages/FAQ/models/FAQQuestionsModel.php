@@ -53,7 +53,7 @@ class FAQQuestionsModel extends AbstractPagesModel {
 			->setLabel('Answer')
 			->setType(Form::FORM_HTML_BBCODE)
 			->setSqlType('text NOT NULL')
-			->setSqlIndex('fulltext')
+			->setSqlindex(ModelMetaIndex::FULLTEXT)
 			->setWysiwygType(Javascript::WYSIWYG_BBCODE)
 			->setExtendedTable(true)
 			->setIsVisible(ModelMetaItem::NEVER));
