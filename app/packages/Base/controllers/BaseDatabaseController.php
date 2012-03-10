@@ -169,7 +169,7 @@ class BaseDatabaseController extends AbstractDefaultController {
 				
 			} 
 			$output = '';
-			$output .= "<form action=\"\" method=\"post\" class=\"cleanform\"><fieldset>\n";
+			$output .= "<form action=\"\" method=\"post\" class=\"cleanform copytest\"><fieldset>\n";
 			$output .= "<h2>Select action to be performed</h2>\n";
 			$output .= "<div><input type=\"radio\" name=\"action\" id=\"action_check\" value=\"check\" class=\"radio\" />\n";
 			$output .= "<label for=\"action_check\">Check DB</label></div>\n";

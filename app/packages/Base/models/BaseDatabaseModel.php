@@ -192,10 +192,12 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 			if (!$model->useInInitDatabase)
 				continue;
 			$tableNameTest = dbConnection::getInstance($database)->tablePrefix() . $model->getTableName(false);
-			$rows += dbConnection::getInstance($database)->fetchOne("SELECT COUNT(*) FROM $tableNameTest");
+			if (dbConnection::getInstance($database)->tableExists($tableNameTest))
+				$rows += dbConnection::getInstance($database)->fetchOne("SELECT COUNT(*) FROM $tableNameTest");
 			if ($model->extendedTextsSupport) {
 				$tableNameTest = dbConnection::getInstance($database)->tablePrefix() . $model->getTableExtName(false);
-				$rows += dbConnection::getInstance($database)->fetchOne("SELECT COUNT(*) FROM $tableNameTest");
+				if (dbConnection::getInstance($database)->tableExists($tableNameTest))
+					$rows += dbConnection::getInstance($database)->fetchOne("SELECT COUNT(*) FROM $tableNameTest");
 			}
 		}
 		return $rows;
