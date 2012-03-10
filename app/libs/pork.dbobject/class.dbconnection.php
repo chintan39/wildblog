@@ -295,27 +295,32 @@ class dbConnection
 	}
 
 	
-	public function getIndexCreateSQL($index, $table, $ext) {
+	public function getIndexCreateSQL($index, $table, $ext) 
+	{
 		return($this->adapter->getIndexCreateSQL($index, $table, $ext));
 	}
 
 
-	public function getEngineSQL($ext) {
+	public function getEngineSQL($ext) 
+	{
 		return($this->adapter->getEngineSQL($ext));
 	}
 	
 	
-	public function getIndexDropSQL($index, $table) {
+	public function getIndexDropSQL($index, $table) 
+	{
 		return($this->adapter->getIndexDropSQL($index, $table));
 	}
 	
 	
-	public function getIndexesFromTable($table) {
+	public function getIndexesFromTable($table) 
+	{
 		return($this->adapter->getIndexesFromTable($table));
 	}
 	
 	
-	public function getColumns($table) {
+	public function getColumns($table) 
+	{
 		return($this->adapter->getColumns($table));
 	}
 	
@@ -447,13 +452,6 @@ class PDOAdapter
 	 * @param string $type
 	 * @return
 	 */
-	/**
-	 * PDOAdapter::fetchRow()
-	 * 
-	 * @param bool $query
-	 * @param string $type
-	 * @return
-	 */
 	public function fetchRow($query=false, $type='assoc')
 	{
 		if ($query != false) $this->query($query);
@@ -541,8 +539,10 @@ class PDOAdapter
 	/**
 	 * PDOAdapter::tableExists()
 	 * 
-	 * @param mixed $table
-	 * @return
+	 * Returns true if table exists in current DB.
+	 * @param string $table
+	 * @return bool
+	 */
 	 */
 	public function tableExists($table)
 	{
@@ -585,19 +585,6 @@ class PDOAdapter
 	}
 
 
-	/**
-	 * Returns true if table exists in current DB.
-	 * @param string $table
-	 * @return bool
-	 */
-	/*public function tableExists($table) {
-		$database = dbConnection::getInstance()->adapter->database;
-		$query = "SELECT COUNT(*) as count FROM `information_schema`.`TABLES` where `TABLE_NAME` LIKE '$table' AND `TABLE_SCHEMA` LIKE '$database'";
-		$tables = dbConnection::getInstance()->fetchRow($query);
-		return ($tables && $tables['count']);
-	}*/
-	
-	
 	/**
 	 * Returns array of columns in the table $table. Columns are instances of class ModelMetaColumn.
 	 * @param string $table
