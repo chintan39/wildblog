@@ -202,28 +202,39 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		self::doMultipleQueries($constructSQL, $errors, true);
 		return count($errors) > 0; 
 	}
+
+
+	static private function tableExists($table) {
+		$database = dbConnection::getInstance()->adapter->database;
+		$query = "SELECT COUNT(*) as count FROM `information_schema`.`TABLES` where `TABLE_NAME` LIKE '$table' AND `TABLE_SCHEMA` LIKE '$database'";
+		$tables = dbConnection::getInstance()->fetchRow($query);
+		return ($tables && $tables['count']);
+	}
+	
+	
+	static private function getColumns($table) {
+		$database = dbConnection::getInstance()->adapter->database;
+		$query = "SELECT * FROM `information_schema`.`COLUMNS` where `TABLE_NAME` LIKE '$table' AND `TABLE_SCHEMA` LIKE '$database'";
+		$columns = dbConnection::getInstance()->fetchAll($query);
+		return $columns ? $columns : array();
+	}
 	
 
 	static private function getCheckTable($modelName) {
 		$model = new $modelName();
 		$text = '';
-		$database = dbConnection::getInstance()->adapter->database;
 		if (array_key_exists("table", get_object_vars($model)) && $model->tableBase && $model->useInInitDatabase) {	// if the model has table defined
 			$table = $model->getTableName();
-			$query = "SELECT COUNT(*) as count FROM `information_schema`.`TABLES` where `TABLE_NAME` LIKE '$table' AND `TABLE_SCHEMA` LIKE '$database'";
-			$tables = dbConnection::getInstance()->fetchRow($query);
-			if ($tables && $tables['count']) {
-				$text .= self::getTableChanges($table, $database, $model, false);
+			if (self::tableExists($table)) {
+				$text .= self::getTableChanges($table, dbConnection::getInstance()->adapter->database, $model, false);
 			} else {
 				// table is not created
 				$text .= self::getConstructTable($modelName, false);
 			}
 			if ($model->extendedTextsSupport) {
 				$tableExt = $model->getTableExtName();
-				$query = "SELECT COUNT(*) as count FROM `information_schema`.`TABLES` where `TABLE_NAME` LIKE '$tableExt' AND `TABLE_SCHEMA` LIKE '$database'";
-				$tables = dbConnection::getInstance()->fetchRow($query);
-				if ($tables && $tables['count']) {
-					$text .= self::getTableChanges($tableExt, $database, $model, true);
+				if (self::tableExists($tableExt)) {
+					$text .= self::getTableChanges($tableExt, dbConnection::getInstance()->adapter->database, $model, true);
 				} else {
 					// table is not created
 					$text .= self::getConstructTable($modelName, true);
@@ -269,12 +280,8 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 			->setType(Form::FORM_INPUT_TEXT)
 			->setSqlType('INT(11) NOT NULL DEFAULT 1');
 		}
-		// table exists
-		$query = "SELECT * FROM `information_schema`.`COLUMNS` where `TABLE_NAME` LIKE '$table' AND `TABLE_SCHEMA` LIKE '$database'";
-		$columns = dbConnection::getInstance()->fetchAll($query);
-		if (!$columns) {
-			$columns = array();
-		}
+		// get table columns
+		$columns = self::getColumns($table);
 
 		$sqlItems = array();
 		$sqlIndex = array();
@@ -388,9 +395,13 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 					unset($constraints[$k]);
 				}
 			}
-			//print_r($constraints);
 			// loop the metaData indexes types
-			//print_r(array_merge($extraIndexes));echo "==";
+			//var_dump(array_merge($model->indexes, $extraIndexes));
+			/* $model->indexes or $extraIndexes has the following structure:
+			   array(
+			       'index_type' => array(
+			           'index_name' => array('column1', 'column2', ...)))
+			 */
 			foreach (array_merge($model->indexes, $extraIndexes) as $metaIndexesType => $metaIndexes) {
 				// loop the metaData indexes
 				foreach ($metaIndexes as $metaIdexName => $metaIndexColumns) {
