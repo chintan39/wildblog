@@ -30,7 +30,7 @@ class DBQueryException extends DBException { }
  
 class dbConnection
 {	
-	 public  $adapter, $insertID, $log;
+	 public  $adapter, $insertID;
 	/**
 	 * dbConnection::__construct()
 	 * Reads settings from the default settings file and creates the connection.
