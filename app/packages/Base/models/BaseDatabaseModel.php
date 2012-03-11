@@ -220,6 +220,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		$text = '';
 		if (array_key_exists("table", get_object_vars($model)) && $model->tableBase && $model->useInInitDatabase) {	// if the model has table defined
 			$table = dbConnection::getInstance($testDatabase ? 'TestDatabase' : null)->tablePrefix() . $model->getTableName(false);
+			echo "$table exist: ".(dbConnection::getInstance()->tableExists($table) ? "Y":"N")."<br>\n";
 			if ($checkExisting && dbConnection::getInstance()->tableExists($table)) {
 				$text .= self::getTableChanges($table, dbConnection::getInstance()->adapter->database, $model, false);
 			} else {
