@@ -167,6 +167,7 @@ class Request {
 			Environment::$smarty->assign('appGenerator', APP_GENERATOR_NAME . ' version ' . APP_VERSION);
 			Environment::$smarty->assign('dirLibs', DIR_LIBS);
 			Environment::$smarty->assign('thisLink', self::getSameLink());
+			Environment::$smarty->assign('requestLink', Request::$url['request']);
 			Environment::$smarty->assign('requestIsAjax', self::isAjax());
 			$today = date('j. XXX Y');
 			$today = str_replace('XXX', Utilities::monthNameLong((int)date('m')), $today);
@@ -220,6 +221,7 @@ class Request {
 		$url['protocol'] = (!empty($_SERVER['HTTPS']) ? 'https' : 'http');
 		$url['baseWithoutProtocol'] = $_SERVER['HTTP_HOST'] . '/' . (Config::Get('PROJECT_URL') ? Config::Get('PROJECT_URL') . '/' : '');
 		$url['base'] = $url['protocol'] . '://' . $url['baseWithoutProtocol'];
+		$url['request'] = $url['protocol'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		$qMarkPos = strpos($_SERVER['REQUEST_URI'], '?');
 		$url['pathRaw'] = ($qMarkPos !== false) ? substr($_SERVER['REQUEST_URI'], 0, $qMarkPos) : $_SERVER['REQUEST_URI'];
 		
@@ -366,6 +368,11 @@ class Request {
 	
 	static private function redirectLocation($link) {
 		header('Location: '.$link);
+		self::finish();
+	}
+	
+		
+	static public function finish() {
 		MessageBus::storeBuffer();
 		exit();
 	}

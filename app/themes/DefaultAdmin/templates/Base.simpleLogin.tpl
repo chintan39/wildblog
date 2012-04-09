@@ -1,4 +1,4 @@
-{require file='part.header'}
+{require file='part.header' theme=Common}
 	<h1>Login</h1>
 {if $actualUserInfo and $actualUserInfo->id}
 Logged: <a href="#">{$actualUserInfo->email}</a><br />
@@ -10,5 +10,5 @@ Logged: <a href="#">{$actualUserInfo->email}</a><br />
 <a href="{linkto package=Base controller=LostPassword action=actionLostPassword}">{tg}Password forgotten?{/tg}</a>
 {/if}
 
-{require file='part.footer'}
+{require file='part.footer' theme=Common}
 

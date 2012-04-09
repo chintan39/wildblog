@@ -31,11 +31,27 @@ class BaseUsersController extends AbstractDefaultController {
     }
 	
 	/**
+	 * Simple Ajax Login Form
+	 */
+	public function actionSimpleLogin($args) {
+		return $this->actionLoginSelf(true);
+	}
+	
+	/**
 	 * Login Form
 	 */
 	public function actionLogin($args) {
+		return $this->actionLoginSelf(false);
+	}
+	
+	/**
+	 * Login Form
+	 */
+	public function actionLoginSelf($sendAjax=false) {
 		$item = new BaseLoginModel();
 		$form = new Form();
+		$form->setSendAjax($sendAjax);
+		$form->setIdentifier('loginForm');
 		$form->fill($item);
 		$form->setDescription($this->getFormDescription());
 		// handeling the form request
@@ -51,11 +67,12 @@ class BaseUsersController extends AbstractDefaultController {
 		}
 		// TODO: Add project-defined additional locations after login.
 		unset($_SESSION['login_redirect']);
-		$form->handleRequest(array('all' => array(
+		$adminHome = array('all' => array(
 			'package' => $ha[0], 
 			'controller' => $ha[1], 
 			'action' => $ha[2],
-			'item' => $item)), tg('You have been logged successfully.'));
+			'item' => $item));
+		$form->handleRequest($sendAjax ? array() : $adminHome, tg('You have been logged successfully.'));
 		$this->assign($form->getIdentifier(), $form->toArray());
 		$_SESSION['login_redirect'] = $sessionLink;
 		//$this->display('login', Themes::BACK_END);

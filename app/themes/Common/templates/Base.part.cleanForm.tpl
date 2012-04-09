@@ -1,6 +1,6 @@
 {if $formId}<a name="{$formId}"></a>{/if}
 
-<form action="{$form.action|htmlentities}{if $formId}#{$formId}{/if}" method="{$form.method}" class="cleanform{if $formClass} {$formClass}{/if}" enctype="multipart/form-data">
+<form action="{$form.action|htmlentities}{if $formId}#{$formId}{/if}" id="form{$form.identifier}" method="{$form.method}" class="cleanform{if $formClass} {$formClass}{/if}" enctype="multipart/form-data">
 {if $form.tabs and $form.displayForm}
 <div id="{$form.tabContainerId}" class="black_tabs">
 	<ul class="tabnav">
@@ -17,6 +17,8 @@
 	{if $form.label}<h2>{$form.label}</h2>{/if}
 	{if $form.description}<p class="description">{$form.description}</p>{/if}
 </div>{/if}
+
+<div id="form{$form.identifier}_messagesContainer">
 
 {if $form.messagesFromBus}
 <div class="confirm">
@@ -38,6 +40,8 @@
 {/foreach}
 </div>
 {/if}
+
+</div>
 
 {if $form.displayForm}
 
@@ -87,7 +91,7 @@
 
 <div class="float-right">
 {foreach from=$form.buttons item=button}
-	{form_button button=$button}
+	{form_button button=$button sendAjax=$form.sendAjax}
 {foreachelse}
 {tg}No buttons found.{/tg}
 {/foreach}

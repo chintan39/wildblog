@@ -484,7 +484,7 @@ class FormFieldMultiSelect extends FormFieldSelect {
 				$link = $this->meta->getLinkNewItem();
 				$linkFull = Request::getLinkSimple($link['package'], $link['controller'], $link['action']);
 				$linkReload = Request::getLinkSimple($link['package'], $link['controller'], $link['actionResult']);
-				$this->html .= "<a href=\"#\" onclick=\"return windowPopupAjax('$linkFull', 'get', '".$this->getIdValue()."', '$linkReload')\">".tg('Add new item')."</a>\n";
+				$this->html .= "<a href=\"#\" onclick=\"return windowPopupAjax('$linkFull', 'closeReplacesSelect', '".$this->getIdValue()."', '$linkReload')\">".tg('Add new item')."</a>\n";
 			}
 		}
 	}

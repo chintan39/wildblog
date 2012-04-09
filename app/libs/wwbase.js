@@ -193,19 +193,30 @@ ajaxPrepend = function (link, useMethod, resultContainer) {
 /**
  * Use Ajax to sent form data and display message in messageContainer.
  */
-ajaxFormMessage = function (form) {
+ajaxSendFormDisplayMessage = function (form) {
 	new Ajax.Request(form.action, {
 		method: form.method,
 		parameters: form.serialize(true),
 		onSuccess: function(transport) {
-			var response = transport.responseText || "Form sent OK.";
-			messageContainer = $('ajaxMessages');
-			if (messageContainer)
-				messageContainer.update(response);
-			alert("Success! \n\n" + response);
+			var response = transport.responseText.evalJSON();
+			if (response['form_result'] == 'OK') {
+				if (response['redirect'])
+					window.location.href = response['redirect'];
+				else {
+					window.location.reload();
+					scroll(0,0);
+				}
+			} else if (response['form_result'] == 'ERROR') {
+				messageContainer = $(form.id + '_messagesContainer');
+				if (messageContainer) {
+					messageContainer.innerHTML = response['messages'].join('<br />');
+					messageContainer.addClassName('error');
+				}
+			}
 		},
 		onFailure: function() { alert('Something went wrong...') }
 	});
+	return false;
 }
 
 /**
@@ -254,12 +265,11 @@ ajaxUpdateSelectBox = function (link, useMethod, resultContainer) {
 /**
  * Opens a new window and defines what should happen when window is closed.
  * @param _resultAction action called after window is closed. 
- *        Possible values: 'replace', 'updateSelect'
+ *        Possible values: 'closeReplacesSelect', 'updateSelect', 'closeDoesNothing'
  * Example usage: 
- * <a href="windowPopupAjax('/my/link', 'get', 'contId', 'replace')">add new item</a>
- * <a href="windowPopupAjax('/my/jsonvalues', 'get', 'selectId', 'updateSelect')">add new item</a>
+ * <a href="windowPopupAjax('/blog/new', 'resultReplacesSelect', 'contId', 'actionJSONListing')">add new item</a>
  */
-windowPopupAjax = function (_link, _method, _resultContainer, _resultLink) {
+windowPopupAjax = function (_link, _resultAction, _resultContainer, _resultLink) {
 	var win = new Window({
 			className: 'bluelighting', 
 			title: 'title', 
@@ -267,11 +277,40 @@ windowPopupAjax = function (_link, _method, _resultContainer, _resultLink) {
 			url: _link, 
 			showEffectOptions: {duration:1.5}
 	}); 
-	win.setCloseCallback(function() {
-			$('ajax_loader').show()
-			ajaxReplaceSelect(_resultLink, 'get', _resultContainer, null);
-			return true;
-	});
+	if (!_resultAction) _resultAction = 'closeDoesNothing';
+	switch (_resultAction) {
+		default:
+		case 'closeDoesNothing':
+			break;
+		case 'closeReplacesSelect':
+			win.setCloseCallback(function() {
+				$('ajax_loader').show()
+				ajaxReplaceSelect(_resultLink, 'get', _resultContainer, null);
+				return true;
+			});
+			break;
+	}
+	win.showCenter(true);
+	return false;
+	
+}
+
+windowPopupAjaxGetContent = function (_link, _resultAction, _resultContainer, _resultLink) {
+	var win = new Window({
+			className: 'bluelighting', 
+			title: 'title', 
+			width:600, height:500, 
+			showEffectOptions: {duration:1.5}
+	}); 
+	new Ajax.Request(_link,
+	  {
+		method:'get',
+		onSuccess: function(transport){
+		  win.getContent().innerHTML = transport.responseText || "no response text";
+		  alert("Success! \n\n" + response);
+		},
+		onFailure: function(){ alert('Something went wrong...') }
+	  });
 	win.showCenter(true);
 	return false;
 	

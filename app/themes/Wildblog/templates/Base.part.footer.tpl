@@ -63,7 +63,8 @@
   </div><!-- footer -->
   <div id="footer-copy">
 	<div class="float-left">
-		Honza Horák, <a href="http://www.wild-web.eu" title="wild-web">wild-web.eu</a> &copy; {$now|date_format:"%Y"} 
+		Honza Horák, <a href="http://www.wild-web.eu" title="wild-web">wild-web.eu</a> &copy; {$now|date_format:"%Y"},
+		{require file='part.adminLogin'}
 	</div><!-- left -->
 	<div class="float-right">
 		<a href="http://validator.w3.org/check?uri=referer" title="Tyto stránky jsou validní podle XHTML 1.0.">

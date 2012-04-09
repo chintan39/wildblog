@@ -61,8 +61,6 @@ class DefaultTheme extends AbstractTheme {
 			'Base.part.footer',
 			),
 		'Base.sitelinks' => array(
-			'Base.part.header', 
-			'Base.part.footer',
 			),
 		'Base.sitemap' => array(
 			'Base.part.header', 

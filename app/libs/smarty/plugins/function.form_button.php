@@ -46,22 +46,26 @@
  * @param    array
  * @param    Smarty
  * @return   string
+ * @todo	 This shouldn't be inside smarty, move it to unique object.
  */
 function smarty_function_form_button($params, &$smarty)
 {
 	$output = "";
 	$button = $params['button'];
+	$sendAjax = isset($params['sendAjax']) ? $params['sendAjax'] : false;
+	$textChange = "";
+	$onclick = "return " . ($sendAjax ? "ajaxSendFormDisplayMessage(this.form);" : "changeTextAndDisable(this, '" . tg("Sending...") . "');");
 	switch ($button["type"]) {
 		case Form::FORM_BUTTON_SAVE: 
-			$onclick = " onclick=\"return changeTextAndDisable(this, '" . tg("Sending...") . "');\"";
+			$onclick = " onclick=\"$onclick\"";
 			$output .= "<input type=\"submit\" class=\"button positive save\" id=\"form_" . $button["name"] . "\" name=\"" . $button["name"] . "\" value=\"" . tg($button["value"]) . "\"$onclick /> ";
 			break;
 		case Form::FORM_BUTTON_SUBMIT: 
-			$onclick = " onclick=\"return changeTextAndDisable(this, '" . tg("Sending...") . "');\"";
+			$onclick = " onclick=\"$onclick\"";
 			$output .= "<input type=\"submit\" class=\"button positive submit\" id=\"form_" . $button["name"] . "\" name=\"" . $button["name"] . "\" value=\"" . tg($button["value"]) . "\"$onclick /> ";
 			break;
 		case Form::FORM_BUTTON_SEND: 
-			$onclick = " onclick=\"return changeTextAndDisable(this, '" . tg("Sending...") . "');\"";
+			$onclick = " onclick=\"$onclick\"";
 			$output .= "<input type=\"submit\" class=\"button positive send\" id=\"form_" . $button["name"] . "\" name=\"" . $button["name"] . "\" value=\"" . tg($button["value"]) . "\"$onclick /> ";
 			break;
 		case Form::FORM_BUTTON_CANCEL: 
@@ -73,7 +77,7 @@ function smarty_function_form_button($params, &$smarty)
 			$output .= "<input type=\"submit\" class=\"button negative clear\" id=\"form_" . $button["name"] . "\" name=\"" . $button["name"] . "\" value=\"" . tg($button["value"]) . "\" $onclick/> ";
 			break;
 		case Form::FORM_BUTTON_SAVE_AS: 
-			$onclick = " onclick=\"this.form.action='{$button['action']}'; if (confirm('".tg('This will create another similar item. Are you sure to continue?')."')) { return changeTextAndDisable(this, '" . tg("Sending...") . "'); } else { return false; }\"";
+			$onclick = " onclick=\"this.form.action='{$button['action']}'; if (confirm('".tg('This will create another similar item. Are you sure to continue?')."')) { $onclick } else { return false; }\"";
 			$output .= "<input type=\"submit\" class=\"button saveas clear\" id=\"form_" . $button["name"] . "\" name=\"" . $button["name"] . "\" value=\"" . tg($button["value"]) . "\"$onclick /> ";
 			break;
 		default: break;

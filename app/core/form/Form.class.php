@@ -40,6 +40,7 @@
  * @var <bool> $noRedirect No redirect after submiting
  * @var <array> $actionAccomplished form has been sent
  * @var <string> $saveAsAction Action to redirect before sending when pressed 'save as' button
+ * @var <string> $sendAjax Set to true if form should be send with ajax
  * @see Restrictions.class.php
  */
 class Form {
@@ -111,6 +112,7 @@ class Form {
 	var $displayFormOnAccomplished = true;
 	var $allowDependencies = array(); // TODO: allow to add items in selector
 	var $saveAsAction=false;
+	var $sendAjax=false;
 	
 	/**
 	 * Constructor, first timestamp will be set.
@@ -284,6 +286,8 @@ class Form {
 			'formHasCompulsoryFields' => $this->getFormHasCompulsoryFields(),
 			'displayForm' => !$this->actionAccomplished || $this->displayFormOnAccomplished,
 			'messagesFromBus' => MessageBus::popMessages($this->identifier),
+			'identifier' => $this->identifier,
+			'sendAjax' => $this->sendAjax,
 			);
 	}
 	
@@ -562,6 +566,14 @@ class Form {
 		return $action == self::FORM_BUTTON_CANCEL;
 	}
 	
+	private function redirect($link) {
+		if ($this->sendAjax) {
+			echo json_encode(array('form_result' => 'OK', 'redirect' => $link));
+			Request::finish();
+		}
+		return Request::redirect($link);
+	}	
+	
 	/**
 	 * Handling the form is done as follows:
 	 * 1) get values from request
@@ -604,14 +616,14 @@ class Form {
 					if (isset($this->req["form_action"]) && $this->req["form_action"] && array_key_exists($this->req["form_action"], $this->alternativeActions)) {
 						$action = $this->alternativeActions[$this->req["form_action"]];
 						if ($action["item"]) {
-							Request::redirect(Request::getLinkItem($action["package"], $action["controller"], $action["method"], $action["item"]));
+							$this->redirect(Request::getLinkItem($action["package"], $action["controller"], $action["method"], $action["item"]));
 						} else {
-							Request::redirect(Request::getLinkSimple($action["package"], $action["controller"], $action["method"]));
+							$this->redirect(Request::getLinkSimple($action["package"], $action["controller"], $action["method"]));
 						}
 					
 					// default action is used (button is specified)
 					} elseif ($actionAfterHandling && isset($actionAfterHandling[$action])) {
-						Request::redirect(Request::getLinkItem(
+						$this->redirect(Request::getLinkItem(
 							$actionAfterHandling[$action]['package'], 
 							$actionAfterHandling[$action]['controller'], 
 							$actionAfterHandling[$action]['action'], 
@@ -621,13 +633,13 @@ class Form {
 					// default action is used (button is not specified)
 					} elseif ($actionAfterHandling && isset($actionAfterHandling['all'])) {
 						if (isset($actionAfterHandling['all']['args'])) {
-							Request::redirect(Request::getLinkSimple(
+							$this->redirect(Request::getLinkSimple(
 								$actionAfterHandling['all']['package'], 
 								$actionAfterHandling['all']['controller'], 
 								$actionAfterHandling['all']['action'], 
 								array_merge(array('accomplished' => false), $actionAfterHandling['all']['args'])));
 						} else {
-							Request::redirect(Request::getLinkItem(
+							$this->redirect(Request::getLinkItem(
 								$actionAfterHandling['all']['package'], 
 								$actionAfterHandling['all']['controller'], 
 								$actionAfterHandling['all']['action'], 
@@ -637,22 +649,33 @@ class Form {
 						
 					// use the same action
 					} else {
-						Request::redirect(Request::getSameLink(array('accomplished' => false, '_pred_' => null)));
+						if ($this->sendAjax)
+							$this->redirect('');
+						else
+							$this->redirect(Request::getSameLink(array('accomplished' => false, '_pred_' => null)));
 					}
 				}
 			} else {
+				if ($this->sendAjax) {
+					$allMessages = array();
+					foreach (array('errors', 'warnings') as $type)
+						foreach ($this->messages[$type] as $messages)
+							$allMessages = array_merge($allMessages, $messages);
+					echo json_encode(array('form_result' => 'ERROR', 'messages' => $allMessages));
+					exit;
+				}
 				$this->updateValuesFromReq();
 			}
 		} else {
 			if ($this->getCancelIsSent() && $actionAfterHandling && isset($actionAfterHandling['cancel'])) {
 				if (isset($actionAfterHandling['cancel']['args'])) {
-					Request::redirect(Request::getLinkSimple(
+					$this->redirect(Request::getLinkSimple(
 						$actionAfterHandling['cancel']['package'], 
 						$actionAfterHandling['cancel']['controller'], 
 						$actionAfterHandling['cancel']['action'], 
 						array_merge(array('accomplished' => false), $actionAfterHandling['cancel']['args'])));
 				} else {
-					Request::redirect(Request::getLinkItem(
+					$this->redirect(Request::getLinkItem(
 						$actionAfterHandling['cancel']['package'], 
 						$actionAfterHandling['cancel']['controller'], 
 						$actionAfterHandling['cancel']['action'], 
@@ -967,6 +990,22 @@ class Form {
 	 */
 	private function storeAlternativeAction($key) {
 		$_SESSION[$this->identifier . "_action"] = $key;
+	}
+
+	/**
+	 * Sets using Ajax for sending data ON/OFF
+	 * @param bool $sendAjax
+	 */
+	public function setSendAjax($sendAjax) {
+		$this->sendAjax = $sendAjax;
+	}
+
+	/**
+	 * Returns true if Ajax is used for sending data
+	 * @return bool $sendAjax
+	 */
+	public function getSendAjax() {
+		return $this->sendAjax;
 	}
 	
 	/**

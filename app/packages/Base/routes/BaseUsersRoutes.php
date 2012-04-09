@@ -38,6 +38,11 @@ class BaseUsersRoutes extends AbstractDefaultRoutes {
 			->setBranch(Themes::BACK_END)
 			->setTemplate('login');
 
+		Router::registerAction($this, 'actionSimpleLogin')
+			->addRuleUrl('admin-simple/$')
+			->setBranch(Themes::BACK_END)
+			->setTemplate('simpleLogin');
+
 		Router::registerAction($this, 'actionLogout')
 			->addRuleUrl('admin/logout/$')
 			->setBranch(Themes::BACK_END);
