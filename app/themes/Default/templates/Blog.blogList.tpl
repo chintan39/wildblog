@@ -18,7 +18,7 @@
 	<a href="{$post->link}#comment_add">add comment</a>
 	<a href="{$post->link}#comments">view posted comments ({$post->commentsCount})</a>
 	</div>
-	{require package=Base file='part.editItem' itemPackage=Blog itemController=Posts itemAction=actionEdit itemItem=$post}
+	{require package=Base file='part.editItem' itemPackage=Blog itemController=Posts itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$post}
 	</div>
 {/foreach}
 {else}

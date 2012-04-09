@@ -5,6 +5,7 @@ a.increase {
 	margin-right: 5px;
 }
 
+div.admin_edit_popup,
 div.admin_edit {
 	margin: 0px;
 	padding: 0px;
@@ -16,6 +17,11 @@ div.admin_edit {
 	background: #FFFFFF;
 }
 
+div.admin_edit_popup {
+	right: 50px; 
+}
+
+div.admin_edit_popup a,
 div.admin_edit a {
 	margin: 0px;
 	padding: 0px;
@@ -28,12 +34,14 @@ div.admin_edit a {
 	border: 1px solid #ffffff;
 }
 
+div.admin_edit_popup a img,
 div.admin_edit a img {
 	margin: 0px;
 	padding: 0px;
 	border: 5px solid #CC6600;
 }
 
+div.admin_edit_popup a:hover img,
 div.admin_edit a:hover img {
 	border-color: #FF6600;
 }

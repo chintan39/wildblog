@@ -5,7 +5,7 @@
 
 	<h1>{$article->title}</h1>
 	{$article->text}
-	{require package=Base file='part.editItem' itemPackage=Basic itemController=Articles itemAction=actionEdit itemItem=$article}
+	{require package=Base file='part.editItem' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
 
 <!-- AddThis Button BEGIN -->
 <div class="addthis_toolbox addthis_default_style">

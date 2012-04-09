@@ -122,18 +122,26 @@ class AbstractDefaultController extends AbstractBasicController{
 	 *
 	 */
 	public function actionSimpleEdit($args) {
-		return $this->actionEdit($args);
+		return $this->actionEditSelf($args, true);
+	}	
+
+	/**
+	 *
+	 */
+	public function actionEdit($args) {
+		return $this->actionEditSelf($args, false);
 	}	
 	
 	
 	/**
 	 *
 	 */
-	public function actionEdit($args) {
+	public function actionEditSelf($args, $sendAjax=false) {
 		
 		$item = $args;
 		$this->actionEditAdjustItem($item);
 		$form = new Form();
+		$form->setSendAjax($sendAjax);
 		$form->setUseTabs(true);
 		$form->setIdentifier(strtolower($this->name));
 
@@ -148,7 +156,7 @@ class AbstractDefaultController extends AbstractBasicController{
 		$form->setDescription($this->getFormDescription());
 		
 		// handeling the form request
-		$form->handleRequest($this->getEditActionsAfterHandlin());
+		$form->handleRequest($this->getEditActionsAfterHandlin(), tg('Item has been saved.'));
 		$this->assign('form', $form->toArray());
 
 		$this->assign('title', tg('Edit ' . strtolower($this->name)));
