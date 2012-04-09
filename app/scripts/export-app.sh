@@ -11,10 +11,15 @@ TODAY=`date '+%F'`
 NAMEDATE="${NAMEBASE}-${TODAY}"
 NAMEZIP="${NAMEDATE}.zip"
 EXPORTDIR="../exported/"
+TIMESTAMPFILE="app/export-${TODAY}"
 
 pushd .
 cd ../..
-echo "Cleaning ${EXPORTDIR}${NAMEDATE} and ${EXPORTDIR}${NAMEZIP} ..."
+echo "Project root is '`pwd`'"
+echo "Current branch:\n`git branch`"
+echo "Folder ${EXPORTDIR}${NAMEDATE} and ${EXPORTDIR}${NAMEZIP} will be cleaned"
+read -p "Is the information above correct? (y/n): "
+if [ "x$REPLY" != "xy" -a "x$REPLY" != "xY" ] ; then popd ; exit 1 ; fi
 rm -rf "${EXPORTDIR}${NAMEDATE}" "${EXPORTDIR}${NAMEZIP}"
 echo "Exporting app ..."
 git archive --format zip --output="${EXPORTDIR}${NAMEZIP}" master 
@@ -32,6 +37,7 @@ if [ "x$1" != "x" ] ; then
 		cp "${EXPORTDIR}${NAMEDATE}/$file" "${EXPORTDIR}${NAMEDATE}-$1/$file"
 	done
 fi
+touch "${EXPORTDIR}${NAMEDATE}/${TIMESTAMPFILE=}"
 echo "==================================================="
 echo "Whole tree exported to ../../${EXPORTDIR}${NAMEDATE}"
 echo "Packed whole tree exported to ../../${EXPORTDIR}${NAMEZIP}"
