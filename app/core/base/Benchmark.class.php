@@ -33,17 +33,45 @@ class Benchmark {
 	 * Constructor, first timestamp will be set.
 	 */
 	public function __construct() {
-		if (Config::Get('DEBUG_MODE')) {
+		if (self::isOn()) {
 			self::$profiler = new PhpQuickProfiler(PhpQuickProfiler::getMicroTime());
 			Console::log('Begin logging data');
 		}
 	}
 	
 	/**
+	 * Is benchmark on?
+	 */
+	static public function isOn() {
+		return (Config::Get('DEBUG_MODE') || $_SESSION['benchmark']);
+	}
+	
+	/**
+	 * Start benchmark tracking
+	 */
+	static public function startTracking() {
+		$_SESSION['benchmark'] = true;
+	}
+	
+	/**
+	 * Is benchmark tracking?
+	 */
+	static public function isTracking() {
+		return isset($_SESSION['benchmark']);
+	}
+	
+	/**
+	 * Stop benchmark tracking
+	 */
+	static public function stopTracking() {
+		unset($_SESSION['benchmark']);
+	}
+	
+	/**
 	 * Sets the checkpoint to this point.
 	 */
 	static public function log($string) {
-		if (Config::Get('DEBUG_MODE')) {
+		if (self::isOn()) {
 			Console::log($string);
 			Console::logMemory();
 		}
@@ -54,7 +82,7 @@ class Benchmark {
 	 * Sets the checkpoint to this point.
 	 */
 	static public function logMemory($string, $name='') {
-		if (Config::Get('DEBUG_MODE')) {
+		if (self::isOn()) {
 			Console::logMemory($string, $name);
 			Console::logMemory();
 		}
@@ -65,7 +93,7 @@ class Benchmark {
 	 * Sets the checkpoint to this point.
 	 */
 	static public function logSpeed($string) {
-		if (Config::Get('DEBUG_MODE')) {
+		if (self::isOn()) {
 			Console::logSpeed($string);
 		}
 	}
@@ -75,14 +103,14 @@ class Benchmark {
 	 * Log SQL query.
 	 */
 	static public function logQuery($string) {
-		if (Config::Get('DEBUG_MODE')) {
+		if (self::isOn()) {
 			Console::logQuery($string);
 		}
 	}
 	
 	
 	static public function getDisplay() {
-		if (!Config::Get('DEBUG_MODE')) {
+		if (!self::isOn()) {
 			return '';
 		}
 		foreach (Environment::$smarty->get_template_vars() as $k => $v) {

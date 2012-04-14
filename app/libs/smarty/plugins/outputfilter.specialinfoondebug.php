@@ -21,9 +21,9 @@
  */
 function smarty_outputfilter_specialinfoondebug($source, &$smarty)
 {
-	if (Config::Get("DEBUG_MODE")) {
+	if (Benchmark::isOn()) {
 		
-		if (isset(Request::$get['benchmark'])) {
+		if (isset(Request::$get['benchmark']) || Benchmark::isTracking()) {
 			$source = preg_replace("/<\/body>/", Benchmark::getDisplay() . "</body>", $source);
 		}
 		

@@ -238,6 +238,10 @@ class Request {
 				$url['path'][] = $p;
 			}
 		}
+		if (isset($_GET['stopbenchmark']))
+			Benchmark::stopTracking();
+		if (isset($_GET['startbenchmark']))
+			Benchmark::startTracking();
 		return $url;
 	}
 	
