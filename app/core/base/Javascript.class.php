@@ -451,13 +451,13 @@ class Javascript {
 			showEffectOptions: {duration:1.5}
 			}); 
 		win.setCloseCallback(function() {
-			$('ajax_loader').show()
+			ajaxLoaderShow()
 			new Ajax.Request('$linkReady', {
 			  method:'get',
 			  onSuccess: function(response) {
 				// Handle the response content...
 				$selectorInit
-				$('ajax_loader').hide()
+				ajaxLoaderHide()
 			  }
 			 });
 			 return true;});

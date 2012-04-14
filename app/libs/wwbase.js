@@ -85,6 +85,20 @@ blank = {
 }
 
 
+ajaxLoaderShow = function() {
+	var elem = $('ajax_loader');
+	if (elem)
+		elem.show();
+}
+
+
+ajaxLoaderHide = function() {
+	var elem = $('ajax_loader');
+	if (elem)
+		elem.hide();
+}
+
+
 /**
  * Returns new ID, that is unused yet.
  */
@@ -115,6 +129,7 @@ changeTextAndDisable = function (elem, text) {
 		elem.value = text;
 	}
 	if (!elem.form.__sent) {
+		ajaxLoaderShow();
 		elem.form.__sent=1; 
 		return true;
 	} else {
@@ -194,19 +209,22 @@ ajaxPrepend = function (link, useMethod, resultContainer) {
  * Use Ajax to sent form data and display message in messageContainer.
  */
 ajaxSendFormDisplayMessage = function (form) {
+	ajaxLoaderShow();
 	new Ajax.Request(form.action, {
 		method: form.method,
 		parameters: form.serialize(true),
 		onSuccess: function(transport) {
 			var response = transport.responseText.evalJSON();
 			if (response['form_result'] == 'OK') {
+				Windows.closeAll();
 				if (response['redirect'])
 					window.location.href = response['redirect'];
 				else {
 					window.location.reload();
-					scroll(0,0);
+					//scroll(0,0);
 				}
 			} else if (response['form_result'] == 'ERROR') {
+				ajaxLoaderHide();
 				messageContainer = $(form.id + '_messagesContainer');
 				if (messageContainer) {
 					messageContainer.innerHTML = response['messages'].join('<br />');
@@ -242,7 +260,7 @@ ajaxReplaceSelect = function (link, useMethod, resultSelectBox, params) {
 				el.innerHTML = responseItems[i]['text'];
 				selectBox.appendChild(el);
 			}
-			$('ajax_loader').hide()
+			ajaxLoaderHide()
 		},
 		onFailure: function() { alert('Something went wrong...') }
 	});
@@ -284,7 +302,7 @@ windowPopupAjax = function (_link, _resultAction, _resultContainer, _resultLink)
 			break;
 		case 'closeReplacesSelect':
 			win.setCloseCallback(function() {
-				$('ajax_loader').show()
+				ajaxLoaderShow()
 				ajaxReplaceSelect(_resultLink, 'get', _resultContainer, null);
 				return true;
 			});
@@ -302,7 +320,7 @@ windowPopupAjaxGetContent = function (_link, _resultAction, _resultContainer, _r
 			width:600, height:500, 
 			showEffectOptions: {duration:1.5}
 	}); 
-	$('ajax_loader').show();
+	ajaxLoaderShow();
 	new Ajax.Request(_link,
 	  {
 		method:'get',
@@ -318,7 +336,7 @@ windowPopupAjaxGetContent = function (_link, _resultAction, _resultContainer, _r
 				win.setSize(size[1], size[2]);
 			}
 		  win.getContent().innerHTML = content; 
-		  $('ajax_loader').hide();
+		  ajaxLoaderHide();
 		  win.showCenter(true);
 		  //alert("Success! \n\n" + response);
 		},

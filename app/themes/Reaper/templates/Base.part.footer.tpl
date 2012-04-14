@@ -80,5 +80,7 @@
 <!-- wrap ends here -->
 </div>
 
+<img src="{$commonImagesPath}ajax_loader.gif" id="ajax_loader" style="display: none;" alt="" />
+
 {require file='part.footer' theme=Common}
 

@@ -116,6 +116,8 @@ Jan Horák, <a href="http://www.wild-web.eu" title="wild-web">wild-web.eu</a>
 
 </div><!-- page -->
 
+<img src="{$commonImagesPath}ajax_loader.gif" id="ajax_loader" style="display: none;" alt="" />
+
 {require file='part.htmlAreas' package=Basic}
 
 {require file='part.footer' theme=Common}

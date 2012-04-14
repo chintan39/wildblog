@@ -22,7 +22,7 @@
 					
 					{require file='part.help'}
 				</div>
-			</div>			
+			</div>
 			<img src="{$commonImagesPath}ajax_loader.gif" id="ajax_loader" style="display: none;" alt="" />
 			<div id="lower">
 				Powered by <a href="http://code.google.com/p/wildblog/" title="wild-blog">wildblog project</a>,
