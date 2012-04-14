@@ -280,6 +280,39 @@ ajaxUpdateSelectBox = function (link, useMethod, resultContainer) {
 }
 
 
+getWindowParams = function(_windowParams, content) {
+	if (!_windowParams)
+		_windowParams = {};
+	if (!_windowParams['width'])
+		_windowParams['width'] = 600;
+	if (!_windowParams['height'])
+		_windowParams['height'] = 500;
+	if (!_windowParams['title'])
+		_windowParams['title'] = '';
+	
+	if (!content)
+		return _windowParams;
+	
+	content = content.replace('Dialog.closeInfo()', 'Windows.closeAll()');
+	var title = content.match(/##title=([^#]+)##/);
+	if (title)
+		_windowParams['title'] = title[1];
+	var size = content.match(/##size=([0-9]+)x([0-9]+)##/);
+	if (size) {
+		_windowParams['width'] = size[1];
+		_windowParams['height'] = size[2];
+	}
+	return _windowParams;
+}
+
+applyWindowParams = function (_windowParams, win) {
+	win.setTitle(_windowParams['title']);
+	if (_windowParams['width'] == 'max')
+		win.maximize();
+	else
+		win.setSize(_windowParams['width'], _windowParams['height']);
+}
+
 /**
  * Opens a new window and defines what should happen when window is closed.
  * @param _resultAction action called after window is closed. 
@@ -287,14 +320,14 @@ ajaxUpdateSelectBox = function (link, useMethod, resultContainer) {
  * Example usage: 
  * <a href="windowPopupAjax('/blog/new', 'resultReplacesSelect', 'contId', 'actionJSONListing')">add new item</a>
  */
-windowPopupAjax = function (_link, _resultAction, _resultContainer, _resultLink) {
+windowPopupAjax = function (_link, _resultAction, _resultContainer, _resultLink, _windowParams) {
+	_windowParams = getWindowParams(_windowParams);
 	var win = new Window({
-			className: 'bluelighting', 
-			title: 'title', 
-			width:600, height:500, 
+			className: 'alphacube', 
 			url: _link, 
 			showEffectOptions: {duration:1.5}
 	}); 
+	applyWindowParams(_windowParams, win);
 	if (!_resultAction) _resultAction = 'closeDoesNothing';
 	switch (_resultAction) {
 		default:
@@ -313,11 +346,10 @@ windowPopupAjax = function (_link, _resultAction, _resultContainer, _resultLink)
 	
 }
 
-windowPopupAjaxGetContent = function (_link, _resultAction, _resultContainer, _resultLink) {
+windowPopupAjaxGetContent = function (_link, _resultAction, _resultContainer, _resultLink, _windowParams) {
+	_windowParams = getWindowParams(_windowParams);
 	var win = new Window({
 			className: 'alphacube', 
-			title: '', 
-			width:600, height:500, 
 			showEffectOptions: {duration:1.5}
 	}); 
 	ajaxLoaderShow();
@@ -327,18 +359,11 @@ windowPopupAjaxGetContent = function (_link, _resultAction, _resultContainer, _r
 		parameters: { __request_type__: 'ajax' },
 		onSuccess: function(transport) {
 			var content = transport.responseText || "no response text";
-			content = content.replace('Dialog.closeInfo()', 'Windows.closeAll()');
-			var title = content.match(/##title=([^#]+)##/);
-			if (title)
-				win.setTitle(title[1]);
-			var size = content.match(/##size=([0-9]+)x([0-9]+)##/);
-			if (size) {
-				win.setSize(size[1], size[2]);
-			}
-		  win.getContent().innerHTML = content; 
-		  ajaxLoaderHide();
-		  win.showCenter(true);
-		  //alert("Success! \n\n" + response);
+			_windowParams = getWindowParams(_windowParams, content);
+			applyWindowParams(_windowParams, win);
+		    win.getContent().innerHTML = content; 
+		    ajaxLoaderHide();
+		    win.showCenter(true);
 		},
 		onFailure: function(){ alert('Something went wrong...') }
 	  });

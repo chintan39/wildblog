@@ -25,6 +25,6 @@
 
 {generate_paging collection=$blogposts}
 
-{require package=Base file='part.addNewItem' itemPackage=Blog itemController=Posts itemAction=actionNew}
+{require package=Base file='part.addNewItem' itemPackage=Blog itemController=Posts itemAction=actionNew itemActionSimple=actionSimpleNew}
 
 {require file='part.footer'}

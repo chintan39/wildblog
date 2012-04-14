@@ -17,7 +17,7 @@
 
 {generate_paging collection=$news}
 
-{require package=Base file='part.addNewItem' itemPackage=Basic itemController=News itemAction=actionNew}
+{require package=Base file='part.addNewItem' itemPackage=Basic itemController=News itemAction=actionNew itemActionSimple=actionSimpleNew}
 
 {require file='part.footer'}
 

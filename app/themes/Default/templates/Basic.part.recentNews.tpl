@@ -11,5 +11,5 @@
 {/if}
 {/strip}
 
-{require package=Base file='part.addNewItem' itemPackage=Basic itemController=News itemAction=actionNew}
+{require package=Base file='part.addNewItem' itemPackage=Basic itemController=News itemAction=actionNew itemActionSimple=actionSimpleNew}
 </div>

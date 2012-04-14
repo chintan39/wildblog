@@ -79,6 +79,6 @@
 </div><!-- lower -->
 </div><!-- page -->
 
-<img src="{$commonImagesPath}ajax_loader.gif" id="ajax_loader" style="display: none;" alt="" />
+<img src="{$commonImagesPath}ajax_loader_threedots.gif" id="ajax_loader" style="display: none;" alt="" />
 
 {require file='part.footer' theme=Common}

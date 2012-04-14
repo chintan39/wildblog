@@ -13,7 +13,7 @@
 	<p>{tg}No galleries found.{/tg}</p>
 {/if}
 
-{require package=Base file='part.addNewItem' itemPackage=Gallery itemController=Galleries itemAction=actionNew}
+{require package=Base file='part.addNewItem' itemPackage=Gallery itemController=Galleries itemAction=actionNew itemActionSimple=actionSimpleNew}
 
 {generate_paging collection=$galleriesList}
 
