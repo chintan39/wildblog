@@ -30,6 +30,11 @@ input, textarea, button {
 	background: #ffffff;
 }
 
+img {
+	border: none;
+}
+
+
 input.submit, button {
 	width: auto;
 	height:30px;
@@ -65,10 +70,6 @@ input.checkbox, button {
  * Cleanform updates (overrides basic cleanform definition)
  */
 
-form.cleanform {
-	border:solid 2px #b7ddf2;
-	background:#f3f3f3;
-}
 
 form.cleanform div.header {
 	border-bottom:solid 1px #CCCCCC;
@@ -374,6 +375,11 @@ div.list a {
 	width: 80%;
 	line-height: 200%;
 }
+
+#content img {
+	border: 5px #cccccc solid;
+}
+
 	
 #content h2 a {
 	color: #000000;

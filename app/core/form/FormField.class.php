@@ -417,9 +417,7 @@ class FormFieldSelect extends FormField {
 		
 		if ($this->meta->getLinkNewItem()) {
 			// window selector
-			Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'windows/javascripts/window.js');
-			Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/default.css'); 
-			Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/lighting.css');
+			Javascript::addWindows();
 			$selectorWindowButton = Javascript::addSelectorWindowButton($this, tg('Add a new item'));
 		} else {
 			$selectorWindowButton = '';

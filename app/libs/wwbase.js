@@ -297,21 +297,33 @@ windowPopupAjax = function (_link, _resultAction, _resultContainer, _resultLink)
 
 windowPopupAjaxGetContent = function (_link, _resultAction, _resultContainer, _resultLink) {
 	var win = new Window({
-			className: 'bluelighting', 
-			title: 'title', 
+			className: 'alphacube', 
+			title: '', 
 			width:600, height:500, 
 			showEffectOptions: {duration:1.5}
 	}); 
+	$('ajax_loader').show();
 	new Ajax.Request(_link,
 	  {
 		method:'get',
-		onSuccess: function(transport){
-		  win.getContent().innerHTML = transport.responseText || "no response text";
-		  alert("Success! \n\n" + response);
+		parameters: { __request_type__: 'ajax' },
+		onSuccess: function(transport) {
+			var content = transport.responseText || "no response text";
+			content = content.replace('Dialog.closeInfo()', 'Windows.closeAll()');
+			var title = content.match(/##title=([^#]+)##/);
+			if (title)
+				win.setTitle(title[1]);
+			var size = content.match(/##size=([0-9]+)x([0-9]+)##/);
+			if (size) {
+				win.setSize(size[1], size[2]);
+			}
+		  win.getContent().innerHTML = content; 
+		  $('ajax_loader').hide();
+		  win.showCenter(true);
+		  //alert("Success! \n\n" + response);
 		},
 		onFailure: function(){ alert('Something went wrong...') }
 	  });
-	win.showCenter(true);
 	return false;
 	
 }

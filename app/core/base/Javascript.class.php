@@ -429,7 +429,7 @@ class Javascript {
 	public static function addWindows() {
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'windows/javascripts/window.js');
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/default.css'); 
-		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/lighting.css');
+		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/alphacube.css');
 	}
 	
 	
