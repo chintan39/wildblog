@@ -169,6 +169,16 @@ class Request {
 			Environment::$smarty->assign('thisLink', self::getSameLink());
 			Environment::$smarty->assign('requestLink', Request::$url['request']);
 			Environment::$smarty->assign('requestIsAjax', self::isAjax());
+			
+			// benchmark tracking
+			if (isset(Request::$get['stopbenchmark']))
+				Benchmark::stopTracking();
+			if (isset(Request::$get['startbenchmark']))
+				Benchmark::startTracking();
+			Environment::$smarty->assign('benchmarkIsTracking', Benchmark::isTracking());
+			Environment::$smarty->assign('benchmarkChangeTracking', Benchmark::isTracking() ? 'stopbenchmark' : 'startbenchmark');
+
+			// date info
 			$today = date('j. XXX Y');
 			$today = str_replace('XXX', Utilities::monthNameLong((int)date('m')), $today);
 			Environment::$smarty->assign('today', $today);
@@ -238,10 +248,6 @@ class Request {
 				$url['path'][] = $p;
 			}
 		}
-		if (isset($_GET['stopbenchmark']))
-			Benchmark::stopTracking();
-		if (isset($_GET['startbenchmark']))
-			Benchmark::startTracking();
 		return $url;
 	}
 	

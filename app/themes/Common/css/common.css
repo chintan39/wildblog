@@ -5,45 +5,56 @@ a.increase {
 	margin-right: 5px;
 }
 
-div.admin_edit_popup,
 div.admin_edit {
 	margin: 0px;
 	padding: 0px;
-	width: 52px;
-	height: 52px;
+	width: 36px;
+	height: 36px;
 	position: absolute; 
 	top: 0px; 
+	right: 0px;
+	-moz-box-shadow: 4px 4px 5px #000;
+	-webkit-box-shadow: 4px 4px 5px #000;
+	box-shadow: 4px 4px 5px #000;
+}
+
+div.admin_edit.new {
 	left: 50%;
-	background: #FFFFFF;
 }
 
-div.admin_edit_popup {
-	right: 50px; 
-}
-
-div.admin_edit_popup a,
 div.admin_edit a {
 	margin: 0px;
 	padding: 0px;
-	width: 42px;
-	height: 42px;
-	position: absolute; 
-	top: 4px; 
-	left: 50%;
-	background: #ffffff;
-	border: 1px solid #ffffff;
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	background: #dddddd;
+	border-top: 2px solid #eeeeee;
+	border-right: 2px solid #cccccc;
+	border-bottom: 2px solid #cccccc;
+	border-left: 2px solid #eeeeee;
 }
 
-div.admin_edit_popup a img,
-div.admin_edit a img {
+div.admin_edit a img.admin_edit {
+	position: absolute;
+	top: 2px; 
+	left: 2px;
 	margin: 0px;
 	padding: 0px;
-	border: 5px solid #CC6600;
+	border: none !important;
 }
 
-div.admin_edit_popup a:hover img,
-div.admin_edit a:hover img {
-	border-color: #FF6600;
+div.admin_edit a:hover {
+	background: #e3e3e3;
+	border-top: 2px solid #cccccc;
+	border-right: 2px solid #eeeeee;
+	border-bottom: 2px solid #eeeeee;
+	border-left: 2px solid #cccccc;
+}
+
+div.admin_edit a:hover img.admin_edit {
+	top: 3px; 
+	left: 3px;
 }
 
 img#ajax_loader {
@@ -51,6 +62,102 @@ img#ajax_loader {
 	top: 50%;
 	left: 50%;
 	z-index: 1000;
+}
+
+
+/**
+ *------------------------------------------------
+ * adminBox 
+ *------------------------------------------------
+ */ 
+
+div#adminBox {
+	position: fixed;
+	background: #dc2f00;
+	border-bottom: 2px solid #a61f00;
+	border-left: 2px solid #a61f00;
+	border-top: 2px solid #a61f00;
+	width: 90px;
+	top: 25%;
+	right: 0px;
+	line-height: 60px;
+	height: 70px;
+	overflow: hidden;
+	-moz-border-radius: 10px 0px 0px 10px;
+	border-radius: 10px 0px 0px 10px;
+	font-size: 120%;
+	z-index: 1000;
+	-moz-box-shadow: -4px 4px 5px #000;
+	-webkit-box-shadow: -4px 4px 5px #000;
+	box-shadow: -4px 4px 5px #000;
+}
+
+div#adminBox:hover {
+	width: 350px;
+	height: auto;
+}
+
+div#adminBox a,
+div#adminBox h2 {
+	display: block;
+	width: 350px;
+	background-position: 16px center;
+	background-repeat: no-repeat;
+	padding-left: 90px;
+	text-align: left;
+	color: #ffffff;
+	text-decoration: none;
+	font-family:Tahoma, Arial, helvetica, sans-serif;
+}
+
+div#adminBox a:hover {
+	background-color: #ff5d31;
+	text-decoration: none;
+}
+
+div#adminBox h2.admin {
+	font-family:Tahoma, Arial, helvetica, sans-serif;
+	background-position: 13px center;
+	background-image: url("/media/.ico/64/wwlogo.png");
+	background-color: #c92b00;
+	border-bottom: 1px solid #ff5d31;
+	line-height: 70px;
+	height: 70px;
+	margin: 0px;
+}
+
+div#adminBox a.admin {
+	background-image: url("/media/.ico/48/settings.png");
+}
+
+div#adminBox a.dict {
+	background-image: url("/media/.ico/48/dictionary.png");
+}
+
+div#adminBox a.bench {
+	background-image: url("/media/.ico/48/chart.png");
+}
+
+div#adminBox a.logout {
+	background-image: url("/media/.ico/24/user_remove.png");
+	background-position: 18px center;
+	font-size: 90%;
+	line-height: 40px;
+}
+
+div#adminBox a.close:hover {
+	background-color: transparent;
+}
+
+div#adminBox a.close {
+	background-position: center center;
+	background-image: url("/media/.ico/24/remove.png");
+	position: absolute;
+	top: 18px;
+	left: 308px;
+	width: 24px;
+	height: 24px;
+	padding: 0px;
 }
 
 /**
