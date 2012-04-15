@@ -157,6 +157,27 @@ div#adminBox a.close {
 	padding: 0px;
 }
 
+table#translations tr td {
+	font-size: 140%;
+	line-height: 170%;
+}
+
+table#translations tr:hover {
+	background: #eeeeee;
+}
+
+table#translations td {
+	padding: 1px 4px;
+	text-align: left;
+}
+
+table#translations td a {
+	background: url("/media/.ico/24/edit.png") center center no-repeat;
+	width: 24px;
+	height: 24px;
+	display: block;
+}
+
 /**
  *------------------------------------------------
  * messages 

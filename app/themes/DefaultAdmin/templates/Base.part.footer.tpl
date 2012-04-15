@@ -31,4 +31,7 @@
 			</div>
 		</div>
 	</div>
+	
+<img src="{$commonImagesPath}ajax_loader_threedots.gif" id="ajax_loader" style="display: none;" alt="" />
+
 {require file='part.footer' theme=Common}

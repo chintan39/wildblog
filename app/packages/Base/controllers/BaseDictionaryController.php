@@ -62,7 +62,12 @@ class BaseDictionaryController extends AbstractDefaultController {
 		$model = new $this->model();
 		$this->urlDict = $model->loadUrlDict();
 	}
-	
+
+	private function addTranslation($template, $kind, $id, $result) {	
+		if (Permission::check(Permission::$ADMIN | Permission::$CONTENT_ADMIN)) {
+			Javascript::addTranslation($template, $kind, $id, $result);
+		}
+	}
 	
 	/**
 	 * Translate the text using the static vocabulary
@@ -70,9 +75,6 @@ class BaseDictionaryController extends AbstractDefaultController {
 	 * @return string translated text
 	 */
 	private function pureTranslate($text, $kind, $forceTheme=false) {
-		if (Config::Get('DEBUG_MODE')) {
-			Javascript::addTranslation($text, $kind);
-		}
 		if (trim($text) == '') {
 			return $text;
 		}
@@ -81,24 +83,41 @@ class BaseDictionaryController extends AbstractDefaultController {
 		}
 		if ($forceTheme) {
 			if (array_key_exists(Language::get($forceTheme), $this->urlDict) && array_key_exists($text, $this->urlDict[Language::get($forceTheme)])) {
-				return $this->urlDict[Language::get($forceTheme)][$text];
+				$this->addTranslation($text, $kind, $this->urlDict[Language::get($forceTheme)][$text]->id, $this->urlDict[Language::get($forceTheme)][$text]->text);
+				return $this->urlDict[Language::get($forceTheme)][$text]->text;
 			} else {
 				if (Config::Get("PROJECT_STATUS") == PROJECT_READY && Config::Get("BASE_DICTIONARY_ADD_ON_NO_ENTRY")) {
 					$this->addIfNeeded($text, BaseDictionaryModel::KIND_URL_PARTS);
-					$this->urlDict[Language::get($forceTheme)][$text] = $text;
+					$v = new stdClass;
+					$v->text=$text;
+					$v->id=null;
+					$this->urlDict[Language::get($forceTheme)][$text] = $v;
 				}
 				return $text;
 			}
 		}
 		if (array_key_exists($text, $this->dict[$kind])) {
-			return $this->dict[$kind][$text];
+			$this->addTranslation($text, $kind, $this->dict[$kind][$text]->id, $this->dict[$kind][$text]->text);
+			return $this->dict[$kind][$text]->text;
 		} else {
 			if (Config::Get("PROJECT_STATUS") == PROJECT_READY && Config::Get("BASE_DICTIONARY_ADD_ON_NO_ENTRY")) {
 				$this->addIfNeeded($text, $kind);
-				$this->dict[$kind][$text] = $text;
+				$v = new stdClass;
+				$v->text=$text;
+				$v->id=null;
+				$this->dict[$kind][$text] = $v;
 			}
 			return $text;
 		}
+	}
+	
+	
+	public function dictionaryEditLink() {
+		foreach ($this->dict[BaseDictionaryModel::KIND_GENERAL] as $k => $v) {
+			$link = Request::getLinkItem($this->package, $this->name, 'actionSimpleEdit', $v->id);
+			return preg_replace('/=[0-9]+$/', '=XXIDXX', $link);
+		}
+		throw new Exception('Directory is empty, which is not expected.');
 	}
 
 	

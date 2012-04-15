@@ -169,9 +169,13 @@ sessionTimer = function (message, timeout) {
  * and update element identified with $resultContainer.
  */
 ajaxReplace = function (link, useMethod, resultContainer) {
+	ajaxLoaderShow();
 	new Ajax.Updater(resultContainer, link, { 
 		method: useMethod,
-		parameters: { __request_type__: 'ajax' }
+		parameters: { __request_type__: 'ajax' },
+		onSuccess: function(transport) {
+			ajaxLoaderHide();
+		}
 	});
 	return false;
 }
@@ -182,10 +186,14 @@ ajaxReplace = function (link, useMethod, resultContainer) {
  * and update element identified with $resultContainer.
  */
 ajaxAppend = function (link, useMethod, resultContainer) {
+	ajaxLoaderShow();
 	new Ajax.Updater(resultContainer, link, { 
 		method: useMethod,
 		parameters: { __request_type__: 'ajax' },
-		insertion: 'bottom'
+		insertion: 'bottom',
+		onSuccess: function(transport) {
+			ajaxLoaderHide();
+		}
 	});
 	return false;
 }
@@ -196,10 +204,14 @@ ajaxAppend = function (link, useMethod, resultContainer) {
  * and update element identified with $resultContainer.
  */
 ajaxPrepend = function (link, useMethod, resultContainer) {
+	ajaxLoaderShow();
 	new Ajax.Updater(resultContainer, link, { 
 		method: useMethod,
 		parameters: { __request_type__: 'ajax' },
-		insertion: 'top'
+		insertion: 'top',
+		onSuccess: function(transport) {
+			ajaxLoaderHide();
+		}
 	});
 	return false;
 }
@@ -216,12 +228,12 @@ ajaxSendFormDisplayMessage = function (form) {
 		onSuccess: function(transport) {
 			var response = transport.responseText.evalJSON();
 			if (response['form_result'] == 'OK') {
-				Windows.closeAll();
-				if (response['redirect'])
+				//Windows.closeAll();
+				if (response['redirect'] != '')
 					window.location.href = response['redirect'];
 				else {
 					window.location.reload();
-					//scroll(0,0);
+					scroll(0,0);
 				}
 			} else if (response['form_result'] == 'ERROR') {
 				ajaxLoaderHide();
@@ -232,7 +244,7 @@ ajaxSendFormDisplayMessage = function (form) {
 				}
 			}
 		},
-		onFailure: function() { alert('Something went wrong...') }
+		onFailure: function() { alert('Something went wrong in ajaxSendFormDisplayMessage...') }
 	});
 	return false;
 }
@@ -241,6 +253,7 @@ ajaxSendFormDisplayMessage = function (form) {
  * Use Ajax to update a select box values..
  */
 ajaxReplaceSelect = function (link, useMethod, resultSelectBox, params) {
+	ajaxLoaderShow();
 	new Ajax.Request(link, {
 		method: useMethod,
 		parameters: params,
@@ -262,7 +275,7 @@ ajaxReplaceSelect = function (link, useMethod, resultSelectBox, params) {
 			}
 			ajaxLoaderHide()
 		},
-		onFailure: function() { alert('Something went wrong...') }
+		onFailure: function() { alert('Something went wrong in ajaxReplaceSelect...') }
 	});
 }
 
@@ -272,9 +285,13 @@ ajaxReplaceSelect = function (link, useMethod, resultSelectBox, params) {
  * and update select element's values identified by $resultContainer.
  */
 ajaxUpdateSelectBox = function (link, useMethod, resultContainer) {
+	ajaxLoaderShow();
 	new Ajax.Updater(resultContainer, link, { 
 		method: useMethod,
-		parameters: { __request_type__: 'ajax' }
+		parameters: { __request_type__: 'ajax' },
+		onSuccess: function(transport) {
+			ajaxLoaderHide();
+		}
 	});
 	return false;
 }
@@ -365,11 +382,33 @@ windowPopupAjaxGetContent = function (_link, _resultAction, _resultContainer, _r
 		    ajaxLoaderHide();
 		    win.showCenter(true);
 		},
-		onFailure: function(){ alert('Something went wrong...') }
+		onFailure: function(){ alert('Something went wrong in windowPopupAjaxGetContent...') }
 	  });
 	return false;
 	
 }
 
+windowPopupAjaxTranslations = function (_link, _translations) {
+    ajaxLoaderShow();
+	var res = '<table id="translations">';
+	var transl = _translations.evalJSON();
+	for (var tr in transl)
+		if (transl[tr]['id']) {
+			var link = _link.replace('XXIDXX', transl[tr]['id']);
+			var onclick = 'Windows.closeAll(); windowPopupAjax(\''+link+'\'); return false;';
+			res += '<tr><td>'+transl[tr]['result']+'</td><td><a href="#" onclick="'+onclick+'" title="Edit translation with original value \''+transl[tr]['key']+'\'"></a></td></tr>';
+		}
+	res += '</table>';
+	var win = new Window({
+			className: 'alphacube', 
+			width: 500,
+			height: 400,
+			title: "Translations",
+			showEffectOptions: {duration:1.5}
+	}); 
+	win.getContent().innerHTML = res;
+    ajaxLoaderHide();
+	win.showCenter(true);
+}
 
 /* end of the file */

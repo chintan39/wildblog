@@ -96,7 +96,10 @@ class BaseDictionaryModel extends AbstractDefaultModel {
     	$tmpDict = $this->Find($this, array('language = ?'), array($lang));
 		if ($tmpDict) {
 			foreach ($tmpDict as $item) {
-				$result[$item->kind][$item->key] = $item->text;
+				$v = new stdClass;
+				$v->text=$item->text;
+				$v->id=$item->id;
+				$result[$item->kind][$item->key] = $v;
 			}
 		}
 		$this->saveCache('dictionary_' . $lang, $result, array($this->name));
@@ -115,7 +118,10 @@ class BaseDictionaryModel extends AbstractDefaultModel {
     		$result[$lang['id']] = array();
 			if ($tmpDict) {
 				foreach ($tmpDict as $item) {
-					$result[$lang['id']][$item->key] = $item->text;
+					$v = new stdClass;
+					$v->text=$item->text;
+					$v->id=$item->id;
+					$result[$lang['id']][$item->key] = $v;
 				}
 			}
     	}

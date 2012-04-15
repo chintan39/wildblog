@@ -177,6 +177,7 @@ class Request {
 				Benchmark::startTracking();
 			Environment::$smarty->assign('benchmarkIsTracking', Benchmark::isTracking());
 			Environment::$smarty->assign('benchmarkChangeTracking', Benchmark::isTracking() ? 'stopbenchmark' : 'startbenchmark');
+			Environment::$smarty->assign('dictionaryEditLink', Environment::getPackage('Base')->getController('Dictionary')->dictionaryEditLink());
 
 			// date info
 			$today = date('j. XXX Y');

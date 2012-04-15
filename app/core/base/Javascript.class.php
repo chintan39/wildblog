@@ -135,8 +135,10 @@ class Javascript {
 	/**
 	 * Adds a translation
 	 */
-	public static function addTranslation($key, $kind) {
-		self::$actualTranslations[] = array('key' => $key, 'kind' => $kind);
+	public static function addTranslation($key, $kind, $id, $result) {
+		$arrayKey = $result.'##'.$id.'##'.$kind.'##'.$key;
+		if (!isset(self::$actualTranslations[$arrayKey]))
+			self::$actualTranslations[$arrayKey] = array('key' => $key, 'kind' => $kind, 'id' => $id, 'result' => $result);
 	}
 
 	
@@ -215,6 +217,7 @@ class Javascript {
 	 * Returns table with actual translations to be easy accessible
 	 */
 	public static function translationsToHTML() {
+		return json_encode(array_values(self::$actualTranslations));
 		if (!count(self::$actualTranslations)) {
 			return '';
 		}
@@ -474,10 +477,11 @@ class Javascript {
 }
 
 function Javascript__addHTML($tpl_output, &$smarty) {
-	if (isset(Request::$get['translations'])) {
+	/*if (isset(Request::$get['translations'])) {
 		Javascript::addCSS(Request::$url['base'] . DIR_THEMES . 'Common/css/translations.css');
 		$tpl_output = preg_replace("/<\/body>/", Javascript::translationsToHTML() . "</body>", $tpl_output);
-	}
+	}*/
+	$tpl_output = str_replace('##exportDictJSON##', Javascript::translationsToHTML(), $tpl_output);
 	return Javascript::addHTML($tpl_output, $smarty);
 }
 
