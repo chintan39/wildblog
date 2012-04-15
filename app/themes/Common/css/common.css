@@ -74,9 +74,6 @@ img#ajax_loader {
 div#adminBox {
 	position: fixed;
 	background: #dc2f00;
-	border-bottom: 2px solid #a61f00;
-	border-left: 2px solid #a61f00;
-	border-top: 2px solid #a61f00;
 	width: 90px;
 	top: 25%;
 	right: 0px;
