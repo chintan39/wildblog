@@ -157,9 +157,15 @@ div#adminBox a.close {
 	padding: 0px;
 }
 
+/**
+ *------------------------------------------------
+ * translations 
+ *------------------------------------------------
+ */ 
+
 table#translations tr td {
 	font-size: 140%;
-	line-height: 170%;
+	line-height: 24px;
 }
 
 table#translations tr:hover {

@@ -28,6 +28,7 @@ class BasePackage extends Package {
 		Config::Set('BASE_PACKAGE_LANGUAGE_SUPPORT', false, null, Config::BOOL, false);
 		Config::Set('BASE_PACKAGE_ALLOW', true, null, Config::BOOL, false);
 		Config::Set('BASE_STORE_HITS_UNTIL_DATE', '0000-00-00 00:00:00', null, Config::STRING, false);
+		Config::Set('BASE_DICTIONARY_FAST_TRANSLATE_URL', false, null, Config::BOOL, false);
 
 	}
 

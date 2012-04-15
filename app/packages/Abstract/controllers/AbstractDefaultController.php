@@ -32,6 +32,7 @@ class AbstractDefaultController extends AbstractBasicController{
 	var $listLimit;
 	var $detailMethodName = null;
 	var $removeMethodName = 'actionRemove';
+	var $removeSimpleMethodName = 'actionSimpleRemove';
 	var $newMethodName = 'actionNew';
 	
 	/**
@@ -136,12 +137,12 @@ class AbstractDefaultController extends AbstractBasicController{
 	/**
 	 *
 	 */
-	public function actionEditSelf($args, $sendAjax=false) {
+	public function actionEditSelf($args, $isSimple=false) {
 		
 		$item = $args;
 		$this->actionEditAdjustItem($item);
 		$form = new Form();
-		$form->setSendAjax($sendAjax);
+		$form->setSendAjax($isSimple);
 		$form->setUseTabs(true);
 		$form->setIdentifier(strtolower($this->name));
 
@@ -163,13 +164,18 @@ class AbstractDefaultController extends AbstractBasicController{
 		$this->assign('help', tg($this->description));
 		
 		// detail action if specified
-		if ($this->detailMethodName) {
+		if ($this->detailMethodName && $isSimple) {
 			$this->assign('detailLink', Request::getLinkItem($this->package, $this->name, $this->detailMethodName, $item));
 		}
 		
 		// detail action if specified
-		if ($this->removeMethodName) {
+		if ($this->removeMethodName && !$isSimple) {
 			$this->assign('removeLink', Request::getLinkItem($this->package, $this->name, $this->removeMethodName, $item));
+		}
+		
+		// detail action if specified
+		if ($this->removeSimpleMethodName && $isSimple) {
+			$this->assign('removeLinkSimple', Request::getLinkItem($this->package, $this->name, $this->removeSimpleMethodName, $item));
 		}
 		
 		// Top menu
@@ -223,9 +229,34 @@ class AbstractDefaultController extends AbstractBasicController{
 	 *
 	 */
 	public function actionRemove($args) {
+		return $this->actionRemoveSelf($args, false);
+	}
+	
+	
+	/**
+	 *
+	 */
+	public function actionSimpleRemove($args) {
+		return $this->actionRemoveSelf($args, true);
+	}
+	
+	
+	/**
+	 *
+	 */
+	public function actionRemoveSelf($args, $isSimple=false) {
 		$item = $args;
+		$id = $item->id;
 		$item->DeleteYourself();
-		Request::redirect(Request::getLinkSimple($this->package, $this->name, 'actionListing'));
+		MessageBus::sendMessage(tg('Item') . " #$id " . tg('has been deleted.'));
+		Request::redirect(Request::getLinkSimple($this->package, $this->name, ($isSimple ? 'actionEmpty' : 'actionListing')));
+	}
+	
+	
+	/**
+	 *
+	 */
+	public function actionEmpty($args) {
 	}
 	
 	

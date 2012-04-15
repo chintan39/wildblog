@@ -135,8 +135,8 @@
 <!-- /footer -->
 </div>
 
-<img src="{$commonImagesPath}ajax_loader.gif" id="ajax_loader" style="display: none;" alt="" />
-
 {require file='part.htmlAreas' package=Basic}
+
+{require file='part.adminBox' theme=Common}
 
 {require file='part.footer' theme=Common}

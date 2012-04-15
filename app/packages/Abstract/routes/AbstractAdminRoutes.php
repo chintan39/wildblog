@@ -73,6 +73,18 @@ class AbstractAdminRoutes {
 			->setBranch(Themes::BACK_END)
 			->setPermission($permission);
 		
+		Router::registerAction($object, 'actionSimpleRemove') 
+			->addRuleUrl($actionsPrefix . 'simple-remove/$')
+			->addRuleGet(array('id'=>'[id]'))
+			->setBranch(Themes::BACK_END)
+			->setPermission($permission);
+		
+		Router::registerAction($object, 'actionEmpty') 
+			->addRuleUrl($actionsPrefix . 'empty/$')
+			->setTemplate('Base|empty')
+			->setBranch(Themes::BACK_END)
+			->setPermission($permission);
+		
 		Router::registerAction($object, 'actionView') 
 			->addRuleUrl($actionsPrefix . 'view/$')
 			->addRuleGet(array('id'=>'[id]'))
@@ -94,65 +106,7 @@ class AbstractAdminRoutes {
 				->setPermission($permission);
 		}
 	}
-	
-	static function getLinksAdminMenuLeft($object) {
-		$listLink = new Link(array(
-			'link' => Request::getLinkSimple($object->package, $object->name, 'actionListing'), 
-			'label' => tg($object->name), 
-			'title' => tg('list of ' . strtolower($object->name)), 
-			'image' => $object->getIcon(), 
-			'action' => array(
-				'package' => $object->package, 
-				'controller' => $object->name, 
-				'action' => 'actionListing')));
-		$listLink->addSuperiorActiveActions($object->package, $object->name, 'actionEdit');
-		$listLink->addSuperiorActiveActions($object->package, $object->name, 'actionNew');
-		$listLink->addSuperiorActiveActions($object->package, $object->name, 'actionView');
-		$listLink->setOrder($object->order);
-		return array($listLink);
-	}
 
-	static function getLinksAdminMenuTop($object) {
-		$listLink = new Link(array(
-			'link' => Request::getLinkSimple($object->package, $object->name, 'actionListing'), 
-			'label' => (tg('list of' . ' ' . strtolower($object->name))),
-			'title' => (tg('list of' . ' ' . strtolower($object->name))), 
-			'image' => 'list', 
-			'action' => array(
-				'package' => $object->package, 
-				'controller' => $object->name, 
-				'action' => 'actionListing')));
-		$listLink->addSuperiorActiveActions($object->package, $object->name, 'actionEdit');
-		$listLink->addSuperiorActiveActions($object->package, $object->name, 'actionView');
-		$listLink->setOrder($object->order);
-		$newLink = new Link(array(
-			'link' => Request::getLinkSimple($object->package, $object->name, 'actionNew'), 
-			'label' => tg('insert new' . ' ' . strtolower($object->name)), 
-			'title' => tg('insert new' . ' ' . strtolower($object->name)), 
-			'image' => 'add', 
-			'action' => array(
-				'package' => $object->package, 
-				'controller' => $object->name, 
-				'action' => 'actionNew')));
-		$newLink->setOrder($object->order);
-		return array($listLink, $newLink);
-	}
-
-	static function getLinksAdminMenuLeftListing($object) {
-		$listLink = new Link(array(
-			'link' => Request::getLinkSimple($object->package, $object->name, 'actionListing'), 
-			'label' => tg($object->name), 
-			'title' => tg('list of ' . strtolower($object->name)), 
-			'image' => $object->getIcon(), 
-			'action' => array(
-				'package' => $object->package, 
-				'controller' => $object->name, 
-				'action' => 'actionListing')));
-		$listLink->addSuperiorActiveActions($object->package, $object->name, 'actionEdit');
-		$listLink->addSuperiorActiveActions($object->package, $object->name, 'actionNew');
-		$listLink->setOrder($object->order);
-		return array($listLink);
-	}
 }
 
 ?>

@@ -24,5 +24,8 @@
 				Jan Horák, <a href="http://www.wild-web.eu" title="wild-web">wild-web.eu</a> &copy; 2009 
 			</div>
 		</div>
+
+{require file='part.adminBox' theme=Common}
+
 {require file='part.footer' theme=Common}
 

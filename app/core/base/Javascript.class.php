@@ -136,6 +136,8 @@ class Javascript {
 	 * Adds a translation
 	 */
 	public static function addTranslation($key, $kind, $id, $result) {
+		if ($kind == BaseDictionaryModel::KIND_URL_PARTS && !Config::Get('BASE_DICTIONARY_FAST_TRANSLATE_URL'))
+			return;
 		$arrayKey = $result.'##'.$id.'##'.$kind.'##'.$key;
 		if (!isset(self::$actualTranslations[$arrayKey]))
 			self::$actualTranslations[$arrayKey] = array('key' => $key, 'kind' => $kind, 'id' => $id, 'result' => $result);
@@ -395,6 +397,10 @@ class Javascript {
 			self::addScriptaculous();
 		}
 		
+		if (stripos($tpl_output, 'windowPopup') !== false) {
+			self::addWindows();
+		}
+		
 		$temp = str_replace(
 				"<!-- javascript_adding -->", 
 				"\n<!-- javascript_adding_begin -->\n" 
@@ -430,9 +436,10 @@ class Javascript {
 	 * Include a JS library windows based on prototype
 	 */
 	public static function addWindows() {
-		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'windows/javascripts/window.js');
-		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/default.css'); 
-		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/alphacube.css');
+		self::addScriptaculous();
+		self::addFile(Request::$url['base'] . DIR_LIBS . 'windows/javascripts/window.js');
+		self::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/default.css'); 
+		self::addCSS(Request::$url['base'] . DIR_LIBS . 'windows/themes/alphacube.css');
 	}
 	
 	

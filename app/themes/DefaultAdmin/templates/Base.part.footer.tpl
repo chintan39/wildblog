@@ -23,7 +23,6 @@
 					{require file='part.help'}
 				</div>
 			</div>
-			<img src="{$commonImagesPath}ajax_loader.gif" id="ajax_loader" style="display: none;" alt="" />
 			<div id="lower">
 				Powered by <a href="http://code.google.com/p/wildblog/" title="wild-blog">wildblog project</a>,
 				Jan Horák, <a href="http://www.wild-web.eu" title="wild-web">wild-web.eu</a>
@@ -32,6 +31,6 @@
 		</div>
 	</div>
 	
-<img src="{$commonImagesPath}ajax_loader_threedots.gif" id="ajax_loader" style="display: none;" alt="" />
+{require file='part.adminBox' theme=Common}
 
 {require file='part.footer' theme=Common}
