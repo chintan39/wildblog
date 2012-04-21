@@ -1,0 +1,83 @@
+/* ----------------------------------------------------------------------------------------------------------
+
+    This website template was downloaded from http://www.nuviotemplates.com - visit us for more templates
+
+    Structure:
+    display; position; float; z-index; overflow; width; height; margin; padding; border; background; align; font;
+
+    Content:
+    
+        1) HTML tags, reset
+        2) Universal styles (display, float, margin, text-align...)
+        3) Generally HTML styles (table, ul, dl...)
+        4) Layout
+        5) Page: Home
+        
+---------------------------------------------------------------------------------------------------------- */
+
+/* ----------------------------------------------------------------------------------------------------------
+1) HTML tags, reset
+---------------------------------------------------------------------------------------------------------- */
+
+* {margin:0; padding:0;}
+body, div, span, p, a, img, ul, ol, li, caption, table, thead, tbody, tfoot, tr, th, td, form, fieldset, legend, label, dl, dt, dd, blockquote, applet, object, h1, h2, h3, h4, h5 {border:0;}
+body {padding-bottom:20px; background:url("../images/bg.gif") 0 0 repeat-x; font:0.8em/1.5 "arial",sans-serif; text-align:center;}
+
+h1, h2, h3, h4, h5, h6 {margin:15px 0 10px 0;}
+h1 {font-size:180%;}
+h2 {font-size:160%;}
+h3 {font-size:140%;}
+h4 {font-size:120%;}
+h5 {font-size:100%;}
+
+p, table, ul, ol, dl, fieldset {margin:15px 0;}
+
+table {border-collapse:collapse; border-spacing:0; font-size:100%;}
+th {text-align:center; font-weight:bold;}
+th, td {padding:3px 7px;}
+
+ul, ol {margin-left:30px;}
+ul ul, ol ol {margin:0; margin-left:20px;}
+ol {list-style-type:decimal;}
+li {display:list-item;}
+
+dt {font-weight:bold;}
+dd {margin-left:30px;}
+
+fieldset {position:relative; padding:10px;}
+legend {position:absolute; top:-1em; margin:0; padding:5px 10px; font-size:100%; font-weight:bold;}
+
+/* special format classes */
+
+.no-border {
+	border: none;
+}
+
+.float-left  { 
+	float: left; 
+}
+
+.float-right {	
+	float: right;  
+}
+
+.clear {
+	clear: both;
+}
+
+.align-left  {	
+	text-align: left; 
+}
+
+.align-right {	
+	text-align: right; 
+}
+
+.align-center {
+	text-align: center;
+}
+
+.italic {
+	font-style: italic;
+}
+
