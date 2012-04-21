@@ -34,7 +34,7 @@ class BaseSitemapRoutes extends AbstractBasicRoutes {
 			->setTemplate('sitemap');
 
 		Router::registerAction($this, 'actionAvailableLinks') 
-			->addRuleUrl('site-links/')
+			->addRuleUrl('site-links.js')
 			->setTemplate('sitelinks');
 
 		Router::registerAction($this, 'actionSitemapXML')

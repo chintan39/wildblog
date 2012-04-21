@@ -5,6 +5,10 @@
  * Date: 18.10.2009
  */
  
+/* special format classes */
+
+@import "../../Common/css/common-content.css";
+
 * {
 	padding:0px;
 	margin:0px;
@@ -127,36 +131,6 @@ img.float-left, span.float-left {
 img.float-right, span.float-right {
 	margin-left: 10px;
 	margin-bottom: 5px;
-}
-
-/* special format classes */
-
-.no-border {
-	border: none;
-}
-
-.float-left  { 
-	float: left; 
-}
-
-.float-right {	
-	float: right;  
-}
-
-.clear {
-	clear: both;
-}
-
-.align-left  {	
-	text-align: left; 
-}
-
-.align-right {	
-	text-align: right; 
-}
-
-.align-center {
-	text-align: center;
 }
 
 /*

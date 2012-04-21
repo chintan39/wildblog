@@ -6,7 +6,7 @@ var tinyMCELinkList = new Array(
 	// Name, URL
 ["", "Empty"]
 {foreach from=$sitemap item=link},
-["{$link->label}", "autolink!:{$link->autolink}"]
+["{$link->label|htmlspecialchars}", "autolink!:{$link->autolink}"]
 {/foreach}
 );
 

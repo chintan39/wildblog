@@ -19,6 +19,8 @@
 1) HTML tags, reset
 ---------------------------------------------------------------------------------------------------------- */
 
+@import "../../Common/css/common-content.css";
+
 * {
 	padding:0px;
 	margin:0px;
@@ -52,37 +54,4 @@ dd {margin-left:30px;}
 fieldset {position:relative; padding:10px;}
 legend {position:absolute; top:-1em; margin:0; padding:5px 10px; font-size:100%; font-weight:bold;}
 
-/* special format classes */
-
-.no-border {
-	border: none;
-}
-
-.float-left  { 
-	float: left; 
-}
-
-.float-right {	
-	float: right;  
-}
-
-.clear {
-	clear: both;
-}
-
-.align-left  {	
-	text-align: left; 
-}
-
-.align-right {	
-	text-align: right; 
-}
-
-.align-center {
-	text-align: center;
-}
-
-.italic {
-	font-style: italic;
-}
 

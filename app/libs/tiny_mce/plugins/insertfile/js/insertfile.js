@@ -36,7 +36,7 @@ var InsertFileDialog = {
 	
 			output += '<a href="' + f.href.value + '" class="size' + size + '">';
 
-			output += '<img src="app/themes/Common/images/ico/' + size + '/filetype_' + ext + '.png" alt="' + ext + '" />';
+			output += '<img src="media/.ico/' + size + '/filetype_' + ext + '.png" alt="' + ext + '" />';
 
 			output += '<span class="size' + size + '">' + f.title.value + '</span>';
 

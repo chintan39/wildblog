@@ -36,7 +36,7 @@ var tinymce_base = {
 	file_manager_base_dir : "../../../",
 	file_manager_dir : "",			// must be overloaded
 
-	external_link_list_url : "site-links/",
+	external_link_list_url : "site-links.js",
 
 	convert_urls : false,
 	document_base_url : "",		// must be overloaded
