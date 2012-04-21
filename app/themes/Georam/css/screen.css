@@ -17,6 +17,8 @@
 
 @import "content.css";
 
+body {padding-bottom:20px; background:url("../images/bg.gif") 0 0 repeat-x; text-align:center;}
+
 /* ----------------------------------------------------------------------------------------------------------
 2) Universal styles (display, float, margin, text-align...)
 ---------------------------------------------------------------------------------------------------------- */
@@ -76,8 +78,8 @@ ul.ul-style01 ul li {background:url("../images/ul-style01-sub.gif") 0 5px no-rep
     
         #nav ul {margin:0 0 0 10px; height: 43px;line-height: 100%; padding:0; list-style:none;}
         #nav ul li {display:block; height: 43px;line-height: 43px;float:left; margin:0; padding:0;}
-        #nav ul li a {display:block; text-align: center;width: 100px; height: 43px;line-height: 43px; background:url("../images/nav-link.gif") 100% 0 repeat-y; text-decoration:underline;}
-        #nav ul li#nav-active a {font-weight:bold; text-decoration:none;}
+        #nav ul li a {padding: 0px 20px; display:block; text-align: center;width: auto; height: 43px;line-height: 43px; background:url("../images/nav-link.gif") 100% 0 repeat-y; text-decoration:underline;}
+        #nav ul li a.active {font-weight:bold; text-decoration:none;}
 
     #cols {background:url("../images/cols.gif") 0 0 repeat-y;padding-top: 148px;}
     #cols.wide {background:url("../images/cols-wide.gif") 0 0 repeat-y;}
@@ -93,7 +95,12 @@ ul.ul-style01 ul li {background:url("../images/ul-style01-sub.gif") 0 5px no-rep
             #aside #aside-title {margin:0; padding:15px 15px 10px 15px; background:url("../images/aside-title.gif") 0 0 no-repeat; font-size:140%; font-weight:normal;}
             #aside .aside-in {padding:10px 10px 15px 10px;}
             #aside .aside-box {padding:10px; background:url("../images/aside-box.jpg") 0 0 no-repeat;}
-            #aside .title {margin:0 5px 0 0; padding:10px 15px; background:url("../images/aside-title-02.gif") 0 0 repeat-x; font-size:100%;}    
+            #aside .title {margin:0 5px 0 0; padding:10px 15px; background:url("../images/aside-title-02.gif") 0 0 repeat-x; font-size:100%;}
+            
+        #aside ul.sidebox {line-height: 32px;margin: 20px 0px;}
+        #aside ul.sidebox li {display: block;margin: 0;padding: 0px 5px;}
+        #aside ul.sidebox li a {font-weight: bold;display: block;font-size: 120%;text-decoration: none;padding: 0px 5px;}
+        #aside ul.sidebox li a.active, #aside ul.sidebox li a:hover {background: #990000;color: #ffffff;}
 
     #cols-bottom {width:910px; height:12px; background:url("../images/cols-bottom.gif") 0 0 no-repeat; font-size:0;}
     
@@ -110,10 +117,10 @@ ul.ul-style01 ul li {background:url("../images/ul-style01-sub.gif") 0 5px no-rep
 /*#sections {background:url("../images/sections.gif") 0 0 repeat-y;}*/
 #sections-bottom {width:620px; height:7px; background:url("../images/sections-bottom.gif") 0 0 no-repeat; font-size:0;}
 
-    .section {float:left; width:280px;}
-    .section.indent {margin-left: 150px;}
+    .section {float:left; width:280px;height:330px;}
+    .section.sec4 {margin-left: 150px;}
     .section p {margin:0;}
-    .section.margin {margin:0 15px;}
+    .section.sec2, .section.sec5 {margin:0 15px;}
     .section h3 {margin:0; padding:10px; background:url("../images/section-title.gif") 0 0 no-repeat; font-size:110%;}
     .section-in {margin-bottom:20px; padding:0 10px 10px 10px;}
 

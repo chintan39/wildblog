@@ -28,7 +28,7 @@ class ResearchPackage extends Package {
 	public function setDefaultConfig() {
 		Config::Set('RESEARCH_PACKAGE_ORDER', 8, null, Config::INT, true);
 		Config::Set('RESEARCH_PACKAGE_LANGUAGE_SUPPORT', false, null, Config::BOOL, false);
-		Config::Set('RESEARCH_PACKAGE_ALLOW', true, null, Config::BOOL, false);
+		Config::Set('RESEARCH_PACKAGE_ALLOW', false, null, Config::BOOL, false);
 	}
 
 	/**

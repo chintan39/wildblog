@@ -395,7 +395,7 @@ windowPopupAjaxTranslations = function (_link, _translations) {
 	for (var tr in transl)
 		if (transl[tr]['id']) {
 			var link = _link.replace('XXIDXX', transl[tr]['id']);
-			var onclick = 'Windows.closeAll(); windowPopupAjax(\''+link+'\'); return false;';
+			var onclick = '/*Windows.closeAll();*/ windowPopupAjax(\''+link+'\'); return false;';
 			res += '<tr><td>'+transl[tr]['result']+'</td><td><a href="#" onclick="'+onclick+'" title="Edit translation with original value \''+transl[tr]['key']+'\'"></a></td></tr>';
 		}
 	res += '</table>';

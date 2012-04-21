@@ -269,7 +269,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		} elseif ($model->languageSupportAllowed) {
 			$metadata[] = AtributesFactory::create('lang')
 			->setType(Form::FORM_INPUT_TEXT)
-			->setSqlType('INT(11) NOT NULL DEFAULT 1');
+			->setSqlType('INT(11) NOT NULL DEFAULT 0');
 		}
 		// get table columns
 		$dbColumns = dbConnection::getInstance()->getColumns($table);

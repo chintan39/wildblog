@@ -421,9 +421,10 @@ class Form {
 	 */
 	private function updateValuesFromReq() {
 		foreach ($this->fields as $name => $field) {
-			$this->fields[$name]->setValue($this->req[$field->getMeta()->getName()]);
-			$this->fields[$name]->setErrorMessage((isset($this->messages['errors'][$field->getMeta()->getName()]) && $this->messages['errors'][$field->getMeta()->getName()]) ? $this->messages['errors'][$field->getMeta()->getName()] : '');
-			$this->fields[$name]->setWarningMessage((isset($this->messages['warnings'][$field->getMeta()->getName()]) && $this->messages['warnings'][$fieldName['name']]) ? $this->messages['warnings'][$field->getMeta()->getName()] : '');
+			$metaName = $field->getMeta()->getName();
+			$this->fields[$name]->setValue(isset($this->req[$metaName]) ? $this->req[$metaName] : null);
+			$this->fields[$name]->setErrorMessage((isset($this->messages['errors'][$metaName]) && $this->messages['errors'][$metaName]) ? $this->messages['errors'][$metaName] : '');
+			$this->fields[$name]->setWarningMessage((isset($this->messages['warnings'][$metaName]) && $this->messages['warnings'][$metaName]) ? $this->messages['warnings'][$metaName] : '');
 		}
 	}
 	

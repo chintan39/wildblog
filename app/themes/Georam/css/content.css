@@ -19,9 +19,14 @@
 1) HTML tags, reset
 ---------------------------------------------------------------------------------------------------------- */
 
-* {margin:0; padding:0;}
+* {
+	padding:0px;
+	margin:0px;
+	position: relative;
+	border:0;
+}
 body, div, span, p, a, img, ul, ol, li, caption, table, thead, tbody, tfoot, tr, th, td, form, fieldset, legend, label, dl, dt, dd, blockquote, applet, object, h1, h2, h3, h4, h5 {border:0;}
-body {padding-bottom:20px; background:url("../images/bg.gif") 0 0 repeat-x; font:0.8em/1.5 "arial",sans-serif; text-align:center;}
+body {font:0.8em/1.5 "arial",sans-serif;}
 
 h1, h2, h3, h4, h5, h6 {margin:15px 0 10px 0;}
 h1 {font-size:180%;}

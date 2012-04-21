@@ -32,6 +32,7 @@ class GeoramTheme extends AbstractTheme {
 			'Common|Base.part.footer',
 			'Basic.part.shortContact',
 			'Basic.part.htmlAreas',
+			'Basic.part.allPagesMenus',
 		),
 		'Basic.articleDetail' => array(
 			'Base.part.header', 

@@ -186,6 +186,7 @@ class Request {
 			Environment::$smarty->assign('today', $today);
 			Environment::$smarty->assign('now', time());
 			Environment::$smarty->assign('visitorsCount', Config::GetCond('BASE_VISITORS_COUNT', 0));
+			Environment::$smarty->assign('config', Config::$data);
 			
 			Environment::$smarty->assign('frontendLanguages', Language::getLanguages(Themes::FRONT_END));
 			Environment::$smarty->assign('backendLanguages', Language::getLanguages(Themes::BACK_END));

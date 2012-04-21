@@ -71,7 +71,7 @@ abstract class AtributesFactory {
 			->setDefaultValue('')
 			->setFormTab(Form::TAB_SEO)
 			->setSqlType('varchar(255) NOT NULL')
-			->setSqlindex(ModelMetaIndex::UNIQUE, true)
+			->setSqlindex(ModelMetaIndex::UNIQUE_LANG)
 			->setIsAutoFilled(ModelMetaItem::ON_NEW)
 			->setExtendedTable(true);
 	}
@@ -452,7 +452,7 @@ abstract class AtributesFactory {
 			->setIsVisibleInForm(ModelMetaItem::NEVER)
 			->setIsVisible(ModelMetaItem::NEVER)
 			->setSqlType('int(11) NOT NULL DEFAULT \'1\'')
-			->setSqlindex(ModelMetaIndex::UNIQUE)
+			->setSqlindex(ModelMetaIndex::UNIQUE_LANG)
 			->setAdjustMethod('NewMaxOnEmpty')
 			->setIsAutoFilled(ModelMetaItem::ON_NEW);
 	}

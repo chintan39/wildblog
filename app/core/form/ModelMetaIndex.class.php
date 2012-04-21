@@ -22,10 +22,11 @@
  */
 
 class ModelMetaIndex {
-	const PRIMARY  = 'primary';
-	const INDEX    = 'index';
-	const UNIQUE   = 'unique';
-	const FULLTEXT = 'fulltext';
+	const PRIMARY     = 'primary';
+	const INDEX       = 'index';
+	const UNIQUE      = 'unique';
+	const UNIQUE_LANG = 'unique_lang';
+	const FULLTEXT    = 'fulltext';
 	
 	public $name;
 	public $type;

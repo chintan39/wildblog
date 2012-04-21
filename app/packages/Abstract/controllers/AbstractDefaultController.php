@@ -142,7 +142,7 @@ class AbstractDefaultController extends AbstractBasicController{
 		$item = $args;
 		$this->actionEditAdjustItem($item);
 		$form = new Form();
-		$form->setSendAjax($isSimple);
+		$form->setSendAjax(Request::isAjax());
 		$form->setUseTabs(true);
 		$form->setIdentifier(strtolower($this->name));
 

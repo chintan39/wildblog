@@ -1,9 +1,21 @@
         </div> <!-- /content -->
 
+{if not $isHomepage}
         <hr class="noscreen" />
-
+        
         <!-- Sidebar -->
         <div id="aside">
+
+            <!-- News -->                    
+            <h4 id="aside-title">{tg}Contact{/tg}</h4>
+
+            <div class="aside-in">
+
+                {require file='part.allPagesMenus' package=Basic menuName='side_menu' ulClass='sidebox'}
+		
+            </div> <!-- /aside-in -->
+   
+        <hr class="noscreen" />
 
             <!-- News -->                    
             <h4 id="aside-title">{tg}Contact{/tg}</h4>
@@ -17,7 +29,8 @@
             </div> <!-- /aside-in -->
    
         </div> <!-- /aside -->
-    
+{/if}
+
     </div> <!-- /cols -->
     
     <hr class="noscreen" /> 
@@ -26,7 +39,7 @@
     <div id="header">
 
         <!-- Your logo -->
-        <h2 id="logo"><a href="#"><img src="{$projectMedia}/logo.png" alt="website name" title="website name" /><!--Your <span>website</span> name--></a></h2>
+        <h2 id="logo"><a href="{$base}"><img src="{$projectMedia}/logo.png" alt="website name" title="website name" /><!--Your <span>website</span> name--></a></h2>
         <hr class="noscreen" />        
 
         <!-- Your slogan -->
@@ -38,14 +51,7 @@
     <!-- Navigation -->
     <div id="nav">
     
-		{require file='part.allPagesMenus' package=Basic menuName='top_menu'}
-        <ul class="box">
-            <li id="nav-active"><a href="#">Homepage</a></li> <!-- Active page (highlighted) -->
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Products</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
+		{require file='part.allPagesMenus' package=Basic menuName='top_menu' ulClass='box'}
         
     <hr class="noscreen" /> 
     </div> <!-- /nav -->

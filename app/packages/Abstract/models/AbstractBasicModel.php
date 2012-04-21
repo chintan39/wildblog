@@ -49,6 +49,7 @@ class AbstractBasicModel {
     	$this->nameShort = str_replace('model', '', str_replace(strtolower($this->package), '', strtolower(get_class($this))));
 		$this->attributesDefinition();
 		$this->propertiesDefinition();
+		$this->cleanAttributes();
 		
 	}
 
@@ -99,6 +100,24 @@ class AbstractBasicModel {
 	 * Could be overwritten.
 	 */
 	protected function propertiesDefinition() {
+	}
+	
+	/**
+	 * Makes some additional changes in attributes definition
+	 */
+	protected function cleanAttributes() {
+		if (!is_array($allMeta = $this->getMetaData()))
+			return;
+		foreach ($allMeta as $meta) {
+			// add lang to index definition if needed
+			$index = $meta->getSqlIndex();
+			if ($index && $index->type == ModelMetaIndex::UNIQUE_LANG) {
+				if (isset($this->languageSupportAllowed) && $this->languageSupportAllowed || $meta->getExtendedTable()) {
+					$index->columns[] = 'lang';
+				}
+				$meta->setSqlIndex(ModelMetaIndex::UNIQUE, $index->columns);
+			}
+		}
 	}
 	
 	/**
