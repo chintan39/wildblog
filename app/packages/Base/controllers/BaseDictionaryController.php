@@ -117,7 +117,8 @@ class BaseDictionaryController extends AbstractDefaultController {
 			$link = Request::getLinkItem($this->package, $this->name, 'actionSimpleEdit', $v->id);
 			return preg_replace('/=[0-9]+$/', '=XXIDXX', $link);
 		}
-		throw new Exception('Directory is empty, which is not expected.');
+		return null;
+		throw new Exception('Dictionary is empty, which is not expected.');
 	}
 
 	

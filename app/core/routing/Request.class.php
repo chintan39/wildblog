@@ -169,6 +169,7 @@ class Request {
 			Environment::$smarty->assign('thisLink', self::getSameLink());
 			Environment::$smarty->assign('requestLink', Request::$url['request']);
 			Environment::$smarty->assign('requestIsAjax', self::isAjax());
+			Environment::$smarty->assign('projectMedia', DIR_PROJECT_URL_MEDIA);
 			
 			// benchmark tracking
 			if (isset(Request::$get['stopbenchmark']))

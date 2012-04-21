@@ -19,9 +19,9 @@
 
 <hr />
 
-Powered by <a href="http://code.google.com/p/wildblog/" title="wildblog">wildblog project</a>,
+{tg}Powered by{/tg} <a href="http://code.google.com/p/wildblog/" title="wildblog">wildblog project</a>,
 Honza Horák, <a href="http://www.wild-web.eu" title="www.wild-web.eu">wild-web.eu</a>
-&copy; {$now|date_format:"%Y"} | <a href="{$base}admin/">Administrace</a>
+&copy; {$now|date_format:"%Y"} | <a href="{$base}admin/">{tg}Administration{/tg}</a>
 
 {require file='part.adminBox' theme=Common}
 

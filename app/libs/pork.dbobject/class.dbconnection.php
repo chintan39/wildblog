@@ -547,10 +547,7 @@ class PDOAdapter
 	{
 		try {
 			$input = $this->fetchOne('SELECT 1 FROM '.$this->quotName($table));
-			if ($this->dbtype == 'mysql')
-				return true;
-			else
-				return ($input !== false);
+			return ($input !== false);
 		} catch (DBQueryException $e) {
 			return false;
 		}

@@ -156,7 +156,10 @@ class ErrorLogger {
 				 . 'Url: ' . $url . "\n---\n\n";
 		
 		// if old enough or tmp file size is too large
-		$tmpFileContent = @file_get_contents(self::$logFile);
+		if (file_exists(self::$logFile))
+			$tmpFileContent = @file_get_contents(self::$logFile);
+		else
+			$tmpFileContent = '';
 		if ((@filemtime(self::$logFileTmp) < strtotime('-' . self::$config['emails_notify_limit_minutes'] . ' MINUTES') )
 			|| ((strlen($tmpFileContent) / 1024) > self::$config['emails_notify_limit_kb'])) {
 			$messageBody = $tmpFileContent . $csvLine;
