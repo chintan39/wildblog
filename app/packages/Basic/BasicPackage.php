@@ -41,7 +41,7 @@ class BasicPackage extends Package {
 		Config::Set('BASIC_NEWS_LIMIT', 6, 'Number of news displayed in sidebar', Config::INT, true);
 		Config::Set('BASIC_ARTICLES_CONTACT_FORM', false, 'Colon-separated article ID values, where contact form should be displayed', Config::STRING, true);
 		Config::Set('BASIC_HOMEPAGE_SECTION_COUNT', 3, 'Number of sections on homepage', Config::INT, false);
-		Config::Set('BASIC_HOMEPAGE_SECTION_IDS', '8:9:10:11:12', 'Colon-separated list of article IDs used as sections', Config::STRING, false);
+		Config::Set('BASIC_HOMEPAGE_SECTION_IDS', '', 'Colon-separated list of article IDs used as sections', Config::STRING, false);
 	}
 	
 	/**

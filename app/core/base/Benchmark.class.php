@@ -43,7 +43,7 @@ class Benchmark {
 	 * Is benchmark on?
 	 */
 	static public function isOn() {
-		return (Config::Get('DEBUG_MODE') || $_SESSION['benchmark']);
+		return (Config::Get('DEBUG_MODE') || (isset($_SESSION['benchmark']) && $_SESSION['benchmark']));
 	}
 	
 	/**

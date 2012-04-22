@@ -1,4 +1,4 @@
-{if $actualUserInfo and $itemItem->id}
+{if $actualUserInfo}
 {if $itemActionSimple}
 <div class="admin_edit new">
 <a href="#" onclick="return windowPopupAjax('{linkto package=$itemPackage controller=$itemController action=$itemActionSimple}', null, null, null, {ldelim}'width': '800'{rdelim});" title="{tg}Add new item in a popup window{/tg}">

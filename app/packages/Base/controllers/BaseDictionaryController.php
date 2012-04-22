@@ -82,7 +82,7 @@ class BaseDictionaryController extends AbstractDefaultController {
 			throw new Exception("Text to translate is too long. Maximum length is " . DICTIONARY_KEY_LENGTH . ".");
 		}
 		if ($forceTheme) {
-			if (array_key_exists(Language::get($forceTheme), $this->urlDict) && array_key_exists($text, $this->urlDict[Language::get($forceTheme)])) {
+			if (array_key_exists(Language::get($forceTheme), $this->urlDict) && array_key_exists($text, $this->urlDict[Language::get($forceTheme)]) && is_object($this->urlDict[Language::get($forceTheme)][$text])) {
 				$this->addTranslation($text, $kind, $this->urlDict[Language::get($forceTheme)][$text]->id, $this->urlDict[Language::get($forceTheme)][$text]->text);
 				return $this->urlDict[Language::get($forceTheme)][$text]->text;
 			} else {
