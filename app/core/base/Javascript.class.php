@@ -387,6 +387,10 @@ class Javascript {
 			self::addScript("hljs.tabReplace = '    ';\nhljs.initHighlightingOnLoad();");
 		}
 		
+		if (stripos($tpl_output, 'cleanform') !== false) {
+			self::addCSS(Request::$url["base"] . DIR_THEMES . 'Common/css/cleanform.css');
+		}
+		
 		if (stripos($tpl_output, 'tooltipOn') !== false) {
 			self::addFile(Request::$url['base'] . DIR_LIBS . 'tooltip/tooltip-v0.2.js');
 			self::addCSS(Request::$url["base"] . DIR_LIBS . 'tooltip/default.css');

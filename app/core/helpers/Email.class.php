@@ -34,7 +34,7 @@ class Email extends PHPMailer {
 	 * Constructor
 	 * @param <array> $exceptions
 	 */
-	public function __construct($exceptions = false) {
+	public function __construct($exceptions = true) {
 		parent::__construct($exceptions);
 		$this->SetFrom('noreply@' . str_replace('www.', '', strtolower($_SERVER['SERVER_NAME'])), tp("Project Title"), 0);
 	}
@@ -66,7 +66,12 @@ class Email extends PHPMailer {
 	
 	
 	public function Send() {
-		$sent = parent::Send();
+		try {
+			$sent = parent::Send();
+		} catch (Exception $e) {
+			$sent = false;
+			// TODO: is error message stored into $this->ErrorInfo?
+		}
 		
 		if ($this->logStoring) {
 			$emailLog = new BaseEmailLogModel();
@@ -82,7 +87,7 @@ class Email extends PHPMailer {
 			
 			if (!$sent) {
 				$emailLog->send_error = $this->ErrorInfo;
-				// TODO: not clear how to handle the incorrect sending, 
+				// TODO: not clear yet, how to handle the incorrect sending, 
 				// callback function could be used
 			} 
 		

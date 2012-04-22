@@ -108,10 +108,8 @@
 	
 			<div class="bottom-left">
 				<p>
-				Powered by <a href="http://code.google.com/p/wildblog/" title="wild-blog">wildblog project</a>,
-				Jan Horák, <a href="http://www.wild-web.eu" title="wild-web">wild-web.eu</a>
-				&copy; {$now|date_format:"%Y"} | <a href="{$base}admin/">Administrace</a>
-				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+				{require file='part.wwFooter' sep=' |'}
+				<br />
 				<a href="http://www.bluewebtemplates.com/" title="Website Templates">website templates</a> by <a href="http://www.styleshout.com/">styleshout</a>
 				</p>
 			</div>		

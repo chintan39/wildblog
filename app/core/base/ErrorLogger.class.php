@@ -188,7 +188,8 @@ class ErrorLogger {
 		
 		$emails = explode(',', self::$config['emails_to_notify']);
 		
-		$mail = new PHPMailer();
+		/* we want to use exceptions, thus true */
+		$mail = new PHPMailer(true);
 		$mail->From = 'noreply@' . str_replace('www.', '', $_SERVER['SERVER_NAME']);
 		$mail->FromName = 'WildBlog Error Reporter';
 		$mail->Body = $body;
@@ -198,7 +199,11 @@ class ErrorLogger {
 			foreach ($emails as $email) {
 				$mail->AddAddress($email);
 			}
-			$mail->Send();
+			try {
+				$mail->Send();
+			} catch (Exception $e) {
+				// pass
+			}
 		}
 	}
 	

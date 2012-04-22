@@ -16,6 +16,8 @@
 ---------------------------------------------------------------------------------------------------------- */
 
 @import "content.css";
+@import "../../Common/css/cleanform.css";
+@import "../../Common/css/common.css";
 
 body {padding-bottom:20px; background:url("../images/bg.gif") 0 0 repeat-x; text-align:center;}
 

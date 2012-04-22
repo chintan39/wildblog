@@ -63,9 +63,7 @@
         <p class="f-right"><a href="http://www.nuviotemplates.com/">Free web templates</a> by <a href="http://www.nuvio.cz/">Nuvio</a>, sponsored by <a href="http://www.lekynainternetu.cz/" title="Léky na internetu.cz">Leky</a></p>
         <!-- Do you want remove this backlinks? Look at www.nuviotemplates.com/payment.php -->
         
-{tg}Powered by{/tg} <a href="http://code.google.com/p/wildblog/" title="wildblog">wildblog project</a>,
-Honza Horák, <a href="http://www.wild-web.eu" title="www.wild-web.eu">wild-web.eu</a>
-&copy; {$now|date_format:"%Y"} | <a href="{$base}admin/">{tg}Administration{/tg}</a>
+        {require file='part.wwFooter' sep=','}
 
     </div> <!-- /footer -->
 

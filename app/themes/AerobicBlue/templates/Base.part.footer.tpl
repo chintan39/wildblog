@@ -107,9 +107,7 @@
 <div class="footer-top"></div>
 <div class="footer-middle">
 <div class="copy">
-Powered by <a href="http://code.google.com/p/wildblog/" title="wild-blog">wildblog project</a>,
-Jan Horák, <a href="http://www.wild-web.eu" title="wild-web">wild-web.eu</a>
-&copy; 2009-2010 | <a href="{$base}admin/">Administrace</a></div>
+{require file='part.wwFooter' sep=' |'}
 </div><!-- footer-middle -->
 <div class="footer-bottom"></div>
 </div><!-- footwrap -->

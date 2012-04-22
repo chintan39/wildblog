@@ -1,0 +1,104 @@
+How work with DB with fluent interfaces will look like:
+
+$s = Query::select('id', 'table1.name', 'title')
+	->from('table1')
+	->leftJoin('table2')->on('table1.id = table2.name and table1.id=:something');
+if (something)
+	$s->where(table1.name like :name and table2.id != :other);
+
+OR:
+
+$s = Query::create("select [columns] from [table1] 
+	left join [table2] on [table1].[id] = [table2].[name] [:where1]")
+	->replace('columns', array('id', 'table1.name', 'title'))
+if (something)
+	$s->replace(':where1', 'and table1.id=:something', Query::SUB_QUERY)
+	$s->replace('table1', $realTableName);
+if (something)
+	$s->append('table1.name like :name and table2.id != :other')
+
+$s->prepare($s->get());
+$s->execute(array('name' => 'sdf', 'other' => 5, 'something' => 3))
+
+
+
+$fieldnames = implode(',', $this->getFieldsSQLArray());
+$postsTagsTable = '`' . $postTagClass->getTableName() . '`';
+$postsTable = '`' . $postClass->getTableName() . '`';
+$query = "
+	SELECT $fieldnames
+	FROM $postsTagsTable
+	LEFT JOIN $postsTable ON $postsTagsTable.post = $postsTable.id
+	$extendedTextsJoin
+	WHERE $postsTable.active = 1 AND $languageSupportWhere $postsTagsTable.post != $postId AND $postsTagsTable.tag IN (
+		SELECT tag
+		FROM $postsTagsTable as pt
+		WHERE pt.post = $postId
+	)
+	GROUP BY $postsTagsTable.post
+	ORDER BY count(*) DESC, $postsTable.published DESC
+	LIMIT $limit
+
+	
+$s = Query::select($this->getFieldsSQLArray())
+	->from($postTagClass->getTableName(), 'a')
+	->leftJoin($postClass->getTableName(), 'b')->on('[a.post] = [b.id] AND [a.tag] IN ')->subquery(
+		->select('pt.tag')
+		->from($postsTagsTable, 'pt')
+		->where('[pt.post] = :postId'))
+	->groupby('a.post')
+	->orderby('count(c) DESC', 'b.published DESC')
+	->limit($limit)
+	->prepare()
+	->execute('postId'=>$postId);
+
+OR
+
+$s = Query::create(select [columns] from [aname] as [a] 
+	left join [bname] as [b] on [a].[post] = [b].[id] and [a].[tag] in ([:selectTags]) 
+	group by [a].[post] 
+	order by count([c]) desc, [b].[published] desc
+	limit [limit])
+->replace('columns', $columns)
+->replace('aname', $tableA)
+->replace('bname', $tableB)
+->replace(':selectTags', 'select [pt].[tag] from [ptname] as [pt] where [pt].[post] = :postId')
+->replace('limit', $limit, Query::INT)
+
+	
+$s = Query::select('id', 'table1.name', 'title')
+	->from('table1')
+	->leftJoin('table2')->on('table1.id = table2.name and table1.id=:something')->bindParam('something', $something)
+	->groupby('table1.id');
+
+$s = Query::select('id', 'table1.name', 'title')
+	->from('table1')
+	->where('id in :parentids')->bindgroup('parentids', $parentIds);
+
+OR
+
+$s = Query::create('select columns from [table1] where (id in [parents])')
+	->replace('columns', array('id', 'table1.name', 'title'))
+	->replace('table', $table1name)
+	->replace('parents', $parentids, Query::INT)
+
+$s = Query::pureSQL('select from [t1] where [t1.a] = :j')->bindvalue('j', 'parada')
+
+         -------
+         | PDO |
+         -------
+            ^
+           | |
+    -----------------
+    |               |  - - >  SQLHelperAdapterMysql
+    | PDBConnection |  - - >  SQLHelperAdapterPostgresql
+    |               |  - - >  SQLHelperAdapterSQLite
+    -----------------
+            ^
+            |
+--------------------------
+| PDB                    |
+| * connectionPruduction |
+| * connectionTesting    |
+--------------------------
+

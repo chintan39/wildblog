@@ -7,6 +7,7 @@
 @import "default.css";
 @import "../../Common/css/cleanform.css";
 @import "../../Common/css/cleantable.css";
+@import "../../Common/css/common.css";
 
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 5px;
