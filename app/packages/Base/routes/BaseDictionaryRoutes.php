@@ -52,6 +52,12 @@ class BaseDictionaryRoutes extends AbstractDefaultRoutes {
 			->setTemplate('index')
 			->setPermission(Permission::$ADMIN);
 		
+		Router::registerAction($this, 'actionExportImport')
+			->addRuleUrl('admin/dictionary/export-import/$')
+			->setBranch(Themes::BACK_END)
+			->setTemplate('Base|defaultEdit')
+			->setPermission(Permission::$ADMIN);
+		
 	}
 	
 

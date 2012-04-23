@@ -42,7 +42,12 @@ class BaseDictionaryController extends AbstractDefaultController {
 		$analyzeLink->addSuperiorActiveActions($this->package, $this->name, "actionAnalyze");
 		$analyzeLink->addSuperiorActiveActions($this->package, $this->name, "actionAnalyzeAdd");
 		$analyzeLink->addSuperiorActiveActions($this->package, $this->name, "actionAnalyzeRemove");
-		return array_merge(parent::getLinksAdminMenuLeft(), AbstractAdminController::getLinksAdminMenuLeft($this), array($analyzeLink));
+		$actionExportImportLing = new Link(array(
+			'link' => Request::getLinkSimple($this->package, $this->name, "actionExportImport"), 
+			'label' => tg('Dictionary Import/Export'), 
+			'title' => tg('Dictionary Import/Export'), 
+			'image' => $this->getIcon()));
+		return array_merge(parent::getLinksAdminMenuLeft(), AbstractAdminController::getLinksAdminMenuLeft($this), array($analyzeLink, $actionExportImportLing));
 	}
 
 	
@@ -186,6 +191,27 @@ class BaseDictionaryController extends AbstractDefaultController {
 			$content = str_replace($paramRepl, $value, $content);
 		}
 		return $content;
+	}
+	
+	
+	/**
+	 * Import / Export to/from csv
+	 */
+	public function actionExportImport() {
+		$item = new BaseExportImportModel();
+		$item->columns = 'key, text, kind';
+		// TODO: some static lists can be interpreted in csv
+		$form = new Form();
+		$form->setIdentifier(strtolower($this->name));
+
+		$form->fill($item, array(Form::FORM_BUTTON_SUBMIT, Form::FORM_BUTTON_CANCEL));
+		
+		// handeling the form request
+		$form->handleRequest($this->getEditActionsAfterHandlin(), tg('Item has been saved.'));
+		$this->assign('form', $form->toArray());
+
+		$this->assign('title', tg('Export/Import ' . strtolower($this->name)));
+		$this->assign('help', tg('Dictionary help for Import/Export'));
 	}
 	
 	
