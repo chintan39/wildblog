@@ -69,6 +69,7 @@
 
 </div> <!-- /main -->
 
+{require file='part.htmlAreas' package=Basic}
 
 {require file='part.adminBox' theme=Common}
 
