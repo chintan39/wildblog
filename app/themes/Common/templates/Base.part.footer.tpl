@@ -1,4 +1,4 @@
-<img src="{$commonImagesPath}ajax_loader{$ajaxLoaderSuffix}.gif" id="ajax_loader" style="display: none;" alt="" />
+<div id="ajax_loader" style="display: none;"><img src="{$commonImagesPath}ajax_loader{$ajaxLoaderSuffix}.gif" alt="" /></div>
 </body>
 </html>
 

@@ -57,11 +57,16 @@ div.admin_edit a:hover img.admin_edit {
 	left: 3px;
 }
 
-img#ajax_loader {
+div#ajax_loader {
 	position: fixed;
 	top: 50%;
 	left: 50%;
 	z-index: 1000;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+div#ajax_loader img {
 	border: none;
 }
 
