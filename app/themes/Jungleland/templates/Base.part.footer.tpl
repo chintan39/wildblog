@@ -108,7 +108,9 @@
 	
 			<div class="bottom-left">
 				<p>
-				{require file='part.wwFooter' sep=' |'}
+				
+				{require file='part.wwFooter' sep=' '}
+				
 				<br />
 				<a href="http://www.bluewebtemplates.com/" title="Website Templates">website templates</a> by <a href="http://www.styleshout.com/">styleshout</a>
 				</p>

@@ -1,8 +1,8 @@
-<a href="{$base}admin/">{tg}Administration{/tg}</a>{$sep}
+<a href="{$base}admin/"><img src="{$iconsPath}24/administration.png" alt="{tg}Administration{/tg}" title="{tg}Administration{/tg}" /></a>{$sep}
 {if $actualUserInfo and $actualUserInfo->id}
-{tg}Logged:{/tg} <a href="#">{$actualUserInfo->email}</a> {$sep} 
-<a href="{linkto package=Base controller=Users action=actionLogout}" class="logging">{tg}Log out{/tg}</a>
+<a href="{linkto package=Base controller=Users action=actionEditProfile}"><img src="{$iconsPath}24/user.png" alt="{$actualUserInfo->email}" title="{$actualUserInfo->email}" /></a> {$sep} 
+<a href="{linkto package=Base controller=Users action=actionLogout}" class="logging"><img src="{$iconsPath}24/lock_off.png" alt="{tg}Log out{/tg}" title="{tg}Log out{/tg}" /></a>
 {else}
-<a href="#" onclick="return windowPopupAjaxGetContent('admin-simple');">{tg}Log in{/tg}</a>
+<a href="#" onclick="return windowPopupAjaxGetContent('admin-simple');"><img src="{$iconsPath}24/lock.png" alt="{tg}Log in{/tg}" title="{tg}Log in{/tg}" /></a>
 {/if}
 

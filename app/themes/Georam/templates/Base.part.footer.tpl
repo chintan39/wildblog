@@ -63,7 +63,7 @@
         <p class="f-right"><a href="http://www.nuviotemplates.com/">Free web templates</a> by <a href="http://www.nuvio.cz/">Nuvio</a>, sponsored by <a href="http://www.lekynainternetu.cz/" title="Léky na internetu.cz">Leky</a></p>
         <!-- Do you want remove this backlinks? Look at www.nuviotemplates.com/payment.php -->
         
-        {require file='part.wwFooter' sep=','}
+        {require file='part.wwFooter' sep=' '}
 
     </div> <!-- /footer -->
 

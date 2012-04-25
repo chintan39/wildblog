@@ -52,6 +52,8 @@ class BaseUsersRoutes extends AbstractDefaultRoutes {
 			->setBranch(Themes::BACK_END)
 			->setTemplate('defaultEdit')
 			->setPermission(Permission::$CONTENT_ADMIN | Permission::$ADMIN);
+		
+		// TODO: we need to change permission of actions defined by AbstractAdminRoutes
 
 	}
 	

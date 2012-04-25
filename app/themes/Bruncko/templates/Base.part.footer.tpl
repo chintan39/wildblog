@@ -38,7 +38,9 @@
 	<hr class="invisible" />
 	<div class="indent">
 		<div class="fleft">
-				{require file='part.wwFooter' sep=' |'}
+		
+{require file='part.wwFooter' sep=' '}
+
 		| <a href="{linkto controller=Sitemap action=actionSitemap}">Mapa webu</a>
 		</div>
 		<div class="fright">Designed by: <a href="http://www.templates.com">Website Templates</a> 

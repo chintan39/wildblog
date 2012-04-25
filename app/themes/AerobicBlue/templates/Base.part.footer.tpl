@@ -107,7 +107,9 @@
 <div class="footer-top"></div>
 <div class="footer-middle">
 <div class="copy">
-{require file='part.wwFooter' sep=' |'}
+
+{require file='part.wwFooter' sep=' '}
+
 </div><!-- footer-middle -->
 <div class="footer-bottom"></div>
 </div><!-- footwrap -->
