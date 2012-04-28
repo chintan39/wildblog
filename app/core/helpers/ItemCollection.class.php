@@ -407,10 +407,12 @@ class ItemCollection {
 					// this is valid only by config now, but has to be solve generally somehow
 					$actionLink = $action;
 					$params = array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE);
-					if ($action == 'actionEdit' && $item->id == -1) {
+					if ($action == 'actionEdit' && $item->id < 0) {
 						$actionLink = 'actionNew';
 						$params['_pred_'] = array('key' => $item->key);
 					}
+					
+					$params['token'] = Request::$tokenCurrent;
 					
 					$buttonsSet[] = array(
 						'link' => Request::getLinkItem($this->controller->package, $this->controller->getName(), $actionLink, $item, $params),

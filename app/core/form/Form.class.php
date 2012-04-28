@@ -113,6 +113,7 @@ class Form {
 	var $allowDependencies = array(); // TODO: allow to add items in selector
 	var $saveAsAction=false;
 	var $sendAjax=false;
+	var $csrf=false;
 	
 	/**
 	 * Constructor, first timestamp will be set.
@@ -806,10 +807,14 @@ class Form {
 		$this->checkCaptcha();
 		$this->checkRecaptcha();
 		$this->checkCaptchaTimer();
+		$this->checkCsrf();
 		
 	}
 
-	
+	private function checkCsrf() {
+		return !$this->csrf || $this->req['form_token'] == Request::$tokenPrevious;
+	}
+
 	/**
 	 * Checks if any of captcha tests has been passed before in current session.
 	 */
@@ -914,7 +919,14 @@ class Form {
 		$formId->setValue($this->identifier);
 		$formId->setMeta(AtributesFactory::create('form_identifier')
 			->setType(self::FORM_HIDDEN));
-		$fieldsExtra = array($formId);
+
+		// csrf token
+		$csrfToken = new FormFieldHidden($this->identifier);
+		$csrfToken->setValue(Request::$tokenCurrent);
+		$csrfToken->setMeta(AtributesFactory::create('form_token')
+			->setType(self::FORM_HIDDEN));
+
+		$fieldsExtra = array($formId, $csrfToken);
 
 		// captcha item
 		if ($this->useCaptcha && !$this->getCaptchaPassed()) {
@@ -1047,6 +1059,9 @@ class Form {
 		}
 	}
 	
+	public function setCsrf($csrf) {
+		$this->csrf = $csrf;
+	}
 	
 	/**
 	 * Sends email with content from the form.

@@ -30,7 +30,7 @@ require_once('RouterAction.class.php');
 
 class Request {
 
-	static public $url, $get, $post, $session, $cookie, $action, $homepageAction, $router, $startTime, $actionLink, $implicit=false; 
+	static public $url, $get, $post, $session, $cookie, $action, $homepageAction, $router, $startTime, $actionLink, $implicit=false, $tokenPrevious, $tokenCurrent; 
 
 	static private $uniqueNumber = 0;
 	
@@ -46,15 +46,29 @@ class Request {
 			self::$homepageAction = new Link(array(
 				'action' => self::explodeLink(Config::Get('HOMEPAGE_ACTION')),
 				'link' => ''));
+			
 			self::$startTime = microtime(true);
+			
 		} else {
 			self::$homepageAction = new Link(array(
 				'label' => tg('Homepage'), 
 				'title' => tg('Homepage'), 
 				'action' => self::explodeLink(Config::Get('HOMEPAGE_ACTION'))));
+			
+			self::$tokenCurrent = self::$tokenPrevious = isset($_SESSION['csrf_token']) ? $_SESSION['csrf_token'] : '';
 		}
 	}
-	
+
+	static public function reGenerateToken() {
+		// token generating
+		// if handle is ajax, then we do not generate new token, but use the old one
+		if (!self::isAjax()) {
+			self::$tokenCurrent = Utilities::generateToken();
+		}
+		$_SESSION['csrf_token'] = self::$tokenCurrent;
+		//echo 'Previous token: '.self::$tokenPrevious."\n<br>";
+		//echo 'Current token: '.self::$tokenCurrent."\n<br>";
+	}
 	
 	/**
 	 * Converts string expression of link to array expression.
@@ -267,6 +281,10 @@ class Request {
 		return $url;
 	}
 	
+	static public function checkCsrf() {
+		//echo 'Previous: '.self::$tokenPrevious." ?= ".self::$get['token']." (get)<br>\n";
+		return self::$tokenPrevious == self::$get['token'];
+	}
 	
 	static public function getRequestLocationFromString($str) {
 		if (preg_match('/(\w+)::(\w+)::(\w+)::(\d{1,9})/', $str, $matches)) {

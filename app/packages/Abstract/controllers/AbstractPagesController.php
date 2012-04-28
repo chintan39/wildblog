@@ -47,12 +47,20 @@ class AbstractPagesController extends AbstractNodesController {
 	}
 	
 	public function actionMoveUp($arg) {
-		$this->moveItem($arg, 'up');
+		if (Request::checkCsrf()) {
+			$this->moveItem($arg, 'up');
+		} else {
+			MessageBus::sendMessage(tg('Item') . " #$id " . tg('could not be moved.').' '.tg('CSRF protection failed.'));
+		}
 		Request::redirect(Request::getLinkSimple($this->package, $this->name, "actionListing", array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE)));
 	}
 	
 	public function actionMoveDown($arg) {
-		$this->moveItem($arg, 'down');
+		if (Request::checkCsrf()) {
+			$this->moveItem($arg, 'down');
+		} else {
+			MessageBus::sendMessage(tg('Item') . " #$id " . tg('could not be moved.').' '.tg('CSRF protection failed.'));
+		}
 		Request::redirect(Request::getLinkSimple($this->package, $this->name, "actionListing", array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE)));
 	}
 	

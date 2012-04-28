@@ -57,6 +57,7 @@ class AbstractDefaultController extends AbstractBasicController{
 	 */
 	public function actionListing($args) {
 
+		Request::reGenerateToken();
 		$items = new ItemCollection($this->getMainListIdentifier(), $this);
 		$items->setPagingAjax(true);
 		$items->setQualification(null); // we overload filters - no qualifications are used
@@ -140,10 +141,12 @@ class AbstractDefaultController extends AbstractBasicController{
 	public function actionEditSelf($args, $isSimple=false) {
 		
 		$item = $args;
+		Request::reGenerateToken();
 		$this->actionEditAdjustItem($item);
 		$form = new Form();
 		$form->setSendAjax(Request::isAjax());
 		$form->setUseTabs(true);
+		$form->setCsrf(true);
 		$form->setIdentifier(strtolower($this->name));
 
 		// new action if specified
@@ -170,12 +173,12 @@ class AbstractDefaultController extends AbstractBasicController{
 		
 		// detail action if specified
 		if ($this->removeMethodName && !$isSimple) {
-			$this->assign('removeLink', Request::getLinkItem($this->package, $this->name, $this->removeMethodName, $item));
+			$this->assign('removeLink', Request::getLinkItem($this->package, $this->name, $this->removeMethodName, $item, array('token' => Request::$tokenCurrent)));
 		}
 		
 		// detail action if specified
 		if ($this->removeSimpleMethodName && $isSimple) {
-			$this->assign('removeLinkSimple', Request::getLinkItem($this->package, $this->name, $this->removeSimpleMethodName, $item));
+			$this->assign('removeLinkSimple', Request::getLinkItem($this->package, $this->name, $this->removeSimpleMethodName, $item, array('token' => Request::$tokenCurrent)));
 		}
 		
 		// Top menu
@@ -247,8 +250,12 @@ class AbstractDefaultController extends AbstractBasicController{
 	public function actionRemoveSelf($args, $isSimple=false) {
 		$item = $args;
 		$id = $item->id;
-		$item->DeleteYourself();
-		MessageBus::sendMessage(tg('Item') . " #$id " . tg('has been deleted.'));
+		if (Request::checkCsrf()) {
+			$item->DeleteYourself();
+			MessageBus::sendMessage(tg('Item') . " #$id " . tg('has been deleted.'));
+		} else {
+			MessageBus::sendMessage(tg('Item') . " #$id " . tg('has not been deleted.').' '.tg('CSRF protection failed.'));
+		}
 		Request::redirect(Request::getLinkSimple($this->package, $this->name, ($isSimple ? 'actionEmpty' : 'actionListing')));
 	}
 	
@@ -277,10 +284,12 @@ class AbstractDefaultController extends AbstractBasicController{
 
 
 	private function actionNewSelf($actionAfterSubmit) {
+		Request::reGenerateToken();
 		$item = new $this->model();
 		$form = new Form();
 		$form->setIdentifier(strtolower($this->name));
 		$form->setUseTabs(true);
+		$form->setCsrf(true);
 		$form->fill($item);
 		$form->setDescription($this->getFormDescription());
 		
