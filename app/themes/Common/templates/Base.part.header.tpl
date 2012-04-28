@@ -16,7 +16,7 @@
   <link rel="stylesheet" media="screen,projection" type="text/css" href="{$base}app/themes/{$generalTheme}/css/screen.css" />
   <!-- css_adding -->
   {require file='part.rssFeeds' theme=Common}
-  <link rel="shortcut icon" type="image/x-icon" href="{$base}project/images/favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="{$base}{if $useThemeFavicon}app/themes/{$generalTheme}/images/{else}media/{/if}favicon.ico" />
   <!-- javascript_adding -->
   <base href="{$base}" />
   </head>

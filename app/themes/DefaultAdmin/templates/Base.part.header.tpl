@@ -1,4 +1,4 @@
-{require file='part.header' theme=Common pageTitle='Administration'|tg|cat:' | '|cat:$title}
+{require file='part.header' theme=Common pageTitle='WildBlog Administration'|tg|cat:' | '|cat:$title useThemeFavicon=1}
 	<div id="wrap">
 		<div id="page">
 			<div id="upper">
