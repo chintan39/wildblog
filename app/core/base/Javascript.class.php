@@ -140,7 +140,7 @@ class Javascript {
 			return;
 		$arrayKey = $result.'##'.$id.'##'.$kind.'##'.$key;
 		if (!isset(self::$actualTranslations[$arrayKey]))
-			self::$actualTranslations[$arrayKey] = array('key' => $key, 'kind' => $kind, 'id' => $id, 'result' => $result);
+			self::$actualTranslations[$arrayKey] = array('key' => str_replace('"', '\u0022', $key), 'kind' => $kind, 'id' => $id, 'result' => str_replace('"', '\u0022', $result));
 	}
 
 	
@@ -219,7 +219,7 @@ class Javascript {
 	 * Returns table with actual translations to be easy accessible
 	 */
 	public static function translationsToHTML() {
-		return json_encode(array_values(self::$actualTranslations));
+		return str_replace("'", "\'", json_encode(array_values(self::$actualTranslations)));
 		if (!count(self::$actualTranslations)) {
 			return '';
 		}

@@ -144,6 +144,7 @@ class AbstractDefaultController extends AbstractBasicController{
 		Request::reGenerateToken();
 		$this->actionEditAdjustItem($item);
 		$form = new Form();
+		$form->setFocusFirstItem(true);
 		$form->setSendAjax(Request::isAjax());
 		$form->setUseTabs(true);
 		$form->setCsrf(true);
@@ -287,6 +288,7 @@ class AbstractDefaultController extends AbstractBasicController{
 		Request::reGenerateToken();
 		$item = new $this->model();
 		$form = new Form();
+		$form->setFocusFirstItem(true);
 		$form->setIdentifier(strtolower($this->name));
 		$form->setUseTabs(true);
 		$form->setCsrf(true);

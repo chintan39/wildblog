@@ -114,6 +114,7 @@ class Form {
 	var $saveAsAction=false;
 	var $sendAjax=false;
 	var $csrf=false;
+	var $focusFirstItem = false;
 	
 	/**
 	 * Constructor, first timestamp will be set.
@@ -169,6 +170,10 @@ class Form {
 	 */
 	public function setSaveAsAction($saveAsAction) {
 		$this->saveAsAction = $saveAsAction;
+	}
+	
+	public function setFocusFirstItem($focusFirstItem) {
+		$this->focusFirstItem = $focusFirstItem;
 	}
 	
 	
@@ -289,6 +294,7 @@ class Form {
 			'messagesFromBus' => MessageBus::popMessages($this->identifier),
 			'identifier' => $this->identifier,
 			'sendAjax' => $this->sendAjax,
+			'focusFirstItem' => $this->focusFirstItem,
 			);
 	}
 	

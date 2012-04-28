@@ -97,7 +97,7 @@ html>body #wrap{height:auto}
 }
 
 #header div.user {
-	top: 36px;
+	top: 28px;
 	right: 160px;
 }
 
@@ -110,15 +110,15 @@ html>body #wrap{height:auto}
 	position: absolute;
 	top: 36px;
 	left: 820px;
-	padding-right: 20px;
+	padding-right: 28px;
 	text-align: right;
 	width: 115px;
-	height: 20px;
-	background: url("/media/.ico/16/user.png") right center no-repeat;
+	height: 24px;
+	background: url("/media/.ico/24/user.png") right center no-repeat;
 }
 
 #header a.logging.logout {
-	background: url("/media/.ico/16/user_remove.png") right center no-repeat;
+	background: url("/media/.ico/24/user_remove.png") right center no-repeat;
 }
 
 #middle {

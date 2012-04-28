@@ -103,4 +103,10 @@
 
 </form>
 
+{if $form.focusFirstItem}
+<script type="text/javascript">
+// ##focusOnFirstElem##form{$form.identifier}##
+focusOnFirstElem('form{$form.identifier}');
+</script>
+{/if}
 

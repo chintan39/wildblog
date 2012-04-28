@@ -50,6 +50,7 @@ class BaseUsersController extends AbstractDefaultController {
 	public function actionLoginSelf($sendAjax=false) {
 		$item = new BaseLoginModel();
 		$form = new Form();
+		$form->setFocusFirstItem(true);
 		$form->setSendAjax($sendAjax);
 		$form->setIdentifier('loginForm');
 		$form->fill($item);

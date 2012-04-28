@@ -85,6 +85,17 @@ blank = {
 }
 
 
+focusOnFirstElem = function (formElemId) {
+	var firstElement = Form.getElements($(formElemId)).find(function(element) {
+		return element.type != 'hidden' && !element.disabled &&
+		['input', 'select', 'textarea'].include(element.tagName.toLowerCase()) &&
+		element.type != 'checkbox';
+	});
+	if(firstElement != null)
+		firstElement.activate();
+}
+
+
 ajaxLoaderShow = function() {
 	var elem = $('ajax_loader');
 	if (elem)
@@ -381,6 +392,9 @@ windowPopupAjaxGetContent = function (_link, _resultAction, _resultContainer, _r
 		    win.getContent().innerHTML = content; 
 		    ajaxLoaderHide();
 		    win.showCenter(true);
+			var res = content.match(/##focusOnFirstElem##([^#]+)##/);
+			if (res)
+				window.setTimeout(function() { focusOnFirstElem(res[1]) }, 1000);
 		},
 		onFailure: function(){ alert('Something went wrong in windowPopupAjaxGetContent...') }
 	  });
