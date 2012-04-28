@@ -411,8 +411,8 @@ class ItemCollection {
 						$actionLink = 'actionNew';
 						$params['_pred_'] = array('key' => $item->key);
 					}
-					
-					$params['token'] = Request::$tokenCurrent;
+					if (in_array($buttonType, array(ItemCollection::BUTTON_MOVEUP, ItemCollection::BUTTON_MOVEDOWN, ItemCollection::BUTTON_REMOVE)))
+						$params['token'] = Request::$tokenCurrent;
 					
 					$buttonsSet[] = array(
 						'link' => Request::getLinkItem($this->controller->package, $this->controller->getName(), $actionLink, $item, $params),

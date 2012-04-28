@@ -50,7 +50,7 @@ class AbstractPagesController extends AbstractNodesController {
 		if (Request::checkCsrf()) {
 			$this->moveItem($arg, 'up');
 		} else {
-			MessageBus::sendMessage(tg('Item') . " #$id " . tg('could not be moved.').' '.tg('CSRF protection failed.'));
+			MessageBus::sendMessage(tg('Item') . " " . tg('could not be moved.').' '.tg('CSRF protection failed.'));
 		}
 		Request::redirect(Request::getLinkSimple($this->package, $this->name, "actionListing", array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE)));
 	}
@@ -59,7 +59,7 @@ class AbstractPagesController extends AbstractNodesController {
 		if (Request::checkCsrf()) {
 			$this->moveItem($arg, 'down');
 		} else {
-			MessageBus::sendMessage(tg('Item') . " #$id " . tg('could not be moved.').' '.tg('CSRF protection failed.'));
+			MessageBus::sendMessage(tg('Item') . " " . tg('could not be moved.').' '.tg('CSRF protection failed.'));
 		}
 		Request::redirect(Request::getLinkSimple($this->package, $this->name, "actionListing", array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE)));
 	}
