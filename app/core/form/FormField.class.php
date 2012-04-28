@@ -143,11 +143,11 @@ class FormField {
 		}
 	}
 	
-	public function getLabel() {
+	public function getLabel($label='', $description='') {
 		return "\n<label for=\"" . $this->getIdValue() . "\">" 
-			. tg($this->meta->getLabel())
+			. tg(empty($label) ? $this->meta->getLabel() : $label)
 			. (Restriction::hasRestrictions($this->meta->getRestrictions(), Restriction::R_NOT_EMPTY) ? '<span class="required">*</span>' : '')
-			. ($this->meta->getDescription() ? "<span class=\"small\">" . tg($this->meta->getDescription()) . "</span>":"") 
+			. (($this->meta->getDescription() || !empty($description)) ? "<span class=\"small\">" . tg(empty($description) ? $this->meta->getDescription() : $description) . "</span>":"") 
 			. ($this->message->error ? "<span class=\"small error\">" . implode("<br />", $this->message->error) . "</span>":"") 
 			. ($this->message->warning ? "<span class=\"small error\">" . implode("<br />", $this->message->warning) . "</span>":"") 
 			. "</label>\n";
@@ -334,13 +334,13 @@ class FormFieldCheckbox extends FormField {
 class FormFieldPassword extends FormField {
 	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = "<input type=\"password\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"\" class=\"$class\" />";
-		$origFieldId = $this->getIdValue();
 		if (Restriction::hasRestrictions($this->meta->getRestrictions(), Restriction::R_CONFIRM_DOUBLE)) {
+			$origFieldId = $this->getIdValue();
 			$this->html .= "\n<div class=\"clear\"></div>";
 			$this->html .= "\n</div>";
 			$confirmName = "confirm_" . $this->meta->getName();
 			$this->html .= "\n\n<div class=\"line\" " . $this->getIdAttr('line_confirm') . ">";
-			$this->html .= $this->meta->getLabel();
+			$this->html .= $this->getLabel('Confirm ' . $this->meta->getLabel(), tg($this->meta->getDescription() . ' again'));
 			$this->html .= "<input type=\"password\" onchange=\"if (this.value != $('$origFieldId').value) {this.addClassName('error');} else {this.removeClassName('error');}\" " . $this->getIdAttr('confirm') . " name=\"" . $confirmName . "\" value=\"\" class=\"$class\" />";
 		}
 	}

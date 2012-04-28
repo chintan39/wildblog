@@ -84,7 +84,7 @@ class BaseUsersController extends AbstractDefaultController {
 	 */
 	public function actionLogout($args) {
 		Permission::setUser(false);
-		Request::redirect(Request::getLinkItem('Base', 'Users', 'actionLogin', 'You have been logged out.'));
+		Request::redirect(Request::getLinkHomePage());
 	}
 
 	
@@ -120,7 +120,7 @@ class BaseUsersController extends AbstractDefaultController {
 		$user->setMetadata('active', 'isEditable', ModelMetaItem::NEVER);
 		$user->setMetadata('private_config', 'isEditable', ModelMetaItem::NEVER);
 		$form = new Form();
-		$form->setIdentifier(tg('Edit your profile'));
+		$form->setIdentifier('profile');
 		$form->fill($user);
 		// handeling the form request
 		$form->handleRequest();

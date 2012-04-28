@@ -31,7 +31,7 @@ class BaseMessagesRoutes extends AbstractDefaultRoutes {
 	 */
 	public function setRouter() {
 		
-		AbstractAdminRoutes::setRouter($this, Permission::$CONTENT_ADMIN | Permission::$ADMIN);
+		AbstractAdminRoutes::setRouter($this, Permission::$ADMIN);
 		
 	}
 

@@ -30,7 +30,7 @@ class BasicHtmlAreasRoutes extends AbstractPagesRoutes {
 	 * with new definitions.
 	 */
 	public function setRouter() {
-		AbstractAdminRoutes::setRouter($this);
+		AbstractAdminRoutes::setRouter($this, Permission::$ADMIN);
 
 		Router::registerSubaction($this, 'subactionMainHtmlAreas')
 			->setTemplate('part.htmlAreas');

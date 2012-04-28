@@ -31,7 +31,7 @@ class BaseUsersRoutes extends AbstractDefaultRoutes {
 	 */
 	public function setRouter() {
 
-		AbstractAdminRoutes::setRouter($this);
+		AbstractAdminRoutes::setRouter($this, Permission::$ADMIN);
 
 		Router::registerAction($this, 'actionLogin')
 			->addRuleUrl('admin/$')

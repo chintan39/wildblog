@@ -24,7 +24,7 @@ class BaseLanguagesRoutes extends AbstractNodesRoutes {
 
 	public function setRouter() {
 		
-		AbstractAdminRoutes::setRouter($this);
+		AbstractAdminRoutes::setRouter($this, Permission::$ADMIN);
 	}
 	
 }
