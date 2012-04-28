@@ -52,7 +52,7 @@ class BasicPackage extends Package {
 	 */
 	public function getLinksAdminMenuLeft() {
 		$link = new Link(array(
-			'link' => Request::getLinkSimple($this->name, "Articles", "actionListing"), 
+			//'link' => Request::getLinkSimple($this->name, "Articles", "actionListing"), 
 			'label' => tg($this->name . " package"), 
 			'title' => tg("articles, news, contact form"), 
 			'image' => $this->getIcon(),

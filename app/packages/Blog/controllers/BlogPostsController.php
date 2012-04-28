@@ -68,14 +68,15 @@ class BlogPostsController extends AbstractPagesController {
 	public function actionDetail($args) {
 
 		// navigation
-		$home = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, 'actionPostsList'), 
-			'label' => tp('Homepage'), 
-			'title' => tp('Homepage')));
+		$home = Request::getLinkHomePage();
 		$blog = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, 'actionPostsList'), 
+			//'link' => Request::getLinkSimple($this->package, $this->name, 'actionPostsList'), 
 			'label' => tp('Blog'), 
-			'title' => tp('Blog')));
+			'title' => tp('Blog'),
+			'action' => array(
+				'package' => $this->package, 
+				'controller' => $this->name, 
+				'action' => 'actionPostsList')));
 		$navigation = new LinkCollection();
 		$navigation->addLink($home);
 		$navigation->addLink($blog);

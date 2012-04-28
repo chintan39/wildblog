@@ -39,7 +39,7 @@ class ReferencesPackage extends Package {
 	 */
 	public function getLinksAdminMenuLeft() {
 		$link = new Link(array(
-			'link' => Request::getLinkSimple($this->name, 'References', 'actionListing'), 
+			//'link' => Request::getLinkSimple($this->name, 'References', 'actionListing'), 
 			'label' => tg($this->name . ' ' . 'package'), 
 			'title' => tg('references from customers'), 
 			'image' => $this->getIcon(),

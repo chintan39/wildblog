@@ -443,7 +443,7 @@ class AbstractDefaultController extends AbstractBasicController{
 		if (!empty($actionsSimple)) {
 			foreach ($actionsSimple as $action => $actionDesc) {
 				$result[] = new Link(array(
-					'link' => Request::getLinkSimple($this->package, $this->name, $action), 
+					//'link' => Request::getLinkSimple($this->package, $this->name, $action), 
 					'label' => '(' . $this->name . ') ' . $actionDesc, 
 					'title' => $actionDesc,
 					'action' => array(
@@ -475,7 +475,7 @@ class AbstractDefaultController extends AbstractBasicController{
 				foreach ($actionsItems as $action => $actionDesc) {
 					foreach ($items as $item) {
 						$result[] = new Link(array(
-							'link' => Request::getLinkItem($this->package, $this->name, $action, $item), 
+							//'link' => Request::getLinkItem($this->package, $this->name, $action, $item), 
 							'label' => '(' . $actionDesc . ') ' . $item->makeSelectTitle(), 
 							'title' => $item->makeSelectTitle(),
 							'action' => array(

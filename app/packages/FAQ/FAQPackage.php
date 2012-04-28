@@ -29,7 +29,7 @@ class FAQPackage extends Package {
 	
 	public function getLinksAdminMenuLeft() {
 		$link = new Link(array(
-			'link' => Request::getLinkSimple($this->name, "Questions", "actionListing"), 
+			//'link' => Request::getLinkSimple($this->name, "Questions", "actionListing"), 
 			'label' => tg($this->name . " package"), 
 			'title' => tg("questions, answers"), 
 			'image' => $this->getIcon(),

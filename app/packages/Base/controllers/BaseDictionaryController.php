@@ -34,7 +34,7 @@ class BaseDictionaryController extends AbstractDefaultController {
 	 */
 	public function getLinksAdminMenuLeft() {
 		$analyzeLink = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, 'actionAnalyze'), 
+			//'link' => Request::getLinkSimple($this->package, $this->name, 'actionAnalyze'), 
 			'label' => tg('Dictionary Analyzer'), 
 			'title' => tg('analyze translations'), 
 			'image' => $this->getIcon(),
@@ -48,7 +48,7 @@ class BaseDictionaryController extends AbstractDefaultController {
 		$analyzeLink->addSuperiorActiveActions($this->package, $this->name, 'actionAnalyzeRemove');
 		
 		$actionExportImportLing = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, 'actionExportImport'), 
+			//'link' => Request::getLinkSimple($this->package, $this->name, 'actionExportImport'), 
 			'label' => tg('Dictionary Import/Export'), 
 			'title' => tg('Dictionary Import/Export'), 
 			'image' => $this->getIcon(),

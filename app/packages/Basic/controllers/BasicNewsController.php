@@ -82,9 +82,13 @@ class BasicNewsController extends AbstractPagesController {
 
 		// navigation
 		$news = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, 'actionNewsList'), 
+			//'link' => Request::getLinkSimple($this->package, $this->name, 'actionNewsList'), 
 			'label' => tp('News'), 
-			'title' => tp('News')));
+			'title' => tp('News'),
+			'action' => array(
+				'package' => $this->package, 
+				'controller' => $this->name, 
+				'action' => 'actionNewsList')));
 		$navigation = new LinkCollection();
 		$navigation->addLink($news);
 		$this->assign("navigation", $navigation->getLinks());

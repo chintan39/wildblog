@@ -39,7 +39,7 @@ class ResearchPackage extends Package {
 	 */
 	public function getLinksAdminMenuLeft() {
 		$link = new Link(array(
-			'link' => Request::getLinkSimple($this->name, 'Researches', 'actionListing'), 
+			//'link' => Request::getLinkSimple($this->name, 'Researches', 'actionListing'), 
 			'label' => tg($this->name . ' ' . tg('package')), 
 			'title' => tg('research of visitors\' opinion'), 
 			'image' => $this->getIcon(),

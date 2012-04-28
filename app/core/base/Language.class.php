@@ -213,11 +213,11 @@ class Language {
 							$newLang->link = Request::getLinkSimple($ac['item']->package, $controllerName, 'actionListing', array($key => $lang->url));
 						} catch (Exception $e) {
 							// get link to root
-							$newLang->link = Request::getLinkHomePage(array($key => $lang->url));
+							$newLang->link = Request::getLinkHomePage(array($key => $lang->url))->getLink();
 						}
 					} else {
 						// get link to root
-						$newLang->link = Request::getLinkHomePage(array($key => $lang->url));
+						$newLang->link = Request::getLinkHomePage(array($key => $lang->url))->getLink();
 					}
 				} else {
 					if ($ac['item'] && !is_array($ac['item'])) {

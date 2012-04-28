@@ -52,7 +52,7 @@ class BaseTestsController extends AbstractDefaultController {
 	 */
 	public function getLinksAdminMenuLeft() {
 		$listLink = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, "actionListing"), 
+			//'link' => Request::getLinkSimple($this->package, $this->name, "actionListing"), 
 			'label' => $this->name, 
 			'title' => tg('tests'), 
 			'image' => $this->getIcon(), 

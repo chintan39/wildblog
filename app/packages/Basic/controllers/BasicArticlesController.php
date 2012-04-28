@@ -141,7 +141,7 @@ class BasicArticlesController extends AbstractPagesController {
 					'item' => $i->id,
 					);
 				$link = new Link(array(
-				'link' => $linkAddress,
+				//'link' => $linkAddress,
 				'label' => '(' . $this->name . ') ' . $i->title, 
 				'title' => $i->title,
 				'action' => $action,
@@ -160,7 +160,7 @@ class BasicArticlesController extends AbstractPagesController {
 		if (preg_match_all('/a\s+name="([^"]+)"/i', $text, $matches)) {
 			foreach ($matches[1] as $anchor) {
 				$link = new Link(array(
-				'link' => $parentLink . '#' . $anchor, 
+				//'link' => $parentLink . '#' . $anchor, 
 				'label' => $anchor, 
 				'title' => $anchor,
 				'action' => $action,
@@ -271,7 +271,7 @@ class BasicArticlesController extends AbstractPagesController {
 						foreach ($articles as $key => $art) {
 							$articles[$key]->addNonDbProperty('link');
 							if ($homepageArticleInUse && $articles[$key] == Config::Get('BASIC_HOMEPAGE_ARTICLE_ID')) {
-								$articles[$key]->link = Request::getLinkHomePage();
+								$articles[$key]->link = Request::getLinkHomePage()->getLink();
 							} else {
 								$articles[$key]->link = Request::getLinkItem($this->package, $this->name, "actionDetail", $art);
 							}

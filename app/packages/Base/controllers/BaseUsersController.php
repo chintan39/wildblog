@@ -84,7 +84,7 @@ class BaseUsersController extends AbstractDefaultController {
 	 */
 	public function actionLogout($args) {
 		Permission::setUser(false);
-		Request::redirect(Request::getLinkHomePage());
+		Request::redirect(Request::getLinkHomePage()->getLink());
 	}
 
 	

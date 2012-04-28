@@ -284,6 +284,15 @@ class Request {
 	}
 	
 	
+	static public function getLinkArray($l) {
+		if (isset($l['item'])) {
+			return self::getLinkItem($l['package'], $l['controller'], $l['action'], $l['item'], isset($l['args']) ? $l['args'] : null);
+		} else {
+			return self::getLinkSimple($l['package'], $l['controller'], $l['action'], isset($l['args']) ? $l['args'] : null);
+		}
+	}
+	
+	
 	static public function getLinkFromRequestLocation($requestLocation) {
 		if ($requestLocation && $requestLocation->item)
 			return self::getLinkItem($requestLocation->package, $requestLocation->controller, $requestLocation->method, $requestLocation->item);
@@ -343,7 +352,14 @@ class Request {
 	 * @see getLinkSimple
 	 */
 	static public function getLinkHomePage($args=array()) {
-		return self::getLinkSimple(self::$homepageAction['package'], self::$homepageAction['controller'], self::$homepageAction['action'], $args); 
+		return new Link(array(
+			'label' => tg('Homepage'), 
+			'title' => tg('Homepage'), 
+			'action' => array(
+				'package' => self::$homepageAction['package'], 
+				'controller' => self::$homepageAction['controller'], 
+				'action' => self::$homepageAction['action'], 
+				'args' => $args))); 
 	}
 	
 	

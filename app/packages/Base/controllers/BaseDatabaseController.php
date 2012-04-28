@@ -204,7 +204,7 @@ class BaseDatabaseController extends AbstractDefaultController {
 	 */
 	public function getLinksAdminMenuLeft() {
 		$listLink = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, 'actionListing'), 
+			//'link' => Request::getLinkSimple($this->package, $this->name, 'actionListing'), 
 			'label' => $this->name, 
 			'title' => tg('database config'), 
 			'image' => $this->getIcon(), 
@@ -216,7 +216,7 @@ class BaseDatabaseController extends AbstractDefaultController {
 		$listLink->setOrder($this->order);
 		
 		$constructLink = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, 'actionConstruct'), 
+			//'link' => Request::getLinkSimple($this->package, $this->name, 'actionConstruct'), 
 			'label' => $this->name . ' ' . tg('construct'), 
 			'title' => tg('database construct'), 
 			'image' => $this->getIcon(),
@@ -226,7 +226,7 @@ class BaseDatabaseController extends AbstractDefaultController {
 				'action' => 'actionConstruct')));
 		
 		$testCopyLink = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, 'actionDbTestCopy'), 
+			//'link' => Request::getLinkSimple($this->package, $this->name, 'actionDbTestCopy'), 
 			'label' => $this->name . ' ' . tg('test DB copy'), 
 			'title' => tg('database test copy'), 
 			'image' => $this->getIcon(),
@@ -236,7 +236,7 @@ class BaseDatabaseController extends AbstractDefaultController {
 				'action' => 'actionDbTestCopy')));
 		
 		$checkLink = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, 'actionDbCheck'), 
+			//'link' => Request::getLinkSimple($this->package, $this->name, 'actionDbCheck'), 
 			'label' => $this->name . ' ' . tg('check'), 
 			'title' => tg('database check'), 
 			'image' => $this->getIcon(),

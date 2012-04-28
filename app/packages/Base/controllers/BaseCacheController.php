@@ -47,7 +47,7 @@ class BaseCacheController extends AbstractBasicController {
 	
 	public function getLinksAdminMenuLeft() {
 		$link = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, 'actionClearCache'), 
+			//'link' => Request::getLinkSimple($this->package, $this->name, 'actionClearCache'), 
 			'label' => tg('Clear cache'), 
 			'title' => tg('removes cached data, stored templates'), 
 			'image' => $this->getIcon(), 

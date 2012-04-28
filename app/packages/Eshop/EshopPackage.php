@@ -39,7 +39,7 @@ class EshopPackage extends Package {
 	 */
 	public function getLinksAdminMenuLeft() {
 		$link = new Link(array(
-			'link' => Request::getLinkSimple($this->name, "Products", "actionListing"), 
+			//'link' => Request::getLinkSimple($this->name, "Products", "actionListing"), 
 			'label' => tg($this->name . ' ' . tg('package')), 
 			'title' => tg("products, manofacturers, orders"), 
 			'image' => $this->getIcon(),

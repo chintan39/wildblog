@@ -41,7 +41,7 @@ class NewsletterPackage extends Package {
 	 */
 	public function getLinksAdminMenuLeft() {
 		$link = new Link(array(
-			'link' => Request::getLinkSimple($this->name, 'Messages', 'actionListing'), 
+			//'link' => Request::getLinkSimple($this->name, 'Messages', 'actionListing'), 
 			'label' => tg($this->name . ' ' . tg('package')), 
 			'title' => tg('partner links, contacts'), 
 			'image' => $this->getIcon(),

@@ -43,7 +43,7 @@ class Link {
 	 * TODO: remake dependency to subLinkCollection
 	 */
 	public function __construct($initArray=array()) {
-		$this->link = isset($initArray['link']) ? $initArray['link'] : '';
+		$this->link = isset($initArray['link']) ? $initArray['link'] : (isset($initArray['action']) ? Request::getLinkArray($initArray['action']): '');
 		$this->linkRel = isset($initArray['link']) ? str_replace(Request::$url['base'], '', $initArray['link']) : '';
 		$this->label = isset($initArray['label']) ? $initArray['label'] : null;
 		$this->title = isset($initArray['title']) ? $initArray['title'] : null;
@@ -96,6 +96,13 @@ class Link {
 	 */
 	public function getActivity() {
 		return $this->activity;
+	}
+	
+	/**
+	 * Returns the link in string format
+	 */
+	public function getLink() {
+		return $this->link;
 	}
 	
 	/**

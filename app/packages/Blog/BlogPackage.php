@@ -31,7 +31,7 @@ class BlogPackage extends Package {
 	
 	public function getLinksAdminMenuLeft() {
 		$link = new Link(array(
-			'link' => Request::getLinkSimple($this->name, "Posts", "actionListing"), 
+			//'link' => Request::getLinkSimple($this->name, "Posts", "actionListing"), 
 			'label' => tg($this->name . " package"), 
 			'title' => tg("blog posts, tags, comments"), 
 			'image' => $this->getIcon(),

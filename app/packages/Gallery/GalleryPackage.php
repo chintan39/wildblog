@@ -41,7 +41,7 @@ class GalleryPackage extends Package {
 	 */
 	public function getLinksAdminMenuLeft() {
 		$link = new Link(array(
-			'link' => Request::getLinkSimple($this->name, "Galleries", "actionListing"), 
+			//'link' => Request::getLinkSimple($this->name, "Galleries", "actionListing"), 
 			'label' => tg($this->name . ' ' . 'package'), 
 			'title' => tg('image galleries'), 
 			'image' => $this->getIcon(),

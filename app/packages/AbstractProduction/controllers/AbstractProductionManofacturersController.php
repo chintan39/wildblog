@@ -33,10 +33,7 @@ class AbstractProductionManofacturersController extends AbstractNodesController 
 
 		// navigation
 		$navigation = new LinkCollection();
-		$home = new Link(array(
-			'link' => Request::getLinkHomePage(), 
-			'label' => tg('Homepage'), 
-			'title' => tg('Homepage')));
+		$home = Request::getLinkHomePage();
 		$navigation->addLink($home);
 		$this->assign("navigation", $navigation->getLinks());
 		

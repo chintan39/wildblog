@@ -21,7 +21,7 @@ abstract class AbstractAdminController {
 
 	static function getLinksAdminMenuLeft($object) {
 		$listLink = new Link(array(
-			'link' => Request::getLinkSimple($object->package, $object->name, 'actionListing'), 
+			//'link' => Request::getLinkSimple($object->package, $object->name, 'actionListing'), 
 			'label' => tg($object->name), 
 			'title' => tg('list of ' . strtolower($object->name)), 
 			'image' => $object->getIcon(), 
@@ -38,7 +38,7 @@ abstract class AbstractAdminController {
 
 	static function getLinksAdminMenuTop($object) {
 		$listLink = new Link(array(
-			'link' => Request::getLinkSimple($object->package, $object->name, 'actionListing'), 
+			//'link' => Request::getLinkSimple($object->package, $object->name, 'actionListing'), 
 			'label' => (tg('list of' . ' ' . strtolower($object->name))),
 			'title' => (tg('list of' . ' ' . strtolower($object->name))), 
 			'image' => 'list', 
@@ -50,7 +50,7 @@ abstract class AbstractAdminController {
 		$listLink->addSuperiorActiveActions($object->package, $object->name, 'actionView');
 		$listLink->setOrder($object->order);
 		$newLink = new Link(array(
-			'link' => Request::getLinkSimple($object->package, $object->name, 'actionNew'), 
+			//'link' => Request::getLinkSimple($object->package, $object->name, 'actionNew'), 
 			'label' => tg('insert new' . ' ' . strtolower($object->name)), 
 			'title' => tg('insert new' . ' ' . strtolower($object->name)), 
 			'image' => 'add', 
@@ -64,7 +64,7 @@ abstract class AbstractAdminController {
 
 	static function getLinksAdminMenuLeftListing($object) {
 		$listLink = new Link(array(
-			'link' => Request::getLinkSimple($object->package, $object->name, 'actionListing'), 
+			//'link' => Request::getLinkSimple($object->package, $object->name, 'actionListing'), 
 			'label' => tg($object->name), 
 			'title' => tg('list of ' . strtolower($object->name)), 
 			'image' => $object->getIcon(), 

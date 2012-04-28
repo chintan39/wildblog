@@ -117,7 +117,7 @@ class LinkCollection {
 			}
 			$requestLocation = Request::getRequestLocationFromString($item->link);
 			$newLink = new Link(array(
-				'link' => Request::getLinkFromRequestLocation($requestLocation), 
+				//'link' => Request::getLinkFromRequestLocation($requestLocation), 
 				'label' => $item->makeSelectTitle(),
 				'title' => $item->makeSelectTitle(), 
 				'action' => array(

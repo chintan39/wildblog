@@ -39,7 +39,7 @@ class CalendarPackage extends Package {
 	 */
 	public function getLinksAdminMenuLeft() {
 		$link = new Link(array(
-			'link' => Request::getLinkSimple($this->name, "Events", "actionListing"), 
+			//'link' => Request::getLinkSimple($this->name, "Events", "actionListing"), 
 			'label' => tg($this->name . ' ' . tg('package')), 
 			'title' => tg('events, calendar tags'), 
 			'image' => $this->getIcon(),

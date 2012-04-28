@@ -35,7 +35,7 @@ class BasePackage extends Package {
 	
 	public function getLinksAdminMenuLeft() {
 		$link = new Link(array(
-			'link' => Request::getLinkSimple($this->name, 'Dictionary', 'actionListing'), 
+			//'link' => Request::getLinkSimple($this->name, 'Dictionary', 'actionListing'), 
 			'label' => tg($this->name . ' package'), 
 			'title' => tg('static texts, database, users, languages'), 
 			'image' => $this->getIcon(),
