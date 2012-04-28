@@ -204,34 +204,46 @@ class BaseDatabaseController extends AbstractDefaultController {
 	 */
 	public function getLinksAdminMenuLeft() {
 		$listLink = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, "actionListing"), 
+			'link' => Request::getLinkSimple($this->package, $this->name, 'actionListing'), 
 			'label' => $this->name, 
 			'title' => tg('database config'), 
 			'image' => $this->getIcon(), 
 			'action' => array(
-				"package" => $this->package, 
-				"controller" => $this->name, 
-				"action" => "actionListing")));
-		$listLink->addSuperiorActiveActions($this->package, $this->name, "actionEdit");
+				'package' => $this->package, 
+				'controller' => $this->name, 
+				'action' => 'actionListing')));
+		$listLink->addSuperiorActiveActions($this->package, $this->name, 'actionEdit');
 		$listLink->setOrder($this->order);
 		
 		$constructLink = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, "actionConstruct"), 
+			'link' => Request::getLinkSimple($this->package, $this->name, 'actionConstruct'), 
 			'label' => $this->name . ' ' . tg('construct'), 
 			'title' => tg('database construct'), 
-			'image' => $this->getIcon()));
+			'image' => $this->getIcon(),
+			'action' => array(
+				'package' => $this->package, 
+				'controller' => $this->name, 
+				'action' => 'actionConstruct')));
 		
 		$testCopyLink = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, "actionDbTestCopy"), 
+			'link' => Request::getLinkSimple($this->package, $this->name, 'actionDbTestCopy'), 
 			'label' => $this->name . ' ' . tg('test DB copy'), 
 			'title' => tg('database test copy'), 
-			'image' => $this->getIcon()));
+			'image' => $this->getIcon(),
+			'action' => array(
+				'package' => $this->package, 
+				'controller' => $this->name, 
+				'action' => 'actionDbTestCopy')));
 		
 		$checkLink = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, "actionDbCheck"), 
+			'link' => Request::getLinkSimple($this->package, $this->name, 'actionDbCheck'), 
 			'label' => $this->name . ' ' . tg('check'), 
 			'title' => tg('database check'), 
-			'image' => $this->getIcon()));
+			'image' => $this->getIcon(),
+			'action' => array(
+				'package' => $this->package, 
+				'controller' => $this->name, 
+				'action' => 'actionDbCheck')));
 		$checkLink->setOrder($this->order);
 		
 		return array($listLink, $testCopyLink, $constructLink, $checkLink);

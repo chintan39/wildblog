@@ -27,7 +27,7 @@ class BaseMenuController extends AbstractBasicController {
 	public function subactionAdminMenuLeft($args) {
 		Benchmark::log("Begin of creating MenuController::AdminMenuLeft");
 		$adminMenuLeft = new LinkCollection();
-		$adminMenuLeft->setIgnorePermissionDenied(true);
+		$adminMenuLeft->setIgnorePermissionDenied(false);
 		$adminMenuLeft->getContentFromControllers("AdminMenuLeft");
 		$adminMenuLeft->sort('order');
 		$this->assign("adminMenuLeft", $adminMenuLeft->getLinks());

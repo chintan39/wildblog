@@ -34,19 +34,29 @@ class BaseDictionaryController extends AbstractDefaultController {
 	 */
 	public function getLinksAdminMenuLeft() {
 		$analyzeLink = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, "actionAnalyze"), 
+			'link' => Request::getLinkSimple($this->package, $this->name, 'actionAnalyze'), 
 			'label' => tg('Dictionary Analyzer'), 
 			'title' => tg('analyze translations'), 
-			'image' => $this->getIcon()));
+			'image' => $this->getIcon(),
+			'action' => array(
+				'package' => $this->package, 
+				'controller' => $this->name, 
+				'action' => 'actionAnalyze')));
 		$analyzeLink->setOrder($this->order);
-		$analyzeLink->addSuperiorActiveActions($this->package, $this->name, "actionAnalyze");
-		$analyzeLink->addSuperiorActiveActions($this->package, $this->name, "actionAnalyzeAdd");
-		$analyzeLink->addSuperiorActiveActions($this->package, $this->name, "actionAnalyzeRemove");
+		$analyzeLink->addSuperiorActiveActions($this->package, $this->name, 'actionAnalyze');
+		$analyzeLink->addSuperiorActiveActions($this->package, $this->name, 'actionAnalyzeAdd');
+		$analyzeLink->addSuperiorActiveActions($this->package, $this->name, 'actionAnalyzeRemove');
+		
 		$actionExportImportLing = new Link(array(
-			'link' => Request::getLinkSimple($this->package, $this->name, "actionExportImport"), 
+			'link' => Request::getLinkSimple($this->package, $this->name, 'actionExportImport'), 
 			'label' => tg('Dictionary Import/Export'), 
 			'title' => tg('Dictionary Import/Export'), 
-			'image' => $this->getIcon()));
+			'image' => $this->getIcon(),
+			'action' => array(
+				'package' => $this->package, 
+				'controller' => $this->name, 
+				'action' => 'actionExportImport')));
+		
 		return array_merge(parent::getLinksAdminMenuLeft(), AbstractAdminController::getLinksAdminMenuLeft($this), array($analyzeLink, $actionExportImportLing));
 	}
 
