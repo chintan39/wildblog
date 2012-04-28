@@ -39,9 +39,20 @@ class Request {
 	/**
 	 * Constructor
 	 */
-	static public function init() {
-		self::$homepageAction = self::explodeLink(Config::Get('HOMEPAGE_ACTION'));
-		self::$startTime = microtime(true);
+	static public function init($full=false) {
+		if (!$full) {
+			// this is not complete link, we cannot get dictionary, create 
+			// link as string etc. We will create it again later
+			self::$homepageAction = new Link(array(
+				'action' => self::explodeLink(Config::Get('HOMEPAGE_ACTION')),
+				'link' => ''));
+			self::$startTime = microtime(true);
+		} else {
+			self::$homepageAction = new Link(array(
+				'label' => tg('Homepage'), 
+				'title' => tg('Homepage'), 
+				'action' => self::explodeLink(Config::Get('HOMEPAGE_ACTION'))));
+		}
 	}
 	
 	
@@ -195,6 +206,8 @@ class Request {
 			Javascript::addFile(self::$url['base'] . 'app/libs/wwbase.js');
 		}
 		
+		self::init(true);
+
 		Benchmark::logSpeed('Handling the request by router.');
 		// handle the request
 		self::$router->handleRequest();
@@ -285,7 +298,7 @@ class Request {
 	
 	
 	static public function getLinkArray($l) {
-		if (isset($l['item'])) {
+		if (isset($l['item']) && $l['item']) {
 			return self::getLinkItem($l['package'], $l['controller'], $l['action'], $l['item'], isset($l['args']) ? $l['args'] : null);
 		} else {
 			return self::getLinkSimple($l['package'], $l['controller'], $l['action'], isset($l['args']) ? $l['args'] : null);
@@ -352,14 +365,12 @@ class Request {
 	 * @see getLinkSimple
 	 */
 	static public function getLinkHomePage($args=array()) {
-		return new Link(array(
-			'label' => tg('Homepage'), 
-			'title' => tg('Homepage'), 
-			'action' => array(
-				'package' => self::$homepageAction['package'], 
-				'controller' => self::$homepageAction['controller'], 
-				'action' => self::$homepageAction['action'], 
-				'args' => $args))); 
+		if (empty($args))
+			return self::$homepageAction;
+		else
+			$t = clone self::$homepageAction;
+			$t->setArgs($args);
+			return $t;
 	}
 	
 	
@@ -455,9 +466,9 @@ class Request {
 	 * @return bool True if actions are equal.
 	 */
 	static public function checkHomepageAction($package, $controller, $action) {
-		return (self::$homepageAction['action'] == $action
-			&& self::$homepageAction['controller'] == $controller
-			&& self::$homepageAction['package'] == $package);
+		return (self::$homepageAction->action['action'] == $action
+			&& self::$homepageAction->action['controller'] == $controller
+			&& self::$homepageAction->action['package'] == $package);
 	}
 	
 	

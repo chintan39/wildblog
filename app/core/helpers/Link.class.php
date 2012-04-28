@@ -43,21 +43,25 @@ class Link {
 	 * TODO: remake dependency to subLinkCollection
 	 */
 	public function __construct($initArray=array()) {
-		$this->link = isset($initArray['link']) ? $initArray['link'] : (isset($initArray['action']) ? Request::getLinkArray($initArray['action']): '');
-		$this->linkRel = isset($initArray['link']) ? str_replace(Request::$url['base'], '', $initArray['link']) : '';
+		$this->action = isset($initArray['action']) ? $initArray['action'] : array();
+		$this->link = isset($initArray['link']) ? $initArray['link'] : ($this->action ? Request::getLinkArray($this->action): '');
 		$this->label = isset($initArray['label']) ? $initArray['label'] : null;
 		$this->title = isset($initArray['title']) ? $initArray['title'] : null;
 		$this->subLinks = isset($initArray['subLinks']) ? $initArray['subLinks'] : array();
 		$this->image = isset($initArray['image']) ? $initArray['image'] : null;
-		$this->action = isset($initArray['action']) ? $initArray['action'] : array();
 		$this->styleClass = isset($initArray['styleClass']) ? $initArray['styleClass'] : null;
 		$this->order = isset($initArray['order']) ? $initArray['order'] : 5;
 		$this->superiorActiveActions = array();
 		$this->activity = '';
 
-		$this->autolink = isset($initArray['action']) ? $this->makeAutoLink() : '';
+		$this->init();
 	}
 
+	
+	private function init() {
+		$this->linkRel = str_replace(Request::$url['base'], '', $this->link);
+		$this->autolink = $this->action ? $this->makeAutoLink() : '';
+	}
 	
 	/**
 	 * Add sublinks (links depended on this link)
@@ -103,6 +107,15 @@ class Link {
 	 */
 	public function getLink() {
 		return $this->link;
+	}
+	
+	/**
+	 * Returns the link in string format
+	 */
+	public function setArgs($args) {
+		$this->action['args'] = $args;
+		$this->link = $this->action ? Request::getLinkArray($this->action): $this->link;
+		$this->init();
 	}
 	
 	/**
