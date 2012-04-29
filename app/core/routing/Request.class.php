@@ -120,11 +120,13 @@ class Request {
 		self::$post = $_POST;
 		self::$session = $_SESSION;
 		self::$cookie = $_COOKIE;
+		
+		// we don't have a dictionary yet, so assigning only necessary variables
 		self::assignBasicVars();
 
 		Benchmark::logSpeed('Begin of handling a request.');
 		
-		// get all routes from controllers
+		// router gets all routes from controllers and is the only place to keep them
 		self::$router = new Router();
 		
 		// check actual APP version with project version, if not the same, DB need to be checked
@@ -152,35 +154,64 @@ class Request {
 			Language::parseURL(self::$url, self::$get);
 		}		
 
-		Benchmark::logSpeed('Setting controllers\' routes.');
 		// setting all routes to router
+		Benchmark::logSpeed('Setting controllers\' routes: begin');
 		foreach (Environment::getRoutes() as $routes) {
 			if ($routes->abstract)
 				continue;
 			$routes->setRouter();
 		}
+		Benchmark::logSpeed('Setting controllers\' routes: end');
 		
-		Benchmark::logSpeed('Loading url dict.');		
 		// load url dictionary
 		if (Config::Get('PROJECT_STATUS') == PROJECT_READY) {
+			Benchmark::logSpeed('Loading url dict: begin');		
 			Environment::getPackage('Base')->getController('Dictionary')->loadUrlDict();
+			Benchmark::logSpeed('Loading url dict: end');		
 		}
 
-		Benchmark::logSpeed('Getting request action.');
 		// get request action
+		Benchmark::logSpeed('Getting request action: begin');
 		self::$router->getRequestAction();
+		Benchmark::logSpeed('Getting request action: end');
 		
 		// settings locale
 		setlocale(LC_ALL, 'cs_CZ.utf8');
-		//var_dump(Language::getCode());exit;
 
-		Benchmark::logSpeed('Loading regular dict.');
 		// load dictionary
 		if (Config::Get('PROJECT_STATUS') == PROJECT_READY) {
+			Benchmark::logSpeed('Loading regular dict: begin');
 			Environment::getPackage('Base')->getController('Dictionary')->loadDict();
+			Benchmark::logSpeed('Loading regular dict: end');
 		}
 		
 		// assign main values to the template
+		self::assignAdvancedVars();
+		
+		// now we know more, so we can do more things
+		self::init(true);
+
+		// handle the request
+		Benchmark::logSpeed('Handling the request by router.');
+		self::$router->handleRequest();
+	}
+	
+	
+	/**
+	 * Assign variables to the Smarty template engine to be accessible 
+	 * in all Smarty templates.
+	 */
+	static private function assignBasicVars() {
+		Environment::$smarty->assign('thisUrl', self::$url['pathAll']);
+		Environment::$smarty->assign('base', self::$url['base']);
+	}
+	
+
+	/**
+	 * Assign all other variables to the Smarty template engine to be 
+	 * accessible in all Smarty templates.
+	 */
+	static private function assignAdvancedVars() {
 		if (Config::Get('PROJECT_STATUS') == PROJECT_READY) {
 			Environment::$smarty->assign('isHomepage', self::isHomepage());
 			Environment::$smarty->assign('title', tp('Project Title'));
@@ -197,9 +228,9 @@ class Request {
 			Environment::$smarty->assign('projectMedia', DIR_PROJECT_URL_MEDIA);
 			
 			// benchmark tracking
-			if (isset(Request::$get['stopbenchmark']))
+			if (isset(self::$get['stopbenchmark']))
 				Benchmark::stopTracking();
-			if (isset(Request::$get['startbenchmark']))
+			if (isset(self::$get['startbenchmark']))
 				Benchmark::startTracking();
 			Environment::$smarty->assign('benchmarkIsTracking', Benchmark::isTracking());
 			Environment::$smarty->assign('benchmarkChangeTracking', Benchmark::isTracking() ? 'stopbenchmark' : 'startbenchmark');
@@ -219,24 +250,8 @@ class Request {
 			Javascript::addFile(self::$url['base'] . 'app/libs/prototype.js');
 			Javascript::addFile(self::$url['base'] . 'app/libs/wwbase.js');
 		}
-		
-		self::init(true);
+	}
 
-		Benchmark::logSpeed('Handling the request by router.');
-		// handle the request
-		self::$router->handleRequest();
-	}
-	
-	
-	/**
-	 * Assign variables to the Smarty template engine to be accessible 
-	 * in the templates.
-	 */
-	static private function assignBasicVars() {
-		Environment::$smarty->assign('thisUrl', self::$url['pathAll']);
-		Environment::$smarty->assign('base', self::$url['base']);
-	}
-	
 	
 	/**
 	 * Returns request variables as an array.
@@ -281,11 +296,24 @@ class Request {
 		return $url;
 	}
 	
-	static public function checkCsrf() {
+	
+	/**
+	 * Checks token from the last request and compares it with the token 
+	 * given or token in url if null.
+	 * @return Returns true if tokens are the same
+	 */
+	static public function checkCsrf($token=null) {
 		//echo 'Previous: '.self::$tokenPrevious." ?= ".self::$get['token']." (get)<br>\n";
-		return self::$tokenPrevious == self::$get['token'];
+		return self::$tokenPrevious == (($token === null) ? self::$get['token'] : $token);
 	}
 	
+	
+	/**
+	 * Converts string in format PackageName::controller::actionName[::id] 
+	 * into an object containing the fields.
+	 * @param string $str link in format PackageName::controller::actionName[::id]
+	 * @return object Request location as object of type RequestLocation
+	 */ 
 	static public function getRequestLocationFromString($str) {
 		if (preg_match('/(\w+)::(\w+)::(\w+)::(\d{1,9})/', $str, $matches)) {
 			$requestLocation = new RequestLocation();
@@ -309,12 +337,24 @@ class Request {
 	}
 	
 	
+	/**
+	 * Converts string in format PackageName::controller::actionName[::id] 
+	 * into a link in string (e.g. http://myweb.com/something)
+	 * @param string $str link in format PackageName::controller::actionName[::id]
+	 * @return string Link
+	 */
 	static public function getLinkString($str) {
 		$requestLocation = self::getRequestLocationFromString($str);
 		return self::getLinkFromRequestLocation($requestLocation);
 	}
 	
 	
+	/**
+	 * Converts string in array format (keys 'package', 'controller', ...) 
+	 * into a link in string (e.g. http://myweb.com/something)
+	 * @param array $str link in array format
+	 * @return string Link
+	 */
 	static public function getLinkArray($l) {
 		if (isset($l['item']) && $l['item']) {
 			return self::getLinkItem($l['package'], $l['controller'], $l['action'], $l['item'], isset($l['args']) ? $l['args'] : null);
@@ -324,6 +364,12 @@ class Request {
 	}
 	
 	
+	/**
+	 * Converts link in string in RequestLocation object format 
+	 * into a link in string (e.g. http://myweb.com/something)
+	 * @param object $requestLocation link in object format
+	 * @return string Link
+	 */
 	static public function getLinkFromRequestLocation($requestLocation) {
 		if ($requestLocation && $requestLocation->item)
 			return self::getLinkItem($requestLocation->package, $requestLocation->controller, $requestLocation->method, $requestLocation->item);
@@ -424,22 +470,34 @@ class Request {
 	}
 	
 	
+	/**
+	 * Sends Redirection header to browser
+	 * @param string $link Link to redirect to
+	 */
 	static private function redirectLocation($link) {
 		header('Location: '.$link);
 		self::finish();
 	}
 	
-		
+	
+	/**
+	 * Actions performed in the absolute end of request processing.
+	 */
 	static public function finish() {
 		MessageBus::storeBuffer();
 		exit();
 	}
 
 
+	/**
+	 * Sends respond code header to browser
+	 * @param ing $code Code to use
+	 */
 	static private function sendHTTPHeader($code=302) {
 		switch ($code) {
-		case 302: header('HTTP/1.1 302 Found'); break;
-		case 301: header('HTTP/1.1 301 Moved Permanently'); break;
+			case 302: header('HTTP/1.1 302 Found'); break;
+			case 301: header('HTTP/1.1 301 Moved Permanently'); break;
+			case 404: header('HTTP/1.0 404 Not Found'); break;
 		}
 	}
 
