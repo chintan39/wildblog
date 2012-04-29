@@ -308,6 +308,7 @@ class Router {
 			Environment::$smarty->mime_type = $this->mimeType;
 			Environment::$smarty->coding = $this->coding;
 			Environment::$smarty->display("file:/" . Themes::getTemplatePath($package, $theme, $template));
+			flush();
 		}
 	}
 	
