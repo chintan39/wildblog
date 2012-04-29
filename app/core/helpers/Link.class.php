@@ -21,7 +21,14 @@
  * Request location
  */
 class RequestLocation {
-	var $package, $controller, $method, $item;
+	var $package=null, $controller=null, $method=null, $item=null;
+	
+	public function __construct($package=null, $controller=null, $method=null, $item=null) {
+		$this->package = $package;
+		$this->controller = $controller;
+		$this->method = $method;
+		$this->item = $item;
+	}
 }
 
 
