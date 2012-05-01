@@ -318,7 +318,7 @@ class GalleryImagesController extends AbstractPagesController {
 		$advancedUploadLabel = tg('Advanced multiple upload');
 		$libDir = DIR_LIBS;
 		$baseUrl = Request::$url['base'];
-		$commonImagesPath = Environment::$smarty->get_template_vars("iconsPath");
+		$commonImagesPath = Environment::$smarty->getTemplateVars("iconsPath");
 		$html =<<<EOF
 		<a href="#" onclick="$('appletContainer').innerHTML=appletConf;return false" title="$advancedUploadLabel"><img src="{$commonImagesPath}32/image_multi_add.png" alt="new dir" /></a><div id="appletContainer"></div>
 		<script type="text/javascript">
@@ -369,7 +369,7 @@ EOF;
 		$advancedUploadLabel = tg('Advanced multiple upload');
 		$libDir = DIR_LIBS;
 		$baseUrl = Request::$url['base'];
-		$commonImagesPath = Environment::$smarty->get_template_vars("iconsPath");
+		$commonImagesPath = Environment::$smarty->getTemplateVars("iconsPath");
 		$html =<<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

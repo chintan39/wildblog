@@ -278,6 +278,14 @@ class Router {
 	
 	
 	/**
+	 * Gets the mimetype of the HTTP respond.
+	 */
+	public function getMimeType() {
+		return $this->mimeType;
+	}
+	
+	
+	/**
 	 * Sets the coding of the HTTP respond, utf-8 by default.
 	 */
 	public function setCoding($coding) {
@@ -305,8 +313,12 @@ class Router {
 		Environment::$smarty->assign("frontendTheme", Config::Get("THEME_FRONT_END"));
 
 		if ($template) {
-			Environment::$smarty->mime_type = $this->mimeType;
-			Environment::$smarty->coding = $this->coding;
+			Environment::$smarty->setTemplateDir(Themes::getTemplateDir($theme));
+			Environment::$smarty->addTemplateDir(Themes::getTemplateDir('Common'));
+			Environment::$smarty->addTemplateDir(Themes::getTemplateDir('Default'));
+			header("Content-Type: {$this->mimeType}; charset={$this->coding}");
+			//Environment::$smarty->mime_type = $this->mimeType;
+			//Environment::$smarty->coding = $this->coding;
 			Environment::$smarty->display("file:/" . Themes::getTemplatePath($package, $theme, $template));
 			flush();
 		}

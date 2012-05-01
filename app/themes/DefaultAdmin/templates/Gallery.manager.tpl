@@ -1,9 +1,10 @@
 {require file='part.header' theme=Common}
 
-{php}
+{*php}
+TODO: implement this
 Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'mediamanager/popup.js');
 Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'mediamanager/manager.js');
-{/php}
+{/php*}
 
 <div class="manager">
 

@@ -248,10 +248,14 @@ class ErrorLogger {
 	 */
 	static public function wwErrorHandler($errno, $errstr, $errfile, $errline) {
 		$message = "In file $errfile [line: $errline]: $errstr (error no. $errno)";
-		if ($errno & E_NOTICE 
-			&& strpos($errfile, 'templates_c') !== false
-			&& strpos($errstr, 'Undefined index') !== false
-			&& $errno == 8) {
+		if (($errno & E_WARNING || $errno & E_NOTICE)
+			&& ((strpos($errfile, 'templates_c') !== false
+				&& (strpos($errstr, 'Undefined index') !== false 
+					|| strpos($errstr, 'Trying to get property of non-object') !== false))
+			|| (strpos($errfile, 'sysplugins') !== false
+				&& (strpos($errstr, 'stat') !== false
+					|| strpos($errstr, 'unlink') !== false))
+			)) {
 			// do not log undefined variables in tempaltes
 		}
 		elseif ($errno & (E_ALL & ~E_NOTICE & ~E_STRICT & ~E_WARNING)) {

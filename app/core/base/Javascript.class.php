@@ -360,7 +360,7 @@ class Javascript {
 				self::addScript('tinyMCE.init(tinymce_add_arrays(' . self::getWysiwygDefinition($k) . ', '
 					.'{elements: ' . implode(',', $elements) . ', '
 					.'document_base_url: "' . Request::$url["base"] . '", '
-					.'content_css: "' . 'app/themes/' . Environment::$smarty->get_template_vars("frontendTheme") . '/css/' . $p['cssFile'] . '", '
+					.'content_css: "' . 'app/themes/' . Environment::$smarty->getTemplateVars("frontendTheme") . '/css/' . $p['cssFile'] . '", '
 					.'language : "' . $p['lang'] .'"}));');
 			}
 		}
