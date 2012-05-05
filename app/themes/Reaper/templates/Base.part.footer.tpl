@@ -7,7 +7,7 @@
 			{include file=part.actions package=Commodity}
 			{include file=part.favourites package=Commodity}
 			{include file='part.advertisements' package=Basic}
-			{include file='part.htmlAreas' package=Basic}
+			{include file='Basic.part.htmlAreas' package=Basic}
 			
 			<div class="pause"></div>
 		</div>

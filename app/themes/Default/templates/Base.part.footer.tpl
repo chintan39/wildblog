@@ -4,7 +4,7 @@
     </div><!-- left -->
     
     <div id="right">
-      {include file='part.htmlAreas' package=Basic}
+      {include file='Basic.part.htmlAreas' package=Basic}
     </div><!-- right -->
     
 	<div class="clear"></div>

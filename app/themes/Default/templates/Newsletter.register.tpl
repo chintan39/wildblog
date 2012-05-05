@@ -2,7 +2,7 @@
 
 <h1>{$title}</h1>
 	
-{include file='Base.part.cleanForm'  form=$newsletterRegister formId=newsletterRegister}
+{include file='Common.part.cleanForm'  form=$newsletterRegister formId=newsletterRegister}
 
 <p>{tp}Statement of the data processing.{/tp}</p>
 

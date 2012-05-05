@@ -12,7 +12,7 @@
       {include file='part.recentPosts' package=Blog}
       {*include file='part.favouritesLastWeek' package=Blog*}
       {include file='part.tagsMenu' package=Blog}
-      {include file='part.htmlAreas' package=Basic}
+      {include file='Basic.part.htmlAreas' package=Basic}
     </div><!-- right -->
 	<div class="clear"></div>
   </div><!-- middle -->

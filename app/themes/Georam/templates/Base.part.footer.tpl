@@ -69,7 +69,7 @@
 
 </div> <!-- /main -->
 
-{include file='part.htmlAreas' package=Basic}
+{include file='Basic.part.htmlAreas' package=Basic}
 
 {include file='part.adminBox' }
 

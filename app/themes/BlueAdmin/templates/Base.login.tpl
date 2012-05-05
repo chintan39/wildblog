@@ -5,7 +5,7 @@ Logged: <a href="#">{$actualUserInfo->email}</a><br />
 	<a href="{linkto package=Base controller=Users action=actionLogout}" class="logging">{tg}Logout{/tg}</a>
 {/if}
 
-{include file='Base.part.cleanForm' }
+{include file='Common.part.cleanForm' }
 
 <a href="{linkto package=Base controller=LostPassword action=actionLostPassword}">{tg}Password forgotten?{/tg}</a>
 
