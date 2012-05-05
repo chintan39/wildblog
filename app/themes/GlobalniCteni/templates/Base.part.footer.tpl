@@ -3,8 +3,8 @@
 
 <div id="leftpanel">
 <h2>{tg}Menu{/tg}</h2>
-{*require file='part.allPagesMenus' package=Basic menuName='top_menu' ulClass='sidemenu'*}
-{include file='part.articlesMenu' package=Basic ulClass='sidemenu'}
+{*require file='Basic.part.allPagesMenus' package=Basic menuName='top_menu' ulClass='sidemenu'*}
+{include file='Basic.part.articlesMenu' package=Basic ulClass='sidemenu'}
 
 <div class="newsletterlink">
 <h2>Newsletter</h2>
@@ -12,7 +12,7 @@
 </div>
 
 <div class="news">
-{include package=Basic file='part.recentNews'}
+{include package=Basic file='Basic.part.recentNews'}
 </div>
 
 <div class="rsslink">
@@ -44,7 +44,7 @@
 </div><!-- header-search -->
 
 <div id="topmenu">
-{include file='part.allPagesMenus' package=Basic menuName='top_menu' ulClass='topmenu'}
+{include file='Basic.part.allPagesMenus' package=Basic menuName='top_menu' ulClass='topmenu'}
 
 <span class="clear"></span><!-- clear flaoting -->
 </div><!-- topmenu -->
@@ -55,12 +55,12 @@
 <div id="footer">
 <div class="upper">
 
-{include file='part.footerArticle' package=Basic}
+{include file='Basic.part.footerArticle' package=Basic}
 
 </div>
 <div class="lower">
 
-{include file='part.shortContact' package=Basic}
+{include file='Basic.part.shortContact' package=Basic}
 
 </div>
 </div>
@@ -68,6 +68,6 @@
 
 {include file='Basic.part.htmlAreas' package=Basic}
 
-{include file='part.adminBox' }
+{include file='Base.part.adminBox' }
 
 {include file='Base.part.footer' }

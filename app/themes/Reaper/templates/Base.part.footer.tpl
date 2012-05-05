@@ -3,10 +3,10 @@
 			
 		<div id="rightbar">
 			
-			{include file=part.references package=Commodity}
-			{include file=part.actions package=Commodity}
-			{include file=part.favourites package=Commodity}
-			{include file='part.advertisements' package=Basic}
+			{include file=Commodity.part.references package=Commodity}
+			{include file=Commodity.part.actions package=Commodity}
+			{include file=Commodity.part.favourites package=Commodity}
+			{include file='Base.part.advertisements' package=Basic}
 			{include file='Basic.part.htmlAreas' package=Basic}
 			
 			<div class="pause"></div>
@@ -16,16 +16,16 @@
 		
 		<div id="sidebar" >							
 				
-			{include file=part.articlesMenu package=Basic}
-			{include file=part.categoriesMenu package=Commodity}
-			{include file=part.manofacturersList package=Commodity}
+			{include file=Basicpart.articlesMenu package=Basic}
+			{include file=Commodity.part.categoriesMenu package=Commodity}
+			{include file=Commodity.part.manofacturersList package=Commodity}
 			
 		</div><!-- sidebar -->
 			
 		<div id="headerphoto">
 		<div id="name">{tp}header page name{/tp}</div>
 		<div id="address">{tp}header page street<br />header page city<br />header page phone<br />header page email{/tp}</div>	
-      {include file='part.navigation'}
+      {include file='Base.part.navigation'}
 		</div>
 		
 	<!-- content-wrap ends here -->		
@@ -36,7 +36,7 @@
 		<h2 id="logo"><a href="">{tp}header top title{/tp}</a></h2>	
 		<h2 id="slogan">{tp}header top subtitle{/tp}</h2> 
 		
-		{include file='part.searchForm' searchFormClass="searchform" searchFormSubmit="Search"}
+		{include file='Base.part.searchForm' searchFormClass="searchform" searchFormSubmit="Search"}
 		<!--
 		<form method="post" class="searchform" action="#">
 			<p><input type="text" name="search_query" class="textbox" />
@@ -80,6 +80,6 @@
 <!-- wrap ends here -->
 </div>
 
-{include file='part.adminBox' }
+{include file='Base.part.adminBox' }
 
 {include file='Base.part.footer' }

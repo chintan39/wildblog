@@ -4,9 +4,9 @@
 	
 {$category->text}
 
-{include file=part.productList package=Commodity products=$category->products}
+{include file=Commodity.part.productList package=Commodity products=$category->products}
 
-{include file=part.contactForm package=Basic}
+{include file='Basic.part.contactForm' package=Basic}
 			
 {include file='Base.part.footer'}
 

@@ -8,5 +8,5 @@
 		<div id="mainleft">	
 		<div id="main">	
 
-		{include file=part.homepageArticle package=Basic}
+		{include file=Basic.part.homepageArticle package=Basic}
 

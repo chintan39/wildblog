@@ -1,1 +1,1 @@
-{include package=Base file='rss'}
+{include  file='rss'}

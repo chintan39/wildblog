@@ -13,9 +13,9 @@
 
 {generate_paging collection=$gallery->images}
 
-{include package=Base file='part.editItem' itemPackage=Gallery itemController=Galleries itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$gallery}
+{include  file='Basic.part.editItem' itemPackage=Gallery itemController=Galleries itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$gallery}
 
-{include file=part.references package=References}
+{include file=References.part.references package=References}
 
 {include file='Base.part.footer'}
 

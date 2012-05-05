@@ -5,7 +5,7 @@
 	{$article->text}
 	</div>
 
-{include file=part.contactForm package=Basic}
+{include file='Basic.part.contactForm' package=Basic}
 
 {include file='Base.part.footer'}
 

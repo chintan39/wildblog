@@ -21,11 +21,11 @@
 	<p>{tg}No galleries found.{/tg}</p>
 {/if}
 
-{include package=Base file='part.addNewItem' itemPackage=Gallery itemController=Galleries itemAction=actionNew itemActionSimple=actionSimpleNew}
+{include  file='Base.part.addNewItem' itemPackage=Gallery itemController=Galleries itemAction=actionNew itemActionSimple=actionSimpleNew}
 
 {generate_paging collection=$galleriesList}
 
-{include file=part.references package=References}
+{include file=References.part.references package=References}
 
 {include file='Base.part.footer'}
 

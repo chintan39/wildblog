@@ -1,17 +1,17 @@
 	<!-- main content end -->
 	
     </div><!-- content -->
-      {include file='part.navigation'}
+      {include file='Base.part.navigation'}
     </div><!-- left -->
     <div id="right">
-      {include file='part.footerArticle' package=Basic}
-      {include file='part.articlesMenu' package=Basic}
-      {include file='part.advertisements' package=Basic}
-      {*require file='part.tagsMenu' package=Basic*}
-      {include file='part.relatedPosts' package=Blog}
-      {include file='part.recentPosts' package=Blog}
-      {*include file='part.favouritesLastWeek' package=Blog*}
-      {include file='part.tagsMenu' package=Blog}
+      {include file='Basic.part.footerArticle' package=Basic}
+      {include file='Basic.part.articlesMenu' package=Basic}
+      {include file='Base.part.advertisements' package=Basic}
+      {*require file='Basic.part.tagsMenu' package=Basic*}
+      {include file='Blog.part.relatedPosts' package=Blog}
+      {include file='Blog.part.recentPosts' package=Blog}
+      {*include file='Blog.part.favouritesLastWeek' package=Blog*}
+      {include file='Blog.part.tagsMenu' package=Blog}
       {include file='Basic.part.htmlAreas' package=Basic}
     </div><!-- right -->
 	<div class="clear"></div>
@@ -35,17 +35,17 @@
 	<a href="{linkto package=Blog controller=Posts action=actionRss}"><img src="app/themes/Wildblog/images/header-rss.gif" title="RSS Feed" alt="RSS Feed" /></a>
     </div><!-- header-rss -->
     <div id="header-search">
-    {include file='part.searchForm'}
+    {include file='Base.part.searchForm'}
 	</div><!-- header-search -->
     <div id="header-langs">
-    {include file='part.languages' languages=$frontendLanguages}
+    {include file='Base.part.languages' languages=$frontendLanguages}
 	</div><!-- header-langs -->
   </div><!-- header -->
 </div><!-- upper -->
 <div id="lower">
   <div id="footer">
     <div id="footer-left">
-    {include package=Blog file='part.archive'}
+    {include package=Blog file='Blog.part.archive'}
     <h3>{tp}other{/tp}</h3>
 	<div class="list">
 	  <a href="{linkto controller=Sitemap action=actionSitemap}">{tg}Sitemap{/tg}</a>
@@ -53,9 +53,9 @@
     </div><!-- list -->
     </div><!-- footer-left -->
     <div id="footer-right">
-	  {include package=LinkBuilding file='part.partnerLinks'}
-	  {*include_package package=Blog file='part.postsFavouritesLastWeek'*}
-	  {*include_package package=Blog file='part.postsMostDisscused'*}
+	  {include package=LinkBuilding file='LinkBuilding.part.partnerLinks'}
+	  {*include_package package=Blog file='Blog.part.postsFavouritesLastWeek'*}
+	  {*include_package package=Blog file='Blog.part.postsMostDisscused'*}
     </div><!-- footer-right -->
 	<div class="clear"></div>
 	<div id="footer-bottom">
@@ -64,7 +64,7 @@
   <div id="footer-copy">
 	<div class="float-left">
 	
-        {include file='part.wwFooter' sep=' '}
+        {include file='Base.part.wwFooter' sep=' '}
         
 	</div><!-- left -->
 	<div class="float-right">
@@ -80,6 +80,6 @@
 </div><!-- lower -->
 </div><!-- page -->
 
-{include file='part.adminBox' }
+{include file='Base.part.adminBox' }
 
 {include file='Base.part.footer'  ajaxLoaderSuffix=_threedots}

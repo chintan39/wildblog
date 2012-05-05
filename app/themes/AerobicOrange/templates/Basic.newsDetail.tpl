@@ -4,7 +4,7 @@
 	<div class="date">{$news->published|date_format:"%e"}. {$news->published|date_format:"%m"|month_format:"%m"}. {$news->published|date_format:"%Y"}</div>
 	{$news->text|addlinks}
 	<div class="clear"></div>
-	{include package=Base file='part.editItem' itemPackage=Basic itemController=News itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$news}
+	{include  file='Basic.part.editItem' itemPackage=Basic itemController=News itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$news}
 
 <!-- AddThis Button BEGIN -->
 <div class="addthis_toolbox addthis_default_style">

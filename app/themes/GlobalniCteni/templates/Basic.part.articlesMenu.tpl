@@ -5,10 +5,10 @@
 	{foreach from=$articlesTree->links item=item}
 		<li class="{$item->activity}"><a href="{$item->link|make_link}">{$item->title}</a></li>
 		{if $item|property_exists:'subLinks' and $item->subLinks and $deep gt 1 and ($item->activity eq 'active' or $item->activity eq 'sup_active')}
-			{include file='part.itemLinkTree' items=$item->subLinks deep=$deep-1}
+			{include file='Base.part.itemLinkTree' items=$item->subLinks deep=$deep-1}
 		{/if}
 		{if $item->action.item eq 58}
-		{include file='part.categoriesMenu' package=GlobalReading ulClass='sidemenu'}
+		{include file='GlobalReading.part.categoriesMenu' package=GlobalReading ulClass='sidemenu'}
 		{/if}
 	{/foreach}
 </ul>

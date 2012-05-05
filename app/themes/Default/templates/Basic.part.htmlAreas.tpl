@@ -4,5 +4,5 @@
 {/foreach}
 {/if}
 
-{include package=Base file='part.addNewItem' itemPackage=Basic itemController=HtmlAreas itemAction=actionNew itemActionSimple=actionSimpleNew}
+{include  file='Base.part.addNewItem' itemPackage=Basic itemController=HtmlAreas itemAction=actionNew itemActionSimple=actionSimpleNew}
 

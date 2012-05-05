@@ -11,5 +11,5 @@
 {/if}
 {/strip}
 
-{include package=Base file='part.addNewItem' itemPackage=Basic itemController=News itemAction=actionNew itemActionSimple=actionSimpleNew}
+{include  file='Base.part.addNewItem' itemPackage=Basic itemController=News itemAction=actionNew itemActionSimple=actionSimpleNew}
 </div>
