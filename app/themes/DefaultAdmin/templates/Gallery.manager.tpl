@@ -1,4 +1,4 @@
-{include file='Base.part.header' theme=Common}
+{include file='Base.part.header' }
 
 {*php}
 TODO: implement this
@@ -66,5 +66,5 @@ function uploaderStatusChanged( uploader) {ldelim}
 init();
 </script>
 
-{include file='Base.part.footer' theme=Common}
+{include file='Base.part.footer' }
 

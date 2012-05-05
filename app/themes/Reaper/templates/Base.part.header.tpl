@@ -1,4 +1,4 @@
-{include file='Base.part.header' theme=Common}
+{include file='Base.part.header' }
 <!-- wrap starts here -->
 <div id="wrap">
 					

@@ -80,6 +80,6 @@
 </div><!-- lower -->
 </div><!-- page -->
 
-{include file='part.adminBox' theme=Common}
+{include file='part.adminBox' }
 
-{include file='Base.part.footer' theme=Common ajaxLoaderSuffix=_threedots}
+{include file='Base.part.footer'  ajaxLoaderSuffix=_threedots}

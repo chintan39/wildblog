@@ -1,5 +1,5 @@
-{include file='Base.part.header' theme=Common}
+{include file='Base.part.header' }
 
 <!-- message_bus_adding -->
       
-{include file='Base.part.footer' theme=Common}
+{include file='Base.part.footer' }

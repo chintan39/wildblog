@@ -1,4 +1,4 @@
-{include file='Base.part.header' theme=Common}
+{include file='Base.part.header' }
 		<div id="page">
 			<div id="upper">
 				<div id="middle">

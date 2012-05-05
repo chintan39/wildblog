@@ -68,6 +68,6 @@
 
 {include file='part.htmlAreas' package=Basic}
 
-{include file='part.adminBox' theme=Common}
+{include file='part.adminBox' }
 
-{include file='Base.part.footer' theme=Common}
+{include file='Base.part.footer' }
