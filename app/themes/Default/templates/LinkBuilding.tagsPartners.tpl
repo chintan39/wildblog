@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 <h1>{tg}Partners sorted by tags{/tg}</h1>
 
@@ -17,5 +17,5 @@
 
 {include package=Base file='part.addNewItem' itemPackage=LinkBuilding itemController=Partners itemAction=actionNew itemActionSimple=actionSimpleNew}
 
-{include file='part.footer'}
+{include file='Base.part.footer'}
 

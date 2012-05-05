@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 {foreach from=$tag->posts->data.items item=postItem}
 	<div class="article">
@@ -16,5 +16,5 @@
 
 {generate_paging collection=$tag}
 
-{include file='part.footer'}
+{include file='Base.part.footer'}
 

@@ -70,4 +70,4 @@
 
 {include file='part.adminBox' theme=Common}
 
-{include file='part.footer' theme=Common}
+{include file='Base.part.footer' theme=Common}

@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 {if $blogposts->data.items}
 {foreach from=$blogposts->data.items item=post}
@@ -27,4 +27,4 @@
 
 {include package=Base file='part.addNewItem' itemPackage=Blog itemController=Posts itemAction=actionNew itemActionSimple=actionSimpleNew}
 
-{include file='part.footer'}
+{include file='Base.part.footer'}

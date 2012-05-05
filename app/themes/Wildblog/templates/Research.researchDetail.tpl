@@ -1,4 +1,4 @@
-{include file='part.header' theme=Common}
+{include file='Base.part.header' theme=Common}
 <div id="page" class="research">
 <div id="page_inner">
 
@@ -8,5 +8,5 @@
 </div><!-- page_inner -->
 </div><!-- page -->
 
-{include file='part.footer' theme=Common}
+{include file='Base.part.footer' theme=Common}
 

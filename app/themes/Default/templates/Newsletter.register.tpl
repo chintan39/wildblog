@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 <h1>{$title}</h1>
 	
@@ -6,4 +6,4 @@
 
 <p>{tp}Statement of the data processing.{/tp}</p>
 
-{include file='part.footer'}
+{include file='Base.part.footer'}

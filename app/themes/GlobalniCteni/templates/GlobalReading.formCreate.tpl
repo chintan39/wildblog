@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 <h1>{$title}</h1>
 
@@ -223,4 +223,4 @@ init2();
 </div>
 <!-- addScriptaculouse -->
 
-{include file='part.footer'}
+{include file='Base.part.footer'}

@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 <h1>{$title}</h1>
 	
@@ -17,5 +17,5 @@
 
 {include file=part.references package=References}
 
-{include file='part.footer'}
+{include file='Base.part.footer'}
 

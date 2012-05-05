@@ -82,4 +82,4 @@
 
 {include file='part.adminBox' theme=Common}
 
-{include file='part.footer' theme=Common ajaxLoaderSuffix=_threedots}
+{include file='Base.part.footer' theme=Common ajaxLoaderSuffix=_threedots}

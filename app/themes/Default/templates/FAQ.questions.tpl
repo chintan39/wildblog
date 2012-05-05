@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 <h1>{$title}</h1>
 
@@ -25,4 +25,4 @@
 
 {generate_paging collection=$questions}
 			
-{include file='part.footer'}
+{include file='Base.part.footer'}

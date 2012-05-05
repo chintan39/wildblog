@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 {if $article}
 {$article->text}
@@ -13,5 +13,5 @@
 {include file=part.contactForm package=Basic}
 {/if}
 
-{include file='part.footer'}
+{include file='Base.part.footer'}
 

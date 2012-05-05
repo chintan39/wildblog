@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 	<div class="article">
 	{if $article}
@@ -7,5 +7,5 @@
 	{/if}
 	</div>
 
-{include file='part.footer'}
+{include file='Base.part.footer'}
 

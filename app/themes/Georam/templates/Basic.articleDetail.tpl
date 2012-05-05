@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 <h1>{$article->title}</h1>
 
@@ -30,5 +30,5 @@
 
 </div> <!-- /content-in -->
 
-{include file='part.footer'}
+{include file='Base.part.footer'}
 

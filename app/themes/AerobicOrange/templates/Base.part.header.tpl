@@ -1,4 +1,4 @@
-{include file='part.header' theme=Common}
+{include file='Base.part.header' theme=Common}
 <div id="page">
 <div class="padding"></div>
 {if not $widepage}

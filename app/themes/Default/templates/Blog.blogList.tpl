@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 {*generate_paging collection=$blogposts showOnlyKeys=prev*}
 
@@ -31,5 +31,5 @@
 
 {include package=Base file='part.addNewItem' itemPackage=Blog itemController=Posts itemAction=actionNew itemActionSimple=actionSimpleNew}
 
-{include file='part.footer'}
+{include file='Base.part.footer'}
 

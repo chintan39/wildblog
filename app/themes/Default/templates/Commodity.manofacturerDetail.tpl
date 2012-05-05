@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 <h1>{$manofacturer->title}</h1>
 			
@@ -10,5 +10,5 @@
 
 {$manofacturer->text}
 
-{include file='part.footer'}
+{include file='Base.part.footer'}
 

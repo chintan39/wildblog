@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 {if $title}
 <h1>{$title}</h1>
@@ -27,5 +27,5 @@
 <a href="{linkto package=Newsletter controller=Messages action=actionSend dataItem=$message}" class="sending">{tg}Send newsletter{/tg}</a>
 </div>
 
-{include file='part.footer'}
+{include file='Base.part.footer'}
 

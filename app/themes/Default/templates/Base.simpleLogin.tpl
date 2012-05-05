@@ -1,4 +1,4 @@
-{*require file='part.header' theme=Common*}
+{*require file='Base.part.header' theme=Common*}
 <!-- ##title={tg}Login{/tg}## -->
 <!-- ##size=500x300## -->
 {if $actualUserInfo and $actualUserInfo->id}
@@ -11,5 +11,5 @@ Logged: <a href="#">{$actualUserInfo->email}</a><br />
 <a href="{linkto package=Base controller=LostPassword action=actionLostPassword}">{tg}Password forgotten?{/tg}</a>
 {/if}
 
-{*require file='part.footer' theme=Common*}
+{*require file='Base.part.footer' theme=Common*}
 

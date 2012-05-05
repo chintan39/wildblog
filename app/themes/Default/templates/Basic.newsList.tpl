@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 {if $title and not $notitle}<h1>{$title}</h1>{/if}
 
@@ -19,5 +19,5 @@
 
 {include package=Base file='part.addNewItem' itemPackage=Basic itemController=News itemAction=actionNew itemActionSimple=actionSimpleNew}
 
-{include file='part.footer'}
+{include file='Base.part.footer'}
 

@@ -1,4 +1,4 @@
-{include file='part.header'}
+{include file='Base.part.header'}
 
 	<div class="article">
 	<h1>{$post->title}</h1>
@@ -11,5 +11,5 @@
 	{include package=Base file='part.editItem' itemPackage=Blog itemController=Posts itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$post}
 	</div>
 
-{include file='part.footer'}
+{include file='Base.part.footer'}
 

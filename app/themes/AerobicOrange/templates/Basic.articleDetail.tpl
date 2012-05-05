@@ -1,7 +1,7 @@
 {if $article and $article->id eq 10 or $article and $article->id eq 15 or $article and $article->id eq 18} {*only for rozvrh*}
 {*assign var=widepage value=1*}
 {/if}
-{include file='part.header'}
+{include file='Base.part.header'}
 
 	<h1>{$article->title}</h1>
 	{$article->text}
@@ -16,5 +16,5 @@
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca362e0566b35bb"></script>
 <!-- AddThis Button END -->
 
-{include file='part.footer'}
+{include file='Base.part.footer'}
 
