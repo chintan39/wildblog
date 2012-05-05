@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 
 	<h1>{$news->title}</h1>
 	<div class="date">{$news->published|date_format:"%e"}. {$news->published|date_format:"%m"|month_format:"%m"}. {$news->published|date_format:"%Y"}</div>
@@ -15,5 +15,5 @@
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4ca362e0566b35bb"></script>
 <!-- AddThis Button END -->
 
-{require file='part.footer'}
+{include file='part.footer.tpl'}
 

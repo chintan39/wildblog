@@ -5,8 +5,6 @@
 
 <div id="rightpanel">
 
-{*require package=Basic file='part.recentNews'*}
-
 <div class="box">
 <h2>Kdy a kde cvičím</h2>
 <a href="{linkto package=Basic controller=Articles action=actionDetail dataItem='18'}" class="cal"><br /><br />Klikněte zde pro zobrazení celého kalendáře s&nbsp;pravidelnými hodinami</a>
@@ -17,7 +15,7 @@
 <div class="box">
 
 <div class="partners">
-{require package=LinkBuilding file='part.partnerLinks'}
+{include file='LinkBuilding.part.partnerLinks.tpl'}
 </div>
 
 <hr class="invisible" />
@@ -27,7 +25,7 @@
 <div class="box">
 <h2>Fotogalerie</h2>
 <div id="gallery">
-{require package=Gallery file='part.galleriesList'}
+{include file='Gallery.part.galleriesList.tpl'}
 </div>
 <a href="{linkto package=Gallery controller=Galleries action=actionGalleriesList}" class="arrow">Zobrazit všechny fotky</a>
 
@@ -86,16 +84,16 @@
 <div class="footer-top"></div>
 <div class="footer-middle">
 <div class="footer-right">
-{require file='part.personalInfo' package=Basic}
+{include file='Basic.part.personalInfo.tpl'}
 </div>
 
 <div class="footer-left">
-{require file='part.shortContact' package=Basic}
+{include file='Basic.part.shortContact.tpl'}
 <a href="http://www.facebook.com/profile.php?id=100000013252832&ref=search" rel="external" class="facebook"><img src="{$iconsPath}64/facebook.png" alt="Facebook" /></a>
 </div>
 
 <div class="footer-left">
-{require package=LinkBuilding file='part.partnerLinks'}
+{include file='LinkBuilding.part.partnerLinks.tpl'}
 </div>
 
 <span class="clear"></span><!-- clear flaoting -->
@@ -108,7 +106,7 @@
 <div class="footer-middle">
 <div class="copy">
 
-{require file='part.wwFooter' sep=' '}
+{include file='Base.part.wwFooter.tpl' sep=' '}
 
 </div><!-- footer-middle -->
 <div class="footer-bottom"></div>
@@ -116,8 +114,8 @@
 
 </div><!-- page -->
 
-{require file='part.htmlAreas' package=Basic}
+{include file='Basic.part.htmlAreas.tpl'}
 
-{require file='part.adminBox' theme=Common}
+{include file='Base.part.adminBox.tpl'}
 
-{require file='part.footer' theme=Common}
+{include file='Base.part.footer.tpl'}

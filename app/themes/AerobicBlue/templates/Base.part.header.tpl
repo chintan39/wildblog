@@ -1,4 +1,4 @@
-{require file='part.header' theme=Common}
+{include file='Base.part.header.tpl'}
 <div id="page">
 <div class="padding"></div>
 {if not $widepage}
