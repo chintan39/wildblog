@@ -1,4 +1,4 @@
-{include file='Base.part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$product->title}</h1>
 			
@@ -12,7 +12,7 @@
 
 {$product->text}
 
-{include file='Basic.part.contactForm' package=Basic}
+{include file='Basic.part.contactForm.tpl' package=Basic}
 
-{include file='Base.part.footer'}
+{include file='Base.part.footer.tpl'}
 

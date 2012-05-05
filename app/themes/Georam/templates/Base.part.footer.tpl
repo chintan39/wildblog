@@ -11,7 +11,7 @@
 
             <div class="aside-in">
 
-                {include file='Blog.part.allPagesMenus' package=Basic menuName='side_menu' ulClass='sidebox'}
+                {include file='Blog.part.allPagesMenus.tpl' package=Basic menuName='side_menu' ulClass='sidebox'}
 		
             </div> <!-- /aside-in -->
    
@@ -23,7 +23,7 @@
             <div class="aside-in">
                 <div class="aside-box">
 
-                {include file='Basic.part.shortContact' package=Basic}
+                {include file='Basic.part.shortContact.tpl' package=Basic}
 
                 </div> <!-- /aside-box -->
             </div> <!-- /aside-in -->
@@ -51,7 +51,7 @@
     <!-- Navigation -->
     <div id="nav">
     
-		{include file='Basic.part.allPagesMenus' package=Basic menuName='top_menu' ulClass='box'}
+		{include file='Basic.part.allPagesMenus.tpl' package=Basic menuName='top_menu' ulClass='box'}
         
     <hr class="noscreen" /> 
     </div> <!-- /nav -->
@@ -63,15 +63,15 @@
         <p class="f-right"><a href="http://www.nuviotemplates.com/">Free web templates</a> by <a href="http://www.nuvio.cz/">Nuvio</a>, sponsored by <a href="http://www.lekynainternetu.cz/" title="Léky na internetu.cz">Leky</a></p>
         <!-- Do you want remove this backlinks? Look at www.nuviotemplates.com/payment.php -->
         
-        {include file='Base.part.wwFooter' sep=' '}
+        {include file='Base.part.wwFooter.tpl' sep=' '}
 
     </div> <!-- /footer -->
 
 </div> <!-- /main -->
 
-{include file='Basic.part.htmlAreas' package=Basic}
+{include file='Basic.part.htmlAreas.tpl' package=Basic}
 
-{include file='Base.part.adminBox' }
+{include file='Base.part.adminBox.tpl' }
 
-{include file='Base.part.footer' }
+{include file='Base.part.footer.tpl' }
 

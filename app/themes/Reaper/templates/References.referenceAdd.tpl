@@ -1,9 +1,9 @@
-{include file='Base.part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$title}</h1>
 	
 {tg}Add your reference to present your opinion to other customers.{/tg}
 
-{include file='Common.part.cleanForm'  form=$referenceNewForm formId=referenceNewForm formClass="no-border"}
+{include file='Common.part.cleanForm.tpl'  form=$referenceNewForm formId=referenceNewForm formClass="no-border"}
 			
-{include file='Base.part.footer'}
+{include file='Base.part.footer.tpl'}

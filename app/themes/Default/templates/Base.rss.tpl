@@ -1,4 +1,4 @@
-{include file='Base.part.rss.header'}
+{include file='Base.part.rss.header.tpl'}
 {if $items->data.items}
 {foreach from=$items->data.items item=item}
     <item>
@@ -10,5 +10,5 @@
     </item>
 {/foreach}
 {/if}
-{include file='Base.part.rss.footer'}
+{include file='Base.part.rss.footer.tpl'}
 

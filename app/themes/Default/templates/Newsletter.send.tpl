@@ -1,4 +1,4 @@
-{include file='Base.part.header'}
+{include file='Base.part.header.tpl'}
 
 {if $title}
 <h1>{$title}</h1>
@@ -29,5 +29,5 @@
 <div class="clear"></div>
 </div>
 
-{include file='Base.part.footer'}
+{include file='Base.part.footer.tpl'}
 

@@ -6,15 +6,15 @@
 							
                 <div class="sidemenu">
 					<h3>{tg}Main menu{/tg}</h3>
-					{include file='Basic.part.allPagesMenus' package=Basic menuName='top_menu'}
+					{include file='Basic.part.allPagesMenus.tpl' package=Basic menuName='top_menu'}
 				</div>
 
 				{*
 				<div class="sidemenu">
-					{include file='LinkBuilding.part.partnerLinks' package=LinkBuilding}
+					{include file='LinkBuilding.part.partnerLinks.tpl' package=LinkBuilding}
 				</div>
 				
-				{include package=Gallery file='Gallery.part.galleriesList'}
+				{include package=Gallery file='Gallery.part.galleriesList.tpl'}
 				*}
 				
 			<!-- /sidebar -->				
@@ -36,7 +36,7 @@
 		<p id="slogan">{tp}header top subtitle{/tp}</p>
 		
 		<div id="nav">
-			{include file='Basic.part.allPagesMenus' package=Basic menuName='top_menu'}
+			{include file='Basic.part.allPagesMenus.tpl' package=Basic menuName='top_menu'}
 		</div>		
 		
 		<p id="rss-feed"><a href="{linkto package=Blog controller=Posts action=actionRss}" class="feed">{tg}RSS feed{/tg}</a></p>
@@ -50,7 +50,7 @@
 		</form>	
 						
 		<div id="namedays">
-			{include file='Basic.part.nameDays' package=Basic}
+			{include file='Basic.part.nameDays.tpl' package=Basic}
 		</div>
 		
 	<!-- /header -->					
@@ -67,7 +67,7 @@
 	
 		<div class="col-a">
 				
-			{include file='Basic.part.shortContact' package=Basic}
+			{include file='Basic.part.shortContact.tpl' package=Basic}
 			
 		</div>
 		
@@ -76,7 +76,7 @@
 			<h3>{tg}Interesting links{/tg}</h3>
 			
 			<div class="footer-list">
-				{include file='Basic.part.allPagesMenus' package=Basic menuName='top_menu'}
+				{include file='Basic.part.allPagesMenus.tpl' package=Basic menuName='top_menu'}
 			</div>					
 				
 		</div>
@@ -97,7 +97,7 @@
 	
 		<div class="col-b">
 		
-		{include file='Basic.part.personalInfo' package=Basic}
+		{include file='Basic.part.personalInfo.tpl' package=Basic}
 			
 		</div>		
 		
@@ -109,7 +109,7 @@
 			<div class="bottom-left">
 				<p>
 				
-				{include file='Base.part.wwFooter' sep=' '}
+				{include file='Base.part.wwFooter.tpl' sep=' '}
 				
 				<br />
 				<a href="http://www.bluewebtemplates.com/" title="Website Templates">website templates</a> by <a href="http://www.styleshout.com/">styleshout</a>
@@ -135,8 +135,8 @@
 <!-- /footer -->
 </div>
 
-{include file='Basic.part.htmlAreas' package=Basic}
+{include file='Basic.part.htmlAreas.tpl' package=Basic}
 
-{include file='Base.part.adminBox' }
+{include file='Base.part.adminBox.tpl' }
 
-{include file='Base.part.footer' }
+{include file='Base.part.footer.tpl' }

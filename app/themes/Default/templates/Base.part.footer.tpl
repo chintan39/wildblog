@@ -4,7 +4,7 @@
     </div><!-- left -->
     
     <div id="right">
-      {include file='Basic.part.htmlAreas' package=Basic}
+      {include file='Basic.part.htmlAreas.tpl' package=Basic}
     </div><!-- right -->
     
 	<div class="clear"></div>
@@ -23,7 +23,7 @@
 Honza Horák, <a href="http://www.wild-web.eu" title="www.wild-web.eu">wild-web.eu</a>
 &copy; {$now|date_format:"%Y"} | <a href="{$base}admin/">{tg}Administration{/tg}</a>
 
-{include file='Base.part.adminBox' }
+{include file='Base.part.adminBox.tpl' }
 
-{include file='Base.part.footer' }
+{include file='Base.part.footer.tpl' }
 

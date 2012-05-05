@@ -1,4 +1,4 @@
-{include file='Base.part.header' }
+{include file='Base.part.header.tpl' }
 <!-- wrap starts here -->
 <div id="wrap">
 					
@@ -8,5 +8,5 @@
 		<div id="mainleft">	
 		<div id="main">	
 
-		{include file=Basic.part.homepageArticle package=Basic}
+		{include file=Basic.part.homepageArticle.tplpackage=Basic}
 

@@ -1,4 +1,4 @@
-{include file='Base.part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$title}</h1>
 	
@@ -15,5 +15,5 @@
 
 {generate_paging collection=$manofacturer}
 			
-{include file='Base.part.footer'}
+{include file='Base.part.footer.tpl'}
 

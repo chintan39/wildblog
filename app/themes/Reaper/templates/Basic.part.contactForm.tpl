@@ -1,3 +1,3 @@
-{include file='Common.part.cleanForm'  form=$contactForm formId=contactForm formClass="no-border"}
+{include file='Common.part.cleanForm.tpl'  form=$contactForm formId=contactForm formClass="no-border"}
 	
 

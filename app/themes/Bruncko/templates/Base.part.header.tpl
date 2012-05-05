@@ -1,4 +1,4 @@
-{include file='Base.part.header' }
+{include file='Base.part.header.tpl' }
 
 <!-- HEADER -->
 <!-- CONTENT -->

@@ -1,4 +1,4 @@
-{include file='Base.part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$title}</h1>
 	
@@ -18,5 +18,5 @@
 
 {generate_paging collection=$galleriesList}
 
-{include file='Base.part.footer' useReferences=1}
+{include file='Base.part.footer.tpl' useReferences=1}
 

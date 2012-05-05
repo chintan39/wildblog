@@ -1,4 +1,4 @@
-{include file='Base.part.header'}
+{include file='Base.part.header.tpl'}
 {if $title}<h1>{$title}</h1>{/if}
 
 {foreach from=$results item=res}
@@ -8,5 +8,5 @@
 </div>
 {/foreach}
 
-{include file='Base.part.footer'}
+{include file='Base.part.footer.tpl'}
 

@@ -1,4 +1,4 @@
-{include file='Base.part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$product->title}</h1>
 			
@@ -13,5 +13,5 @@
 
 <div class="clear"></div>
 
-{include file='Base.part.footer'}
+{include file='Base.part.footer.tpl'}
 

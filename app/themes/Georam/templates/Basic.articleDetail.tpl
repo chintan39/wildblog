@@ -1,4 +1,4 @@
-{include file='Base.part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$article->title}</h1>
 
@@ -25,10 +25,10 @@
 
 {if $article}
 {$article->text}
-{include  file='Basic.part.editItem' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
+{include  file='Basic.part.editItem.tpl' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
 {/if}
 
 </div> <!-- /content-in -->
 
-{include file='Base.part.footer'}
+{include file='Base.part.footer.tpl'}
 

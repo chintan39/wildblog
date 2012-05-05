@@ -1,4 +1,4 @@
-{include file='Base.part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$title}</h1>
 	
@@ -13,9 +13,9 @@
 
 {generate_paging collection=$gallery->images}
 
-{include  file='Basic.part.editItem' itemPackage=Gallery itemController=Galleries itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$gallery}
+{include  file='Basic.part.editItem.tpl' itemPackage=Gallery itemController=Galleries itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$gallery}
 
-{include file=References.part.references package=References}
+{include file=References.part.references.tplpackage=References}
 
-{include file='Base.part.footer'}
+{include file='Base.part.footer.tpl'}
 

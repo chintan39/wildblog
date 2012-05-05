@@ -1,12 +1,12 @@
-{include file='Base.part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$category->title}</h1>
 	
 {$category->text}
 
-{include file=Commodity.part.productList package=Commodity products=$category->products}
+{include file=Commodity.part.productList.tplpackage=Commodity products=$category->products}
 
-{include file='Basic.part.contactForm' package=Basic}
+{include file='Basic.part.contactForm.tpl' package=Basic}
 			
-{include file='Base.part.footer'}
+{include file='Base.part.footer.tpl'}
 

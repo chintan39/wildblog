@@ -1,4 +1,4 @@
-{include file='Base.part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{tg}Partners sorted by tags{/tg}</h1>
 
@@ -15,7 +15,7 @@
 {tg}Nothing was found.{/tg}
 {/if}
 
-{include  file='Base.part.addNewItem' itemPackage=LinkBuilding itemController=Partners itemAction=actionNew itemActionSimple=actionSimpleNew}
+{include  file='Base.part.addNewItem.tpl' itemPackage=LinkBuilding itemController=Partners itemAction=actionNew itemActionSimple=actionSimpleNew}
 
-{include file='Base.part.footer'}
+{include file='Base.part.footer.tpl'}
 

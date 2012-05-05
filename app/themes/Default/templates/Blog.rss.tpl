@@ -1,1 +1,1 @@
-{include  file='rss'}
+{include  file='rss.tpl'}

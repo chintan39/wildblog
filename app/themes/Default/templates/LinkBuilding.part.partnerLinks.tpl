@@ -7,5 +7,5 @@
 	<strong><a href="{linkto package=LinkBuilding controller=Partners action=actionPartners}">{tg}more partners{/tg}</a></strong>
 {/if}
 
-{include  file='Base.part.addNewItem' itemPackage=LinkBuilding itemController=Partners itemAction=actionNew itemActionSimple=actionSimpleNew}
+{include  file='Base.part.addNewItem.tpl' itemPackage=LinkBuilding itemController=Partners itemAction=actionNew itemActionSimple=actionSimpleNew}
 

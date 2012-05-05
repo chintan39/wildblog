@@ -3,11 +3,11 @@
 			
 		<div id="rightbar">
 			
-			{include file=Commodity.part.references package=Commodity}
-			{include file=Commodity.part.actions package=Commodity}
-			{include file=Commodity.part.favourites package=Commodity}
-			{include file='Base.part.advertisements' package=Basic}
-			{include file='Basic.part.htmlAreas' package=Basic}
+			{include file=Commodity.part.references.tplpackage=Commodity}
+			{include file=Commodity.part.actions.tplpackage=Commodity}
+			{include file=Commodity.part.favourites.tplpackage=Commodity}
+			{include file='Base.part.advertisements.tpl' package=Basic}
+			{include file='Basic.part.htmlAreas.tpl' package=Basic}
 			
 			<div class="pause"></div>
 		</div>
@@ -16,16 +16,16 @@
 		
 		<div id="sidebar" >							
 				
-			{include file=Basicpart.articlesMenu package=Basic}
-			{include file=Commodity.part.categoriesMenu package=Commodity}
-			{include file=Commodity.part.manofacturersList package=Commodity}
+			{include file=Basicpart.articlesMenu.tplpackage=Basic}
+			{include file=Commodity.part.categoriesMenu.tplpackage=Commodity}
+			{include file=Commodity.part.manofacturersList.tplpackage=Commodity}
 			
 		</div><!-- sidebar -->
 			
 		<div id="headerphoto">
 		<div id="name">{tp}header page name{/tp}</div>
 		<div id="address">{tp}header page street<br />header page city<br />header page phone<br />header page email{/tp}</div>	
-      {include file='Base.part.navigation'}
+      {include file='Base.part.navigation.tpl'}
 		</div>
 		
 	<!-- content-wrap ends here -->		
@@ -36,7 +36,7 @@
 		<h2 id="logo"><a href="">{tp}header top title{/tp}</a></h2>	
 		<h2 id="slogan">{tp}header top subtitle{/tp}</h2> 
 		
-		{include file='Base.part.searchForm' searchFormClass="searchform" searchFormSubmit="Search"}
+		{include file='Base.part.searchForm.tpl' searchFormClass="searchform" searchFormSubmit="Search"}
 		<!--
 		<form method="post" class="searchform" action="#">
 			<p><input type="text" name="search_query" class="textbox" />
@@ -80,6 +80,6 @@
 <!-- wrap ends here -->
 </div>
 
-{include file='Base.part.adminBox' }
+{include file='Base.part.adminBox.tpl' }
 
-{include file='Base.part.footer' }
+{include file='Base.part.footer.tpl' }

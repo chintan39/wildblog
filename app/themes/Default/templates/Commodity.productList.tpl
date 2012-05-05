@@ -1,8 +1,8 @@
-{include file='Base.part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$title}</h1>
 	
-{include file=Commodity.part.productList package=Commodity}
+{include file=Commodity.part.productList.tplpackage=Commodity}
 
-{include file='Base.part.footer'}
+{include file='Base.part.footer.tpl'}
 

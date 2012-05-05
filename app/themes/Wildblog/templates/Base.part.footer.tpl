@@ -1,18 +1,18 @@
 	<!-- main content end -->
 	
     </div><!-- content -->
-      {include file='Base.part.navigation'}
+      {include file='Base.part.navigation.tpl'}
     </div><!-- left -->
     <div id="right">
-      {include file='Basic.part.footerArticle' package=Basic}
-      {include file='Basic.part.articlesMenu' package=Basic}
-      {include file='Base.part.advertisements' package=Basic}
-      {*require file='Basic.part.tagsMenu' package=Basic*}
-      {include file='Blog.part.relatedPosts' package=Blog}
-      {include file='Blog.part.recentPosts' package=Blog}
-      {*include file='Blog.part.favouritesLastWeek' package=Blog*}
-      {include file='Blog.part.tagsMenu' package=Blog}
-      {include file='Basic.part.htmlAreas' package=Basic}
+      {include file='Basic.part.footerArticle.tpl' package=Basic}
+      {include file='Basic.part.articlesMenu.tpl' package=Basic}
+      {include file='Base.part.advertisements.tpl' package=Basic}
+      {*require file='Basic.part.tagsMenu.tpl' package=Basic*}
+      {include file='Blog.part.relatedPosts.tpl' package=Blog}
+      {include file='Blog.part.recentPosts.tpl' package=Blog}
+      {*include file='Blog.part.favouritesLastWeek.tpl' package=Blog*}
+      {include file='Blog.part.tagsMenu.tpl' package=Blog}
+      {include file='Basic.part.htmlAreas.tpl' package=Basic}
     </div><!-- right -->
 	<div class="clear"></div>
   </div><!-- middle -->
@@ -35,17 +35,17 @@
 	<a href="{linkto package=Blog controller=Posts action=actionRss}"><img src="app/themes/Wildblog/images/header-rss.gif" title="RSS Feed" alt="RSS Feed" /></a>
     </div><!-- header-rss -->
     <div id="header-search">
-    {include file='Base.part.searchForm'}
+    {include file='Base.part.searchForm.tpl'}
 	</div><!-- header-search -->
     <div id="header-langs">
-    {include file='Base.part.languages' languages=$frontendLanguages}
+    {include file='Base.part.languages.tpl' languages=$frontendLanguages}
 	</div><!-- header-langs -->
   </div><!-- header -->
 </div><!-- upper -->
 <div id="lower">
   <div id="footer">
     <div id="footer-left">
-    {include package=Blog file='Blog.part.archive'}
+    {include package=Blog file='Blog.part.archive.tpl'}
     <h3>{tp}other{/tp}</h3>
 	<div class="list">
 	  <a href="{linkto controller=Sitemap action=actionSitemap}">{tg}Sitemap{/tg}</a>
@@ -53,9 +53,9 @@
     </div><!-- list -->
     </div><!-- footer-left -->
     <div id="footer-right">
-	  {include package=LinkBuilding file='LinkBuilding.part.partnerLinks'}
-	  {*include_package package=Blog file='Blog.part.postsFavouritesLastWeek'*}
-	  {*include_package package=Blog file='Blog.part.postsMostDisscused'*}
+	  {include package=LinkBuilding file='LinkBuilding.part.partnerLinks.tpl'}
+	  {*include_package package=Blog file='Blog.part.postsFavouritesLastWeek.tpl'*}
+	  {*include_package package=Blog file='Blog.part.postsMostDisscused.tpl'*}
     </div><!-- footer-right -->
 	<div class="clear"></div>
 	<div id="footer-bottom">
@@ -64,7 +64,7 @@
   <div id="footer-copy">
 	<div class="float-left">
 	
-        {include file='Base.part.wwFooter' sep=' '}
+        {include file='Base.part.wwFooter.tpl' sep=' '}
         
 	</div><!-- left -->
 	<div class="float-right">
@@ -80,6 +80,6 @@
 </div><!-- lower -->
 </div><!-- page -->
 
-{include file='Base.part.adminBox' }
+{include file='Base.part.adminBox.tpl' }
 
-{include file='Base.part.footer'  ajaxLoaderSuffix=_threedots}
+{include file='Base.part.footer.tpl'  ajaxLoaderSuffix=_threedots}
