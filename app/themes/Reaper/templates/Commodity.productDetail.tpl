@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='part.header'}
 
 <h1>{$product->title}</h1>
 			
@@ -12,7 +12,7 @@
 
 {$product->text}
 
-{require file=part.contactForm package=Basic}
+{include file=part.contactForm package=Basic}
 
-{require file='part.footer'}
+{include file='part.footer'}
 

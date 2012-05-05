@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='part.header'}
 
 <h1>{$title}</h1>
 	
@@ -15,5 +15,5 @@
 
 {generate_paging collection=$manofacturer}
 			
-{require file='part.footer'}
+{include file='part.footer'}
 

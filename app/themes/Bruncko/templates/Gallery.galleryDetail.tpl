@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='part.header'}
 
 <h1>{$title}</h1>
 	
@@ -13,5 +13,5 @@
 
 {generate_paging collection=$gallery->images}
 
-{require file='part.footer' useReferences=1}
+{include file='part.footer' useReferences=1}
 

@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='part.header'}
 
 <h1>{$title}</h1>
 	
@@ -18,4 +18,4 @@
 
 <p class="addReference"><a href="{linkto package=References controller=References action=actionReferenceAdd}"><img src="{$iconsPath}32/add.png" alt="+" class="no-border" /> {tg}add refernce{/tg}</a></p>
 			
-{require file='part.footer'}
+{include file='part.footer'}

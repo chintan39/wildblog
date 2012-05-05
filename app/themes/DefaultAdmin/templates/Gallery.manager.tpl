@@ -1,4 +1,4 @@
-{require file='part.header' theme=Common}
+{include file='part.header' theme=Common}
 
 {*php}
 TODO: implement this
@@ -66,5 +66,5 @@ function uploaderStatusChanged( uploader) {ldelim}
 init();
 </script>
 
-{require file='part.footer' theme=Common}
+{include file='part.footer' theme=Common}
 

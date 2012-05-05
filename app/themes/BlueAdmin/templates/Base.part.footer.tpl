@@ -1,21 +1,21 @@
 					</div>
 					<div id="left">
-					{require file='part.menuLeft'}
+					{include file='part.menuLeft'}
 					</div>
 
 					<div class="clear"></div>
 					
 				    <div id="header-langs">{tg}Content language:{/tg}
-					{require file='part.languages' languages=$frontendLanguages}
+					{include file='part.languages' languages=$frontendLanguages}
 					</div><!-- header-langs -->
 
 				</div>
 				<div id="header">
 					<a href="{$base}" class="title">{$projectTitle}</a>
-					{require file='part.userInfo'}
+					{include file='part.userInfo'}
 					
 				    <div id="header-langs">{tg}Admin language:{/tg}
-					{require file='part.languages' languages=$backendLanguages}
+					{include file='part.languages' languages=$backendLanguages}
 					</div><!-- header-langs -->
 					
 				</div>
@@ -25,7 +25,7 @@
 			</div>
 		</div>
 
-{require file='part.adminBox' theme=Common}
+{include file='part.adminBox' theme=Common}
 
-{require file='part.footer' theme=Common}
+{include file='part.footer' theme=Common}
 

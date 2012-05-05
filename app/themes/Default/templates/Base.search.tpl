@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='part.header'}
 
 <h1>{$title}</h1>
 {assign var=found value=0}
@@ -19,5 +19,5 @@
 {tg}Nothing was found.{/tg}
 {/if}
 
-{require file='part.footer'}
+{include file='part.footer'}
 

@@ -3,11 +3,11 @@
 			
 		<div id="rightbar">
 			
-			{require file=part.references package=Commodity}
-			{require file=part.actions package=Commodity}
-			{require file=part.favourites package=Commodity}
-			{require file='part.advertisements' package=Basic}
-			{require file='part.htmlAreas' package=Basic}
+			{include file=part.references package=Commodity}
+			{include file=part.actions package=Commodity}
+			{include file=part.favourites package=Commodity}
+			{include file='part.advertisements' package=Basic}
+			{include file='part.htmlAreas' package=Basic}
 			
 			<div class="pause"></div>
 		</div>
@@ -16,16 +16,16 @@
 		
 		<div id="sidebar" >							
 				
-			{require file=part.articlesMenu package=Basic}
-			{require file=part.categoriesMenu package=Commodity}
-			{require file=part.manofacturersList package=Commodity}
+			{include file=part.articlesMenu package=Basic}
+			{include file=part.categoriesMenu package=Commodity}
+			{include file=part.manofacturersList package=Commodity}
 			
 		</div><!-- sidebar -->
 			
 		<div id="headerphoto">
 		<div id="name">{tp}header page name{/tp}</div>
 		<div id="address">{tp}header page street<br />header page city<br />header page phone<br />header page email{/tp}</div>	
-      {require file='part.navigation'}
+      {include file='part.navigation'}
 		</div>
 		
 	<!-- content-wrap ends here -->		
@@ -36,7 +36,7 @@
 		<h2 id="logo"><a href="">{tp}header top title{/tp}</a></h2>	
 		<h2 id="slogan">{tp}header top subtitle{/tp}</h2> 
 		
-		{require file='part.searchForm' searchFormClass="searchform" searchFormSubmit="Search"}
+		{include file='part.searchForm' searchFormClass="searchform" searchFormSubmit="Search"}
 		<!--
 		<form method="post" class="searchform" action="#">
 			<p><input type="text" name="search_query" class="textbox" />
@@ -80,6 +80,6 @@
 <!-- wrap ends here -->
 </div>
 
-{require file='part.adminBox' theme=Common}
+{include file='part.adminBox' theme=Common}
 
-{require file='part.footer' theme=Common}
+{include file='part.footer' theme=Common}

@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='part.header'}
 
 <h1>{$article->title}</h1>
 
@@ -25,10 +25,10 @@
 
 {if $article}
 {$article->text}
-{require package=Base file='part.editItem' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
+{include package=Base file='part.editItem' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
 {/if}
 
 </div> <!-- /content-in -->
 
-{require file='part.footer'}
+{include file='part.footer'}
 

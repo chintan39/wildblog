@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='part.header'}
 {if $title}<h1>{$title}</h1>{/if}
 
 {foreach from=$results item=res}
@@ -8,5 +8,5 @@
 </div>
 {/foreach}
 
-{require file='part.footer'}
+{include file='part.footer'}
 

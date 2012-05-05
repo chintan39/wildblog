@@ -6,15 +6,15 @@
 							
                 <div class="sidemenu">
 					<h3>{tg}Main menu{/tg}</h3>
-					{require file='part.allPagesMenus' package=Basic menuName='top_menu'}
+					{include file='part.allPagesMenus' package=Basic menuName='top_menu'}
 				</div>
 
 				{*
 				<div class="sidemenu">
-					{require file='part.partnerLinks' package=LinkBuilding}
+					{include file='part.partnerLinks' package=LinkBuilding}
 				</div>
 				
-				{require package=Gallery file='part.galleriesList'}
+				{include package=Gallery file='part.galleriesList'}
 				*}
 				
 			<!-- /sidebar -->				
@@ -36,7 +36,7 @@
 		<p id="slogan">{tp}header top subtitle{/tp}</p>
 		
 		<div id="nav">
-			{require file='part.allPagesMenus' package=Basic menuName='top_menu'}
+			{include file='part.allPagesMenus' package=Basic menuName='top_menu'}
 		</div>		
 		
 		<p id="rss-feed"><a href="{linkto package=Blog controller=Posts action=actionRss}" class="feed">{tg}RSS feed{/tg}</a></p>
@@ -50,7 +50,7 @@
 		</form>	
 						
 		<div id="namedays">
-			{require file='part.nameDays' package=Basic}
+			{include file='part.nameDays' package=Basic}
 		</div>
 		
 	<!-- /header -->					
@@ -67,7 +67,7 @@
 	
 		<div class="col-a">
 				
-			{require file='part.shortContact' package=Basic}
+			{include file='part.shortContact' package=Basic}
 			
 		</div>
 		
@@ -76,7 +76,7 @@
 			<h3>{tg}Interesting links{/tg}</h3>
 			
 			<div class="footer-list">
-				{require file='part.allPagesMenus' package=Basic menuName='top_menu'}
+				{include file='part.allPagesMenus' package=Basic menuName='top_menu'}
 			</div>					
 				
 		</div>
@@ -97,7 +97,7 @@
 	
 		<div class="col-b">
 		
-		{require file='part.personalInfo' package=Basic}
+		{include file='part.personalInfo' package=Basic}
 			
 		</div>		
 		
@@ -109,7 +109,7 @@
 			<div class="bottom-left">
 				<p>
 				
-				{require file='part.wwFooter' sep=' '}
+				{include file='part.wwFooter' sep=' '}
 				
 				<br />
 				<a href="http://www.bluewebtemplates.com/" title="Website Templates">website templates</a> by <a href="http://www.styleshout.com/">styleshout</a>
@@ -135,8 +135,8 @@
 <!-- /footer -->
 </div>
 
-{require file='part.htmlAreas' package=Basic}
+{include file='part.htmlAreas' package=Basic}
 
-{require file='part.adminBox' theme=Common}
+{include file='part.adminBox' theme=Common}
 
-{require file='part.footer' theme=Common}
+{include file='part.footer' theme=Common}

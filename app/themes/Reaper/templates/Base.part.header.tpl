@@ -1,4 +1,4 @@
-{require file='part.header' theme=Common}
+{include file='part.header' theme=Common}
 <!-- wrap starts here -->
 <div id="wrap">
 					
@@ -8,5 +8,5 @@
 		<div id="mainleft">	
 		<div id="main">	
 
-		{require file=part.homepageArticle package=Basic}
+		{include file=part.homepageArticle package=Basic}
 

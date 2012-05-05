@@ -1,18 +1,18 @@
 	<!-- main content end -->
 	
     </div><!-- content -->
-      {require file='part.navigation'}
+      {include file='part.navigation'}
     </div><!-- left -->
     <div id="right">
-      {require file='part.footerArticle' package=Basic}
-      {require file='part.articlesMenu' package=Basic}
-      {require file='part.advertisements' package=Basic}
+      {include file='part.footerArticle' package=Basic}
+      {include file='part.articlesMenu' package=Basic}
+      {include file='part.advertisements' package=Basic}
       {*require file='part.tagsMenu' package=Basic*}
-      {require file='part.relatedPosts' package=Blog}
-      {require file='part.recentPosts' package=Blog}
+      {include file='part.relatedPosts' package=Blog}
+      {include file='part.recentPosts' package=Blog}
       {*include file='part.favouritesLastWeek' package=Blog*}
-      {require file='part.tagsMenu' package=Blog}
-      {require file='part.htmlAreas' package=Basic}
+      {include file='part.tagsMenu' package=Blog}
+      {include file='part.htmlAreas' package=Basic}
     </div><!-- right -->
 	<div class="clear"></div>
   </div><!-- middle -->
@@ -35,17 +35,17 @@
 	<a href="{linkto package=Blog controller=Posts action=actionRss}"><img src="app/themes/Wildblog/images/header-rss.gif" title="RSS Feed" alt="RSS Feed" /></a>
     </div><!-- header-rss -->
     <div id="header-search">
-    {require file='part.searchForm'}
+    {include file='part.searchForm'}
 	</div><!-- header-search -->
     <div id="header-langs">
-    {require file='part.languages' languages=$frontendLanguages}
+    {include file='part.languages' languages=$frontendLanguages}
 	</div><!-- header-langs -->
   </div><!-- header -->
 </div><!-- upper -->
 <div id="lower">
   <div id="footer">
     <div id="footer-left">
-    {require package=Blog file='part.archive'}
+    {include package=Blog file='part.archive'}
     <h3>{tp}other{/tp}</h3>
 	<div class="list">
 	  <a href="{linkto controller=Sitemap action=actionSitemap}">{tg}Sitemap{/tg}</a>
@@ -53,7 +53,7 @@
     </div><!-- list -->
     </div><!-- footer-left -->
     <div id="footer-right">
-	  {require package=LinkBuilding file='part.partnerLinks'}
+	  {include package=LinkBuilding file='part.partnerLinks'}
 	  {*include_package package=Blog file='part.postsFavouritesLastWeek'*}
 	  {*include_package package=Blog file='part.postsMostDisscused'*}
     </div><!-- footer-right -->
@@ -64,7 +64,7 @@
   <div id="footer-copy">
 	<div class="float-left">
 	
-        {require file='part.wwFooter' sep=' '}
+        {include file='part.wwFooter' sep=' '}
         
 	</div><!-- left -->
 	<div class="float-right">
@@ -80,6 +80,6 @@
 </div><!-- lower -->
 </div><!-- page -->
 
-{require file='part.adminBox' theme=Common}
+{include file='part.adminBox' theme=Common}
 
-{require file='part.footer' theme=Common ajaxLoaderSuffix=_threedots}
+{include file='part.footer' theme=Common ajaxLoaderSuffix=_threedots}

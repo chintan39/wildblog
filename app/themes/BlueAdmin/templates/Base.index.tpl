@@ -1,5 +1,5 @@
-{require file='part.header'}
+{include file='part.header'}
 {if $title}<h1>{$title}</h1>{/if}
 {$text}
-{require file='part.footer'}
+{include file='part.footer'}
 

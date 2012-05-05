@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='part.header'}
 
 <h1>{$title}</h1>
 	
@@ -13,9 +13,9 @@
 	<p>{tg}No galleries found.{/tg}</p>
 {/if}
 
-{require package=Base file='part.addNewItem' itemPackage=Gallery itemController=Galleries itemAction=actionNew itemActionSimple=actionSimpleNew}
+{include package=Base file='part.addNewItem' itemPackage=Gallery itemController=Galleries itemAction=actionNew itemActionSimple=actionSimpleNew}
 
 {generate_paging collection=$galleriesList}
 
-{require file='part.footer'}
+{include file='part.footer'}
 

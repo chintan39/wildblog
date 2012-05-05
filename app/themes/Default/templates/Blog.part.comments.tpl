@@ -10,7 +10,7 @@
 {/foreach}
 {/if}
 <a name="comment_add"></a>
-{require file='part.cleanForm' theme=Common formId=comment formClass="no-border"}
+{include file='part.cleanForm' theme=Common formId=comment formClass="no-border"}
 </div>
 {/strip}
 

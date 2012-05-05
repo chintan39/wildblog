@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='part.header'}
 
 {if $title and not $notitle}<h1>{$title}</h1>{/if}
 
@@ -17,7 +17,7 @@
 
 {generate_paging collection=$news}
 
-{require package=Base file='part.addNewItem' itemPackage=Basic itemController=News itemAction=actionNew itemActionSimple=actionSimpleNew}
+{include package=Base file='part.addNewItem' itemPackage=Basic itemController=News itemAction=actionNew itemActionSimple=actionSimpleNew}
 
-{require file='part.footer'}
+{include file='part.footer'}
 

@@ -1,8 +1,8 @@
-{require file='part.header'}
+{include file='part.header'}
 <div id="{$main->containerId}">
 <h1>{$title|default:'List':tg}</h1>
 {generate_table collection=$main}
 {if $csvLink}<a href="{$csvLink}" class="csvLink">{tg}Show in CSV{/tg}</a>{/if}
 </div>
-{require file='part.footer'}
+{include file='part.footer'}
 

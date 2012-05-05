@@ -1,4 +1,4 @@
-{require file='part.header' theme=Common}
+{include file='part.header' theme=Common}
 
 <!-- HEADER -->
 <!-- CONTENT -->

@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='part.header'}
 
 <h1>{$manofacturer->title}</h1>
 			
@@ -6,9 +6,9 @@
 
 {if $manofacturer->link}<p>{tg}Web{/tg}: <a href="{$manofacturer->link}" rel="external">{$manofacturer->link}</a></p>{/if}
 
-{require file=part.productList package=Commodity products=$manofacturer->products}
+{include file=part.productList package=Commodity products=$manofacturer->products}
 
 {$manofacturer->text}
 
-{require file='part.footer'}
+{include file='part.footer'}
 

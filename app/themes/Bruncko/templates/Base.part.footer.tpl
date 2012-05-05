@@ -1,14 +1,14 @@
 					</div>
 					<div class="col-1">
 						{if $useReferences}
-						{require package=References file='part.references'}
+						{include package=References file='part.references'}
 						{else}
-						{require package=Gallery file='part.galleriesList'}
+						{include package=Gallery file='part.galleriesList'}
 						{/if}
 						<hr class="invisible" />
 						{if $isHomepage}
 						<div class="contact">
-							{require file='part.shortContact' package=Basic}
+							{include file='part.shortContact' package=Basic}
 						</div>
 						{/if}
 					</div>
@@ -39,7 +39,7 @@
 	<div class="indent">
 		<div class="fleft">
 		
-{require file='part.wwFooter' sep=' '}
+{include file='part.wwFooter' sep=' '}
 
 		| <a href="{linkto controller=Sitemap action=actionSitemap}">Mapa webu</a>
 		</div>
@@ -48,8 +48,8 @@
 	</div>
 </div>
 
-{require file='part.htmlAreas' package=Basic}
+{include file='part.htmlAreas' package=Basic}
 
-{require file='part.adminBox' theme=Common}
+{include file='part.adminBox' theme=Common}
 
-{require file='part.footer' theme=Common}
+{include file='part.footer' theme=Common}

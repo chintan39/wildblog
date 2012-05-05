@@ -1,8 +1,8 @@
-{require file='part.header'}
+{include file='part.header'}
 
 <h1>{$title}</h1>
 
-{require file='part.cleanForm' theme=Common form=$contactForm formId=contactForm}
+{include file='part.cleanForm' theme=Common form=$contactForm formId=contactForm}
 	
-{require file='part.footer'}
+{include file='part.footer'}
 
