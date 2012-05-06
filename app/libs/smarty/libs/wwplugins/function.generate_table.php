@@ -84,12 +84,18 @@ function smarty_function_generate_table($params, &$smarty)
 			$output .= "</div>\n";
 		}
 
-		require_once($smarty->_get_plugin_filepath('function', 'form_field'));
+		/**
+		 * Include the {@link function.form_field.php} plugin
+		 */
+		require_once('function.form_field.php');
 		foreach ($form['fields'] as $field) {
 			$output .= smarty_function_form_field(array('field' => $field), $smarty);
 		}
 
-		require_once($smarty->_get_plugin_filepath('function', 'form_button'));
+		/**
+		 * Include the {@link function.form_button.php} plugin
+		 */
+		require_once('function.form_button.php');
 		$output .= "<div class=\"float-right\">\n";
 		foreach ($form['buttons'] as $button) {
 			$output .= smarty_function_form_button(array('button' => $button), $smarty);
@@ -202,7 +208,10 @@ function smarty_function_generate_table($params, &$smarty)
 	 * paging 
 	 */
 	// we need to include function explicitely
-	require_once($smarty->_get_plugin_filepath('function', 'generate_paging'));
+	/**
+	 * Include the {@link function.generate_paging.php} plugin
+	 */
+	require_once('function.generate_paging.php');
 	$output .= smarty_function_generate_paging($params, $smarty);
 
 	
