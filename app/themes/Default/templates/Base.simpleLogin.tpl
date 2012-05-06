@@ -6,7 +6,7 @@ Logged: <a href="#">{$actualUserInfo->email}</a><br />
 	<a href="{linkto  controller=Users action=actionLogout}" class="logging">{tg}Logout{/tg}</a>
 
 {else}
-{include file='Common.part.cleanForm.tpl'  form=$loginForm ajax=1}
+{include file='Base.part.cleanForm.tpl'  form=$loginForm ajax=1}
 
 <a href="{linkto  controller=LostPassword action=actionLostPassword}">{tg}Password forgotten?{/tg}</a>
 {/if}
