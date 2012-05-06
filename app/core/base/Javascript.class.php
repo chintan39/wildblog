@@ -383,7 +383,7 @@ class Javascript {
 		if (stripos($tpl_output, '<pre class="highlight"><code>') !== false) {
 			self::addFile(Request::$url['base'] . DIR_LIBS . 'highlight/highlight.js');
 			self::addFile(Request::$url['base'] . DIR_LIBS . 'highlight/highlight.pack.js');
-			self::addCSS(Request::$url["base"] . DIR_LIBS . 'highlight/styles/default.css');
+			self::addCSS(Request::$url['base'] . DIR_LIBS . 'highlight/styles/default.css');
 			self::addScript("hljs.tabReplace = '    ';\nhljs.initHighlightingOnLoad();");
 		}
 		
@@ -393,8 +393,12 @@ class Javascript {
 		
 		if (stripos($tpl_output, 'tooltipOn') !== false) {
 			self::addFile(Request::$url['base'] . DIR_LIBS . 'tooltip/tooltip-v0.2.js');
-			self::addCSS(Request::$url["base"] . DIR_LIBS . 'tooltip/default.css');
+			self::addCSS(Request::$url['base'] . DIR_LIBS . 'tooltip/default.css');
 			self::addFile(Request::$url['base'] . DIR_LIBS . 'tooltip/tooltip-init.js');
+		}
+		
+		if (stripos($tpl_output, 'selectMedia') !== false) {
+			self::addFile(Request::$url['base'] . DIR_LIBS . 'mediamanager/MediaManager.js');
 		}
 		
 		if (stripos($tpl_output, '<!-- addScriptaculouse -->') !== false) {

@@ -1,4 +1,4 @@
-{include file='Base.part.header.tpl' }
+{include file='Base.part.pageHeader.tpl' }
 
 {*php}
 TODO: implement this
@@ -66,5 +66,5 @@ function uploaderStatusChanged( uploader) {ldelim}
 init();
 </script>
 
-{include file='Base.part.footer.tpl' }
+{include file='Base.part.pageFooter.tpl' }
 
