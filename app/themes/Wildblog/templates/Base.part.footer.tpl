@@ -6,7 +6,7 @@
     <div id="right">
       {include file='Basic.part.footerArticle.tpl' package=Basic}
       {include file='Basic.part.articlesMenu.tpl' package=Basic}
-      {include file='Base.part.advertisements.tpl' package=Basic}
+      {include file='Basic.part.advertisements.tpl' package=Basic}
       {*require file='Basic.part.tagsMenu.tpl' package=Basic*}
       {include file='Blog.part.relatedPosts.tpl' package=Blog}
       {include file='Blog.part.recentPosts.tpl' package=Blog}
@@ -82,4 +82,4 @@
 
 {include file='Base.part.adminBox.tpl' }
 
-{include file='Base.part.footer.tpl'  ajaxLoaderSuffix=_threedots}
+{include file='Base.part.pageFooter.tpl'  ajaxLoaderSuffix=_threedots}

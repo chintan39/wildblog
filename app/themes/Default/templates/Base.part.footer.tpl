@@ -25,5 +25,5 @@ Honza Horák, <a href="http://www.wild-web.eu" title="www.wild-web.eu">wild-web.
 
 {include file='Base.part.adminBox.tpl' }
 
-{include file='Base.part.footer.tpl' }
+{include file='Base.part.pageFooter.tpl' }
 

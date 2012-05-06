@@ -8,7 +8,7 @@
 	{include package=Blog file='Blog.part.tags.tpl' tags=$post->tags}
     {include package=Blog file='Blog.part.relatedPostsDown.tpl'}
 	{include package=Blog file='Blog.part.comments.tpl' form=$commentNewForm comments=$post->comments}
-	{include  file='Basic.part.editItem.tpl' itemPackage=Blog itemController=Posts itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$post}
+	{include  file='Base.part.editItem.tpl' itemPackage=Blog itemController=Posts itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$post}
 	</div>
 
 {include file='Base.part.footer.tpl'}

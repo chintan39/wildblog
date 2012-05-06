@@ -5,7 +5,7 @@
 
 	<h1>{$article->title}</h1>
 	{$article->text}
-	{include  file='Basic.part.editItem.tpl' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
+	{include  file='Base.part.editItem.tpl' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
 
 <!-- AddThis Button BEGIN -->
 <div class="addthis_toolbox addthis_default_style">

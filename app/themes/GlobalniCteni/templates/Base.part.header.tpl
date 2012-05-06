@@ -1,4 +1,4 @@
-{include file='Base.part.header.tpl' }
+{include file='Base.part.pageHeader.tpl' }
 
 <div id="page">
 <div id="contentwrap">

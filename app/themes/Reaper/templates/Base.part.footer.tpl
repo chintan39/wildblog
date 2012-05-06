@@ -6,7 +6,7 @@
 			{include file=Commodity.part.references.tplpackage=Commodity}
 			{include file=Commodity.part.actions.tplpackage=Commodity}
 			{include file=Commodity.part.favourites.tplpackage=Commodity}
-			{include file='Base.part.advertisements.tpl' package=Basic}
+			{include file='Basic.part.advertisements.tpl' package=Basic}
 			{include file='Basic.part.htmlAreas.tpl' package=Basic}
 			
 			<div class="pause"></div>
@@ -82,4 +82,4 @@
 
 {include file='Base.part.adminBox.tpl' }
 
-{include file='Base.part.footer.tpl' }
+{include file='Base.part.pageFooter.tpl' }

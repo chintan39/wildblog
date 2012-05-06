@@ -18,7 +18,7 @@
 	<a href="{$post->link}#comment_add"><img src="{$iconsPath}16/comment_add.png" alt="" title="" /> add comment</a>
 	<a href="{$post->link}#comments"><img src="{$iconsPath}16/comments.png" alt="" title="" /> view posted comments ({$post->commentsCount})</a>
 	</div>
-	{include  file='Basic.part.editItem.tpl' itemPackage=Blog itemController=Posts itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$post}
+	{include  file='Base.part.editItem.tpl' itemPackage=Blog itemController=Posts itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$post}
 	</div>
 	<br /><br /><br />
 {/foreach}
