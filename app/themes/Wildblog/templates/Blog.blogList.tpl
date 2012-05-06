@@ -10,7 +10,7 @@
 {foreach from=$blogposts->data.items item=post}
 	<div class="article">
 	<h1><a href="{$post->link}">{$post->title}</a></h1>
-	<div class="date"><span class="w">{$post->published|date_format:"%m"|month_format:"%nam"}|{$post->published|date_format:"%e"}</span> <span class="y">{$post->published|date_format:"%Y"}</span></div>
+	<div class="date"><span class="w">{$post->published|date_format2:"%m"|month_format:"%nam"}|{$post->published|date_format2:"%e"}</span> <span class="y">{$post->published|date_format2:"%Y"}</span></div>
 	{$post->text}
 	<div class="clear"></div>
 	{include file='Blog.part.tags.tpl' tags=$post->tags package=Blog}

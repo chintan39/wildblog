@@ -26,7 +26,7 @@
 			<div id="lower">
 				Powered by <a href="http://code.google.com/p/wildblog/" title="wild-blog">wildblog project</a>,
 				Jan Horák, <a href="http://www.wild-web.eu" title="wild-web">wild-web.eu</a>
-				&copy; 2009-{$now|date_format:"%Y"}
+				&copy; 2009-{$now|date_format2:"%Y"}
 			</div>
 		</div>
 	</div>

@@ -6,7 +6,7 @@
       <link>{$item->link}</link>
       <guid>{$item->link}</guid>
       <description>{$item->description|default:$item->text|strip_tags|truncate:255}</description>
-      <pubDate>{$item->published|date_format:"%standard"}</pubDate>
+      <pubDate>{$item->published|date_format2:"%standard"}</pubDate>
     </item>
 {/foreach}
 {/if}

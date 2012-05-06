@@ -3,7 +3,7 @@
 {foreach from=$tag->posts->data.items item=postItem}
 	<div class="article">
 	<h1><a href="{$postItem->link}" rel="external">{$postItem->title}</a></h1>
-	<div class="date">{$postItem->published|date_format:"%m/%e"}</div>
+	<div class="date">{$postItem->published|date_format2:"%m/%e"}</div>
 	{$postItem->text}
 	{include file='Blog.part.tags.tpl' tags=$postItem->tags package=Blog}
 	<div class="comments">

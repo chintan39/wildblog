@@ -6,7 +6,7 @@
 {foreach from=$news->data.items item=item}
 	<div class="news">
 	<h2><a href="{$item->link}">{$item->title}</a></h2>
-	<div class="date">{$item->published|date_format:"%relative"}</div>
+	<div class="date">{$item->published|date_format2:"%relative"}</div>
 	{$item->preview}
 	<div class="clear"></div>
 	</div>

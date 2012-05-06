@@ -6,7 +6,7 @@
 {foreach from=$news->data.items item=item}
 	<div class="article">
 	<h1><a href="{$item->link}"{if $item->color} style="color: {$item->color};"{/if}>{$item->title}</a></h1>
-	<div class="date">{$item->published|date_format:"%e"}. {$item->published|date_format:"%m"|month_format:"%m"}. {$item->published|date_format:"%Y"}</div>
+	<div class="date">{$item->published|date_format2:"%e"}. {$item->published|date_format2:"%m"|month_format:"%m"}. {$item->published|date_format2:"%Y"}</div>
 	{$item->preview}
 	<div class="clear"></div>
 	</div>

@@ -21,7 +21,7 @@
 
 {tg}Powered by{/tg} <a href="http://code.google.com/p/wildblog/" title="wildblog">wildblog project</a>,
 Honza Horák, <a href="http://www.wild-web.eu" title="www.wild-web.eu">wild-web.eu</a>
-&copy; {$now|date_format:"%Y"} | <a href="{$base}admin/">{tg}Administration{/tg}</a>
+&copy; {$now|date_format2:"%Y"} | <a href="{$base}admin/">{tg}Administration{/tg}</a>
 
 {include file='Base.part.adminBox.tpl' }
 

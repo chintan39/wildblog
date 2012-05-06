@@ -1,7 +1,7 @@
 {include file='Base.part.header.tpl'}
 
 	<h1>{$news->title}</h1>
-	<div class="date">{$news->published|date_format:"%e"}. {$news->published|date_format:"%m"|month_format:"%m"}. {$news->published|date_format:"%Y"}</div>
+	<div class="date">{$news->published|date_format2:"%e"}. {$news->published|date_format2:"%m"|month_format:"%m"}. {$news->published|date_format2:"%Y"}</div>
 	{$news->text|addlinks}
 	<div class="clear"></div>
 	{include  file='Base.part.editItem.tpl' itemPackage=Basic itemController=News itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$news}

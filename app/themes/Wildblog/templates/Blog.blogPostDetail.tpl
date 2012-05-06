@@ -2,7 +2,7 @@
 
 	<div class="article">
 	<h1>{$post->title}</h1>
-	<div class="date"><span class="w">{$post->published|date_format:"%m"|month_format:"%nam"}|{$post->published|date_format:"%e"}</span> <span class="y">{$post->published|date_format:"%Y"}</span></div>
+	<div class="date"><span class="w">{$post->published|date_format2:"%m"|month_format:"%nam"}|{$post->published|date_format2:"%e"}</span> <span class="y">{$post->published|date_format2:"%Y"}</span></div>
 	{$post->text|addlinks}
 	<div class="clear"></div>
 	{include package=Blog file='Blog.part.tags.tpl' tags=$post->tags}
