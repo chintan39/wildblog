@@ -155,7 +155,7 @@ class GalleryImagesController extends AbstractPagesController {
 						$newImage->image = Utilities::path2url($thumb->getThumbnailImagePath());
 					} else {
 						if (preg_match('/\.([^\.\/]+)$/', $image->image, $ext)) {
-							if (file_exists(DIR_ICONS_IMAGES_DIR_THUMBS_URL . '128/filetype_' . $ext[1] . '.png')) {
+							if (file_exists(DIR_ICONS_IMAGES_DIR_ORIGINAL . '128/filetype_' . $ext[1] . '.png')) {
 								$newImage->image = DIR_ICONS_IMAGES_DIR_THUMBS_URL . '64/filetype_' . $ext[1] . '.png';
 							} else {
 								$newImage->image = DIR_ICONS_IMAGES_DIR_THUMBS_URL . '64/filetype_unknown.png';
