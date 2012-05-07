@@ -3,11 +3,11 @@
 			
 		<div id="rightbar">
 			
-			{require file=part.references package=Commodity}
-			{require file=part.actions package=Commodity}
-			{require file=part.favourites package=Commodity}
-			{require file='part.advertisements' package=Basic}
-			{require file='part.htmlAreas' package=Basic}
+			{include file=Commodity.part.references.tplpackage=Commodity}
+			{include file=Commodity.part.actions.tplpackage=Commodity}
+			{include file=Commodity.part.favourites.tplpackage=Commodity}
+			{include file='Basic.part.advertisements.tpl' package=Basic}
+			{include file='Basic.part.htmlAreas.tpl' package=Basic}
 			
 			<div class="pause"></div>
 		</div>
@@ -16,16 +16,16 @@
 		
 		<div id="sidebar" >							
 				
-			{require file=part.articlesMenu package=Basic}
-			{require file=part.categoriesMenu package=Commodity}
-			{require file=part.manofacturersList package=Commodity}
+			{include file=Basicpart.articlesMenu.tplpackage=Basic}
+			{include file=Commodity.part.categoriesMenu.tplpackage=Commodity}
+			{include file=Commodity.part.manofacturersList.tplpackage=Commodity}
 			
 		</div><!-- sidebar -->
 			
 		<div id="headerphoto">
 		<div id="name">{tp}header page name{/tp}</div>
 		<div id="address">{tp}header page street<br />header page city<br />header page phone<br />header page email{/tp}</div>	
-      {require file='part.navigation'}
+      {include file='Base.part.navigation.tpl'}
 		</div>
 		
 	<!-- content-wrap ends here -->		
@@ -36,7 +36,7 @@
 		<h2 id="logo"><a href="">{tp}header top title{/tp}</a></h2>	
 		<h2 id="slogan">{tp}header top subtitle{/tp}</h2> 
 		
-		{require file='part.searchForm' searchFormClass="searchform" searchFormSubmit="Search"}
+		{include file='Base.part.searchForm.tpl' searchFormClass="searchform" searchFormSubmit="Search"}
 		<!--
 		<form method="post" class="searchform" action="#">
 			<p><input type="text" name="search_query" class="textbox" />
@@ -80,6 +80,6 @@
 <!-- wrap ends here -->
 </div>
 
-{require file='part.adminBox' theme=Common}
+{include file='Base.part.adminBox.tpl' }
 
-{require file='part.footer' theme=Common}
+{include file='Base.part.pageFooter.tpl' }

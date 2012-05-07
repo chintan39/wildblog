@@ -1,15 +1,15 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 
 	<div class="article">
 	<h1>{$post->title}</h1>
-	<div class="date"><span class="w">{$post->published|date_format:"%m"|month_format:"%nam"}|{$post->published|date_format:"%e"}</span> <span class="y">{$post->published|date_format:"%Y"}</span></div>
+	<div class="date"><span class="w">{$post->published|date_format2:"%m"|month_format:"%nam"}|{$post->published|date_format2:"%e"}</span> <span class="y">{$post->published|date_format2:"%Y"}</span></div>
 	{$post->text|addlinks}
 	<div class="clear"></div>
-	{require package=Blog file='part.tags' tags=$post->tags}
-    {require package=Blog file='part.relatedPostsDown'}
-	{require package=Blog file='part.comments' form=$commentNewForm comments=$post->comments}
-	{require package=Base file='part.editItem' itemPackage=Blog itemController=Posts itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$post}
+	{include package=Blog file='Blog.part.tags.tpl' tags=$post->tags}
+    {include package=Blog file='Blog.part.relatedPostsDown.tpl'}
+	{include package=Blog file='Blog.part.comments.tpl' form=$commentNewForm comments=$post->comments}
+	{include  file='Base.part.editItem.tpl' itemPackage=Blog itemController=Posts itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$post}
 	</div>
 
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}
 

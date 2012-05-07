@@ -1,4 +1,4 @@
-{require file='part.header' theme=Common}
+{include file='Base.part.pageHeader.tpl' }
 <!-- wrap starts here -->
 <div id="wrap">
 					
@@ -8,5 +8,5 @@
 		<div id="mainleft">	
 		<div id="main">	
 
-		{require file=part.homepageArticle package=Basic}
+		{include file=Basic.part.homepageArticle.tplpackage=Basic}
 

@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$title}</h1>
 
@@ -25,4 +25,4 @@
 
 {generate_paging collection=$questions}
 			
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}

@@ -1,11 +1,11 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 
 	<div class="article">
 	<h1>{$article->title}</h1>
 	{$article->text}
 	</div>
 
-{require file=part.contactForm package=Basic}
+{include file='Basic.part.contactForm.tpl' package=Basic}
 
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}
 

@@ -1,5 +1,5 @@
-{require file='part.header' theme=Common}
+{include file='Base.part.header.tpl' }
 
 <!-- message_bus_adding -->
       
-{require file='part.footer' theme=Common}
+{include file='Base.part.footer.tpl' }

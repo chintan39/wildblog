@@ -7,7 +7,7 @@
 date_default_timezone_set('Europe/Prague');
 
 // version of the application
-define('APP_VERSION', '0.4.8');
+define('APP_VERSION', '0.4.9');
 define('APP_GENERATOR_NAME', 'WildBlog');
 
 define('DIR_APP', 'app/');
@@ -69,9 +69,9 @@ define('DIR_ICONS_IMAGES_DIR_THUMBS_URL', DIR_PROJECT_URL_MEDIA . '.ico/');
 define('DIR_PORK', DIR_LIBS . 'pork.dbobject/');
 
 // smarty templates engine directories
-define('DIR_SMARTY', DIR_LIBS . 'smarty/');
+define('DIR_SMARTY', DIR_LIBS . 'smarty/libs/');
 define('DIR_SMARTY_TEMPLATES', '');
-define('DIR_SMARTY_THEME_TEMPLATES', DIR_THEMES . '[theme]/templates/[package].' );
+define('DIR_SMARTY_THEME_TEMPLATES', DIR_THEMES . '[theme]/templates/' );
 define('DIR_SMARTY_THEME_CSS', DIR_THEMES . '[theme]/css/' );
 define('DIR_SMARTY_THEME_IMAGES', DIR_THEMES . '[theme]/images/' );
 define('DIR_SMARTY_THEME_JS', DIR_THEMES . '[theme]/js/' );

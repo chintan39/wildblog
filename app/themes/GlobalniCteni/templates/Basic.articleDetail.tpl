@@ -1,11 +1,11 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 
 	<div class="article">
 	{if $article}
 	{$article->text}
-	{require package=Base file='part.editItem' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
+	{include  file='Base.part.editItem.tpl' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
 	{/if}
 	</div>
 
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}
 

@@ -6,7 +6,7 @@
 <div id="leftpanel">
 
 <div id="leftmenu">
-{require file='part.allPagesMenus' package=Basic menuName='left_menu'}
+{include file='Basic.part.allPagesMenus.tpl' package=Basic menuName='left_menu'}
 {*
 <ul>
 <li><a href="{linkto package=Basic controller=News action=actionNewsPrimaryTag}">Aktuálně</a></li>
@@ -40,7 +40,7 @@
 <div class="box">
 
 <div class="partners">
-{require package=LinkBuilding file='part.partnerLinks'}
+{include package=LinkBuilding file='LinkBuilding.part.partnerLinks.tpl'}
 </div>
 
 <hr class="invisible" />
@@ -50,7 +50,7 @@
 <div class="box">
 <h2>Fotogalerie</h2>
 <div id="gallery">
-{require package=Gallery file='part.galleriesList'}
+{include package=Gallery file='Gallery.part.galleriesList.tpl'}
 </div>
 <a href="{linkto package=Gallery controller=Galleries action=actionGalleriesList}" class="arrow">Zobrazit všechny fotky</a>
 
@@ -89,16 +89,16 @@
 <div class="footer-top"></div>
 <div class="footer-middle">
 <div class="footer-right">
-{require file='part.personalInfo' package=Basic}
+{include file='Basic.part.personalInfo.tpl' package=Basic}
 </div>
 
 <div class="footer-left">
-{require file='part.shortContact' package=Basic}
+{include file='Basic.part.shortContact.tpl' package=Basic}
 <a href="http://www.facebook.com/profile.php?id=100000013252832&ref=search" rel="external" class="facebook"><img src="{$iconsPath}64/facebook.png" alt="Facebook" /></a>
 </div>
 
 <div class="footer-left">
-{require package=LinkBuilding file='part.partnerLinks'}
+{include package=LinkBuilding file='LinkBuilding.part.partnerLinks.tpl'}
 </div>
 
 <span class="clear"></span><!-- clear flaoting -->
@@ -111,15 +111,15 @@
 <div class="footer-middle">
 <div class="copy">
 
-{require file='part.wwFooter' sep=' '}
+{include file='Base.part.wwFooter.tpl' sep=' '}
 
 </div><!-- footer-middle -->
 </div><!-- footwrap -->
 
 </div><!-- page -->
 
-{require file='part.htmlAreas' package=Basic}
+{include file='Basic.part.htmlAreas.tpl' package=Basic}
 
-{require file='part.adminBox' theme=Common}
+{include file='Base.part.adminBox.tpl' }
 
-{require file='part.footer' theme=Common}
+{include file='Base.part.footer.tpl' }

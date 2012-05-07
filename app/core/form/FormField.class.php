@@ -217,7 +217,6 @@ class FormField {
 
 
 
-
 class FormFieldFactory {
 	static public function getInstance($fieldType, $formIdentifier) {
 		switch ($fieldType) {

@@ -747,21 +747,27 @@ class Form {
 			}
 		}
 		
+		
+		// store changes made in item into DB
+		$changes = $this->dataModel->getChanges();
+
 		// save data in the DB or in other way (depends on the model)
 		$this->dataModel->Save();
 		
 		// handle the relation many:many
 		foreach ($this->dataModel->getChangeAbleOrAutoFilledMetaData() as $field => $meta) {
 			if (in_array($meta->getType(), array(Form::FORM_MULTISELECT_FOREIGNKEY, Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE))) {
-				$this->dataModel->Save();
+				//$this->dataModel->Save();
 				$relationModelName = $meta->getOptionsModel();
 				$oldItems = $this->dataModel->Find($relationModelName);
 				$oldIds = array();
+				$connectChange = '';
 				if (is_array($oldItems)) {
 					foreach ($oldItems as $oldItem) {
 						// the item is no more connected
 						if (array_key_exists($field, $this->req) && is_array($this->req[$field]) && !in_array($oldItem->id, $this->req[$field])) {
 							$this->dataModel->Disconnect($oldItem);
+							$connectChange .= "- {$oldItem->id}\n";
 						} else {
 							// if the item is connected and the connection should remain, store the Id for the future
 							$oldIds[] = $oldItem->id;
@@ -773,8 +779,20 @@ class Form {
 						if (!in_array($newItemId, $oldIds)) {
 							// make a new connection if it is not made yet
 							$this->dataModel->Connect(new $relationModelName($newItemId));
+							$connectChange .= "+ $newItemId\n";
 						}
 					}
+				}
+				
+				// store changes in connections
+				if ($connectChange) {
+					$change = new BaseChangesModel();
+					$change->packagename = $this->dataModel->package;
+					$change->model = $this->dataModel->getName();
+					$change->item = $this->dataModel->id;
+					$change->field = $field;
+					$change->data = $connectChange;
+					$changes[] = $change;
 				}
 			}
 		}
@@ -799,6 +817,11 @@ class Form {
 				}
 				$newProp->Save();
 			}
+		}
+		
+		// store changes into DB
+		foreach ($changes as $change) {
+			$change->Save();
 		}
 	}
 	

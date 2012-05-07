@@ -113,7 +113,7 @@ class Benchmark {
 		if (!self::isOn()) {
 			return '';
 		}
-		foreach (Environment::$smarty->get_template_vars() as $k => $v) {
+		foreach (Environment::$smarty->getTemplateVars() as $k => $v) {
 			self::logMemory($v, "Smarty variable '$k'");
 		} 
 		self::logMemory(serialize(MetaDataContainer::$data), "MetaDataContainer size estimation");

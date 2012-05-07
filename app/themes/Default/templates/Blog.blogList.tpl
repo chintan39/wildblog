@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 
 {*generate_paging collection=$blogposts showOnlyKeys=prev*}
 
@@ -10,15 +10,15 @@
 {foreach from=$blogposts->data.items item=post}
 	<div class="article">
 	<h1><a href="{$post->link}">{$post->title}</a></h1>
-	<div class="date">Date:&nbsp;{$post->published|date_format:"%m/%e"}</div>
+	<div class="date">Date:&nbsp;{$post->published|date_format2:"%m/%e"}</div>
 	{$post->text}
 	<div class="clear"></div>
-	{require file='part.tags' tags=$post->tags package=Blog}
+	{include file='Blog.part.tags.tpl' tags=$post->tags package=Blog}
 	<div class="comments">
 	<a href="{$post->link}#comment_add">add comment</a>
 	<a href="{$post->link}#comments">view posted comments ({$post->commentsCount})</a>
 	</div>
-	{require package=Base file='part.editItem' itemPackage=Blog itemController=Posts itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$post}
+	{include  file='Base.part.editItem.tpl' itemPackage=Blog itemController=Posts itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$post}
 	</div>
 {/foreach}
 {else}
@@ -29,7 +29,7 @@
 
 </div>
 
-{require package=Base file='part.addNewItem' itemPackage=Blog itemController=Posts itemAction=actionNew itemActionSimple=actionSimpleNew}
+{include  file='Base.part.addNewItem.tpl' itemPackage=Blog itemController=Posts itemAction=actionNew itemActionSimple=actionSimpleNew}
 
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}
 

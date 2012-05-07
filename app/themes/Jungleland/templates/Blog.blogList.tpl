@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 
 {if $blogposts->data.items}
 {foreach from=$blogposts->data.items item=post}
@@ -12,7 +12,7 @@
 					{if $post->tags}
 					<p class="tags">	
 						<strong>{tg}Tags{/tg}: </strong> 
-						{require file='part.tags' tags=$post->tags package=Blog}
+						{include file='Blog.part.tags.tpl' tags=$post->tags package=Blog}
 					</p>
 					{/if}
 				
@@ -25,6 +25,6 @@
 
 {generate_paging collection=$blogposts}
 
-{require package=Base file='part.addNewItem' itemPackage=Blog itemController=Posts itemAction=actionNew itemActionSimple=actionSimpleNew}
+{include  file='Base.part.addNewItem.tpl' itemPackage=Blog itemController=Posts itemAction=actionNew itemActionSimple=actionSimpleNew}
 
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}

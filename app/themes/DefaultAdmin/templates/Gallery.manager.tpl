@@ -1,9 +1,10 @@
-{require file='part.header' theme=Common}
+{include file='Base.part.pageHeader.tpl' }
 
-{php}
+{*php}
+TODO: implement this
 Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'mediamanager/popup.js');
 Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'mediamanager/manager.js');
-{/php}
+{/php*}
 
 <div class="manager">
 
@@ -65,5 +66,5 @@ function uploaderStatusChanged( uploader) {ldelim}
 init();
 </script>
 
-{require file='part.footer' theme=Common}
+{include file='Base.part.pageFooter.tpl' }
 

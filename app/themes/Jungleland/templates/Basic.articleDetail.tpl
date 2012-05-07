@@ -1,17 +1,17 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 
 {if $article}
 {$article->text}
-{require package=Base file='part.editItem' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
+{include  file='Base.part.editItem.tpl' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
 {/if}
 
 {if $isHomepage}
-{require package=Basic file='part.recentNews'}
+{include package=Basic file='Basic.part.recentNews.tpl'}
 {/if}
 
 {if $article->hasContactForm}
-{require file=part.contactForm package=Basic}
+{include file='Basic.part.contactForm.tpl' package=Basic}
 {/if}
 
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}
 

@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$title}</h1>
 
@@ -21,11 +21,11 @@
 	<p>{tg}No galleries found.{/tg}</p>
 {/if}
 
-{require package=Base file='part.addNewItem' itemPackage=Gallery itemController=Galleries itemAction=actionNew itemActionSimple=actionSimpleNew}
+{include  file='Base.part.addNewItem.tpl' itemPackage=Gallery itemController=Galleries itemAction=actionNew itemActionSimple=actionSimpleNew}
 
 {generate_paging collection=$galleriesList}
 
-{require file=part.references package=References}
+{include file=References.part.references.tplpackage=References}
 
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}
 

@@ -70,10 +70,10 @@ class DefaultAdminTheme extends AbstractTheme {
 			'Base.part.languages',
 			'Base.part.userInfo',
 			'Base.part.languages',
-			'Common|Base.part.footer',
+			'Common|Base.part.pageFooter',
 			),
 		'Base.part.header' => array(
-			'Common|Base.part.footer',
+			'Common|Base.part.pageHeader',
 			'Base.part.menuTop',
 			),
 		'Base.part.languages' => array(),

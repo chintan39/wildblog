@@ -1,8 +1,8 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 
 	<h1>{tg}Get token{/tg}</h1>
 
-	{require file='part.cleanForm' theme=Common}
+	{include file='Base.part.cleanForm.tpl' }
 
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}
 

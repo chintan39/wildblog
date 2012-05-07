@@ -579,6 +579,14 @@ class Request {
 	
 
 	/**
+	 * Gets the mimetype of the HTTP respond.
+	 */
+	static public function getMimeType() {
+		return self::$router->getMimeType();
+	}
+	
+
+	/**
 	 * Sets the coding of the HTTP respond, utf-8 by default.
 	 */
 	static public function setCoding($coding) {

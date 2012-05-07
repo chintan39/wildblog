@@ -360,7 +360,7 @@ class Javascript {
 				self::addScript('tinyMCE.init(tinymce_add_arrays(' . self::getWysiwygDefinition($k) . ', '
 					.'{elements: ' . implode(',', $elements) . ', '
 					.'document_base_url: "' . Request::$url["base"] . '", '
-					.'content_css: "' . 'app/themes/' . Environment::$smarty->get_template_vars("frontendTheme") . '/css/' . $p['cssFile'] . '", '
+					.'content_css: "' . 'app/themes/' . Environment::$smarty->getTemplateVars("frontendTheme") . '/css/' . $p['cssFile'] . '", '
 					.'language : "' . $p['lang'] .'"}));');
 			}
 		}
@@ -383,7 +383,7 @@ class Javascript {
 		if (stripos($tpl_output, '<pre class="highlight"><code>') !== false) {
 			self::addFile(Request::$url['base'] . DIR_LIBS . 'highlight/highlight.js');
 			self::addFile(Request::$url['base'] . DIR_LIBS . 'highlight/highlight.pack.js');
-			self::addCSS(Request::$url["base"] . DIR_LIBS . 'highlight/styles/default.css');
+			self::addCSS(Request::$url['base'] . DIR_LIBS . 'highlight/styles/default.css');
 			self::addScript("hljs.tabReplace = '    ';\nhljs.initHighlightingOnLoad();");
 		}
 		
@@ -393,8 +393,12 @@ class Javascript {
 		
 		if (stripos($tpl_output, 'tooltipOn') !== false) {
 			self::addFile(Request::$url['base'] . DIR_LIBS . 'tooltip/tooltip-v0.2.js');
-			self::addCSS(Request::$url["base"] . DIR_LIBS . 'tooltip/default.css');
+			self::addCSS(Request::$url['base'] . DIR_LIBS . 'tooltip/default.css');
 			self::addFile(Request::$url['base'] . DIR_LIBS . 'tooltip/tooltip-init.js');
+		}
+		
+		if (stripos($tpl_output, 'selectMedia') !== false) {
+			self::addFile(Request::$url['base'] . DIR_LIBS . 'mediamanager/MediaManager.js');
 		}
 		
 		if (stripos($tpl_output, '<!-- addScriptaculouse -->') !== false) {

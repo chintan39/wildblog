@@ -5,7 +5,7 @@
 		<li><a href="{$item->link|make_link}">{$item->title}</a></li>
 		{if $item|property_exists:'subItems' and $item->subItems and $deep gt 1}
 			{assign var=deep value=$deep-1}
-			{require file='part.itemLinkTree' items=$item->subItems deep=$deep}
+			{include file='Base.part.itemLinkTree.tpl' items=$item->subItems deep=$deep}
 			{assign var=deep value=$deep+1}
 		{/if}
 	{/foreach}

@@ -5,7 +5,7 @@
     <link>{$base}</link>
     <description>{tp}RSS description{/tp}</description>
     <language>cs</language>
-    <pubDate>{$rssInfo.publishDate|date_format:"%standard"}</pubDate>
+    <pubDate>{$rssInfo.publishDate|date_format2:"%standard"}</pubDate>
     <generator>Wild-Web</generator>
     <webMaster>horak.jan@centrum.cz (Jan Horak)</webMaster>
     <ttl>60</ttl>

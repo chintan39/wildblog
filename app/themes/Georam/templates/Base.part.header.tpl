@@ -1,4 +1,4 @@
-{require file='part.header' theme=Common}
+{include file='Base.part.pageHeader.tpl' }
 <div id="main">
 
     <!-- 2 columns (content + sidebar) -->

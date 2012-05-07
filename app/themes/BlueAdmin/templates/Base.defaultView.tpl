@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 <h1>View</h1>
 {foreach from=$changableColumns item=column}
 	<h2>{$column.label}</h2>
@@ -6,5 +6,5 @@
 	<div>{$item->$itemName}</div>
 	<div class="clear"></div>
 {/foreach}
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}
 

@@ -1,5 +1,5 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 <h1>Edit</h1>
-{require file='part.cleanForm' theme=Common}
-{require file='part.footer'}
+{include file='Base.part.cleanForm.tpl' }
+{include file='Base.part.footer.tpl'}
 

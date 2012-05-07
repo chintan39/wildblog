@@ -1,4 +1,4 @@
-{require file='part.rss.header'}
+{include file='Base.part.rss.header.tpl'}
 {if $items->data.items}
 {foreach from=$items->data.items item=item}
     <item>
@@ -6,9 +6,9 @@
       <link>{$item->link}</link>
       <guid>{$item->link}</guid>
       <description>{$item->description|default:$item->text|strip_tags|truncate:255}</description>
-      <pubDate>{$item->published|date_format:"%standard"}</pubDate>
+      <pubDate>{$item->published|date_format2:"%standard"}</pubDate>
     </item>
 {/foreach}
 {/if}
-{require file='part.rss.footer'}
+{include file='Base.part.rss.footer.tpl'}
 

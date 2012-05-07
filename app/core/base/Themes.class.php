@@ -55,16 +55,28 @@ class Themes {
 	/**
 	 * Returns the path to template's files.
 	 */
+	static public function getTemplateDir($theme) {
+		$path = str_replace("[theme]", $theme, DIR_SMARTY_THEME_TEMPLATES);
+		if (!file_exists($path) || !is_dir($path) || !is_readable($path)) {
+			throw new Exception("Template dir '$path' does not exist in package $package.");
+		}
+		return BASE_PATH.$path;
+	}
+
+	
+	/**
+	 * Returns the path to template's files.
+	 */
 	static public function getTemplatePath($package, $theme, $file) {
-		$path = str_replace("[theme]", $theme, str_replace("[package]", $package, DIR_SMARTY_THEME_TEMPLATES)) . $file . '.tpl';
+		$path = str_replace("[theme]", $theme, str_replace("[package]", $package, DIR_SMARTY_THEME_TEMPLATES)) . $package . '.' . $file . '.tpl';
 		if (!file_exists($path)) {
 			if ($theme != 'Default') {
 				return self::getTemplatePath($package, 'Default', $file);
 			} else {
-				throw new Exception("Template $file does not exist in package $package: $path.");
+				throw new Exception("Template '$file' ('$path') does not exist in package $package: $path.");
 			}
 		}
-		return $path;
+		return BASE_PATH.$path;
 	}
 
 	

@@ -5,7 +5,7 @@
 	<div class="light">
 	<div class="news">
 	{foreach from=$recentPosts->data.items item=postItem}
-		<a href="{$postItem->link}">{$postItem->title} <span class="date">{$postItem->published|date_format:"%m"|month_format:"%nam"}|{$postItem->published|date_format:"%e"}</span></a>
+		<a href="{$postItem->link}">{$postItem->title} <span class="date">{$postItem->published|date_format2:"%m"|month_format:"%nam"}|{$postItem->published|date_format2:"%e"}</span></a>
 	{/foreach}
 	</div><!-- news -->
 	</div><!-- light -->

@@ -1,1 +1,1 @@
-{require package=Base file='rss'}
+{include  file='rss.tpl'}

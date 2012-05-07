@@ -178,7 +178,7 @@ class BaseDictionaryController extends AbstractDefaultController {
 				$content = $this->pureTranslate($content, $kind);
 				$variables = $this->translateGetParams($content);
 				foreach ($variables as $paramRepl => $paramName) {
-					$value = $smarty->get_template_vars($paramName);
+					$value = $smarty->getTemplateVars($paramName);
 					$content = str_replace($paramRepl, $value, $content);
 				}
 				return $content;

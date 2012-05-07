@@ -165,7 +165,7 @@ class Package {
 			$routesName = str_replace('Routes', '', $routesClassName);
 			$modelClassName = $routesName . 'Model';
 			if (!class_exists($routesClassName)) {
-				throw new Exception("Class of the routes \"$routesName\" does not exists.");
+				throw new Exception("Class of the routes \"$routesName\" ($routesClassName) does not exists in path ".$this->packageDirectory . DIR_ROUTES.".");
 				return null;
 			}
 			$this->routes[$routesName] = $routesClassName;

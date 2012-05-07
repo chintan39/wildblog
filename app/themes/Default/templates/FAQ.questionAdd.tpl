@@ -1,7 +1,7 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$title}</h1>
 
-{require file='part.cleanForm' theme=Common form=$questionNewForm formId=questionNewForm}
+{include file='Base.part.cleanForm.tpl'  form=$questionNewForm formId=questionNewForm}
 			
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}

@@ -1,4 +1,4 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 {tp}No content, default template.{/tp}
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}
 

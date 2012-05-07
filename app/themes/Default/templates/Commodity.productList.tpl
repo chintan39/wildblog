@@ -1,8 +1,8 @@
-{require file='part.header'}
+{include file='Base.part.header.tpl'}
 
 <h1>{$title}</h1>
 	
-{require file=part.productList package=Commodity}
+{include file=Commodity.part.productList.tplpackage=Commodity}
 
-{require file='part.footer'}
+{include file='Base.part.footer.tpl'}
 

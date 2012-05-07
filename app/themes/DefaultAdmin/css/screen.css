@@ -258,6 +258,11 @@ html>body #wrap{height:auto}
 	width: 485px;
 	height: 360px;
 	overflow: auto;
+	-moz-border-radius: 10px 0px 0px 10px;
+	border-radius: 10px 0px 0px 10px;
+	-moz-box-shadow: 4px 4px 5px #777;
+	-webkit-box-shadow: 4px 4px 5px #777;
+	box-shadow: 4px 4px 5px #777;
 }
 
 div#header div#help_container a.help_close {
@@ -324,7 +329,7 @@ a.detailItem {
 	position: absolute;
 	display: block;
 	top: 80px;
-	right: 48px;
+	right: 90px;
 	width: 32px;
 	height: 32px;
 	background: url('/media/.ico/32/detail.png') center center no-repeat;;
@@ -332,6 +337,36 @@ a.detailItem {
 }
 
 a.detailItem:hover {
+	border: 1px solid #cccccc;
+}
+
+a.viewItem {
+	position: absolute;
+	display: block;
+	top: 80px;
+	right: 48px;
+	width: 32px;
+	height: 32px;
+	background: url('/media/.ico/32/view.png') center center no-repeat;;
+	border: 1px solid #ffffff;
+}
+
+a.viewItem:hover {
+	border: 1px solid #cccccc;
+}
+
+a.editItem {
+	position: absolute;
+	display: block;
+	top: 80px;
+	right: 6px;
+	width: 32px;
+	height: 32px;
+	background: url('/media/.ico/32/edit.png') center center no-repeat;;
+	border: 1px solid #ffffff;
+}
+
+a.editItem:hover {
 	border: 1px solid #cccccc;
 }
 
@@ -350,6 +385,45 @@ a.removeItem:hover {
 	border: 1px solid #cccccc;
 }
 
+
+div.viewItemValues {
+	
+}
+
+div.viewItemValues h2 {
+	float: left;
+	width: 27%;
+	margin-bottom: 5px;
+	font-size: 110%;
+	font-weight: bold;
+	background: #efefef;
+}
+
+div.viewItemValues div.value {
+	float: right;
+	width: 70%;
+	border: 1px solid #efefef;
+	margin: 5px 0px;
+}
+
+div.viewItemChanges {
+	height: 300px;
+	overflow: hidden;
+}
+
+div.viewItemChanges h2 {
+	margin: 20px 0px;
+}
+
+div.viewItemChanges h3 {
+	margin: 5px 0px;
+}
+
+div.viewItemChanges pre.box {
+	margin: 5px 0px;
+	border: 1px solid #e5e3a0;
+	background: #f6f5cd;
+}
 
 
 

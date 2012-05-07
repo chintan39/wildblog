@@ -5,7 +5,7 @@
 		<li><a href="{$item->link}" class="{$item->activity}">{$item->title}</a></li>
 		{if $item->subLinks and ($item->activity ne 'passive') and ($item->activity ne 'sup_passive') and $deep gt 1}
 			{assign var=deep value=$deep-1}
-			{require file='part.linkTree' items=$item->subLinks deep=$deep}
+			{include file='Base.part.linkTree.tpl' items=$item->subLinks deep=$deep}
 			{assign var=deep value=$deep+1}
 		{/if}
 	{/foreach}

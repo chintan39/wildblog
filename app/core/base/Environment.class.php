@@ -17,6 +17,45 @@
 */
 
 
+function wwAutoload($class_name) {
+	$package = $subfolder = $name = '';
+	if (preg_match('/Controller$/', $class_name)) {
+		$subfolder = str_replace('/', '', DIR_CONTROLLERS);
+		$suffix = 'Controller';
+	} elseif (preg_match('/Model$/', $class_name)) {
+		$subfolder = str_replace('/', '', DIR_MODELS);
+		$suffix = 'Model';
+	} elseif (preg_match('/Routes$/', $class_name)) {
+		$subfolder = str_replace('/', '', DIR_ROUTES);
+		$suffix = 'Routes';
+	} elseif (preg_match('/Test$/', $class_name)) {
+		$subfolder = str_replace('/', '', DIR_TESTS);
+		$suffix = 'Test';
+	}
+	if (!$subfolder) {
+		return;
+	}
+	foreach (scandir(DIR_PACKAGES) as $packageName) {
+		if ($packageName{0} == '.')
+			continue;
+		if (preg_match('/^' . $packageName . '(\w+)' . $suffix . '$/', $class_name, $matches)) {
+			$package = $packageName . '/';
+			$name = $matches[0];
+		}
+	}
+	if ($package && $subfolder && $name) {
+		$file = DIR_PACKAGES . $package . $subfolder . '/' . $name . '.php';
+		if (file_exists($file)) {
+			global $__wwClassesLoaded;
+			$__wwClassesLoaded++;
+			require_once($file);
+		}
+    }
+}
+
+spl_autoload_register('wwAutoload');
+
+
 /**
  * Including all necessary files
  */
@@ -53,43 +92,8 @@ require_once(DIR_PORK . 'class.settings.php');
 require_once(DIR_CORE_HELPERS . 'Permission.class.php');
 
 require_once(DIR_SMARTY . 'Smarty.class.php');
-
-function __autoload($class_name) {
-	$package = $subfolder = $name = '';
-	if (preg_match('/Controller$/', $class_name)) {
-		$subfolder = str_replace('/', '', DIR_CONTROLLERS);
-		$suffix = 'Controller';
-	} elseif (preg_match('/Model$/', $class_name)) {
-		$subfolder = str_replace('/', '', DIR_MODELS);
-		$suffix = 'Model';
-	} elseif (preg_match('/Routes$/', $class_name)) {
-		$subfolder = str_replace('/', '', DIR_ROUTES);
-		$suffix = 'Routes';
-	} elseif (preg_match('/Test$/', $class_name)) {
-		$subfolder = str_replace('/', '', DIR_TESTS);
-		$suffix = 'Test';
-	}
-	if (!$subfolder) {
-		return;
-	}
-	foreach (scandir(DIR_PACKAGES) as $packageName) {
-		if ($packageName{0} == '.')
-			continue;
-		if (preg_match('/^' . $packageName . '(\w+)' . $suffix . '$/', $class_name, $matches)) {
-			$package = $packageName . '/';
-			$name = $matches[0];
-		}
-	}
-	if ($package && $subfolder && $name) {
-		$file = DIR_PACKAGES . $package . $subfolder . '/' . $name . '.php';
-		if (file_exists($file)) {
-			global $__wwClassesLoaded;
-			$__wwClassesLoaded++;
-			require_once($file);
-		}
-    }
-}
-
+require_once(DIR_SMARTY . 'wwplugins/outputfilter.addautolinks.php');
+require_once(DIR_SMARTY . 'wwplugins/outputfilter.specialinfoondebug.php');
 
 /**
  * This is the Environment class. Environment is the first layer between 
@@ -114,13 +118,14 @@ class Environment {
 	static public function init() {
 		$benchmark = new Benchmark();
 		self::initSmarty();
-		self::$smarty->load_filter('output','specialinfoondebug');
-		self::$smarty->load_filter('output','addautolinks');
-		self::$smarty->register_block('tp','Utilities__smarty_translate_p');
-		self::$smarty->register_block('tg','Utilities__smarty_translate_g');
-		self::$smarty->register_block('tu','Utilities__smarty_translate_u');
-		self::$smarty->register_outputfilter('Javascript__addHTML');
-		self::$smarty->register_outputfilter('MessageBus__exportMessages');
+		self::$smarty->addPluginsDir(DIR_SMARTY . 'wwplugins');
+		self::$smarty->registerPlugin('block', 'tp','Utilities__smarty_translate_p');
+		self::$smarty->registerPlugin('block', 'tg','Utilities__smarty_translate_g');
+		self::$smarty->registerPlugin('block', 'tu','Utilities__smarty_translate_u');
+		self::$smarty->registerFilter('output', 'smarty_outputfilter_specialinfoondebug');
+		self::$smarty->registerFilter('output', 'smarty_outputfilter_addautolinks');
+		self::$smarty->registerFilter('output', 'Javascript__addHTML');
+		self::$smarty->registerFilter('output', 'MessageBus__exportMessages');
 
 		self::loadPackages();
 		$permission = new Permission();
