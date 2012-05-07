@@ -351,7 +351,7 @@ class Form {
 				// if the field is preset, we cannot edit the field
 				continue;
 			}
-			$field = FormFieldFactory::getInstance($meta->getType(), $this->identifier); 
+			$field = FormFieldFactory::getInstance($meta->getType(), $this->identifier);
 			$field->setMeta($this->dataModel->getMetaData($fieldName));
 			$field->setDataModel($this->dataModel);
 			$field->setValue($this->dataModel->getValue($fieldName));

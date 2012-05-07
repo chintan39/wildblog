@@ -70,6 +70,9 @@ class BookingReservationsModel extends AbstractDefaultModel {
 			->setOptionsMethod('listSelect'));
 		
 		$this->addMetaData(AtributesFactory::create('beds')
+			->setLabel('Beds')
+			->setDescription('sum of beds booked')
+			->setType(Form::FORM_INPUT_NUMBER)
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\''));
 
 		$this->addMetaData(AtributesFactory::stdIdentification());
