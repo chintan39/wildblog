@@ -801,6 +801,13 @@ class AbstractBasicModel {
 		return Utilities::now();
 	}
 	
+	private function adjustFunctionCurrentDateOnEmpty(&$meta, &$newData) {
+		if (!$this->id && (!array_key_exists($meta->getName(), $newData) || trim($newData[$meta->getName()]) == '')) {
+			return date('Y-m-d');
+		}
+		return false;
+	}
+	
 	private function adjustFunctionCurrentDateTimeOnEmpty(&$meta, &$newData) {
 		if (!$this->id && (!array_key_exists($meta->getName(), $newData) || trim($newData[$meta->getName()]) == '')) {
 			return Utilities::now();

@@ -31,6 +31,10 @@ class BookingReservationsRoutes extends AbstractDefaultRoutes {
 	 */
 	public function setRouter() {
 		AbstractAdminRoutes::setRouter($this, Permission::$ADMIN);
+		
+		Router::registerAction($this, 'actionShowRooms')
+			->addRuleUrl('reservation-rooms/$')
+			->setTemplate('reservationRooms');
 	}
 
 }

@@ -27,7 +27,13 @@ class BookingReservationsModel extends AbstractDefaultModel {
     	
     	parent::attributesDefinition();
     	
-    	$this->addMetaData(AtributesFactory::stdDateFrom());
+    	$this->addMetaData(AtributesFactory::stdDateFrom()
+    		->setRestrictions(Restriction::R_NOT_EMPTY));
+    	
+    	$this->addMetaData(AtributesFactory::stdDateTo()
+    		->setRestrictions(Restriction::R_NOT_EMPTY)
+    		->setIsEditable(ModelMetaItem::NEVER)
+    		->setAdjustMethod('DateFromPlusNights'));
 
 		$this->addMetaData(AtributesFactory::create('nights')
 			->setLabel('Nights')
@@ -63,6 +69,14 @@ class BookingReservationsModel extends AbstractDefaultModel {
 			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
 			->setOptionsMethod('listSelect'));
 		
+		$this->addMetaData(AtributesFactory::create('beds')
+			->setSqlType('int(11) NOT NULL DEFAULT \'0\''));
+
+		$this->addMetaData(AtributesFactory::stdIdentification());
+		
+		$this->addMetaData(AtributesFactory::stdInserted());
+		$this->addMetaData(AtributesFactory::stdUpdated());
+		
     }
     
     
@@ -72,6 +86,15 @@ class BookingReservationsModel extends AbstractDefaultModel {
     	
         $this->addCustomRelationMany('BookingRoomsModel', 'BookingReservationsRoomsModel', 'reservation', 'room', 'reservationsRoomsConnection'); // define a many:many relation to Tag through BlogTag
     }
+    
+
+   	protected function sortingDefinition() {
+		$this->sorting = array(new ItemSorting('updated', SORTING_DESC));
+	}
+
+	protected function adjustFunctionDateFromPlusNights(&$meta, &$newData) {
+		return Utilities::dateAddDays($newData['date_from'], $newData['nights']-1);exit;
+	}
 } 
 
 ?>

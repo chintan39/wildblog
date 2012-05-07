@@ -452,7 +452,7 @@ class FormFieldMultiSelect extends FormFieldSelect {
 			$options = MetaDataContainer::getFieldOptions($this->getModelName(), $this->meta->getName());
 		}
 		foreach ($options as $o) {
-			$this->html .= "<option value=\"" . $o["id"] . "\"". ((in_array($o["id"], $this->value)) ? " selected=\"selected\"" : ""). (array_key_exists("disabled", $o) && $o["disabled"] ? " disabled=\"disabled\"" : "") .">" . $o["value"] . "</option>\n";
+			$this->html .= "<option value=\"" . $o["id"] . "\"". ((is_array($this->value) && (in_array($o["id"], $this->value))) ? " selected=\"selected\"" : ""). (array_key_exists("disabled", $o) && $o["disabled"] ? " disabled=\"disabled\"" : "") .">" . $o["value"] . "</option>\n";
 		}
 		$this->html .= "</select>";
 		if ($this->meta->getSelector()) {

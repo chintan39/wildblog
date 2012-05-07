@@ -81,6 +81,48 @@ class Utilities {
 		return tg('now');
 	}
 	
+
+	/**
+	 * This returns date, which will follow after $days days from $dateFrom.
+	 * @param date $dateFrom starting date
+	 * @param number $days how many days to add
+	 * @return date Date $days after $dateFrom
+	 */
+	static public function dateAddDays($dateFrom, $days) {
+		return date_format(date_add(date_create($dateFrom), date_interval_create_from_date_string("$days DAYS")), 'Y-m-d');
+	}
+	
+
+	/**
+	 * This returns $days items of dates, beggining from $dateFrom.
+	 * @param date $dateFrom starting date
+	 * @param number $days how many days to return
+	 * @return array $days dates after $dateFrom
+	 */
+	static public function dateRangeDays($dateFrom, $days) {
+		$result = array();
+		for ($i = 0; $i < $days; $i++)
+			$result[] = self::dateAddDays($dateFrom, $i);
+		return $result;
+	}
+ 
+
+	/**
+	 * This returns array of dates, beggining from $dateFrom and ending $dateTo.
+	 * @param date $dateFrom starting date
+	 * @param date $dateTo ending date
+	 * @return array dates between $dateFrom and $dateTo
+	 */
+	static public function dateRangeDates($dateFrom, $dateTo) {
+		$d = date_diff(date_create($dateTo), date_create($dateFrom));
+		if ($d->d <= 0)
+			return array();
+		$result = array();
+		for ($i = 0; $i < $d->d+1; $i++)
+			$result[] = self::dateAddDays($dateFrom, $i);
+		return $result;
+	}
+ 
 	
 	/**
 	 * Convert digit place of the number to the nice form and retuns units as the second parameter.

@@ -39,17 +39,13 @@ class BookingRoomsModel extends AbstractPagesModel {
 			->setType(Form::FORM_INPUT_NUMBER)
 			->setSqlType('int NOT NULL'));
 
-		$this->addMetaData(AtributesFactory::create('identification')
-			->setLabel('Identification')
-			->setRestrictions(Restriction::R_NOT_EMPTY)
-			->setType(Form::FORM_INPUT_TEXT)
-			->setSqlType('varchar(255) NOT NULL'));
+		$this->addMetaData(AtributesFactory::stdIdentification());
 
     	$roomTypes = array();
 		$roomTypes[] = array('id' => self::PRIVATE_ROOM, 'value' => 'private');
 		$roomTypes[] = array('id' => self::SHARED_ROOM, 'value' => 'shared');
 
-    	$this->addMetaData(AtributesFactory::create('roomType')
+    	$this->addMetaData(AtributesFactory::create('room_type')
 			->setLabel('Room type')
 			->setDescription('what type of room it is')
 			->setType(Form::FORM_SELECT)
@@ -61,7 +57,7 @@ class BookingRoomsModel extends AbstractPagesModel {
 		$priceTypes[] = array('id' => self::PRICE_ROOM, 'value' => 'room');
 		$priceTypes[] = array('id' => self::PRICE_BED, 'value' => 'bed');
 
-    	$this->addMetaData(AtributesFactory::create('pricingType')
+    	$this->addMetaData(AtributesFactory::create('pricing_type')
 			->setLabel('Pricing type')
 			->setDescription('what is paid in this room')
 			->setType(Form::FORM_SELECT)
@@ -84,6 +80,96 @@ class BookingRoomsModel extends AbstractPagesModel {
         $this->addCustomRelationMany('BookingReservationsModel', 'BookingReservationsRoomsModel', 'room', 'reservation', 'reservationsRoomsConnection'); // define a many:many relation to Tag through BlogTag
         $this->addCustomRelationMany('BookingPricesModel', 'BookingPricesRoomsModel', 'room', 'price', 'pricesRoomsConnection'); // define a many:many relation to Tag through BlogTag
     }
+
+
+	public static function getRoomInfo($room, $dateFrom, $nights) {
+		$dateLast = Utilities::dateAddDays($dateFrom, $nights-1);
+		$days = Utilities::dateRangeDays($dateFrom, $nights);
+		$result = array();
+		
+		// get last price definition before starting date
+		foreach (Utilities::dateRangeDates($dateFrom, $dateLast) as $d) {
+			$result[$d] = new stdClass;
+			$result[$d]->price = 0;
+			$result[$d]->free = true;
+		}
+
+		foreach (self::getPricesForRoomBetweenDates($room, $dateFrom, $dateLast) as $d => $price)
+			$result[$d]->price = $price;
+		
+		foreach (self::getFreeBedsForRoomBetweenDates($room, $dateFrom, $dateLast) as $d => $free)
+			$result[$d]->free = $free;
+		
+		return $result;
+	}
+
+
+	public static function getPricesForRoomBetweenDates($room, $dateFirst, $dateLast) {
+		$pricesClass = new BookingPricesModel();
+		$pricesRoomsClass = new BookingPricesRoomsModel();
+		$pricesTable = '`' . $pricesClass->getTableName() . '`';
+		$pricesRoomsTable = '`' . $pricesRoomsClass->getTableName() . '`';
+		
+		$roomId = $room->id;
+		
+		// get all other prices that matters in our term
+		$query = "
+			SELECT prices.date_from, prices.price
+			FROM $pricesRoomsTable AS prices_rooms
+			LEFT JOIN $pricesTable AS prices ON prices_rooms.price = prices.id
+			WHERE prices_rooms.room = $roomId
+			AND prices.date_from <= '$dateLast'
+			ORDER BY prices.date_from ASC";
+		if (Config::Get('DEBUG_MODE')) {
+			Benchmark::log('getPricesForRoomBetweenDates SQL: ' . $query); // QUERY logger
+		}
+		$prices = dbConnection::getInstance()->fetchAll($query);
+		$result = array();
+		if ($prices) {
+			foreach ($prices as $p) {
+				foreach (Utilities::dateRangeDates($p['date_from'] < $dateFirst ? $dateFirst : $p['date_from'], $dateLast) as $d)
+					$result[$d] = $p['price'];
+			}
+		}
+		return $result;
+	}
+
+
+	public static function getFreeBedsForRoomBetweenDates($room, $dateFirst, $dateLast) {
+		$reservationsClass = new BookingReservationsModel();
+		$reservationsRoomsClass = new BookingReservationsRoomsModel();
+		$reservationsTable = '`' . $reservationsClass->getTableName() . '`';
+		$reservationsRoomsTable = '`' . $reservationsRoomsClass->getTableName() . '`';
+		
+		$roomId = $room->id;
+		
+		$result = array();
+		foreach (Utilities::dateRangeDates($dateFirst, $dateLast) as $d)
+			$result[$d] = $room->capacity;
+
+		// get all other prices that matters in our term
+		$query = "
+			SELECT reservations.id, reservations.date_from, reservations.date_to, reservations.nights, reservations_rooms.beds
+			FROM $reservationsRoomsTable AS reservations_rooms
+			LEFT JOIN $reservationsTable AS reservations ON reservations_rooms.room = reservations.id
+			WHERE reservations_rooms.room = $roomId
+			AND ((reservations.date_from <= '$dateLast' AND reservations.date_to >= '$dateFirst')
+				OR (reservations.date_from >= '$dateFirst' AND reservations.date_to <= '$dateLast'))
+			ORDER BY reservations.date_from ASC";
+		if (Config::Get('DEBUG_MODE')) {
+			Benchmark::log('getPricesForRoomBetweenDates SQL: ' . $query); // QUERY logger
+		}
+		$reservations = dbConnection::getInstance()->fetchAll($query);
+
+		if ($reservations) {
+			foreach ($reservations as $r) {
+				foreach (Utilities::dateRangeDates($r['date_from'] < $dateFirst ? $dateFirst : $r['date_from'], 
+					$r['date_to'] > $dateLast ? $dateLast : $r['date_to']) as $d)
+					$result[$d] = $room->capacity - $r['beds'];
+			}
+		}
+		return $result;
+	}
 } 
 
 ?>

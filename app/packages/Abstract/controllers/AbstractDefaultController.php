@@ -459,7 +459,7 @@ class AbstractDefaultController extends AbstractBasicController{
 	 * @return array Link list in format array(array('link' => 'package::controller::actionName::id', 'title' => 'Title of item'))
 	 */
 	public function getItemsLinksDefault($actionsSimple = array(), $actionsItems=array()) {
-		
+
 		$result = array();
 
 		// simple actions

@@ -425,7 +425,7 @@ abstract class AtributesFactory {
 			->setDefaultValue('0000-00-00')
 			->setSqlType('date NOT NULL DEFAULT \'0000-00-00\'')
 			->setSqlindex(ModelMetaIndex::INDEX)
-			->setAdjustMethod('CurrentDateTimeOnEmpty')
+			->setAdjustMethod('CurrentDateOnEmpty')
 			->setIsAutoFilled(ModelMetaItem::ALWAYS);
 	}
 		
@@ -440,7 +440,7 @@ abstract class AtributesFactory {
 			->setDefaultValue('0000-00-00')
 			->setSqlType('date NOT NULL DEFAULT \'0000-00-00\'')
 			->setSqlindex(ModelMetaIndex::INDEX)
-			->setAdjustMethod('CurrentDateTimeOnEmpty')
+			->setAdjustMethod('CurrentDateOnEmpty')
 			->setIsAutoFilled(ModelMetaItem::ALWAYS);
 	}
 		
@@ -652,6 +652,16 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_TEXT)
 			->setDefaultValue('')
 			->setSqlType('varchar(255) NOT NULL');
+	}
+	
+	/**
+	 * Attribute Identification for general use
+	 */
+	static public function stdIdentification() {
+		return self::create('identification')
+			->setLabel('Identification')
+			->setType(Form::FORM_INPUT_TEXT)
+			->setSqlType('varchar(255) NOT NULL DEFAULT \'\'');
 	}
 }
 

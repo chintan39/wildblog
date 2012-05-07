@@ -125,6 +125,10 @@ class DefaultTheme extends AbstractTheme {
 		'Blog.rss' => array(
 			'Base.rss',
 			),
+		'Booking.reservationRooms' => array(
+			'Base.part.header',
+			'Base.part.footer',
+			),
 		'Commodity.referenceAdd' => array(
 			'Base.part.header',
 			'Common|Base.part.cleanForm',

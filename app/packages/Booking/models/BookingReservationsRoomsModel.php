@@ -34,6 +34,9 @@ class BookingReservationsRoomsModel extends AbstractDefaultModel {
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlindex(ModelMetaIndex::INDEX));
 
+		$this->addMetaData(AtributesFactory::create('beds')
+			->setSqlType('int(11) NOT NULL DEFAULT \'0\''));
+
     }
     
     protected function relationsDefinition() {
