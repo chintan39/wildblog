@@ -286,8 +286,8 @@ class FormFieldInputDate extends FormField {
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'datetimepicker/datetimepicker.js');
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'datetimepicker/stylesheets/calendarview.css');
 		Javascript::addScript("Event.observe(window, 'load', function() { Calendar.setup({
-		dateField: '" . $this->meta->getIdValue() . "',
-		triggerElement: '" . $this->meta->getIdValue('button') . "',
+		dateField: '" . $this->getIdValue() . "',
+		triggerElement: '" . $this->getIdValue('button') . "',
 		timeMode: 0})});");
 		$this->html = "<input type=\"text\"" . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" />"
 			."<a href=\"JavaScript:void(0);\" onclick=\"return false;\"" . $this->getIdAttr('button') . "><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . '32/calendar_view.png' . "\" alt=\"" . tg("Choose date") . "\"class=\"choose\" /></a>";
