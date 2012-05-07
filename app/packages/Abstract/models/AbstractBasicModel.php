@@ -964,6 +964,11 @@ class AbstractBasicModel {
 		$this->predefinedValues = $values;
 	}
 	
+	
+	public function getChanges() {
+		return array();
+	}
+	
 }
 
 ?>

@@ -19,6 +19,8 @@
 
 class BlogPostsController extends AbstractPagesController {
 	
+	var $detailMethodName = 'actionDetail';
+
 	/**
 	 * Posts List action
 	 */

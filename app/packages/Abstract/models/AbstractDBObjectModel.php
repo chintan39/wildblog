@@ -961,6 +961,37 @@ class AbstractDBObjectModel extends AbstractBasicModel
 		return $input;
 	}
 	
+	
+	public function getChanges($suppressedFields=array('updated', 'inserted', 'author')) {
+		$changes = array();
+		foreach ($this->changedValues as $field => $value) {
+			if (in_array($field, $suppressedFields))
+				continue;
+			if ($value == $this->databaseValues[$field])
+				continue;
+			
+			$change = new BaseChangesModel();
+			$change->packagename = $this->package;
+			$change->model = $this->getName();
+			$change->item = $this->id;
+			$change->field = $field;
+			
+			// long texts are stored as unified diff
+			if (in_array($this->getMetaData($field)->getType(), array(Form::FORM_TEXTAREA, Form::FORM_HTML, Form::FORM_HTML_BBCODE))) {
+				// Initialize the diff class
+				require_once(DIR_LIBS . 'phpdiff/lib/Diff.php');
+				require_once(DIR_LIBS . 'phpdiff/lib/Diff/Renderer/Text/Unified.php');
+				$diff = new Diff(explode("\n", $this->databaseValues[$field]), explode("\n", $value));
+				$renderer = new Diff_Renderer_Text_Unified;
+				$change->data = $diff->render($renderer);
+			} else { 
+				$change->data = "-'{$this->databaseValues[$field]}'\n+'$value'\n";
+			}
+			
+			$changes[] = $change;
+		}
+		return $changes;
+	}
 }
 
 /**

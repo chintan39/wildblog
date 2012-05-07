@@ -31,6 +31,7 @@ class AbstractDefaultController extends AbstractBasicController{
 	
 	var $listLimit;
 	var $detailMethodName = null;
+	var $viewMethodName = 'actionView';
 	var $removeMethodName = 'actionRemove';
 	var $removeSimpleMethodName = 'actionSimpleRemove';
 	var $newMethodName = 'actionNew';
@@ -168,8 +169,13 @@ class AbstractDefaultController extends AbstractBasicController{
 		$this->assign('help', tg($this->description));
 		
 		// detail action if specified
-		if ($this->detailMethodName && $isSimple) {
+		if ($this->detailMethodName && !$isSimple) {
 			$this->assign('detailLink', Request::getLinkItem($this->package, $this->name, $this->detailMethodName, $item));
+		}
+		
+		// view action if specified
+		if ($this->viewMethodName && !$isSimple) {
+			$this->assign('viewLink', Request::getLinkItem($this->package, $this->name, $this->viewMethodName, $item));
 		}
 		
 		// detail action if specified
@@ -213,16 +219,22 @@ class AbstractDefaultController extends AbstractBasicController{
 	 */
 	public function actionView($args) {
 		$item = $args;
-		$changableColumns = $item->getChangeAbleMetaData();
+		$changableColumns = $item->getChangeAbleOrAutoFilledMetaData();
 		foreach ($changableColumns as $k => $col) {
 			if (in_array($col->getType(), array(Form::FORM_MULTISELECT_FOREIGNKEY, Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE))) {
 				unset($changableColumns[$k]);
 			}
 		}
+		
+		$changes = BaseChangesModel::Search('BaseChangesModel', array('packagename = ? and model = ? and item = ?'), array($item->package, $item->getName(), $item->id), array("ORDER BY `inserted` DESC"));
+		if (!$changes) $changes = array();
+		
 		$this->assign('changableColumns', $changableColumns);
 		$this->assign('item', $item);
+		$this->assign('changes', $changes);
+		$this->assign('editLink', Request::getLinkItem($this->package, $this->name, 'actionEdit', $item));
 
-		$this->assign('title', tg('View ' . strtolower($this->name)));
+		$this->assign('title', tg('View ' . strtolower($this->name) . ' (#' . $item->id . ')'));
 		
 		// Top menu
 		$this->addTopMenu();
