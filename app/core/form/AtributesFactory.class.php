@@ -415,6 +415,36 @@ abstract class AtributesFactory {
 	}
 		
 	/**
+	 * Attribute Date/Time from - timestamp
+	 */
+	static public function stdDateFrom() {
+		return self::create('date_from')
+			->setLabel('Date from')
+			->setDescription('write or select a date using an icon')
+			->setType(Form::FORM_INPUT_DATE)
+			->setDefaultValue('0000-00-00')
+			->setSqlType('date NOT NULL DEFAULT \'0000-00-00\'')
+			->setSqlindex(ModelMetaIndex::INDEX)
+			->setAdjustMethod('CurrentDateTimeOnEmpty')
+			->setIsAutoFilled(ModelMetaItem::ALWAYS);
+	}
+		
+	/**
+	 * Attribute Date/Time to - timestamp
+	 */
+	static public function stdDateTo() {
+		return self::create('date_to')
+			->setLabel('Date to')
+			->setDescription('write or select a date using an icon')
+			->setType(Form::FORM_INPUT_DATE)
+			->setDefaultValue('0000-00-00')
+			->setSqlType('date NOT NULL DEFAULT \'0000-00-00\'')
+			->setSqlindex(ModelMetaIndex::INDEX)
+			->setAdjustMethod('CurrentDateTimeOnEmpty')
+			->setIsAutoFilled(ModelMetaItem::ALWAYS);
+	}
+		
+	/**
 	 * Attribute Link - URL
 	 */
 	static public function stdLink() {
