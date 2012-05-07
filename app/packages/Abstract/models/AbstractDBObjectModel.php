@@ -976,6 +976,11 @@ class AbstractDBObjectModel extends AbstractBasicModel
 			$change->item = $this->id;
 			$change->field = $field;
 			
+			// store actually logged user
+			$user = Permission::getActualUserInfo();
+			if ($user)
+				$change->user = $user->id;
+			
 			// long texts are stored as unified diff
 			if (in_array($this->getMetaData($field)->getType(), array(Form::FORM_TEXTAREA, Form::FORM_HTML, Form::FORM_HTML_BBCODE))) {
 				// Initialize the diff class

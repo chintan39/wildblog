@@ -15,14 +15,15 @@
 <h2>{tg}Changes{/tg}</h2>
 {foreach from=$changes item=change}
 <p>
-{tg}Field{/tg} {$change->field} {tg} was changed{/tg} {$change->inserted|date_format2:'%relative'}
+{tg}Field{/tg} <strong>{$change->field}</strong> {tg} was changed by {/tg} <strong>user#{$change->user}</strong> (ip {$change->ip}) {$change->inserted|date_format2:'%relative'}
 <a href="#" onclick="$('viewItemChanges{$change->id}').toggle(); return false;">{tg}show/hide{/tg}</a>
 </p>
 <pre class="box" id="viewItemChanges{$change->id}" style="display: none;">{$change->data|htmlspecialchars}</pre>
 {/foreach}
 </div> <!-- viewItemChanges -->
 
-<p><a href="#" onclick="$('viewItemChanges').style.height='auto';return false;">{tg}Show all changes{/tg}</a></p>
+{*<p><a href="#" onclick="$('viewItemChanges').style.height='auto';return false;">{tg}Show all changes{/tg}</a></p>*}
+<p><a href="#" onclick="$('viewItemChanges').style.height='auto';$$('#viewItemChanges pre').each( function(item) { item.show() });return false;">{tg}Show all changes{/tg}</a></p>
 
 <a href="{$editLink}" class="editItem" title="{tg}Edit item{/tg}"></a>
 

@@ -408,7 +408,7 @@ div.viewItemValues div.value {
 
 div.viewItemChanges {
 	height: 300px;
-	overflow: hidden;
+	overflow-y: scroll;
 }
 
 div.viewItemChanges h2 {

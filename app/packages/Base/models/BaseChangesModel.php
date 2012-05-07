@@ -62,23 +62,21 @@ class BaseChangesModel extends AbstractDefaultModel {
 			->setIsEditable(ModelMetaItem::NEVER)
 			->setSqlType('TEXT NOT NULL'));
 
-		$this->addMetaData(AtributesFactory::stdInserted()->setIsEditable(ModelMetaItem::NEVER)->removeSqlIndex());
+		$this->addMetaData(AtributesFactory::create('user')
+			->setLabel('User')
+			->setType(Form::FORM_INPUT_TEXT)
+			->setIsEditable(ModelMetaItem::NEVER)
+			->setSqlType('VARCHAR(64) NOT NULL'));
+
+		$this->addMetaData(AtributesFactory::stdInserted()->setIsEditable(ModelMetaItem::NEVER));
     	$this->addMetaData(AtributesFactory::stdIP()->setIsEditable(ModelMetaItem::NEVER));
 
-		$this->addIndex(new ModelMetaIndex(array('package', 'model', 'item'), ModelMetaIndex::UNIQUE));
+		$this->addIndex(new ModelMetaIndex(array('packagename', 'model', 'item'), ModelMetaIndex::INDEX));
     }
     
-    /**
-     * Static constructor.
-     */
-    public static function create($package, $model, $item, $field, $data) {
-    	$change = new self();
-    	$change->packagename = $package;
-    	$change->model = $model;
-    	$change->item = $item;
-    	$change->field = $field;
-    	$change->data = $data;
-    	return $change;
+    function __construct($id = false, $forceLanguage = false) {
+    	parent::__construct($id, $forceLanguage);
+    	$this->ip = Utilities::getRemoteIP();
     }
 }
 
