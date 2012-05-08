@@ -92,8 +92,8 @@ require_once(DIR_PORK . 'class.settings.php');
 require_once(DIR_CORE_HELPERS . 'Permission.class.php');
 
 require_once(DIR_SMARTY . 'Smarty.class.php');
-require_once(DIR_SMARTY . 'wwplugins/outputfilter.addautolinks.php');
-require_once(DIR_SMARTY . 'wwplugins/outputfilter.specialinfoondebug.php');
+require_once(DIR_SMARTY_WWPLUGINS . 'outputfilter.addautolinks.php');
+require_once(DIR_SMARTY_WWPLUGINS . 'outputfilter.specialinfoondebug.php');
 
 /**
  * This is the Environment class. Environment is the first layer between 
@@ -118,7 +118,7 @@ class Environment {
 	static public function init() {
 		$benchmark = new Benchmark();
 		self::initSmarty();
-		self::$smarty->addPluginsDir(DIR_SMARTY . 'wwplugins');
+		self::$smarty->addPluginsDir(DIR_SMARTY_WWPLUGINS);
 		self::$smarty->registerPlugin('block', 'tp','Utilities__smarty_translate_p');
 		self::$smarty->registerPlugin('block', 'tg','Utilities__smarty_translate_g');
 		self::$smarty->registerPlugin('block', 'tu','Utilities__smarty_translate_u');

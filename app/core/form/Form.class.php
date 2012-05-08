@@ -79,7 +79,7 @@ class Form {
 	const FORM_BUTTON_SEND = 32;
 	const FORM_CAPTCHA_TIMER = 33;
 
-	const FORM_SPECIFIC_NOT_IN_DB = 1001;
+	const FORM_CUSTOM = 1001;
 	
 	const TAB_BASIC = '1_basic';
 	const TAB_PROPERTIES = '2_properties';
@@ -726,7 +726,7 @@ class Form {
 			if ($meta->getType() == Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE) {
 				continue;
 			}
-			if (!in_array($meta->getType(), array(Form::FORM_MULTISELECT_FOREIGNKEY, Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_SPECIFIC_NOT_IN_DB)) || $meta->getUpdateHandleDefault()) {
+			if (!in_array($meta->getType(), array(Form::FORM_MULTISELECT_FOREIGNKEY, Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_CUSTOM)) || $meta->getUpdateHandleDefault()) {
 				if (array_key_exists($field, $this->predefinedValues)) {
 					$val = $this->predefinedValues[$field];
 					// we do not hash the field if it should not be changed on empty and the field is empty

@@ -220,7 +220,7 @@ class FormField {
 class FormFieldFactory {
 	static public function getInstance($fieldType, $formIdentifier) {
 		switch ($fieldType) {
-			case Form::FORM_SPECIFIC_NOT_IN_DB: return new FormFieldSpecificNotInDb($formIdentifier); break;
+			case Form::FORM_CUSTOM: return new FormFieldCustom($formIdentifier); break;
 			case Form::FORM_INPUT_NUMBER: return new FormFieldInputNumber($formIdentifier); break;
 			case Form::FORM_INPUT_TEXT: return new FormFieldInputText($formIdentifier); break;
 			case Form::FORM_TEXTAREA: return new FormFieldHTML($formIdentifier); break;
@@ -255,7 +255,7 @@ class FormFieldFactory {
 
 
 	
-class FormFieldSpecificNotInDb extends FormField {
+class FormFieldCustom extends FormField {
 	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = $this->meta->getRenderObject()->getFormHTML($this);
 	}

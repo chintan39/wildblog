@@ -37,7 +37,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 		
 		$this->addMetaData(AtributesFactory::create('titleimage')
 			->setLabel('Title image')
-			->setType(Form::FORM_SPECIFIC_NOT_IN_DB)
+			->setType(Form::FORM_CUSTOM)
 			->setOptionsMethod('listSelectSelector')
 			->setSelector(true)
 			->setUpdateHandleDefault(true)

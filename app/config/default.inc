@@ -78,6 +78,7 @@ define('DIR_SMARTY_THEME_JS', DIR_THEMES . '[theme]/js/' );
 define('DIR_SMARTY_TEMPLATES_C', DIR_PROJECT_CACHE . 'templates_c/');
 define('DIR_SMARTY_CACHE', DIR_PROJECT_CACHE . 'cache/');
 define('DIR_SMARTY_CONFIG', DIR_APP . 'config/');
+define('DIR_SMARTY_WWPLUGINS', DIR_SMARTY . 'wwplugins/');
 
 // models and controllers cache dir
 define('DIR_MODELS_CACHE', DIR_PROJECT_CACHE . 'models/');

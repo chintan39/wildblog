@@ -30,37 +30,29 @@ class BookingReservationsController extends AbstractDefaultController {
 	 */
 	public function actionShowRooms($args) {
 		
+		$reservationFormModel = new BookingReservationFormModel();
+		//$reservationFormModel->date_from = date('Y-m-d');
+		//$reservationFormModel->nights = 3;
+		
 		$items = new ItemCollection("rooms", Environment::getPackage($this->package)->getController('Rooms'));
 		$items->loadCollection();
 		
-		if (isset(Request::$get['date_from']) && preg_match('/\d{4}-\d{2}-\d{2}/', Request::$get['date_from']))
-			$dateFrom = Request::$get['date_from'];
-		else
-			$dateFrom = date('Y-m-d');
-			
-		$nights = isset(Request::$get['nights']) ? (int)Request::$get['nights'] : '3';
-		$nights = ($nights > 100 || $nights <= 0) ? 3 : $nights;
-		
 		if ($items->data["items"]) {
 			foreach ($items->data["items"] as $key => $item) {
-				$item->addNonDbProperty("info");
-				$item->info = BookingRoomsModel::getRoomInfo($item, $dateFrom, $nights);
-				$minFree = $item->capacity;
-				foreach ($item->info as $i)
-					if ($i->free < $minFree)
-						$minFree = $i->free;
-				$item->addNonDbProperty("beds");
-				if ($item->priceType == BookingRoomsModel::PRICE_ROOM)
-					$item->beds = array(0, $minFree);
-				else
-					$item->beds = range(0, $minFree);
+				$reservationFormModel->addRoom($item);
 			}
 		}
-
-		$this->assign("rooms", $items);
-		$this->assign("dates", Utilities::dateRangeDays($dateFrom, $nights));
 		
-		$this->assign("title", tg('Reservations from') . ' ' . $dateFrom . ' ' . tg('for #$nights# nights', array('nights' => $nights)));
+		$form = new Form();
+		$form->setIdentifier('reservationForm');
+		$form->fill($reservationFormModel);
+		$form->handleRequest();
+
+		$this->assign($form->getIdentifier(), $form->toArray());
+		$this->assign("rooms", $items);
+		$this->assign("dates", Utilities::dateRangeDays($reservationFormModel->date_from, $reservationFormModel->nights));
+		
+		$this->assign("title", tg('Reservations from') . ' ' . $reservationFormModel->date_from . ' ' . tg('for #$nights# nights', array('nights' => $reservationFormModel->nights)));
 	}
 }
 

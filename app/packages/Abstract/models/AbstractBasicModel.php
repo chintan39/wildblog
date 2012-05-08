@@ -329,7 +329,7 @@ class AbstractBasicModel {
 	 */
     protected function getFieldsInDB($includeId=true) {
     	$fields = array();
-    	$fields_not_in_db = array(Form::FORM_MULTISELECT_FOREIGNKEY, Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_SPECIFIC_NOT_IN_DB);
+    	$fields_not_in_db = array(Form::FORM_MULTISELECT_FOREIGNKEY, Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_CUSTOM);
     	if (!$includeId) {
     		$fields_not_in_db[] = Form::FORM_ID;
     	}
@@ -902,7 +902,7 @@ class AbstractBasicModel {
 			return $value;
 		}
 		switch ($meta->getType()) {
-			case Form::FORM_SPECIFIC_NOT_IN_DB:
+			case Form::FORM_CUSTOM:
 				$value = $this->getTableValue();
 				break;
 			case Form::FORM_ID:

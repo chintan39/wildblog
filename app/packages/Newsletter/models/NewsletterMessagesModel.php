@@ -43,7 +43,7 @@ class NewsletterMessagesModel extends AbstractPagesModel {
     	
 		$this->addMetaData(AtributesFactory::create('contactGroups')
 			->setLabel('Contact groups')
-			->setType(Form::FORM_SPECIFIC_NOT_IN_DB)
+			->setType(Form::FORM_CUSTOM)
 			->setOptionsMethod('listSelect')
 			->setRenderObject($this)
 			->setIsVisible(ModelMetaItem::NEVER)

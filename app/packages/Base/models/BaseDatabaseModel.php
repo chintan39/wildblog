@@ -283,7 +283,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		// Compare columns in DB and columns according model definition 
 		foreach ($metadata as $meta) {
 			if (in_array($meta->getType(), array(Form::FORM_MULTISELECT_FOREIGNKEY,
-				Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_SPECIFIC_NOT_IN_DB))) {
+				Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_CUSTOM))) {
 				continue;
 			}
 			if ($model->extendedTextsSupport && ($ext && !$meta->getExtendedTable() || !$ext && $meta->getExtendedTable())) {
@@ -409,7 +409,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		// Compare columns in DB and columns according model definition 
 		foreach ($metadata as $meta) {
 			if (in_array($meta->getType(), array(Form::FORM_MULTISELECT_FOREIGNKEY,
-				Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_SPECIFIC_NOT_IN_DB))) {
+				Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_CUSTOM))) {
 				continue;
 			}
 			if ($model->extendedTextsSupport && ($ext && !$meta->getExtendedTable() || !$ext && $meta->getExtendedTable())) {
