@@ -51,6 +51,19 @@ class BookingReservationFormModel extends AbstractVirtualModel {
     }
     
 
+	/**
+	 * Save data to Reservations model.
+	 */
+	public function Save() {
+		parent::Save();
+		$reservation = new BookingReservationsModel();
+		$reservation->date_from = $this->date_from;
+		$reservation->nights = $this->nights;
+		foreach ($this->rooms as $room)
+			;
+	}
+	
+	
     public function addRoom($room) {
     	
     	$this->addMetaData(AtributesFactory::create('room'.$room->id)
