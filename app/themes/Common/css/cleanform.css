@@ -199,6 +199,10 @@ form.cleanform input.button.choose {
 	background-image:url("/media/.ico/32/basic.png");
 }
 
+form.cleanform input.button.back {
+	background-image:url("/media/.ico/32/back.png");
+}
+
 form.cleanform input.checkbox {
 	width: 20px;
 	height: 20px;

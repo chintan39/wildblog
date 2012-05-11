@@ -78,6 +78,7 @@ class Form {
 	const FORM_BUTTON_SAVE_AS = 31;
 	const FORM_BUTTON_SEND = 32;
 	const FORM_CAPTCHA_TIMER = 33;
+	const FORM_BUTTON_BACK = 34;
 
 	const FORM_CUSTOM = 1001;
 	
@@ -115,6 +116,9 @@ class Form {
 	var $sendAjax=false;
 	var $csrf=false;
 	var $focusFirstItem = false;
+	var $steps=1;
+	var $step=1;
+	var $buttonsList = array();
 	
 	/**
 	 * Constructor, first timestamp will be set.
@@ -295,6 +299,8 @@ class Form {
 			'identifier' => $this->identifier,
 			'sendAjax' => $this->sendAjax,
 			'focusFirstItem' => $this->focusFirstItem,
+			'steps' => $this->steps,
+			'step' => $this->step,
 			);
 	}
 	
@@ -454,15 +460,20 @@ class Form {
 	 * @param array $buttonsList List of button types, that should be added.
 	 */
 	public function addButtons($buttonsList=null) {
-		if ($buttonsList === null) {
-			$buttonsList = array(self::FORM_BUTTON_SUBMIT, self::FORM_BUTTON_CANCEL);
-		}
+		$this->buttonsList = ($buttonsList === null) ? array(self::FORM_BUTTON_SUBMIT, self::FORM_BUTTON_CANCEL) : $buttonsList;
 		
 		if ($this->hasSaveAsAction()) {
-			$buttonsList[] = self::FORM_BUTTON_SAVE_AS;
+			$this->buttonsList[] = self::FORM_BUTTON_SAVE_AS;
 		}
 
-		foreach ($buttonsList as $button) {
+		if ($this->steps > 1) {
+			$this->buttonsList[] = self::FORM_BUTTON_BACK;
+		}
+	}
+	
+	private function parseButtonList() {
+		$this->buttons = array();
+		foreach ($this->buttonsList as $button) {
 			switch ($button) {
 				case self::FORM_BUTTON_SUBMIT:
 					$this->buttons[] = array('name' => 'submit', 'value' => 'Submit', 'type' => self::FORM_BUTTON_SUBMIT);
@@ -485,12 +496,16 @@ class Form {
 				case self::FORM_BUTTON_SAVE_AS:
 					$this->buttons[] = array('name' => 'saveas', 'value' => 'Save As', 'type' => self::FORM_BUTTON_SAVE_AS, 'action' => $this->getSaveAsAction());
 					break;
+				case self::FORM_BUTTON_BACK:
+					if ($this->step > 1)
+						$this->buttons[] = array('name' => 'back', 'value' => 'Back', 'type' => self::FORM_BUTTON_BACK);
+					break;
 				default: break;
 			}
 		}
 	}
 
-	
+
 	/**
 	 * Sets the form label.
 	 * @param string $label Label of the form
@@ -567,6 +582,14 @@ class Form {
 	}
 	
 	/**
+	 * Returns true if this form has been sent using back button.
+	 */
+	private function getIsSentBack() {
+		$action = $this->getAction();
+		return $action == self::FORM_BUTTON_BACK;
+	}
+	
+	/**
 	 * Returns true if this form has not been sent, but pressed Cancel.
 	 */
 	private function getCancelIsSent() {
@@ -597,22 +620,33 @@ class Form {
 		} else {
 			$this->req = &Request::$get;
 		}
-		$action = $this->getAction();
-		if ($this->getIsSent()) {
+		$this->step = isset($this->req['form_step']) ? (int)$this->req['form_step'] : $this->step;
+		$this->parseButtonList();
+		if ($this->getIsSentBack()) {
+			$this->decreaseStep();
+			$this->noRedirect = true;
+		} elseif ($this->getIsSent()) {
 			if (isset($this->req["form_action"]) && is_numeric($this->req["form_action"])) {
 				$this->storeAlternativeAction($this->req["form_action"]);
 			}
 			$this->checkFields();
 			if (!count($this->messages["errors"])) {
-				// Saving...
-				$this->updateDataModelFromRequest();
-				
-				// and sending message
-				MessageBus::sendMessage($confirmationMessage ? $confirmationMessage : tg('Form has been sent.'), false, $this->identifier);
-				
-				// mail sending
-				if ($this->useSendMail) {
-					$this->sendMail();
+				// handle form in more steps
+				if ($this->steps > 1 && $this->step < $this->steps) {
+					$this->increaseStep();
+					$this->noRedirect = true;
+				} else {
+					
+					// Saving...
+					$this->updateDataModelFromRequest();
+					
+					// and sending message
+					MessageBus::sendMessage($confirmationMessage ? $confirmationMessage : tg('Form has been sent.'), false, $this->identifier);
+					
+					// mail sending
+					if ($this->useSendMail) {
+						$this->sendMail();
+					}
 				}
 
 				// redirection
@@ -695,7 +729,27 @@ class Form {
 		}
 	}
 
+	
+	/**
+	 * Increase actual step
+	 */
+	private function increaseStep() {
+		if ($this->step < $this->steps)
+			$this->step++;
+		$this->parseButtonList();
+	}
 
+	
+	/**
+	 * Decrease actual step
+	 */
+	private function decreaseStep() {
+		if ($this->step > 1)
+			$this->step--;
+		$this->parseButtonList();
+	}
+	
+	
 	/**
 	 * Returns action (button pressed) of the form sent.
 	 */
@@ -955,7 +1009,13 @@ class Form {
 		$csrfToken->setMeta(AtributesFactory::create('form_token')
 			->setType(self::FORM_HIDDEN));
 
-		$fieldsExtra = array($formId, $csrfToken);
+		// form step
+		$formStep = new FormFieldHidden($this->identifier);
+		$formStep->setValue($this->step);
+		$formStep->setMeta(AtributesFactory::create('form_step')
+			->setType(self::FORM_HIDDEN));
+
+		$fieldsExtra = array($formId, $csrfToken, $formStep);
 
 		// captcha item
 		if ($this->useCaptcha && !$this->getCaptchaPassed()) {
@@ -1013,7 +1073,10 @@ class Form {
 				->setOptionsMustBeSelected(true));
 			$fieldsExtra[] = $fieldAlterAct;
 		}
-		return array_merge($this->fields, $fieldsExtra);
+		$allFields = array_merge($this->fields, $fieldsExtra);
+		foreach ($allFields as $k => $field)
+			$allFields[$k]->setFormStepActual($this->step);
+		return $allFields;
 	}
 	
 	
@@ -1203,6 +1266,26 @@ class Form {
 			}
 		}
 	}
+	
+	
+	/**
+	 * Gets steps
+	 * @return string steps
+	 */
+	public function getSteps() {
+		return $this->steps;
+	}
+	
+	
+	/**
+	 * Sets steps
+	 * @param string steps
+	 */
+	public function setSteps($steps) {
+		$this->steps = $steps;
+	}
+	
+	
 }
 
 ?>

@@ -80,6 +80,10 @@ function smarty_function_form_button($params, &$smarty)
 			$onclick = " onclick=\"this.form.action='{$button['action']}'; if (confirm('".tg('This will create another similar item. Are you sure to continue?')."')) { $onclick } else { return false; }\"";
 			$output .= "<input type=\"submit\" class=\"button saveas clear\" id=\"form_" . $button["name"] . "\" name=\"" . $button["name"] . "\" value=\"" . tg($button["value"]) . "\"$onclick /> ";
 			break;
+		case Form::FORM_BUTTON_BACK: 
+			$onclick = " onclick=\"$onclick\"";
+			$output .= "<input type=\"submit\" class=\"button back send\" id=\"form_" . $button["name"] . "\" name=\"" . $button["name"] . "\" value=\"" . tg($button["value"]) . "\"$onclick /> ";
+			break;
 		default: break;
 	}
 	return $output;

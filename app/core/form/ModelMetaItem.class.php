@@ -30,6 +30,10 @@ class ModelMetaItem {
 	const ON_NEW = 2;
 	const ON_EDIT = 3;
 	
+	const STEP_EDITABLE = 1;
+	const STEP_READONLY = 2;
+	const STEP_HIDDEN = 3;
+	
 	private $name;					// name of the item (only a-z_ is possible)
 	private $type;					// type of the item (@see Form::...)
 	private $order;					// order of the item is defined automaticly
@@ -64,6 +68,7 @@ class ModelMetaItem {
 	private $style = null;
 	private $uploadDir =  '';
 	private $updateHandleDefault = false;
+	private $formStepsOptions = array();
 	
 	static private $newOrder = 1;
 	
@@ -108,6 +113,23 @@ class ModelMetaItem {
 		$this->defaultValue = $value;
 		return $this;
 	}
+
+	
+	/**
+	 * Getter
+	 */
+	public function getFormStepsOptions() {
+		return $this->formStepsOptions;
+	}
+	
+	/**
+	 * Setter
+	 */
+	public function setFormStepsOptions($value) {
+		$this->formStepsOptions = $value;
+		return $this;
+	}
+	
 
 	public function getName() {
         return $this->name;
@@ -471,6 +493,18 @@ class ModelMetaItem {
 	public function setIsVisibleInForm($isVisibleInForm) {
 		$this->isVisibleInForm = $isVisibleInForm;
 		return $this;
+	}
+	
+	
+	public function inEditableInActualFormStep($actualFormStep=1) {
+		return $this->getActualFormStep($actualFormStep) == self::STEP_EDITABLE;
+	}
+
+	public function getActualFormStep($actualFormStep=1) {
+		$stepOptions = $this->getFormStepsOptions();
+		/* array is indexed from 0, but first step is 1, thus -1 in index */
+		return ($actualFormStep && isset($stepOptions[$actualFormStep-1])) ? 
+				$stepOptions[$actualFormStep-1] : self::STEP_EDITABLE;
 	}
 
 }

@@ -31,13 +31,15 @@ class BookingReservationFormModel extends AbstractVirtualModel {
     	
     	$this->addMetaData(AtributesFactory::stdDateFrom()
     		->setRestrictions(Restriction::R_NOT_EMPTY)
-    		->setDefaultValue(date('Y-m-d')));
+    		->setDefaultValue(date('Y-m-d'))
+    		->setFormStepsOptions(array(ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY)));
     	
 		$this->addMetaData(AtributesFactory::create('nights')
 			->setLabel('Nights')
 			->setRestrictions(Restriction::R_NOT_EMPTY)
 			->setType(Form::FORM_INPUT_NUMBER)
-    		->setDefaultValue(3));
+    		->setDefaultValue(3)
+    		->setFormStepsOptions(array(ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY)));
 
     	$this->addMetaData(AtributesFactory::stdPrice());
     	
@@ -71,7 +73,8 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 			->setDescription($room->text)
 			->setType(Form::FORM_CUSTOM)
 			->setRenderObject($this)
-			->setOptionsMustBeSelected(true));
+			->setOptionsMustBeSelected(true)
+    		->setFormStepsOptions(array(ModelMetaItem::STEP_HIDDEN, ModelMetaItem::STEP_EDITABLE)));
 		
 		$this->rooms['room'.$room->id] = $room;
     }

@@ -1,4 +1,4 @@
-{if $formId}<a name="{$formId}"></a>{/if}
+{if $formId}<a name="{$formId}"></a>({$form.step}/{$form.steps}){/if}
 
 <form action="{$form.action|htmlentities}{if $formId}#{$formId}{/if}" id="form{$form.identifier}" method="{$form.method}" class="cleanform{if $formClass} {$formClass}{/if}" enctype="multipart/form-data">
 {if $form.tabs and $form.displayForm}

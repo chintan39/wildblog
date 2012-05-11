@@ -28,6 +28,7 @@ class FormField {
 	protected $message = null; 		// messages related to this field
 	protected $options = null;		// values options
 	protected $optionsFromModel = true;
+	protected $formStepActual = false;
 	
 	protected $classes = array();
 	protected $style='';
@@ -43,6 +44,10 @@ class FormField {
 		$this->message->error = array();
 		$this->message->warning = array();
 		$this->formIdentifier = $formIdentifier;
+	}
+	
+	public function setFormStepActual($formStepActual) {
+		$this->formStepActual = $formStepActual;
 	}
 
 	public function setDataModel($dataModel) {
@@ -144,15 +149,26 @@ class FormField {
 	}
 	
 	public function getLabel($label='', $description='') {
-		return "\n<label for=\"" . $this->getIdValue() . "\">" 
-			. tg(empty($label) ? $this->meta->getLabel() : $label)
-			. (Restriction::hasRestrictions($this->meta->getRestrictions(), Restriction::R_NOT_EMPTY) ? '<span class="required">*</span>' : '')
-			. (($this->meta->getDescription() || !empty($description)) ? "<span class=\"small\">" . tg(empty($description) ? $this->meta->getDescription() : $description) . "</span>":"") 
-			. ($this->message->error ? "<span class=\"small error\">" . implode("<br />", $this->message->error) . "</span>":"") 
-			. ($this->message->warning ? "<span class=\"small error\">" . implode("<br />", $this->message->warning) . "</span>":"") 
-			. "</label>\n";
+		switch ($this->getActualStepState()) {
+			default:
+			case ModelMetaItem::STEP_EDITABLE:
+			case ModelMetaItem::STEP_READONLY:
+				return "\n<label for=\"" . $this->getIdValue() . "\">" 
+					. tg(empty($label) ? $this->meta->getLabel() : $label)
+					. (Restriction::hasRestrictions($this->meta->getRestrictions(), Restriction::R_NOT_EMPTY) ? '<span class="required">*</span>' : '')
+					. (($this->meta->getDescription() || !empty($description)) ? "<span class=\"small\">" . tg(empty($description) ? $this->meta->getDescription() : $description) . "</span>":"") 
+					. ($this->message->error ? "<span class=\"small error\">" . implode("<br />", $this->message->error) . "</span>":"") 
+					. ($this->message->warning ? "<span class=\"small error\">" . implode("<br />", $this->message->warning) . "</span>":"") 
+					. "</label>\n";
+				break;
+			case ModelMetaItem::STEP_HIDDEN: return ''; break;
+		}
 	}
 
+	
+	private function getActualStepState() {
+		return $this->meta->getActualFormStep($this->formStepActual);
+	}
 	
 	public function addBox() {
 		$this->hasBox = true;
@@ -168,12 +184,32 @@ class FormField {
 		return $this->formIdentifier;
 	}
 	
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
+		$this->html = '';
+		return $this;
+	}
+	
+	public function setHTMLReadonly($class, $style) {
 		$this->html = '';
 		return $this;
 	}
 	
 	public function getHTML() {
+		switch ($this->getActualStepState()) {
+			default:
+			case ModelMetaItem::STEP_EDITABLE:
+				return $this->getHTMLEditable();
+				break;
+			case ModelMetaItem::STEP_READONLY:
+				return $this->getHTMLReadonly();
+				break;
+			case ModelMetaItem::STEP_HIDDEN: 
+				return $this->getHTMLHidden();
+				break;
+		}
+	}
+	
+	public function getHTMLEditable() {
 		$this->adjustValue();
 		$onclick = $this->onclick ? " onclick=\"{$this->onclick}\"": '';
 		$onchange = $this->onchange ? " onchange=\"{$this->onchange}\"": '';
@@ -181,7 +217,7 @@ class FormField {
 		$this->disabled = $this->meta->isChangeAble(isset($this->dataModel->id) ? $this->dataModel->id : null) 
 			? '' : " disabled=\"disabled\"";
 		if ($this->html === null) {
-			$this->setHTML($this->getClassAttr(), $this->getStyleAttr(), $onclick, $onchange);
+			$this->setHTMLEditable($this->getClassAttr(), $this->getStyleAttr(), $onclick, $onchange);
 		}
 		$output = $this->html;
 		if ($this->hasLabel) {
@@ -198,6 +234,43 @@ class FormField {
 				. "\n</div>"
 				. "\n<!-- Form field " . $this->meta->getName() . " (end) -->\n";
 		}
+		return $output;
+	}
+
+	public function getHTMLReadonly() {
+		$this->adjustValue();
+		$style = $this->style ? " style=\"{$this->style}\"": '';
+		if ($this->html === null) {
+			$this->setHTMLReadonly($this->getClassAttr(), $this->getStyleAttr());
+		}
+		$output = $this->html;
+		if ($this->hasLabel) {
+			$output = $this->getLabel() . $output 
+				. "\n<p class=\"nodisplay\"><input type=\"hidden\"" . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" /></p>\n";
+		}
+		if ($this->hasBox) {
+			$lineStyle = $this->lineStyle ? " style=\"{$this->lineStyle}\"": '';
+			$lineClass = $this->meta->getLineClass();
+			$lineClass = 'line' . (($lineClass) ? ' ' . $lineClass : '');
+			$output = "\n\n<!-- Form field " . $this->meta->getName() . " (begin) -->\n"
+			. "<div class=\"$lineClass\"" . $this->getIdAttr('line') . " $lineStyle>"
+				. $output
+				. "\n<div class=\"clear\"></div>"
+				. "\n</div>"
+				. "\n<!-- Form field " . $this->meta->getName() . " (end) -->\n";
+		}
+		return $output;
+	}
+
+	public function getHTMLHidden() {
+		$this->adjustValue();
+		if ($this->html === null) {
+			$this->html = "<p class=\"nodisplay\"><input type=\"hidden\"" . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" /></p>\n";
+		}
+		$output = $this->html;
+		$output = "\n\n<!-- Form field " . $this->meta->getName() . " (begin) -->\n"
+			. $output
+			. "\n<!-- Form field " . $this->meta->getName() . " (end) -->\n";
 		return $output;
 	}
 
@@ -256,13 +329,14 @@ class FormFieldFactory {
 
 	
 class FormFieldCustom extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = $this->meta->getRenderObject()->getFormHTML($this);
+		return $this;
 	}
 }
 
 class FormFieldHidden extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$changeExpected = strpos($this->getMeta()->getName(), 'captcha') !== false;
 		if ($changeExpected)
@@ -273,16 +347,17 @@ class FormFieldHidden extends FormField {
 		if ($changeExpected)
 			$this->html .= "\n<!-- webdiffer-no-log-end -->\n";
 	}
-	public function getHTML() {
+	
+	public function getHTMLEditable() {
 		if ($this->html === null) {
-			$this->setHTML('', '', '', '', '');
+			$this->setHTMLEditable('', '', '', '', '');
 		}
 		return $this->html;
 	}
 }
 
 class FormFieldInputDate extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'datetimepicker/datetimepicker.js');
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'datetimepicker/stylesheets/calendarview.css');
 		Javascript::addScript("Event.observe(window, 'load', function() { Calendar.setup({
@@ -291,11 +366,16 @@ class FormFieldInputDate extends FormField {
 		timeMode: 0})});");
 		$this->html = "<input type=\"text\"" . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" />"
 			."<a href=\"JavaScript:void(0);\" onclick=\"return false;\"" . $this->getIdAttr('button') . "><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . '32/calendar_view.png' . "\" alt=\"" . tg("Choose date") . "\"class=\"choose\" /></a>";
+		return $this;
+	}
+	public function setHTMLReadonly($class, $style) {
+		$this->html = $this->value;
+		return $this;
 	}
 }
 
 class FormFieldInputTime extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'datetimepicker/datetimepicker.js');
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'datetimepicker/stylesheets/calendarview.css');
 		Javascript::addScript("Event.observe(window, 'load', function() { Calendar.setup({
@@ -305,6 +385,11 @@ class FormFieldInputTime extends FormField {
 		timeStep: 30})});");
 		$this->html = "<input type=\"text\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" />"
 			. "<a href=\"JavaScript:void(0);\" onclick=\"return false;\" " . $this->getIdAttr('button') . "><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . '32/calendar_view.png' . "\" alt=\"" . tg("Choose time") . "\"class=\"choose\" /></a>";
+		return $this;
+	}
+	public function setHTMLReadonly($class, $style) {
+		$this->html = $this->value;
+		return $this;
 	}
 }
 
@@ -312,8 +397,13 @@ class FormFieldInputDateTime extends FormFieldInputTime {
 }
 
 class FormFieldInputText extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = "<input type=\"text\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\"{$onclick}{$onchange}{$style} />";
+		return $this;
+	}
+	public function setHTMLReadonly($class, $style) {
+		$this->html = $this->value;
+		return $this;
 	}
 }
 
@@ -324,14 +414,19 @@ class FormFieldInputNumber extends FormFieldInputText {
 }
 
 class FormFieldCheckbox extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$class = 'checkbox';
 		$this->html = "<input type=\"checkbox\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"1\"". (($this->value) ? " checked=\"checked\"" : "") ." class=\"$class\" />";
+		return $this;
+	}
+	public function setHTMLReadonly($class, $style) {
+		$this->html = $this->value ? tg('Yes') : tg('No');
+		return $this;
 	}
 }
 
 class FormFieldPassword extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = "<input type=\"password\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"\" class=\"$class\" />";
 		if (Restriction::hasRestrictions($this->meta->getRestrictions(), Restriction::R_CONFIRM_DOUBLE)) {
 			$origFieldId = $this->getIdValue();
@@ -342,11 +437,16 @@ class FormFieldPassword extends FormField {
 			$this->html .= $this->getLabel('Confirm ' . $this->meta->getLabel(), tg($this->meta->getDescription() . ' again'));
 			$this->html .= "<input type=\"password\" onchange=\"if (this.value != $('$origFieldId').value) {this.addClassName('error');} else {this.removeClassName('error');}\" " . $this->getIdAttr('confirm') . " name=\"" . $confirmName . "\" value=\"\" class=\"$class\" />";
 		}
+		return $this;
+	}
+	public function setHTMLReadonly($class, $style) {
+		$this->html = '**********';
+		return $this;
 	}
 }
 
 class FormFieldHTML extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		switch ($this->meta->getType()) {
 			case Form::FORM_HTML_BBCODE:
 				Javascript::addWysiwyg($this->getIdValue(), Javascript::WYSIWYG_BBCODE);
@@ -373,11 +473,16 @@ class FormFieldHTML extends FormField {
 			$this->html .= "<a href=\"#\" onclick=\"elementHeightChange($('" . $this->getIdValue() . "'), 50, -40);return false;\" class=\"decrease\"><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . '16/up.png' . "\" alt=\"" . tg("decrease") . "\" /></a>\n";
 			$this->html .= "<a href=\"#\" onclick=\"elementHeightChange($('" . $this->getIdValue() . "'), 600, 40);return false;\" class=\"increase\"><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . '16/down.png' . "\" alt=\"" . tg("increase") . "\" /></a>\n";
 		}
+		return $this;
+	}
+	public function setHTMLReadonly($class, $style) {
+		$this->html = $this->value;
+		return $this;
 	}
 }
 
 class FormFieldRadio extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$class = ' radio';
 		if (!$this->meta->getOptionsMustBeSelected()) {
@@ -389,11 +494,16 @@ class FormFieldRadio extends FormField {
 			$this->html .= "<input type=\"radio\" " . $this->getIdAttr($o["id"]) . " name=\"" . $this->meta->getName() . "\" value=\"" . $o["id"] . "\"". (($this->value == $o["id"]) ? " checked=\"checked\"" : "") . ($o["disabled"] ? " disabled=\"disabled\"" : "") . " class=\"$class\"{$onclick}{$onchange}{$style} />";
 			$this->html .= "<label for=\"" . $this->getIdValue($o["id"]) . "\" class=\"radio\">" . ($transOpt ? tg($o["value"]) : $o["value"]) . "</label>";
 		}	
+		return $this;
+	}
+	public function setHTMLReadonly($class, $style) {
+		$this->html = $this->value;
+		return $this;
 	}
 }
 
 class FormFieldSelect extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$this->html .= "<select " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" class=\"$class\"{$this->disabled}>";
 		if (!$this->meta->getOptionsMustBeSelected()) {
@@ -434,6 +544,11 @@ class FormFieldSelect extends FormField {
 				$this->html .= "</script>\n";
 			}
 		}
+		return $this;
+	}
+	public function setHTMLReadonly($class, $style) {
+		$this->html = $this->value;
+		return $this;
 	}
 }
 
@@ -441,7 +556,7 @@ class FormFieldMultiSelect extends FormFieldSelect {
 	protected function adjustValue() {
 	}
 	
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$this->html .= "<select " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "[]\" multiple=\"multiple\" size=\"5\" class=\"$class\">";
 		
@@ -484,6 +599,11 @@ class FormFieldMultiSelect extends FormFieldSelect {
 				$this->html .= "<a href=\"#\" onclick=\"return windowPopupAjax('$linkFull', 'closeReplacesSelect', '".$this->getIdValue()."', '$linkReload')\">".tg('Add new item')."</a>\n";
 			}
 		}
+		return $this;
+	}
+	public function setHTMLReadonly($class, $style) {
+		$this->html = implode(', ', $this->value);
+		return $this;
 	}
 }
 
@@ -499,7 +619,7 @@ class FormFieldMultiSelectForeignKeyInteractive extends FormFieldMultiSelect {
 }
 
 class FormFieldFile extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$browserBaseUrl = DIR_PROJECT_URL_MEDIA;
 		$browserType = $this->getBrowserType();
@@ -509,6 +629,7 @@ class FormFieldFile extends FormField {
 			. "selectMedia(\$('" . $this->getIdValue() . "'), " 
 			. "'$browserType')"
 			. "\" />";
+		return $this;
 	}
 	
 	protected function getBrowserType() {
@@ -523,18 +644,23 @@ class FormFieldImage extends FormFieldFile {
 }
 
 class FormFieldColorRHBHEXA extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'colorpicker/js/colorPicker.js');
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'colorpicker/css/colorPicker.css');
 		$backgroundColor = (strlen($this->value) > 0) ? 'style="background-color: ' . $this->value . '" ' : '';
 		$this->html .= "<input type=\"text\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" onclick=\"startColorPicker(this);\" onkeyup=\"maskedHex(this);\" $backgroundColor/>";
 		$this->html .= "<a href=\"#\" onclick=\"\$('" . $this->getIdValue() . "').value=''; \$('" . $this->getIdValue() . "').style.background='#ffffff'; return false;\" title=\"Clear item\"><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "24/remove.png\" alt=\"Clear item\" /></a>\n";
+		return $this;
+	}
+	public function setHTMLReadonly($class, $style) {
+		$this->html = '<span style="background: #' . $this->value . ';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+		return $this;
 	}
 }
 
 class FormFieldCaptcha extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$captchaImagePath = Request::getLinkSimple("Base", "Captcha", "actionCaptcha");
 		$captchaImagePath = rtrim($captchaImagePath, '/');
@@ -547,15 +673,17 @@ class FormFieldCaptcha extends FormField {
 		$class .= ' captcha_text';
 		$this->html .= "\n<div class=\"clear\"></div>";
 		$this->html .= "<label></label><input type=\"text\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"\" class=\"$class\" />";
+		return $this;
 	}
 }
 
 class FormFieldRecaptcha extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$this->html .= "<div class=\"recaptcha\">";
 		$this->html .= $this->value;
 		$this->html .= "\n</div>";
+		return $this;
 	}
 
 	protected function adjustValue() {
@@ -563,7 +691,7 @@ class FormFieldRecaptcha extends FormField {
 }
 
 class FormFieldLink extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'linkselector.js');
 		Javascript::addScript("Event.observe(window, 'load', function() { LinkSelector.setup({
@@ -572,14 +700,20 @@ class FormFieldLink extends FormField {
 		triggerElement: '" . $this->getIdValue('button') . "'})});");
 		$this->html .= "<input type=\"text\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" />";
 		$this->html .= "<div id=\"" . $this->getIdValue('container') . "\"></div>";
+		return $this;
+	}
+	public function setHTMLReadonly($class, $style) {
+		$this->html = $this->value;
+		return $this;
 	}
 }
 
 
 class FormFieldUploadFile extends FormField {
-	public function setHTML($class, $style, $onclick, $onchange) {
+	public function setHTMLEditable($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		$this->html .= "<input type=\"file\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" class=\"$class\"{$onclick}{$onchange}{$style} />";
+		return $this;
 	}
 }
 
