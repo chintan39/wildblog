@@ -314,10 +314,10 @@ class AbstractBasicModel {
 	 * @param &$newData
 	 * @return array List of messages (errors and warnings).
 	 */
-	public function checkFields(&$newData, &$preddefinedData) {
+	public function checkFields(&$newData, &$preddefinedData, $formStep) {
 
 		$this->adjustAllFieldsValue($newData, $preddefinedData);
-		$this->checkAllFieldsValue($newData, $preddefinedData);
+		$this->checkAllFieldsValue($newData, $preddefinedData, $formStep);
 		
 		return $this->messages;
 	}
@@ -356,7 +356,7 @@ class AbstractBasicModel {
 			}
 		}
 		$this->adjustAllFieldsValue($this->changedValues, $preddefinedData);
-		$this->checkAllFieldsValue($this->changedValues, $preddefinedData);
+		$this->checkAllFieldsValue($this->changedValues, $preddefinedData, $formStep);
 		
 		return $this->messages;
 	}
@@ -392,15 +392,15 @@ class AbstractBasicModel {
 	 * Checks field's value (for example if url is unique).
 	 * @param &$newData
 	 */
-	protected function checkAllFieldsValue(&$newData, &$preddefinedData) {
+	protected function checkAllFieldsValue(&$newData, &$preddefinedData, $formStep) {
 		// check standard columns
 		$inDB = $this->getFieldsInDB(false);
 		foreach ($this->getMetaData() as $field => $meta) {
 			if (in_array($field, $inDB)) {
 				if (array_key_exists($field, $preddefinedData)) {
-					$this->checkFieldValue($meta, $preddefinedData);
+					$this->checkFieldValue($meta, $preddefinedData, $formStep);
 				} else {
-					$this->checkFieldValue($meta, $newData);
+					$this->checkFieldValue($meta, $newData, $formStep);
 				}
 			}
 		}
@@ -410,9 +410,9 @@ class AbstractBasicModel {
 		if ($propModel) {
 			foreach ($propModel->getPossibleProperties() as $field => $meta) {
 				if (array_key_exists($field, $preddefinedData)) {
-					$this->checkFieldValue($meta, $preddefinedData);
+					$this->checkFieldValue($meta, $preddefinedData, $formStep);
 				} else {
-					$this->checkFieldValue($meta, $newData);
+					$this->checkFieldValue($meta, $newData, $formStep);
 				}
 			}
 		}
@@ -499,7 +499,7 @@ class AbstractBasicModel {
 	 * @param &$meta
 	 * @param &$newData all new data from form
 	 */
-	protected function checkFieldValue(&$meta, &$newData) {
+	protected function checkFieldValue(&$meta, &$newData, $formStep) {
 		if (empty($newData[$meta->getName()]) 
 			&& (isset($this->id) && $this->id && Restriction::hasRestrictions($meta->getRestrictions(), Restriction::R_NO_EDIT_ON_EMPTY) 
 				|| Restriction::hasRestrictions($meta->getRestrictions(), Restriction::R_EMPTY))) {

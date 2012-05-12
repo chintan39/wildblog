@@ -82,7 +82,7 @@ class NewsletterContactsRegisterModel extends NewsletterContactsModel {
 	}
 	
 	
-	protected function checkFieldValue(&$meta, &$newData) {
+	protected function checkFieldValue(&$meta, &$newData, $formStep) {
 		if (isset($newData['unsubscribe']) && $newData['unsubscribe'] == 1) {
 			if ($meta->getName() == 'email') {
 				$meta->removeRestrictions(Restriction::R_UNIQUE);
@@ -101,7 +101,7 @@ class NewsletterContactsRegisterModel extends NewsletterContactsModel {
 				$this->addMessage("errors", $meta->getName(), tg("You have to agree with the data processing agreement."));
 			}
 		}
-		parent::checkFieldValue($meta, $newData);
+		parent::checkFieldValue($meta, $newData, $formStep);
 	}
 
 	

@@ -191,11 +191,14 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 	 * @param &$newData
 	 * @return array List of messages (errors and warnings).
 	 */
-	public function checkFields(&$newData, &$preddefinedData) {
-		parent::checkFields($newData, $preddefinedData);
+	public function checkFields(&$newData, &$preddefinedData, $formStep) {
+		parent::checkFields($newData, $preddefinedData, $formStep);
 		$beds = 0;
+		$checkBeds = false;
 		foreach ($this->rooms as $room) {
 			$roomId = 'room' . $room->id;
+			$stepOptions = $this->getMetaData($roomId)->getFormStepsOptions();
+			$checkBeds |= (isset($stepOptions[$formStep-1]) && $stepOptions[$formStep-1] == ModelMetaItem::STEP_EDITABLE);
 			$roomBeds = $newData[$roomId];
 			// check if rooms have valid beds selected
 			if ($roomBeds > $room->capacity) {
@@ -205,7 +208,7 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 		}
 		
 		// check if at least some beds are selected
-		if (!$beds)
+		if ($checkBeds && !$beds)
 			$this->addMessageSimple('errors', tg('You have to select at least some beds'));
 		
 		return $this->messages;

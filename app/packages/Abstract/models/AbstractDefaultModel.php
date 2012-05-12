@@ -656,9 +656,9 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 	}
 
 	
-	protected function checkFieldValue(&$meta, &$newData) {
+	protected function checkFieldValue(&$meta, &$newData, $formStep) {
 		// check all basic fields
-		parent::checkFieldValue($meta, $newData);
+		parent::checkFieldValue($meta, $newData, $formStep);
 		
 		// check parent field for recursive cyclus - that is dangerous
 		if ($meta->getType() == Form::FORM_SELECT_FOREIGNKEY && array_key_exists($this->name, $this->relations) && $this->relations[$this->name]->sourceProperty == $meta->getName()) {

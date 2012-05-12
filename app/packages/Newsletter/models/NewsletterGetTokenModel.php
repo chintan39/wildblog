@@ -66,7 +66,7 @@ class NewsletterGetTokenModel extends AbstractVirtualModel {
 	}
 	
 	
-	protected function checkFieldValue(&$meta, &$newData) {
+	protected function checkFieldValue(&$meta, &$newData, $formStep) {
 		if ($meta->getName() == 'email') {
 			$tmp = NewsletterContactsModel::Search('NewsletterContactsModel', array('email = ?'), array($newData['email']));
 			if (!$tmp) {
@@ -75,7 +75,7 @@ class NewsletterGetTokenModel extends AbstractVirtualModel {
 				$this->contact = $tmp[0];
 			}
 		}
-		parent::checkFieldValue($meta, $newData);
+		parent::checkFieldValue($meta, $newData, $formStep);
 	}
 
 } 
