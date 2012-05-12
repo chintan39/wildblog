@@ -436,6 +436,7 @@ class Form {
 		foreach ($this->fields as $name => $field) {
 			$metaName = $field->getMeta()->getName();
 			$this->fields[$name]->setValue(isset($this->req[$metaName]) ? $this->req[$metaName] : null);
+			$this->dataModel->$metaName = $this->fields[$name]->getValue();
 			$this->fields[$name]->setErrorMessage((isset($this->messages['errors'][$metaName]) && $this->messages['errors'][$metaName]) ? $this->messages['errors'][$metaName] : '');
 			$this->fields[$name]->setWarningMessage((isset($this->messages['warnings'][$metaName]) && $this->messages['warnings'][$metaName]) ? $this->messages['warnings'][$metaName] : '');
 		}
@@ -625,6 +626,7 @@ class Form {
 		if ($this->getIsSentBack()) {
 			$this->decreaseStep();
 			$this->noRedirect = true;
+			$this->updateValuesFromReq();
 		} elseif ($this->getIsSent()) {
 			if (isset($this->req["form_action"]) && is_numeric($this->req["form_action"])) {
 				$this->storeAlternativeAction($this->req["form_action"]);

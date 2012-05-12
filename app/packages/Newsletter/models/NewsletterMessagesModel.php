@@ -99,7 +99,7 @@ class NewsletterMessagesModel extends AbstractPagesModel {
     	return ($this->reply_to ? $this->reply_to : $this->getDefualtReplytoEmail());
     }
 
-    public function getFormHTML($formField) {
+    public function getFormHTMLEditable($formField) {
     	$meta = $formField->getMeta();
 		$fieldName = $meta->getName();
 		if ($fieldName == 'contactGroups') {

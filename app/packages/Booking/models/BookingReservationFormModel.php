@@ -32,16 +32,17 @@ class BookingReservationFormModel extends AbstractVirtualModel {
     	$this->addMetaData(AtributesFactory::stdDateFrom()
     		->setRestrictions(Restriction::R_NOT_EMPTY)
     		->setDefaultValue(date('Y-m-d'))
-    		->setFormStepsOptions(array(ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY)));
+    		->setFormStepsOptions(array(ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY)));
     	
 		$this->addMetaData(AtributesFactory::create('nights')
 			->setLabel('Nights')
 			->setRestrictions(Restriction::R_NOT_EMPTY)
 			->setType(Form::FORM_INPUT_NUMBER)
     		->setDefaultValue(3)
-    		->setFormStepsOptions(array(ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY)));
+    		->setFormStepsOptions(array(ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY)));
 
-    	$this->addMetaData(AtributesFactory::stdPrice());
+    	$this->addMetaData(AtributesFactory::stdPrice()
+    		->setFormStepsOptions(array(ModelMetaItem::STEP_HIDDEN, ModelMetaItem::STEP_HIDDEN, ModelMetaItem::STEP_READONLY)));
     	
 		/*$this->addMetaData(AtributesFactory::create('currency')
 			->setLabel('Currency')
@@ -60,9 +61,22 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 		parent::Save();
 		$reservation = new BookingReservationsModel();
 		$reservation->date_from = $this->date_from;
+		$reservation->date_to = Utilities::dateAddDays($this->date_from, $this->nights-1);
 		$reservation->nights = $this->nights;
-		foreach ($this->rooms as $room)
-			;
+		$reservation->beds = 0;
+		$reservation->Save();
+		foreach ($this->rooms as $room) {
+			$roomId = 'room' . $room->id;
+			if ($this->$roomId) {
+				$conn = new BookingReservationsRoomsModel();
+				$conn->room = $room->id;
+				$conn->reservation = $reservation->id;
+				$conn->beds = $this->$roomId;
+				$reservation->beds += $this->$roomId;
+				$conn->Save();
+			}
+		}
+		$reservation->Save();
 	}
 	
 	
@@ -74,52 +88,127 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 			->setType(Form::FORM_CUSTOM)
 			->setRenderObject($this)
 			->setOptionsMustBeSelected(true)
-    		->setFormStepsOptions(array(ModelMetaItem::STEP_HIDDEN, ModelMetaItem::STEP_EDITABLE)));
+			->setUpdateHandleDefault(true)
+    		->setFormStepsOptions(array(ModelMetaItem::STEP_HIDDEN, ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY)));
 		
 		$this->rooms['room'.$room->id] = $room;
     }
     
     
-	public function getFormHTML($formField) {
-		// TODO: move function to utilities
-		require_once(DIR_SMARTY_WWPLUGINS . 'modifier.price.php');
-		
+	public function getFormHTMLReadonly($formField) {
 		$meta = $formField->getMeta();
 		$model = $formField->getDataModel();
 		$fieldName = $meta->getName();
-		$output = '';
-		$room = $this->rooms[$fieldName];
-
-		$roomInfo = BookingRoomsModel::getRoomInfo($room, $model->date_from, $model->nights);
-		$minFree = $room->capacity;
-		foreach ($roomInfo as $i)
-			if ($i->free < $minFree)
-				$minFree = $i->free;
-		if ($room->priceType == BookingRoomsModel::PRICE_ROOM)
-			$roomBeds = array(0, $minFree);
-		else
-			$roomBeds = range(0, $minFree);
-
-
-		$output .= '<table class="prices" style="width: 70%;"><tr>'."\n";
-		foreach ($roomInfo as $date => $info) {
-			$output .= '<th>'.$date.'</th>'."\n";
-		}
-		$output .= '</tr><tr>'."\n";
-		foreach ($roomInfo as $date => $info) {
-			if ($info->free)
-				$output .= '<td class="free">'.smarty_modifier_price($info->price).'</td>'."\n";
+		if (strncmp($fieldName, 'room', 4) == 0) {
+			// don't display empty rooms
+			if (!$formField->getValue()) {
+				$formField->removeBox();
+				$formField->removeLabel();
+				return '';
+			}
+			
+			// TODO: move function to utilities
+			require_once(DIR_SMARTY_WWPLUGINS . 'modifier.price.php');
+			
+			$output = '';
+			$room = $this->rooms[$fieldName];
+	
+			$roomInfo = BookingRoomsModel::getRoomInfo($room, $model->date_from, $model->nights);
+			$minFree = $room->capacity;
+			foreach ($roomInfo as $i)
+				if ($i->free < $minFree)
+					$minFree = $i->free;
+			if ($room->priceType == BookingRoomsModel::PRICE_ROOM)
+				$roomBeds = array(0, $minFree);
 			else
-				$output .= '<td class="full">'.tg('Full').'</td>'."\n";
+				$roomBeds = range(0, $minFree);
+	
+	
+			$output .= '<table class="prices" style="width: 70%;"><tr>'."\n";
+			foreach ($roomInfo as $date => $info) {
+				$output .= '<th>'.$date.'</th>'."\n";
+			}
+			$output .= '</tr><tr>'."\n";
+			foreach ($roomInfo as $date => $info) {
+				if ($info->free)
+					$output .= '<td class="free">'.smarty_modifier_price($info->price).'</td>'."\n";
+				else
+					$output .= '<td class="full">'.tg('Full').'</td>'."\n";
+			}
+			$output .= '</tr></table>'."\n";
+			$output .= $formField->getValue() . ' ' . tg('Beds') . "\n";
+			return $output;
 		}
-		$output .= '</tr></table>'."\n";
-		$output .= '<select '.$formField->getIdAttr().' name="' . $fieldName . '">';
-			foreach ($roomBeds as $bedCount) {
-				$output .= '<option value="' . $bedCount . '"'. ($model->$fieldName && ($model->$fieldName == $bedCount) ? ' selected="selected"' : ''). '>' . $bedCount . '</option>'."\n";
-		}
+	}
 
-		$output .= '</select>'."\n";
-		return $output;
+	public function getFormHTMLEditable($formField) {
+		$meta = $formField->getMeta();
+		$model = $formField->getDataModel();
+		$fieldName = $meta->getName();
+		if (strncmp($fieldName, 'room', 4) == 0) {
+			// TODO: move function to utilities
+			require_once(DIR_SMARTY_WWPLUGINS . 'modifier.price.php');
+			
+			$output = '';
+			$room = $this->rooms[$fieldName];
+	
+			$roomInfo = BookingRoomsModel::getRoomInfo($room, $model->date_from, $model->nights);
+			$minFree = $room->capacity;
+			foreach ($roomInfo as $i)
+				if ($i->free < $minFree)
+					$minFree = $i->free;
+			if ($room->priceType == BookingRoomsModel::PRICE_ROOM)
+				$roomBeds = array(0, $minFree);
+			else
+				$roomBeds = range(0, $minFree);
+	
+	
+			$output .= '<table class="prices" style="width: 70%;"><tr>'."\n";
+			foreach ($roomInfo as $date => $info) {
+				$output .= '<th>'.$date.'</th>'."\n";
+			}
+			$output .= '</tr><tr>'."\n";
+			foreach ($roomInfo as $date => $info) {
+				if ($info->free)
+					$output .= '<td class="free">'.smarty_modifier_price($info->price).'</td>'."\n";
+				else
+					$output .= '<td class="full">'.tg('Full').'</td>'."\n";
+			}
+			$output .= '</tr></table>'."\n";
+			$output .= '<select '.$formField->getIdAttr().' name="' . $fieldName . '">';
+				foreach ($roomBeds as $bedCount) {
+					$output .= '<option value="' . $bedCount . '"'. ($formField->getValue() && ($formField->getValue() == $bedCount) ? ' selected="selected"' : ''). '>' . $bedCount . '</option>'."\n";
+			}
+	
+			$output .= '</select> '. tg('Beds') . "\n";
+			return $output;
+		}
+	}
+
+
+	/**
+	 * Adjusts values of the fields, checks field's format and value.
+	 * @param &$newData
+	 * @return array List of messages (errors and warnings).
+	 */
+	public function checkFields(&$newData, &$preddefinedData) {
+		parent::checkFields($newData, $preddefinedData);
+		$beds = 0;
+		foreach ($this->rooms as $room) {
+			$roomId = 'room' . $room->id;
+			$roomBeds = $newData[$roomId];
+			// check if rooms have valid beds selected
+			if ($roomBeds > $room->capacity) {
+				$this->addMessageField('errors', $this->getMetaData($roomId), tg('Number of beds in room is not valid')); 
+			}
+			$beds += $roomBeds;
+		}
+		
+		// check if at least some beds are selected
+		if (!$beds)
+			$this->addMessageSimple('errors', tg('You have to select at least some beds'));
+		
+		return $this->messages;
 	}
 } 
 

@@ -123,6 +123,7 @@ class BookingRoomsModel extends AbstractPagesModel {
 		if (Config::Get('DEBUG_MODE')) {
 			Benchmark::log('getPricesForRoomBetweenDates SQL: ' . $query); // QUERY logger
 		}
+		if (DEBUG_PRINT_QUERIES) print $query;
 		$prices = dbConnection::getInstance()->fetchAll($query);
 		$result = array();
 		if ($prices) {
@@ -151,11 +152,13 @@ class BookingRoomsModel extends AbstractPagesModel {
 		$query = "
 			SELECT reservations.id, reservations.date_from, reservations.date_to, reservations.nights, reservations_rooms.beds
 			FROM $reservationsRoomsTable AS reservations_rooms
-			LEFT JOIN $reservationsTable AS reservations ON reservations_rooms.room = reservations.id
+			LEFT JOIN $reservationsTable AS reservations ON reservations_rooms.reservation = reservations.id
 			WHERE reservations_rooms.room = $roomId
-			AND ((reservations.date_from <= '$dateLast' AND reservations.date_to >= '$dateFirst')
-				OR (reservations.date_from >= '$dateFirst' AND reservations.date_to <= '$dateLast'))
+			AND ((reservations.date_to >= '$dateFirst' AND reservations.date_to <= '$dateLast')
+				OR (reservations.date_from >= '$dateFirst' AND reservations.date_from <= '$dateLast')
+				OR (reservations.date_from <= '$dateFirst' AND reservations.date_from >= '$dateLast'))
 			ORDER BY reservations.date_from ASC";
+		if (DEBUG_PRINT_QUERIES) print $query;
 		if (Config::Get('DEBUG_MODE')) {
 			Benchmark::log('getPricesForRoomBetweenDates SQL: ' . $query); // QUERY logger
 		}

@@ -45,7 +45,7 @@ class BookingReservationsController extends AbstractDefaultController {
 		
 		$form = new Form();
 		$form->setIdentifier('reservationForm');
-		$form->setSteps(4); /* must be called before ::fill to add buttons */
+		$form->setSteps(3); /* must be called before ::fill to add buttons */
 		$form->fill($reservationFormModel);
 		$form->handleRequest();
 

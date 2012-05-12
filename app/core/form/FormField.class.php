@@ -104,6 +104,10 @@ class FormField {
 		$this->value = $value;
 	}
 
+	public function getValue() {
+		return $this->value;
+	}
+
 	public function addValue($value) {
 		$this->value[] = $value;
 	}
@@ -175,8 +179,18 @@ class FormField {
 		return $this;
 	}
 	
+	public function removeBox() {
+		$this->hasBox = false;
+		return $this;
+	}
+	
 	public function addLabel() {
 		$this->hasLabel = true;
+		return $this;
+	}
+	
+	public function removeLabel() {
+		$this->hasLabel = false;
 		return $this;
 	}
 	
@@ -245,9 +259,9 @@ class FormField {
 		}
 		$output = $this->html;
 		if ($this->hasLabel) {
-			$output = $this->getLabel() . $output 
-				. "\n<p class=\"nodisplay\"><input type=\"hidden\"" . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" /></p>\n";
+			$output = $this->getLabel() . $output; 
 		}
+		$output .= "\n<p class=\"nodisplay\"><input type=\"hidden\"" . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" /></p>\n";
 		if ($this->hasBox) {
 			$lineStyle = $this->lineStyle ? " style=\"{$this->lineStyle}\"": '';
 			$lineClass = $this->meta->getLineClass();
@@ -330,7 +344,11 @@ class FormFieldFactory {
 	
 class FormFieldCustom extends FormField {
 	public function setHTMLEditable($class, $style, $onclick, $onchange) {
-		$this->html = $this->meta->getRenderObject()->getFormHTML($this);
+		$this->html = $this->meta->getRenderObject()->getFormHTMLEditable($this);
+		return $this;
+	}
+	public function setHTMLReadonly($class, $style) {
+		$this->html = $this->meta->getRenderObject()->getFormHTMLReadonly($this);
 		return $this;
 	}
 }

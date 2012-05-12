@@ -126,7 +126,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 	 * MetaDataContainer, we have mished up objects, so we use $model to have correct
 	 * model to access.
 	 */
-	public function getFormHTML($formField) {
+	public function getFormHTMLEditable($formField) {
 		$meta = $formField->getMeta();
 		$model = $formField->getDataModel();
 		$fieldName = $meta->getName();
