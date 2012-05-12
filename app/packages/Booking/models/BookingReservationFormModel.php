@@ -84,7 +84,7 @@ class BookingReservationFormModel extends AbstractVirtualModel {
     	
     	$this->addMetaData(AtributesFactory::create('room'.$room->id)
 			->setLabel($room->title)
-			->setDescription($room->text)
+			->setDescription($room->text . '(' . (($room->room_type == BookingRoomsModel::PRIVATE_ROOM) ? tg('private') : tg('shared')) . ')')
 			->setType(Form::FORM_CUSTOM)
 			->setRenderObject($this)
 			->setOptionsMustBeSelected(true)

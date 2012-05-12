@@ -167,8 +167,12 @@ class BookingRoomsModel extends AbstractPagesModel {
 		if ($reservations) {
 			foreach ($reservations as $r) {
 				foreach (Utilities::dateRangeDates($r['date_from'] < $dateFirst ? $dateFirst : $r['date_from'], 
-					$r['date_to'] > $dateLast ? $dateLast : $r['date_to']) as $d)
-					$result[$d] = $room->capacity - $r['beds'];
+					$r['date_to'] > $dateLast ? $dateLast : $r['date_to']) as $d) {
+						if ($room->room_type == self::PRIVATE_ROOM && $r['beds'])
+							$result[$d] = 0;
+						else
+							$result[$d] = $room->capacity - $r['beds'];
+					}
 			}
 		}
 		return $result;
