@@ -79,6 +79,7 @@ class Form {
 	const FORM_BUTTON_SEND = 32;
 	const FORM_CAPTCHA_TIMER = 33;
 	const FORM_BUTTON_BACK = 34;
+	const FORM_INPUT_PRICE = 35;
 
 	const FORM_CUSTOM = 1001;
 	
@@ -127,7 +128,7 @@ class Form {
 		$this->fields = array();
 		$this->buttons = array();
 		$this->getActionAccomplished();
-		$this->action = Request::getSameLink(array('accomplished' => false, '_pred_' => null));
+		$this->action = Request::getSameLink(array('accomplished' => null, '_pred_' => null));
 		$this->predefinedValues = isset(Request::$get['_pred_']) ? Request::$get['_pred_'] : array();
 		
 		// default mail settings

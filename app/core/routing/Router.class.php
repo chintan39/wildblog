@@ -664,6 +664,8 @@ class Router {
 					}
 				} elseif ($v !== null) {
 					$reqStructure["get"][$k] = $v;
+				} else {
+					unset($reqStructure["get"][$k]);
 				}
 			}
 		} else {

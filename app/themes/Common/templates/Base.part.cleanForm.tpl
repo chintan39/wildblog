@@ -1,6 +1,6 @@
 {if $formId}<a name="{$formId}"></a>{/if}
 
-{if $form.steps gt 1}
+{if not $form.actionAccomplished and $form.steps gt 1}
 <div class="steps">{tg}Step{/tg} {$form.step}/{$form.steps}</div>
 {/if}
 
@@ -103,6 +103,8 @@
 </div>
 <div class="clear"></div>
 
+{else}
+<p><a href="{$form.action|htmlentities}">{tg}Return to form{/tg}</a></p>
 {/if}
 
 </form>

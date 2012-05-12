@@ -334,6 +334,7 @@ class FormFieldFactory {
 			case Form::FORM_LINK: return new FormFieldLink($formIdentifier); break;
 			case Form::FORM_UPLOAD_FILE: return new FormFieldUploadFile($formIdentifier); break;
 			case Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE: return new FormFieldMultiSelectForeignKeyInteractive($formIdentifier); break;
+			case Form::FORM_INPUT_PRICE: return new FormFieldInputPrice($formIdentifier); break;
 		}
 	}
 }
@@ -429,6 +430,13 @@ class FormFieldInputId extends FormFieldInputText {
 }
 
 class FormFieldInputNumber extends FormFieldInputText {
+}
+
+class FormFieldInputPrice extends FormFieldInputNumber {
+	public function setHTMLReadonly($class, $style) {
+		$this->html = '<div class="note">' . Utilities::formatPrice($this->value) . '</div>';
+		return $this;
+	}
 }
 
 class FormFieldCheckbox extends FormField {

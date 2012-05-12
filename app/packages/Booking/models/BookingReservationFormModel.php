@@ -83,10 +83,11 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 	
 	
     public function addRoom($room) {
-    	
+    	$roomTypeText = ($room->room_type == BookingRoomsModel::PRIVATE_ROOM) ? tg('private') : tg('shared');
+    	$priceTypeText = ($room->pricing_type == BookingRoomsModel::PRICE_ROOM) ? tg('price per room') : tg('price per bed');
     	$this->addMetaData(AtributesFactory::create('room'.$room->id)
 			->setLabel($room->title)
-			->setDescription($room->text . '(' . (($room->room_type == BookingRoomsModel::PRIVATE_ROOM) ? tg('private') : tg('shared')) . ')')
+			->setDescription($room->text . " ($roomTypeText, $priceTypeText)")
 			->setType(Form::FORM_CUSTOM)
 			->setRenderObject($this)
 			->setOptionsMustBeSelected(true)
@@ -214,21 +215,6 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 	}
 	
 	
-	/**
-	 * Adjusts values of the field (for example checkbox is 1, if it is set, 0 if not).
-	 * @param &$value
-	 * @param $metaType
-	 * @param $adjustBool if checkbox shoul be adjusted (when used predefined - do not adjust)
-	 */
-	protected function adjustFieldValue(&$meta, &$newData, $adjustBool=true, $formStep) {
-		parent::adjustFieldValue($meta, $newData, $adjustBool, $formStep);
-		if ($meta->getName() == 'price') {
-			$stepOptions = $meta->getFormStepsOptions();
-			if (isset($stepOptions[$formStep]) && $stepOptions[$formStep] != ModelMetaItem::STEP_HIDDEN)
-				return;
-		}
-	}
-	
 	public function adjustFunctionComputePrice(&$meta, &$newData) {
 		$price = 0;
 		foreach ($this->rooms as $room) {
@@ -236,7 +222,8 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 			foreach ($roomInfo as $day => $rInfo) {
 				$roomId = 'room' . $room->id;
 				$roomBeds = $newData[$roomId];
-				$price += ($room->price_type == BookingRoomsModel::PRICE_ROOM) ? $rInfo->price : ($roomBeds * $rInfo->price);
+				if ($roomBeds)
+					$price += ($room->pricing_type == BookingRoomsModel::PRICE_ROOM) ? $rInfo->price : ($roomBeds * $rInfo->price);
 			}
 		}
 		return $price;

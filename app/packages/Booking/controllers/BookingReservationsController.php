@@ -31,8 +31,6 @@ class BookingReservationsController extends AbstractDefaultController {
 	public function actionShowRooms($args) {
 		
 		$reservationFormModel = new BookingReservationFormModel();
-		//$reservationFormModel->date_from = date('Y-m-d');
-		//$reservationFormModel->nights = 3;
 		
 		$items = new ItemCollection("rooms", Environment::getPackage($this->package)->getController('Rooms'));
 		$items->loadCollection();
@@ -46,6 +44,7 @@ class BookingReservationsController extends AbstractDefaultController {
 		$form = new Form();
 		$form->setIdentifier('reservationForm');
 		$form->setSteps(3); /* must be called before ::fill to add buttons */
+		$form->setDisplayFormOnAccomplished(false);
 		$form->fill($reservationFormModel);
 		$form->handleRequest();
 

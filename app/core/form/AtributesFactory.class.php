@@ -497,7 +497,7 @@ abstract class AtributesFactory {
 			->setLabel('Price')
 			->setDescription('price of the item')
 			->setRestrictions(Restriction::R_PRICE)
-			->setType(Form::FORM_INPUT_NUMBER)
+			->setType(Form::FORM_INPUT_PRICE)
 			->setDefaultValue(0)
 			->setSqlType('decimal(12,4) NULL DEFAULT NULL')
 			->setSqlindex(ModelMetaIndex::INDEX)
