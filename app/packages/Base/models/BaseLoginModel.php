@@ -39,7 +39,7 @@ class BaseLoginModel extends AbstractVirtualModel {
 	/**
 	 * Checking of the values sent by form, this overwrittes standard.
 	 */
-	protected function checkAllFieldsValue(&$newData, &$preddefinedData) {
+	protected function checkAllFieldsValue(&$newData, &$preddefinedData, $formStep) {
 		$usersMatch = Environment::getPackage('Base')->getController('Users')->tryLogin($newData['email'], $newData['password']);
 		if (count($usersMatch)) {
 			$this->user = $usersMatch[0];

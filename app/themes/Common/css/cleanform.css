@@ -63,6 +63,7 @@ form.cleanform div.float-right {
 
 form.cleanform label{
 	display:block;
+	font-size: 110%;
 	font-weight:bold;
 	text-align:right;
 	width:140px;
@@ -86,17 +87,20 @@ form.cleanform span.error {
 	text-indent: 16px;
 }
 
-form.cleanform input, form.cleanform textarea, form.cleanform select, form.cleanform span.note {
+form.cleanform input, form.cleanform textarea, form.cleanform select, form.cleanform span.note, form.cleanform div.note {
 	float:left;
 	display: inline;
-	font-size:12px;
+	font-size: 110%;
 	padding:4px 2px;
 	border:solid 1px #cccccc;
 	width:300px;
 	margin:1px;
 }
 
-form.cleanform input.radio, form.cleanform label.radio {
+form.cleanform input.radio, form.cleanform label.radio, 
+form.cleanform div.short, form.cleanform span.short, 
+form.cleanform input.short, form.cleanform label.short, 
+form.cleanform textarea.short, form.cleanform select.short {
 	width: auto;
 }
 
@@ -121,9 +125,15 @@ form.cleanform textarea.lite {
 	width: 510px;
 }
 
-form.cleanform span.note {
+form.cleanform span.note,
+form.cleanform div.note {
 	width: 330px;
 	border: none;
+}
+
+form.cleanform span.note.short,
+form.cleanform div.note.short {
+	width: auto;
 }
 
 /* Button main class */

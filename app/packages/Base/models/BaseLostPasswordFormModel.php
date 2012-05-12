@@ -69,7 +69,7 @@ class BaseLostPasswordFormModel extends AbstractVirtualModel {
 	/**
 	 * Checking of the values sent by form, this overwrittes standard.
 	 */
-	protected function checkAllFieldsValue(&$newData, &$preddefinedData) {
+	protected function checkAllFieldsValue(&$newData, &$preddefinedData, $formStep) {
 		if ($user = Environment::getPackage('Base')->getController('Users')->getItemFilter(array('email = ?'), array($newData['email']))) {
 			$this->user = $user;
 		} else {

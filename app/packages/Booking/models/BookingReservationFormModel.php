@@ -107,9 +107,6 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 				return '';
 			}
 			
-			// TODO: move function to utilities
-			require_once(DIR_SMARTY_WWPLUGINS . 'modifier.price.php');
-			
 			$output = '';
 			$room = $this->rooms[$fieldName];
 	
@@ -131,12 +128,12 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 			$output .= '</tr><tr>'."\n";
 			foreach ($roomInfo as $date => $info) {
 				if ($info->free)
-					$output .= '<td class="free">'.smarty_modifier_price($info->price).'</td>'."\n";
+					$output .= '<td class="free">'.Utilities::formatPrice($info->price).'</td>'."\n";
 				else
 					$output .= '<td class="full">'.tg('Full').'</td>'."\n";
 			}
 			$output .= '</tr></table>'."\n";
-			$output .= $formField->getValue() . ' ' . tg('Beds') . "\n";
+			$output .= '<div class="note">' . $formField->getValue() . ' ' . ($formField->getValue() > 1 ? tg('Beds') : tg('Bed')) . "</div>\n";
 			return $output;
 		}
 	}
@@ -146,9 +143,6 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 		$model = $formField->getDataModel();
 		$fieldName = $meta->getName();
 		if (strncmp($fieldName, 'room', 4) == 0) {
-			// TODO: move function to utilities
-			require_once(DIR_SMARTY_WWPLUGINS . 'modifier.price.php');
-			
 			$output = '';
 			$room = $this->rooms[$fieldName];
 	
@@ -170,17 +164,20 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 			$output .= '</tr><tr>'."\n";
 			foreach ($roomInfo as $date => $info) {
 				if ($info->free)
-					$output .= '<td class="free">'.smarty_modifier_price($info->price).'</td>'."\n";
+					$output .= '<td class="free">'.Utilities::formatPrice($info->price).'</td>'."\n";
 				else
 					$output .= '<td class="full">'.tg('Full').'</td>'."\n";
 			}
 			$output .= '</tr></table>'."\n";
-			$output .= '<select '.$formField->getIdAttr().' name="' . $fieldName . '">';
+			$output .= '<div class="note">'."\n";
+			$output .= '<select '.$formField->getIdAttr().' name="' . $fieldName . '" class="short">';
 				foreach ($roomBeds as $bedCount) {
 					$output .= '<option value="' . $bedCount . '"'. ($formField->getValue() && ($formField->getValue() == $bedCount) ? ' selected="selected"' : ''). '>' . $bedCount . '</option>'."\n";
 			}
 	
-			$output .= '</select> '. tg('Beds') . "\n";
+			$output .= '</select>'."\n";
+			$output .= '<span class="note short">' . tg('Beds') . "</span>\n";
+			$output .= '</div>' . "\n";
 			return $output;
 		}
 	}

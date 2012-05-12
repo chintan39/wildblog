@@ -387,7 +387,7 @@ class FormFieldInputDate extends FormField {
 		return $this;
 	}
 	public function setHTMLReadonly($class, $style) {
-		$this->html = $this->value;
+		$this->html = '<div class="note">' . $this->value . '</div>';
 		return $this;
 	}
 }
@@ -406,7 +406,7 @@ class FormFieldInputTime extends FormField {
 		return $this;
 	}
 	public function setHTMLReadonly($class, $style) {
-		$this->html = $this->value;
+		$this->html = '<div class="note">' . $this->value . '</div>';
 		return $this;
 	}
 }
@@ -420,7 +420,7 @@ class FormFieldInputText extends FormField {
 		return $this;
 	}
 	public function setHTMLReadonly($class, $style) {
-		$this->html = $this->value;
+		$this->html = '<div class="note">' . $this->value . '</div>';
 		return $this;
 	}
 }
@@ -438,7 +438,7 @@ class FormFieldCheckbox extends FormField {
 		return $this;
 	}
 	public function setHTMLReadonly($class, $style) {
-		$this->html = $this->value ? tg('Yes') : tg('No');
+		$this->html = '<div class="note">' . ($this->value ? tg('Yes') : tg('No')) . '</div>';
 		return $this;
 	}
 }
@@ -458,7 +458,7 @@ class FormFieldPassword extends FormField {
 		return $this;
 	}
 	public function setHTMLReadonly($class, $style) {
-		$this->html = '**********';
+		$this->html = '<div class="note">**********</div>';
 		return $this;
 	}
 }
@@ -494,7 +494,7 @@ class FormFieldHTML extends FormField {
 		return $this;
 	}
 	public function setHTMLReadonly($class, $style) {
-		$this->html = $this->value;
+		$this->html = '<div class="note">' . $this->value . '</div>';
 		return $this;
 	}
 }
@@ -515,7 +515,7 @@ class FormFieldRadio extends FormField {
 		return $this;
 	}
 	public function setHTMLReadonly($class, $style) {
-		$this->html = $this->value;
+		$this->html = '<div class="note">' . $this->value . '</div>';
 		return $this;
 	}
 }
@@ -565,7 +565,7 @@ class FormFieldSelect extends FormField {
 		return $this;
 	}
 	public function setHTMLReadonly($class, $style) {
-		$this->html = $this->value;
+		$this->html = '<div class="note">' . $this->value . '</div>';
 		return $this;
 	}
 }
@@ -620,7 +620,7 @@ class FormFieldMultiSelect extends FormFieldSelect {
 		return $this;
 	}
 	public function setHTMLReadonly($class, $style) {
-		$this->html = implode(', ', $this->value);
+		$this->html = '<div class="note">' . implode(', ', $this->value) . '</div>';
 		return $this;
 	}
 }
@@ -672,7 +672,7 @@ class FormFieldColorRHBHEXA extends FormField {
 		return $this;
 	}
 	public function setHTMLReadonly($class, $style) {
-		$this->html = '<span style="background: #' . $this->value . ';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+		$this->html = '<div class="note">' . '<span style="background: #' . $this->value . ';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>' . '</div>';
 		return $this;
 	}
 }
@@ -721,7 +721,7 @@ class FormFieldLink extends FormField {
 		return $this;
 	}
 	public function setHTMLReadonly($class, $style) {
-		$this->html = $this->value;
+		$this->html = '<div class="note">' . $this->value . '</div>';
 		return $this;
 	}
 }

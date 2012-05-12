@@ -210,6 +210,51 @@ class Utilities {
 	
 	
 	/**
+	 * Formats $str as price.
+	 * @param string|int $string number to format
+	 * @param string $decimalPlaces count of decimal places
+	 * @param string $thousandDivider Thousand separator
+	 * @param string $comma decimal separator
+	 * @return string Formated price
+	 */
+	 static public function formatPrice($string, $decimalPlaces=2, $thousandDivider='&nbsp;', $comma=',') {
+	 	 // check decimal format
+	 	 $decimalPlaces = (int)$decimalPlaces;
+	 	 if ($decimalPlaces<0 || $decimalPlaces>100) {
+	 	 	 throw new Exception("Invalid decimal places.");
+	 	 }
+	 	 // convert to float
+	 	 $string = (float)$string;
+	 	 
+	 	 // negative values convert to positive, store the sign
+	 	 if ($string < 0.0) {
+	 	 	 $partSig = '-';
+	 	 	 $string *= -1;
+	 	 } else {
+	 	 	 $partSig = '';
+	 	 }
+	 	 // separate decimal part and cut to proper decimal places
+	 	 $partDec = preg_replace('/^0[\.,]/', '', sprintf("%.{$decimalPlaces}f", $string - floor($string)));
+	 	 
+	 	 // separate integer part
+	 	 $partInt = (int)floor($string);
+	 	 
+	 	 // divide the integer part by $decimalPlaces
+	 	 $arrInt = array();
+	 	 while ($partInt) {
+	 	 	 $arrInt[] = $partInt % 1000;
+	 	 	 $partInt = (int)($partInt/1000);
+	 	 }
+	 	 // if no integer part, use 0
+	 	 if (!$arrInt) {
+	 	 	 $arrInt[] = '0';
+	 	 }
+	 	 // compose the number
+	 	 return $partSig.implode($thousandDivider, array_reverse($arrInt)).$comma.$partDec;
+	 }
+	 
+	 
+	/**
 	 * Checks if $str is in url-friendly format (can include characters a-b,
 	 * numbers 0-9 and the '-' character).
 	 */
