@@ -803,7 +803,6 @@ class Form {
 			}
 		}
 		
-		
 		// store changes made in item into DB
 		$changes = $this->dataModel->getChanges();
 
@@ -888,7 +887,7 @@ class Form {
 	 */
 	private function checkFields() {
 		$this->messages = $this->dataModel->checkFields($this->req, $this->predefinedValues, $this->step);
-		
+
 		$this->checkCaptcha();
 		$this->checkRecaptcha();
 		$this->checkCaptchaTimer();

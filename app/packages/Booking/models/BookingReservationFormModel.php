@@ -42,7 +42,8 @@ class BookingReservationFormModel extends AbstractVirtualModel {
     		->setFormStepsOptions(array(ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY)));
 
     	$this->addMetaData(AtributesFactory::stdPrice()
-    		->setFormStepsOptions(array(ModelMetaItem::STEP_HIDDEN, ModelMetaItem::STEP_HIDDEN, ModelMetaItem::STEP_READONLY)));
+    		->setFormStepsOptions(array(ModelMetaItem::STEP_HIDDEN, ModelMetaItem::STEP_HIDDEN, ModelMetaItem::STEP_READONLY))
+    		->setAdjustMethod('ComputePrice'));
     	
 		/*$this->addMetaData(AtributesFactory::create('currency')
 			->setLabel('Currency')
@@ -63,6 +64,7 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 		$reservation->date_from = $this->date_from;
 		$reservation->date_to = Utilities::dateAddDays($this->date_from, $this->nights-1);
 		$reservation->nights = $this->nights;
+		$reservation->price = $this->price;
 		$reservation->beds = 0;
 		$reservation->Save();
 		foreach ($this->rooms as $room) {
@@ -209,6 +211,35 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 			$this->addMessageSimple('errors', tg('You have to select at least some beds'));
 		
 		return $this->messages;
+	}
+	
+	
+	/**
+	 * Adjusts values of the field (for example checkbox is 1, if it is set, 0 if not).
+	 * @param &$value
+	 * @param $metaType
+	 * @param $adjustBool if checkbox shoul be adjusted (when used predefined - do not adjust)
+	 */
+	protected function adjustFieldValue(&$meta, &$newData, $adjustBool=true, $formStep) {
+		parent::adjustFieldValue($meta, $newData, $adjustBool, $formStep);
+		if ($meta->getName() == 'price') {
+			$stepOptions = $meta->getFormStepsOptions();
+			if (isset($stepOptions[$formStep]) && $stepOptions[$formStep] != ModelMetaItem::STEP_HIDDEN)
+				return;
+		}
+	}
+	
+	public function adjustFunctionComputePrice(&$meta, &$newData) {
+		$price = 0;
+		foreach ($this->rooms as $room) {
+			$roomInfo = BookingRoomsModel::getRoomInfo($room, $newData['date_from'], $newData['nights']);
+			foreach ($roomInfo as $day => $rInfo) {
+				$roomId = 'room' . $room->id;
+				$roomBeds = $newData[$roomId];
+				$price += ($room->price_type == BookingRoomsModel::PRICE_ROOM) ? $rInfo->price : ($roomBeds * $rInfo->price);
+			}
+		}
+		return $price;
 	}
 } 
 

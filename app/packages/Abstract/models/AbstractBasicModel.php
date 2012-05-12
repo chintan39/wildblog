@@ -316,7 +316,7 @@ class AbstractBasicModel {
 	 */
 	public function checkFields(&$newData, &$preddefinedData, $formStep) {
 
-		$this->adjustAllFieldsValue($newData, $preddefinedData);
+		$this->adjustAllFieldsValue($newData, $preddefinedData, $formStep);
 		$this->checkAllFieldsValue($newData, $preddefinedData, $formStep);
 		
 		return $this->messages;
@@ -355,8 +355,8 @@ class AbstractBasicModel {
 				$this->changedValues[$field] = $this->getMetaData($field)->getDefaultValue();
 			}
 		}
-		$this->adjustAllFieldsValue($this->changedValues, $preddefinedData);
-		$this->checkAllFieldsValue($this->changedValues, $preddefinedData, $formStep);
+		$this->adjustAllFieldsValue($this->changedValues, $preddefinedData, 1);
+		$this->checkAllFieldsValue($this->changedValues, $preddefinedData, 1);
 		
 		return $this->messages;
 	}
@@ -365,13 +365,13 @@ class AbstractBasicModel {
 	 * Adjusts values of the fields (for example checkbox is 1, if it is set, 0 if not).
 	 * @param &$newData
 	 */
-	protected function adjustAllFieldsValue(&$newData, &$preddefinedData) {
+	protected function adjustAllFieldsValue(&$newData, &$preddefinedData, $formStep) {
 		// adjust standard columns
 		foreach ($this->getMetaData() as $field => $meta) {
 			if (array_key_exists($field, $preddefinedData)) {
-				$this->adjustFieldValue($meta, $preddefinedData, false);
+				$this->adjustFieldValue($meta, $preddefinedData, false, $formStep);
 			} else {
-				$this->adjustFieldValue($meta, $newData);
+				$this->adjustFieldValue($meta, $newData, true, $formStep);
 			}
 		}
 		
@@ -380,9 +380,9 @@ class AbstractBasicModel {
 		if ($propModel) {
 			foreach ($propModel->getPossibleProperties() as $field => $meta) {
 				if (array_key_exists($field, $preddefinedData)) {
-					$this->adjustFieldValue($meta, $preddefinedData, false);
+					$this->adjustFieldValue($meta, $preddefinedData, false, $formStep);
 				} else {
-					$this->adjustFieldValue($meta, $newData);
+					$this->adjustFieldValue($meta, $newData, true, $formStep);
 				}
 			}
 		}
@@ -438,7 +438,7 @@ class AbstractBasicModel {
 	 * @param $metaType
 	 * @param $adjustBool if checkbox shoul be adjusted (when used predefined - do not adjust)
 	 */
-	protected function adjustFieldValue(&$meta, &$newData, $adjustBool=true) {
+	protected function adjustFieldValue(&$meta, &$newData, $adjustBool=true, $formStep) {
 		$this->adjustBasicFieldValue($meta, $newData, $adjustBool);
 		if (Restriction::hasRestrictions($meta->getRestrictions(), Restriction::R_URL_PART)) {
 			$value = isset($newData['title']) ? $newData['title'] : "";
@@ -741,6 +741,7 @@ class AbstractBasicModel {
 	protected function adjustFunctionFieldUrlPart(&$meta, &$newData, $source) {
 	}
 	
+
 	/**
 	 * Adjust field's format as a part of url.
 	 * @param &$value
