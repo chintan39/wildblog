@@ -25,6 +25,7 @@ class BookingPackage extends Package {
 		Config::Set("BOOKING_PACKAGE_ORDER", 4, null, Config::INT, true);
 		Config::Set("BOOKING_PACKAGE_LANGUAGE_SUPPORT", false, null, Config::BOOL, false);
 		Config::Set("BOOKING_PACKAGE_ALLOW", false, null, Config::BOOL, false);
+		Config::Set("BOOKING_CURRENCIES", "en:EUR:1", 'Currencies specification in format languageId:currencyString:ratio on every line', Config::BOOL, true);
 	}
 	
 	public function getLinksAdminMenuLeft() {

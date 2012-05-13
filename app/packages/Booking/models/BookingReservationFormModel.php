@@ -23,6 +23,7 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 	var $icon = 'booking';
 	var $languageSupportAllowed = false;
 	var $rooms = array();
+	var $currencies = array();
 
     protected function attributesDefinition() {
     	
@@ -45,13 +46,34 @@ class BookingReservationFormModel extends AbstractVirtualModel {
     		->setFormStepsOptions(array(ModelMetaItem::STEP_HIDDEN, ModelMetaItem::STEP_HIDDEN, ModelMetaItem::STEP_READONLY))
     		->setAdjustMethod('ComputePrice'));
     	
-		/*$this->addMetaData(AtributesFactory::create('currency')
+    	$curOpts = array();
+    	$line = 0;
+    	$defaultCur = false;
+    	foreach (explode("\n", Config::Get('BOOKING_CURRENCIES')) as $cur) {
+    		$line++;
+    		$cur = trim($cur);
+    		if ($cur == '')
+    			continue;
+    		$cur = explode(':', $cur);
+    		if (!isset($cur[1]) || strlen($cur[1]) > 255 || !isset($cur[2]) || ((float)$cur[2])<0.00001)
+    			throw new Exception('Config item BOOKING_CURRENCIES has wrong format on line '.$line);
+    		if ($line == 1)
+    			$defaultCur = $cur[1];
+    		$curOpts[] = array('id' => $cur[1], 'value' => $cur[1]);
+    		$this->currencies[$cur[1]] = (float)$cur[2];
+    	}
+    	if (!$defaultCur)
+    		throw new Exception('Config item BOOKING_CURRENCIES contains no valid lines');
+    	
+		$this->addMetaData(AtributesFactory::create('currency')
 			->setLabel('Currency')
 			->setRestrictions(Restriction::R_NOT_EMPTY)
-			->setType(Form::FORM_INPUT_TEXT)
-			->setSqlType('varchar(255) NOT NULL'));
-		*/
-
+			->setType(Form::FORM_SELECT)
+			->setOptions($curOpts)
+    		->setDefaultValue($defaultCur)
+			->setSqlType('varchar(255) NOT NULL')
+			->setOptionsMustBeSelected(true)
+    		->setFormStepsOptions(array(ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY)));
     }
     
 
@@ -65,6 +87,7 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 		$reservation->date_to = Utilities::dateAddDays($this->date_from, $this->nights-1);
 		$reservation->nights = $this->nights;
 		$reservation->price = $this->price;
+		$reservation->currency = $this->currency;
 		$reservation->beds = 0;
 		$reservation->Save();
 		foreach ($this->rooms as $room) {
@@ -131,7 +154,7 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 			$output .= '</tr><tr>'."\n";
 			foreach ($roomInfo as $date => $info) {
 				if ($info->free)
-					$output .= '<td class="free">'.Utilities::formatPrice($info->price).'</td>'."\n";
+					$output .= '<td class="free">'.Utilities::formatPrice($info->price/$this->currencies[$model->currency]).'</td>'."\n";
 				else
 					$output .= '<td class="full">'.tg('Full').'</td>'."\n";
 			}
@@ -167,7 +190,7 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 			$output .= '</tr><tr>'."\n";
 			foreach ($roomInfo as $date => $info) {
 				if ($info->free)
-					$output .= '<td class="free">'.Utilities::formatPrice($info->price).'</td>'."\n";
+					$output .= '<td class="free">'.Utilities::formatPrice($info->price/$this->currencies[$model->currency]).'</td>'."\n";
 				else
 					$output .= '<td class="full">'.tg('Full').'</td>'."\n";
 			}
@@ -223,10 +246,10 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 				$roomId = 'room' . $room->id;
 				$roomBeds = $newData[$roomId];
 				if ($roomBeds)
-					$price += ($room->pricing_type == BookingRoomsModel::PRICE_ROOM) ? $rInfo->price : ($roomBeds * $rInfo->price);
+					$price += ($room->pricing_type == BookingRoomsModel::PRICE_ROOM) ? $rInfo->price/$this->currencies[$newData['currency']] : ($roomBeds * $rInfo->price/$this->currencies[$newData['currency']]);
 			}
 		}
-		return $price;
+		return str_replace(',', '.', round($price, 2));
 	}
 } 
 
