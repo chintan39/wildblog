@@ -47,6 +47,21 @@ class BookingReservationsRoomsModel extends AbstractDefaultModel {
         $this->addCustomRelation('BookingRoomsModel', 'room', 'id'); // define a many:many relation to Tag through BlogTag
     }
 
+    
+    static public function removeReservationRooms($reservationId) {
+		$reservationsRoomsClass = new BookingReservationsRoomsModel();
+		$reservationsRoomsTable = '`' . $reservationsRoomsClass->getTableName() . '`';
+		
+		// delete all rooms that matters in our reservations
+		$query = "
+			DELETE FROM $reservationsRoomsTable
+			WHERE reservation = $reservationId";
+		if (DEBUG_PRINT_QUERIES) print $query;
+		if (Config::Get('DEBUG_MODE')) {
+			Benchmark::log('removeReservationRooms SQL: ' . $query); // QUERY logger
+		}
+		return dbConnection::getInstance()->query($query);
+    } 
 
 } 
 

@@ -51,7 +51,6 @@ class AbstractDBObjectModel extends AbstractBasicModel
 {
 	var $fields = array();
 	var $primary;
-	var $id;
 	var $table;
 	var $tableBase;
 	var $tableExt;

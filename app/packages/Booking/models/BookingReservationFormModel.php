@@ -25,6 +25,31 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 	var $rooms = array();
 	var $currencies = array();
 
+    function __construct($id = false) {
+    	parent::__construct($id);
+    	$this->__setupDatabase();
+    }
+    
+    
+	public function __setupDatabase() {
+		if($this->id) $this->__init();
+	}
+
+
+	/** 
+	 *	Fills the current object with the corresponding row from the database. 
+	 */
+	protected function __init() 
+	{
+		if ($this->id != false) {
+			$reservation = new BookingReservationsModel($this->id);
+			$this->date_from = $reservation->date_from;
+			$this->nights = $reservation->nights;
+			$this->price = $reservation->price;
+			$this->currency = $reservation->currency;
+		}
+	}
+
     protected function attributesDefinition() {
     	
     	parent::attributesDefinition();
@@ -74,6 +99,15 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 			->setSqlType('varchar(255) NOT NULL')
 			->setOptionsMustBeSelected(true)
     		->setFormStepsOptions(array(ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY)));
+
+		$items = new ItemCollection("rooms", Environment::getPackage($this->package)->getController('Rooms'));
+		$items->loadCollection();
+		
+		if ($items->data["items"]) {
+			foreach ($items->data["items"] as $key => $item) {
+				$this->addRoom($item);
+			}
+		}
     }
     
 
@@ -82,7 +116,7 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 	 */
 	public function Save() {
 		parent::Save();
-		$reservation = new BookingReservationsModel();
+		$reservation = new BookingReservationsModel($this->id);
 		$reservation->date_from = $this->date_from;
 		$reservation->date_to = Utilities::dateAddDays($this->date_from, $this->nights-1);
 		$reservation->nights = $this->nights;
@@ -90,6 +124,8 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 		$reservation->currency = $this->currency;
 		$reservation->beds = 0;
 		$reservation->Save();
+		if ($reservation->id)
+			BookingReservationsRoomsModel::removeReservationRooms($reservation->id);
 		foreach ($this->rooms as $room) {
 			$roomId = 'room' . $room->id;
 			if ($this->$roomId) {
@@ -136,7 +172,7 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 			$output = '';
 			$room = $this->rooms[$fieldName];
 	
-			$roomInfo = BookingRoomsModel::getRoomInfo($room, $model->date_from, $model->nights);
+			$roomInfo = BookingRoomsModel::getRoomInfo($room, $model->date_from, $model->nights, $model->id);
 			$minFree = $room->capacity;
 			foreach ($roomInfo as $i)
 				if ($i->free < $minFree)
@@ -172,7 +208,7 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 			$output = '';
 			$room = $this->rooms[$fieldName];
 	
-			$roomInfo = BookingRoomsModel::getRoomInfo($room, $model->date_from, $model->nights);
+			$roomInfo = BookingRoomsModel::getRoomInfo($room, $model->date_from, $model->nights, $model->id);
 			$minFree = $room->capacity;
 			foreach ($roomInfo as $i)
 				if ($i->free < $minFree)
@@ -251,6 +287,7 @@ class BookingReservationFormModel extends AbstractVirtualModel {
 		}
 		return str_replace(',', '.', round($price, 2));
 	}
+
 } 
 
 ?>

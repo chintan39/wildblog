@@ -887,7 +887,11 @@ class Form {
 	 * If error, set self::addMessage - this will indicate an errror.
 	 */
 	private function checkFields() {
-		$this->messages = $this->dataModel->checkFields($this->req, $this->predefinedValues, $this->step);
+		$newData = $this->req;
+		if (isset($this->dataModel->id) && !isset($newData['id']))
+			$newData['id'] = $this->dataModel->id;
+		
+		$this->messages = $this->dataModel->checkFields($newData, $this->predefinedValues, $this->step);
 
 		$this->checkCaptcha();
 		$this->checkRecaptcha();

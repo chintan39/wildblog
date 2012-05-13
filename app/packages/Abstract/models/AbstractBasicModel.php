@@ -26,6 +26,7 @@ class AbstractBasicModel {
 	var $package="Abstract";
 	var $table = null;
 	
+	var $id;
 	var $buttonsSet;
 	var $attrOrder=0;
 	var $name;
@@ -44,7 +45,7 @@ class AbstractBasicModel {
 	static public $propertiesOptionsCache = false;		// properties options cache - not to load each when creating the new object
 	
     function __construct($id = false) {
-    	
+    	$this->id = $id;
     	$this->name = get_class($this);
     	$this->nameShort = str_replace('model', '', str_replace(strtolower($this->package), '', strtolower(get_class($this))));
 		$this->attributesDefinition();

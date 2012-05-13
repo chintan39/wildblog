@@ -78,11 +78,12 @@ class BookingRoomsModel extends AbstractPagesModel {
     	parent::relationsDefinition();
     	
         $this->addCustomRelationMany('BookingReservationsModel', 'BookingReservationsRoomsModel', 'room', 'reservation', 'reservationsRoomsConnection'); // define a many:many relation to Tag through BlogTag
+        $this->addCustomRelationMany('BookingReservationViewModel', 'BookingReservationsRoomsModel', 'room', 'reservation', 'reservationsRoomsConnection'); // define a many:many relation to Tag through BlogTag
         $this->addCustomRelationMany('BookingPricesModel', 'BookingPricesRoomsModel', 'room', 'price', 'pricesRoomsConnection'); // define a many:many relation to Tag through BlogTag
     }
 
 
-	public static function getRoomInfo($room, $dateFrom, $nights) {
+	public static function getRoomInfo($room, $dateFrom, $nights, $reservationIgnoreId=false) {
 		$dateLast = Utilities::dateAddDays($dateFrom, $nights-1);
 		$days = Utilities::dateRangeDays($dateFrom, $nights);
 		$result = array();
@@ -97,7 +98,7 @@ class BookingRoomsModel extends AbstractPagesModel {
 		foreach (self::getPricesForRoomBetweenDates($room, $dateFrom, $dateLast) as $d => $price)
 			$result[$d]->price = $price;
 		
-		foreach (self::getFreeBedsForRoomBetweenDates($room, $dateFrom, $dateLast) as $d => $free)
+		foreach (self::getFreeBedsForRoomBetweenDates($room, $dateFrom, $dateLast, $reservationIgnoreId) as $d => $free)
 			$result[$d]->free = $free;
 		
 		return $result;
@@ -136,7 +137,7 @@ class BookingRoomsModel extends AbstractPagesModel {
 	}
 
 
-	public static function getFreeBedsForRoomBetweenDates($room, $dateFirst, $dateLast) {
+	public static function getFreeBedsForRoomBetweenDates($room, $dateFirst, $dateLast, $reservationIgnoreId=false) {
 		$reservationsClass = new BookingReservationsModel();
 		$reservationsRoomsClass = new BookingReservationsRoomsModel();
 		$reservationsTable = '`' . $reservationsClass->getTableName() . '`';
@@ -148,12 +149,14 @@ class BookingRoomsModel extends AbstractPagesModel {
 		foreach (Utilities::dateRangeDates($dateFirst, $dateLast) as $d)
 			$result[$d] = $room->capacity;
 
+		$reservationIgnoreSQL = $reservationIgnoreId ? "and reservations_rooms.reservation <> $reservationIgnoreId" : '';
+		
 		// get all other prices that matters in our term
 		$query = "
 			SELECT reservations.id, reservations.date_from, reservations.date_to, reservations.nights, reservations_rooms.beds
 			FROM $reservationsRoomsTable AS reservations_rooms
 			LEFT JOIN $reservationsTable AS reservations ON reservations_rooms.reservation = reservations.id
-			WHERE reservations_rooms.room = $roomId
+			WHERE reservations_rooms.room = $roomId $reservationIgnoreSQL
 			AND ((reservations.date_to >= '$dateFirst' AND reservations.date_to <= '$dateLast')
 				OR (reservations.date_from >= '$dateFirst' AND reservations.date_from <= '$dateLast')
 				OR (reservations.date_from <= '$dateFirst' AND reservations.date_from >= '$dateLast'))
@@ -177,6 +180,33 @@ class BookingRoomsModel extends AbstractPagesModel {
 		}
 		return $result;
 	}
+	
+	
+	public static function getReservationRoomBeds($reservationId) {
+		$reservationsRoomsClass = new BookingReservationsRoomsModel();
+		$reservationsRoomsTable = '`' . $reservationsRoomsClass->getTableName() . '`';
+		
+		$result = array();
+
+		// get all other prices that matters in our term
+		$query = "
+			SELECT reservations_rooms.room, reservations_rooms.beds
+			FROM $reservationsRoomsTable AS reservations_rooms
+			WHERE reservations_rooms.reservation = $reservationId";
+		if (DEBUG_PRINT_QUERIES) print $query;
+		if (Config::Get('DEBUG_MODE')) {
+			Benchmark::log('getReservationRoomBeds SQL: ' . $query); // QUERY logger
+		}
+		$rooms = dbConnection::getInstance()->fetchAll($query);
+
+		if ($rooms) {
+			foreach ($rooms as $r) {
+				$result['room'.$r['room']] = $r['beds'];
+			}
+		}
+		return $result;
+	}
+	
 } 
 
 ?>
