@@ -25,7 +25,7 @@
 {*<p><a href="#" onclick="$('viewItemChanges').style.height='auto';return false;">{tg}Show all changes{/tg}</a></p>*}
 <p><a href="#" onclick="$('viewItemChanges').style.height='auto';$$('#viewItemChanges pre').each( function(item) { item.show() });return false;">{tg}Show all changes{/tg}</a></p>
 
-<a href="{$editLink}" class="editItem" title="{tg}Edit item{/tg}"></a>
+{if $editLink}<a href="{$editLink}" class="editItem" title="{tg}Edit item{/tg}"></a>{/if}
 
 {include file='Base.part.footer.tpl'}
 

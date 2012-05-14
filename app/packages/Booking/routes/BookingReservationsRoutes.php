@@ -35,6 +35,10 @@ class BookingReservationsRoutes extends AbstractDefaultRoutes {
 		Router::registerAction($this, 'actionShowRooms')
 			->addRuleUrl('reservation-rooms/$')
 			->setTemplate('reservationRooms');
+			
+		Router::getAction($this, 'actionView')
+			->setTemplate('Base|defaultEdit');
+			
 	}
 
 }

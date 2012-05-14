@@ -28,19 +28,46 @@ class BookingReservationViewModel extends BookingReservationFormModel {
 			->setDescription('sum of beds booked')
 			->setType(Form::FORM_INPUT_NUMBER)
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
-			->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_EDITABLE)));
+			->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY)));
 
 		$this->getMetaData('date_from')
-			->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_EDITABLE));
+			->setFormStepsOptions(array(ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY));
+			
 		$this->getMetaData('nights')
-			->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_EDITABLE));
+			->setFormStepsOptions(array(ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY));
+			
 		$this->getMetaData('price')
-			->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_EDITABLE));
+			->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY));
+			
 		$this->getMetaData('currency')
-			->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_EDITABLE));
+			->setFormStepsOptions(array(ModelMetaItem::STEP_EDITABLE, ModelMetaItem::STEP_READONLY));
+			
 		foreach ($this->rooms as $room)
 			$this->getMetaData('room' . $room->id)
 				->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_EDITABLE));
+    }
+
+
+    public function makeReadOnly() {
+
+		$this->getMetaData('beds')
+			->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY));
+
+		$this->getMetaData('date_from')
+			->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY));
+			
+		$this->getMetaData('nights')
+			->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY));
+			
+		$this->getMetaData('price')
+			->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY));
+			
+		$this->getMetaData('currency')
+			->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY));
+			
+		foreach ($this->rooms as $room)
+			$this->getMetaData('room' . $room->id)
+				->setFormStepsOptions(array(ModelMetaItem::STEP_READONLY, ModelMetaItem::STEP_READONLY));
     }
     
     

@@ -484,7 +484,7 @@ class Form {
 					$this->buttons[] = array('name' => 'send', 'value' => 'Send', 'type' => self::FORM_BUTTON_SEND);
 					break;
 				case self::FORM_BUTTON_SAVE:
-					$this->buttons[] = array('name' => 'save', 'value' => 'Save', 'type' => self::FORM_BUTTON_SAVE);
+					$this->buttons[] = array('name' => 'save', 'value' => ($this->step<$this->steps)?'Next':'Save', 'type' => self::FORM_BUTTON_SAVE);
 					break;
 				case self::FORM_BUTTON_CANCEL:
 					$b = array('name' => 'cancel', 'value' => 'Cancel', 'type' => self::FORM_BUTTON_CANCEL);
@@ -887,11 +887,10 @@ class Form {
 	 * If error, set self::addMessage - this will indicate an errror.
 	 */
 	private function checkFields() {
-		$newData = $this->req;
-		if (isset($this->dataModel->id) && !isset($newData['id']))
-			$newData['id'] = $this->dataModel->id;
+		if (isset($this->dataModel->id) && !isset($this->req['id']))
+			$this->req['id'] = $this->dataModel->id;
 		
-		$this->messages = $this->dataModel->checkFields($newData, $this->predefinedValues, $this->step);
+		$this->messages = $this->dataModel->checkFields($this->req, $this->predefinedValues, $this->step);
 
 		$this->checkCaptcha();
 		$this->checkRecaptcha();
@@ -1280,6 +1279,15 @@ class Form {
 	 */
 	public function getSteps() {
 		return $this->steps;
+	}
+	
+	
+	/**
+	 * Return actual step
+	 * @return number step
+	 */
+	public function getStep() {
+		return $this->step;
 	}
 	
 	

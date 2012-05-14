@@ -50,7 +50,15 @@ class BookingReservationsController extends AbstractDefaultController {
 	 *
 	 */
 	public function actionEditSelf($args, $isSimple=false) {
+		$this->reservationFormSelf($args);
+		$this->assign('detailLink', Request::getLinkItem($this->package, $this->name, 'actionView', $args));
+	}
+
+
+	private function reservationFormSelf(&$args, $steps=2, $buttons=array(Form::FORM_BUTTON_SAVE, Form::FORM_BUTTON_CANCEL), $readOnly=false) {
 		$item = new BookingReservationViewModel($args->id);
+		if ($readOnly)
+			$item->makeReadOnly();
 		Request::reGenerateToken();
 		$this->actionEditAdjustItem($item);
 		$form = new Form();
@@ -59,9 +67,9 @@ class BookingReservationsController extends AbstractDefaultController {
 		$form->setUseTabs(true);
 		$form->setCsrf(true);
 		$form->setIdentifier(strtolower($this->name));
-		$form->setSteps(2);
+		$form->setSteps($steps);
 
-		$form->fill($item, $this->getEditButtons());
+		$form->fill($item, $buttons);
 		$form->setDescription($this->getFormDescription());
 		
 		// handeling the form request
@@ -84,28 +92,8 @@ class BookingReservationsController extends AbstractDefaultController {
 	 *
 	 */
 	public function actionView($args) {
-		$item = $args;
-		echo "I'm changing this.".$item->id;
-		$item->getMetaData('date_from')->setIsEditable(ModelMetaItem::NEVER);
-		$changableColumns = $item->getChangeAbleOrAutoFilledMetaData();
-		foreach ($changableColumns as $k => $col) {
-			if (in_array($col->getType(), array(Form::FORM_MULTISELECT_FOREIGNKEY, Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE))) {
-				unset($changableColumns[$k]);
-			}
-		}
-		
-		$changes = BaseChangesModel::Search('BaseChangesModel', array('packagename = ? and model = ? and item = ?'), array($item->package, $item->getName(), $item->id), array("ORDER BY `inserted` DESC"));
-		if (!$changes) $changes = array();
-		
-		$this->assign('changableColumns', $changableColumns);
-		$this->assign('item', $item);
-		$this->assign('changes', $changes);
-		$this->assign('editLink', Request::getLinkItem($this->package, $this->name, 'actionEdit', $item));
-
-		$this->assign('title', tg('View ' . strtolower($this->name) . ' (#' . $item->id . ')'));
-		
-		// Top menu
-		$this->addTopMenu();
+		$this->reservationFormSelf($args, 1, array(), true);
+		$this->assign('editLink', Request::getLinkItem($this->package, $this->name, 'actionEdit', $args));
 	}
 }
 
