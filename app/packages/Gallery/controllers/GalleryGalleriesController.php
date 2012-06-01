@@ -87,7 +87,7 @@ class GalleryGalleriesController extends AbstractPagesController {
 		$gallery->addNonDbProperty("titleimage");
 		$gallery->titleimage = $gallery->FindTitleImage("GalleryImagesModel", "GalleryGalleriesImagesModel");
 		$gallery->addNonDbProperty("images");
-		$images = new ItemCollection("galleriesList", Environment::getPackage($this->getPackage())->getController('Images'), 'GalleryImagesModel', 'getCollectionItemsFromItems');
+		$images = new ItemCollection("galleriesList", Environment::getPackage($this->getPackage())->getController('Images'));
 		$images->loadItemsFromItems($gallery->Find('GalleryImagesModel'));
 		$gallery->images = $images;
 
