@@ -119,8 +119,8 @@ div.selector div.addNewItemButton {
 
 div.selector div.addNewItemButton a {
 	display: block;
-	height: 32px;
-	width: 32px;
+	height: 64px;
+	width: 64px;
 	background: url('../images/add.png') center center no-repeat;
 }
 
@@ -152,15 +152,21 @@ div.selector div.actualItems span.activeItem span {
 
 div.selector div.actualItems span.activeItem a.removeItem {
 	position: absolute;
+	display: none;
 	top: -10px;
 	right: -10px;
-	width: 32px;
-	height: 32px;
+	width: 24px;
+	height: 24px;
 	background: url('../images/remove.png') center center no-repeat;
 	border: none;
 }
 
+div.selector div.actualItems span.activeItem:hover a.removeItem {
+	display: block;
+}
+
 div.selector div.actualItems span.activeItem a.removeItem:hover {
+	display: block;
 	border: none;
 }
 

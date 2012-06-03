@@ -33,7 +33,8 @@ SelectorMenu.setup = function(params)
 {
     var selectorMenu, actualIndex, actualAttr, opts, i, a, actual, 
     spantext, optionsContainer, selectItemContainer, addItemContainer, 
-    actualItemsContainer, mainElemId, button, newClear, closer, tmp
+    actualItemsContainer, mainElemId, button, newClear, closer, tmp,
+    dialogWrapper
     
     selectorMenu = new SelectorMenu(params.parentElement)
 	
@@ -135,7 +136,11 @@ SelectorMenu.setup = function(params)
     // create container to hold options
     optionsContainer = new Element('div')
     optionsContainer.addClassName('options')
-    optionsContainer.style.display = 'none'
+    //optionsContainer.style.display = 'none'
+
+    // create container to hold options
+    dialogWrapper = new Element('div')
+    dialogWrapper.appendChild(optionsContainer)
 
     // button to close option list
     closer = new Element('a', {href: '#'})
@@ -175,8 +180,9 @@ SelectorMenu.setup = function(params)
     newClear.addClassName('clear')
     optionsContainer.appendChild(newClear)
     
-    selectorMenu.getContainerField().appendChild(optionsContainer)
+    selectorMenu.getContainerField().appendChild(dialogWrapper)
     selectorMenu.setOptionsContainer(optionsContainer)
+    selectorMenu.setDialogWrapper(dialogWrapper)
     
     // clear separator
     newClear = new Element('span')
@@ -223,6 +229,8 @@ SelectorMenu.prototype = {
   options: [],
   
   attributeFields: [],
+
+  window: null,
   
   //----------------------------------------------------------------------------
 
@@ -265,6 +273,11 @@ SelectorMenu.prototype = {
   	this.optionsContainer = optionsContainer
   },
   
+  setDialogWrapper: function(dialogWrapper)
+  {
+  	this.dialogWrapper = dialogWrapper
+  },
+  
   setDisplayMode: function(displayMode)
   {
   	this.displayMode = displayMode
@@ -300,6 +313,11 @@ SelectorMenu.prototype = {
   getOptionsContainer: function()
   {
   	return this.optionsContainer
+  },
+  
+  getDialogWrapper: function()
+  {
+  	return this.dialogWrapper
   },
   
   getDisplayMode: function()
@@ -417,11 +435,26 @@ SelectorMenu.prototype = {
   
   // this should be redesign
   showOptions: function() {
-  	this.getOptionsContainer().style.display = 'block'
+  	
+    if (!this.window) {
+	  this.window = new Window({
+			className: 'alphacube', 
+			width: 500,
+			height: 400,
+			title: "Translations",
+			showEffectOptions: {duration:0.5}
+	  }); 
+	  this.window.setContent(this.getDialogWrapper());
+    }
+    //this.getOptionsContainer().style.display = 'block'
+    this.window.showCenter(true);
   },
 
   hideOptions: function() {
-  	this.getOptionsContainer().style.display = 'none'
+  	if (this.window)
+  		this.window.hide(0);
+  	//this.getOptionsContainer().style.display = 'none'
+  	//this.getDialogWrapper().style.display = 'none'
   },
   
   selectOption: function(optionIndex, forceAdd) {
@@ -450,7 +483,8 @@ SelectorMenu.prototype = {
   		actualItemsContainer.appendChild(newItem)
   	}
 
-  	this.hideOptions()
+  	if (!this.isMultiple())
+  	  this.hideOptions()
   }
   
 }
