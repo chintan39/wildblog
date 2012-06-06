@@ -15,6 +15,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/* TODO: we need better styling of images : border, 
+ * compact margins in selector and by selected, ...
+ */
+
 div.selector {
 	display: inline;
 	width: 400px;
@@ -135,7 +139,7 @@ div.selector div.selectItemButton a {
 	display: block;
 	height: 32px;
 	width: 32px;
-	background: url('../images/next.png') center center no-repeat;
+	background: url('../images/dropdown.png') center center no-repeat;
 }
 
 div.selector div.floating {

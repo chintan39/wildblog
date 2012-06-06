@@ -85,6 +85,7 @@ div#adminBox {
 	right: 0px;
 	line-height: 60px;
 	height: 70px;
+	height: auto;
 	overflow: hidden;
 	-moz-border-radius: 10px 0px 0px 10px;
 	border-radius: 10px 0px 0px 10px;
@@ -93,6 +94,10 @@ div#adminBox {
 	-moz-box-shadow: -4px 4px 5px #000;
 	-webkit-box-shadow: -4px 4px 5px #000;
 	box-shadow: -4px 4px 5px #000;
+	transition: height 1s, width 1s;
+	-moz-transition: height 1s, width 1s;
+	-webkit-transition: height 1s, width 1s;
+	-o-transition: height 1s, width 1s;
 }
 
 div#adminBox:hover {
