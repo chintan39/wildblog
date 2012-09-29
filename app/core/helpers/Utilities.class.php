@@ -140,6 +140,15 @@ class Utilities {
 		}
 	}
 	
+	/**
+	 * Return directory and file separately in array from path.
+	 * @param string $path
+	 * @return array Array[0]=dir, [1]=file
+	 */
+	static public function getDirFileFromPath($path) {
+		return array(dirname($path), basename($path));
+	}
+	
 	
 	/**
 	 * Adjust file name to be unique in the directory using adding -N suffix, 
@@ -154,7 +163,7 @@ class Utilities {
 			$newFilenameBase = $match[1];
 			$newFilenameExt = $match[2];
 		} else {
-			$newFilenameBase = $match[1];
+			$newFilenameBase = $filename;
 			$newFilenameExt = '';
 		}
 		

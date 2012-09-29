@@ -64,6 +64,8 @@ class ModelMetaItem {
 	private $style = null;
 	private $uploadDir =  '';
 	private $updateHandleDefault = false;
+	private $uploadMultipleFiles = false;
+	private $isInDb = null;
 	
 	static private $newOrder = 1;
 	
@@ -473,6 +475,52 @@ class ModelMetaItem {
 		return $this;
 	}
 
+    /**
+	 * Getter
+	 */
+	public function getUploadMultipleFiles() {
+		return $this->uploadMultipleFiles;
+	}
+
+    /**
+	 * Setter
+	 */
+	public function setUploadMultipleFiles($uploadMultipleFiles) {
+		$this->uploadMultipleFiles = $uploadMultipleFiles;
+		return $this;
+	}
+
+    /**
+	 * Getter
+	 */
+	public function getForceIsInDb() {
+		return $this->isInDb;
+	}
+
+    /**
+	 * Setter
+	 */
+	public function setForceIsInDb($isInDb) {
+		$this->isInDb = $isInDb;
+		return $this;
+	}
+	
+	
+	/**
+	 * Returns true if field is in DB.
+	 */
+	public function getIsInDB($includeId=true) {
+		/* if defined $this->isInDb, we just use it */
+		if ($this->isInDb !== null)
+			return $this->isInDb;
+		
+		$fields_not_in_db = array(Form::FORM_MULTISELECT_FOREIGNKEY, Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_SPECIFIC_NOT_IN_DB);
+    	if (!$includeId)
+    		$fields_not_in_db[] = Form::FORM_ID;
+    	
+		return !in_array($this->getType(), $fields_not_in_db);
+	}
+	
 }
 
 ?>

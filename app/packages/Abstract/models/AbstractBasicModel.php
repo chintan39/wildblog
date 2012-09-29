@@ -61,23 +61,67 @@ class AbstractBasicModel {
 	 * Save data to some object, can be overwritten, but not has to be.
 	 */
 	public function Save() {
-		$this->handleUploadedFile();
+	}
+	
+	public function Save2() {
 	}
 
-	protected function handleUploadedFile() {
+	public function handleUploadedFile() {
     	foreach ($this->getMetaData() as $field => $meta) {
     		if ($meta->getType() == Form::FORM_UPLOAD_FILE) {
-    			$newFileName = Utilities::concatPath($meta->getUploadDir(), Utilities::getUniqueFileName(Utilities::makeFileNameFormat($_FILES[$meta->getName()]['name']), $meta->getUploadDir()));
-    			if (!move_uploaded_file($_FILES[$meta->getName()]['tmp_name'], $newFileName)) {
-    				throw new Exception('Cannot move uploaded file into ' . $newFileName . '. Maybe wrong directory attributes?');
-    			} else {
-    				if (Utilities::fileIsImage($newFileName)) {
-    					Utilities::resizeImageIfNeeded($newFileName, DEFAULT_UPLOAD_IMAGE_WIDTH, DEFAULT_UPLOAD_IMAGE_HEIGHT);
+    			$uploadDir = $meta->getUploadDir();
+    			/* If uploadDir begins with DYNAMIC_NAME_PATTERN, the rest is
+    			 * field, which will be actually the name of directory where
+    			 * files will be stored.
+    			 * The directory will be created in case it doesn't exist yet.*/
+    			if (strncmp($uploadDir, DYNAMIC_NAME_PATTERN, strlen(DYNAMIC_NAME_PATTERN)) == 0) {
+    				$fieldName = str_replace(DYNAMIC_NAME_PATTERN, '', $uploadDir);
+    				$fieldName = preg_replace('/^\[([^\]]+)\]$/', '\\1', $fieldName);
+    				if (!$this->getValue($fieldName))
+    					throw new Exception("Field in DYNAMIC_NAME_PATTERN ('$fieldName') is not set properly");
+    				$uploadDir = Utilities::concatPath(DIR_PROJECT_PATH_MEDIA, $this->getValue($fieldName));
+    				if (!file_exists($uploadDir) && !mkdir($uploadDir, 0777))
+    					throw new Exception("Dir $uploadDir could not be created. Consider checking file permissions and SELinux context if enabled.");
+    			}
+    			
+    			/* Handle uploaded files. Fields allowing upload multiple 
+    			 * files are handled differently. */
+    			if ($meta->getUploadMultipleFiles()) {
+    				for ($i = 0; $i<count($_FILES[$meta->getName()]['tmp_name']); $i++) {
+    					if (!$_FILES[$meta->getName()]['tmp_name'][$i])
+    						continue;
+    					// we don't get filename probably
+    					$newFileName = Utilities::concatPath($uploadDir, Utilities::getUniqueFileName(Utilities::makeFileNameFormat($_FILES[$meta->getName()]['name'][$i]), $uploadDir));
+	   					$this->handleOneFile($_FILES[$meta->getName()]['tmp_name'][$i], $newFileName, $meta->getName(), true);
     				}
-    				$this->uploadedFiles[$meta->getName()] = $newFileName;
+    			} else {
+    				$newFileName = Utilities::concatPath($uploadDir, Utilities::getUniqueFileName(Utilities::makeFileNameFormat($_FILES[$meta->getName()]['name']), $uploadDir));
+   					$this->handleOneFile($_FILES[$meta->getName()]['tmp_name'], $newFileName, $meta->getName(), false);
     			}
     		}
     	}
+	}
+	
+	/**
+	 * Moves and renames file from temporary upload directory to final destination.
+	 * @param string $tmpname Temporary destination
+	 * @param string $newFileName New final destination
+	 * @return string package name
+	 */
+	private function handleOneFile($tmpName, $newFileName, $metaName, $multiple) {
+		if (!move_uploaded_file($tmpName, $newFileName)) {
+			throw new Exception('Cannot move uploaded file ' . $tmpName . ' into ' . $newFileName . '. Maybe wrong directory attributes?');
+		} else {
+			if (Utilities::fileIsImage($newFileName)) {
+				Utilities::resizeImageIfNeeded($newFileName, DEFAULT_UPLOAD_IMAGE_WIDTH, DEFAULT_UPLOAD_IMAGE_HEIGHT);
+			}
+			if ($multiple) {
+				if (!isset($this->uploadedFiles[$metaName]) || !is_array($this->uploadedFiles[$metaName]))
+					$this->uploadedFiles[$metaName] = array();
+				$this->uploadedFiles[$metaName][] = $newFileName;
+			} else
+				$this->uploadedFiles[$metaName] = $newFileName;
+		}
 	}
 	
 	/**
@@ -329,15 +373,9 @@ class AbstractBasicModel {
 	 */
     protected function getFieldsInDB($includeId=true) {
     	$fields = array();
-    	$fields_not_in_db = array(Form::FORM_MULTISELECT_FOREIGNKEY, Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_SPECIFIC_NOT_IN_DB);
-    	if (!$includeId) {
-    		$fields_not_in_db[] = Form::FORM_ID;
-    	}
-
     	foreach ($this->getMetaData() as $field => $meta) {
-    		if (!in_array($meta->getType(), $fields_not_in_db)) {
+    		if ($meta->getIsInDB($includeId))
     			$fields[$field] = $field;
-    		}
     	}
     	return $fields;
     }

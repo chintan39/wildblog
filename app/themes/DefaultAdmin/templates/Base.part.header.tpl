@@ -1,4 +1,4 @@
-{include file='Base.part.pageHeader.tpl' pageTitle='WildBlog Administration'|tg|cat:' | '|cat:$title useThemeFavicon=1}
+{include file='Base.part.pageHeader.tpl' pageTitle='WildBlog Administration'|tg|cat:' | '|cat:$title useThemeFavicon=1 noindex=1}
 	<div id="wrap">
 		<div id="page">
 			<div id="upper">

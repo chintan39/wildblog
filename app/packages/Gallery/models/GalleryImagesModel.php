@@ -88,6 +88,25 @@ class GalleryImagesModel extends AbstractNodesModel {
     	return $selectItems; 
     }
     
+    static public function addImage2db($dir, $file) {
+    	$image = Utilities::path2url(Utilities::concatPath($dir, $file));
+		if ($oldImage = self::Search('GalleryImagesModel', array('image = ?'), array($image))) {
+			return $oldImage[0];
+		} else {
+			$newImage = new GalleryImagesModel();
+			$newImage->image = $image;
+			$newImage->active = 1;
+			$newImage->url = Utilities::makeUrlPartFormat(preg_replace('/\.(jpg|jpe|jpeg|gif|png)$/', '', $file));
+			$newImage->title = ucfirst(str_replace('-', ' ', $newImage->url));
+			$errorsWarnings = $newImage->checkFieldsSelf();
+			if (count($errorsWarnings['errors']) == 0) {
+				$newImage->Save();
+			} else {
+				print_r($errors);exit;
+			}
+			return $newImage;
+		}
+    }
     
 } 
 

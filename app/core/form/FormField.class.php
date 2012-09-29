@@ -579,7 +579,8 @@ class FormFieldLink extends FormField {
 class FormFieldUploadFile extends FormField {
 	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
-		$this->html .= "<input type=\"file\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" class=\"$class\"{$onclick}{$onchange}{$style} />";
+		$multiple =  $this->meta->getUploadMultipleFiles() ? ' multiple=""' : '';
+		$this->html .= "<input type=\"file\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . ($this->meta->getUploadMultipleFiles() ? '[]' : '') . "\" class=\"$class\"{$onclick}{$onchange}{$style}{$multiple} />";
 	}
 }
 

@@ -6,7 +6,7 @@
   <meta name="description" content="{$seoDescription|default:$pageDescription|default:$projectDescription}" />
   <meta name="keywords" content="{$seoKeywords|default:$projectKeywords}" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="{if $noindex}noindex, nofollow{else}index, follow{/if}" />
   <meta name="rating" content="general" />
   <meta name="author" content="Honza Horák; mailto:horak.jan@centrum.cz" />
   <meta name="generator" content="{$appGenerator}" />

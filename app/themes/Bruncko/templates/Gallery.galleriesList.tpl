@@ -16,6 +16,8 @@
 	<p>{tg}No galleries found.{/tg}</p>
 {/if}
 
+{include  file='Base.part.addNewItem.tpl' itemPackage=Gallery itemController=Galleries itemAction=actionNew itemActionSimple=actionSimpleNew}
+
 {generate_paging collection=$galleriesList}
 
 {include file='Base.part.footer.tpl' useReferences=1}

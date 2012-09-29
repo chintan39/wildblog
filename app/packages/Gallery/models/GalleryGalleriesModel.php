@@ -21,11 +21,20 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 
 	var $package = 'Gallery';
 	var $icon = 'gallery', $table = 'galleries';
+	private $uploadDone = false;
 
     protected function attributesDefinition() {
     	
     	parent::attributesDefinition();
-    	
+
+    	$this->addMetaData(AtributesFactory::create('imagesUpload')
+    		->setLabel('Images upload')
+			->setDescription('upload one or more images quickly')
+			->setType(Form::FORM_UPLOAD_FILE)
+			->setUploadDir(DYNAMIC_NAME_PATTERN . '[url]')
+			->setUploadMultipleFiles(true)
+			->setForceIsInDb(false));
+
     	$this->addMetaData(AtributesFactory::stdPublished());
 
 		$this->addMetaData(AtributesFactory::create('imageGalleryConnection')
@@ -101,9 +110,32 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 		$ret = parent::Save($forceSaving);
 		
 		$this->saveTitleImage();
+
 		
 		return $ret;
 	}
+	
+	
+	public function Save2() {
+		// we don't need to add already connected images
+		$oldImages = $this->Find('GalleryImagesModel', array(), array(), array(), array('id'));
+		$oldImagesIds = array();
+		if ($oldImages) {
+			foreach ($oldImages as $image)
+				$oldImagesIds[$image->id] = true;
+		}
+		
+		if (isset($this->uploadedFiles['imagesUpload']) && is_array($this->uploadedFiles['imagesUpload'])) {
+			foreach ($this->uploadedFiles['imagesUpload'] as $path) {
+				list($dir, $file) = Utilities::getDirFileFromPath($path);
+				$image = GalleryImagesModel::addImage2db($dir, $file);
+				if (!isset($oldImagesIds[$image->id])) {
+					$this->Connect($image);
+				}
+			}
+		}
+	}
+	
 
 	public function Import($values) {
 		$ret = parent::Import($values);
@@ -148,6 +180,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 								'indent' => isset($o['indent']) ? $o['indent'] : 0));
 				
 				$output .= '<option value=""'. ((!$model->titleimage) ? ' selected="selected"' : '') . '>' . '[' . tg('not selected') . ']' . '</option>'."\n";
+				$script = '';
 				if ($images) {
 					foreach ($images as $image) {
 						$output .= '<option value="' . $image->id . '"'. ($model->titleimage && ($model->titleimage->id == $image->id) ? ' selected="selected"' : ''). '>' . $image->makeSelectTitle() . '</option>'."\n";

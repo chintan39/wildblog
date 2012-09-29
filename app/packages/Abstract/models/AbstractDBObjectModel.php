@@ -424,6 +424,7 @@ class AbstractDBObjectModel extends AbstractBasicModel
 	 */
 	public function Save($forceSaving=false) 
 	{
+		parent::Save($forceSaving);
 		
 		$this->adjustValuesBeforeSaving();
 		

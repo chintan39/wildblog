@@ -48,23 +48,7 @@ class GalleryImagesController extends AbstractPagesController {
 	
 	
 	private function addImage2db($dir, $file) {
-		$image = Utilities::path2url(Utilities::concatPath($dir, $file));
-		if (!GalleryImagesModel::Search('GalleryImagesModel', array('image = ?'), array($image))) {
-			$newImage = new GalleryImagesModel();
-			$newImage->image = $image;
-			$newImage->active = 1;
-			$newImage->url = Utilities::makeUrlPartFormat(preg_replace('/\.(jpg|jpe|jpeg|gif|png)$/', '', $file));
-			$newImage->title = ucfirst(str_replace('-', ' ', $newImage->url));
-			$errorsWarnings = $newImage->checkFieldsSelf();
-			if (count($errorsWarnings['errors']) == 0) {
-				$newImage->Save();
-			} else {
-				print_r($errors);exit;
-			}
-			return $newImage;
-		} else {
-			return null;
-		}
+		return GalleryImagesModel::addImage2db($dir, $file);
 	}
 	
 	private function synchDir($dir, $recursive=true) {

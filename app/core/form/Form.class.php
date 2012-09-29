@@ -726,7 +726,7 @@ class Form {
 			if ($meta->getType() == Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE) {
 				continue;
 			}
-			if (!in_array($meta->getType(), array(Form::FORM_MULTISELECT_FOREIGNKEY, Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE, Form::FORM_SPECIFIC_NOT_IN_DB)) || $meta->getUpdateHandleDefault()) {
+			if ($meta->getIsInDB() || $meta->getUpdateHandleDefault()) {
 				if (array_key_exists($field, $this->predefinedValues)) {
 					$val = $this->predefinedValues[$field];
 					// we do not hash the field if it should not be changed on empty and the field is empty
@@ -751,6 +751,9 @@ class Form {
 		// store changes made in item into DB
 		$changes = $this->dataModel->getChanges();
 
+		// handle uploading files
+		$this->dataModel->handleUploadedFile();
+		
 		// save data in the DB or in other way (depends on the model)
 		$this->dataModel->Save();
 		
@@ -823,6 +826,9 @@ class Form {
 		foreach ($changes as $change) {
 			$change->Save();
 		}
+		
+		// save data in the DB or in other way (depends on the model)
+		$this->dataModel->Save2();
 	}
 	
 	
