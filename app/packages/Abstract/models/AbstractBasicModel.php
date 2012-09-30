@@ -77,7 +77,7 @@ class AbstractBasicModel {
     			if (strncmp($uploadDir, DYNAMIC_NAME_PATTERN, strlen(DYNAMIC_NAME_PATTERN)) == 0) {
     				$fieldName = str_replace(DYNAMIC_NAME_PATTERN, '', $uploadDir);
     				$fieldName = preg_replace('/^\[([^\]]+)\]$/', '\\1', $fieldName);
-    				if (!$this->getValue($fieldName))
+    				if (!isset($this->$fieldName) || !$this->$fieldName)
     					throw new Exception("Field in DYNAMIC_NAME_PATTERN ('$fieldName') is not set properly");
     				$uploadDir = Utilities::concatPath(DIR_PROJECT_PATH_MEDIA, $this->getValue($fieldName));
     				if (!file_exists($uploadDir) && !mkdir($uploadDir, 0777))

@@ -111,7 +111,6 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 		
 		$this->saveTitleImage();
 
-		
 		return $ret;
 	}
 	
@@ -125,12 +124,23 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 				$oldImagesIds[$image->id] = true;
 		}
 		
+		$firstImage = true;
+		
 		if (isset($this->uploadedFiles['imagesUpload']) && is_array($this->uploadedFiles['imagesUpload'])) {
 			foreach ($this->uploadedFiles['imagesUpload'] as $path) {
 				list($dir, $file) = Utilities::getDirFileFromPath($path);
 				$image = GalleryImagesModel::addImage2db($dir, $file);
 				if (!isset($oldImagesIds[$image->id])) {
 					$this->Connect($image);
+				}
+				
+				// If no other title image selected, use the first one
+				if ($firstImage) {
+					$firstImage = false;
+					if (!$this->titleimage) {
+						$this->titleimage = $image->id;
+						$this->saveTitleImage();
+					}
 				}
 			}
 		}

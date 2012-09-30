@@ -13,5 +13,7 @@
 
 {generate_paging collection=$gallery->images}
 
+{include  file='Base.part.editItem.tpl' itemPackage=Gallery itemController=Galleries itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$gallery}
+
 {include file='Base.part.footer.tpl'}
 

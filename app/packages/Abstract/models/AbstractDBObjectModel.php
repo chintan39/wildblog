@@ -968,7 +968,8 @@ class AbstractDBObjectModel extends AbstractBasicModel
 		foreach ($this->changedValues as $field => $value) {
 			if (in_array($field, $suppressedFields))
 				continue;
-			if ($value == $this->databaseValues[$field])
+			$oldValue = isset($this->databaseValues[$field]) ? $this->databaseValues[$field] : '';
+			if ($value == $oldValue)
 				continue;
 			
 			$change = new BaseChangesModel();
@@ -991,7 +992,7 @@ class AbstractDBObjectModel extends AbstractBasicModel
 				$renderer = new Diff_Renderer_Text_Unified;
 				$change->data = $diff->render($renderer);
 			} else { 
-				$change->data = "-'{$this->databaseValues[$field]}'\n+'$value'\n";
+				$change->data = "-'{$oldValue}'\n+'$value'\n";
 			}
 			
 			$changes[] = $change;
