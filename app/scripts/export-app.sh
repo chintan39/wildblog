@@ -22,7 +22,7 @@ read -p "Is the information above correct? (y/n): "
 if [ "x$REPLY" != "xy" -a "x$REPLY" != "xY" ] ; then popd ; exit 1 ; fi
 rm -rf "${EXPORTDIR}${NAMEDATE}" "${EXPORTDIR}${NAMEZIP}"
 echo "Exporting app ..."
-git archive --format zip --output="${EXPORTDIR}${NAMEZIP}" master 
+git archive --format zip --output="${EXPORTDIR}${NAMEZIP}" HEAD
 echo "Unpacking ${EXPORTDIR}${NAMEZIP} into ${EXPORTDIR}${NAMEDATE} ..."
 mkdir -p "${EXPORTDIR}${NAMEDATE}"
 unzip "${EXPORTDIR}${NAMEZIP}" -d "${EXPORTDIR}${NAMEDATE}" >/dev/null
