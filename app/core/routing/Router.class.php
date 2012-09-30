@@ -60,8 +60,7 @@ class Router {
 		
 		return $routes[$package][$routesName][$methodName];
 	}
-	
-	
+
 	/**
 	 * Adds an rule to the set of route rules.
 	 * This is the basic version, rules must be specified before and given as the argument.

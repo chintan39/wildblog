@@ -514,7 +514,7 @@ class Request {
 			self::$actionLink = self::getLinkSimple($action['package'], $action['controller'], $action['method']);
 		}
 	}
-	
+
 	
 	/**
 	 * Returns the saved action, which is aplied for the current request.

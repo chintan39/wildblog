@@ -96,6 +96,7 @@ class Permission {
 	static public function clearSession() {
 		unset($_SESSION['actualUserId']);
 		unset($_SESSION['timeout_idle']);
+		Request::redirect(Request::getLinkSimple('Base', 'Users', 'actionLogin'));
 	}
 	
 	
