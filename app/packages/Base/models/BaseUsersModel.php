@@ -32,12 +32,25 @@ class BaseUsersModel extends AbstractSimpleModel {
     	
     	parent::attributesDefinition();
 
-    	$this->addMetaData(AtributesFactory::stdAccountEmail());
+    	$this->addMetaData(AtributesFactory::stdAccountEmail()
+			->addRestrictions(Restriction::R_NO_EDIT_ON_EMPTY));
     	$this->addMetaData(AtributesFactory::stdFirstname());
     	$this->addMetaData(AtributesFactory::stdSurname());
-    	$this->addMetaData(AtributesFactory::stdAccountpassword());
-    	$this->addMetaData(AtributesFactory::stdAccountPermissions());
-    	$this->addMetaData(AtributesFactory::stdLastLogged());
+    	$this->addMetaData(AtributesFactory::stdLoginPassword()
+    			->setName('old_password')
+    			->setLabel('Old password')
+    			->setForceIsInDb(false)
+    			->setOptionsMustBeSelected(true)
+    			->setUseSalt(false));
+    	$this->addMetaData(AtributesFactory::stdAccountpassword()
+    			->setCheckMethod('checkOldPassword')
+    			->setLabel('New password'));
+    	$this->addMetaData(AtributesFactory::stdAccountPermissions()
+			->addRestrictions(Restriction::R_NO_EDIT_ON_EMPTY));
+    	$this->addMetaData(AtributesFactory::stdLastLogged()
+			->addRestrictions(Restriction::R_NO_EDIT_ON_EMPTY));
+    	$this->getMetaData('active')
+			->addRestrictions(Restriction::R_NO_EDIT_ON_EMPTY);
 
 		$this->addMetaData(AtributesFactory::create('private_config')
 			->setLabel('Private config')
@@ -45,7 +58,8 @@ class BaseUsersModel extends AbstractSimpleModel {
 			->setSqlType('TEXT NOT NULL')
 			->setFormTab(Form::TAB_PROPERTIES)
 			->setExtendedTable(false)
-			->setIsVisible(ModelMetaItem::NEVER));
+			->setIsVisible(ModelMetaItem::NEVER)
+			->addRestrictions(Restriction::R_NO_EDIT_ON_EMPTY));
 	
     }
 
@@ -58,6 +72,14 @@ class BaseUsersModel extends AbstractSimpleModel {
     	$o = trim($this->firstname . " " . $this->surname);
     	return $o ? $o : parent::makeSelectTitle();
     }
+
+    public function checkOldPassword($value, &$meta, &$newData) {
+		$usersMatch = Environment::getPackage('Base')->getController('Users')->tryLogin($this->email, Request::$post['old_password']);
+		if (!$usersMatch || !count($usersMatch)) {
+			$this->addMessageField("errors", 'old_password', tg("Old password is not set properly"));
+		}
+    } 
+
 }
 
 

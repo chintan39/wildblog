@@ -46,6 +46,7 @@ class ModelMetaItem {
 	private $sqlIndex = null; 		// index in SQL (see ModelMetaIndex class)
 	private $adjustMethod = null;		// value should be adjusted before checking
 	private $adjustBeforeSavingMethod = null;
+	private $checkMethod = null;		// value should be done as validity checking
 	private $isAutoFilled = self::NEVER;	// null means only on the inserting a new item
 	private $wysiwygType = Javascript::WYSIWYG_FULL;	// type of wysiwyg configuration
 	private $formTab = null;		// tab where the item should be in (@see Form::TAB_... constants)
@@ -248,7 +249,16 @@ class ModelMetaItem {
         return $this;
     }
 
-    public function getAdjustMethod() {
+	public function getCheckMethod() {
+        return $this->checkMethod;
+    }
+
+    public function setCheckMethod($checkMethod) {
+        $this->checkMethod = $checkMethod;
+        return $this;
+    }
+
+	public function getAdjustMethod() {
         return $this->adjustMethod;
     }
 
@@ -522,9 +532,9 @@ class ModelMetaItem {
 		return !in_array($this->getType(), $fields_not_in_db);
 	}
 
-	public function hashValue($value, &$newValues) {
+	public function hashValue($value, $email='') {
 		if ($this->getUseSalt())
-			return Utilities::hashPasswordSalt(Utilities::hashPassword($value), isset($newValues['email']) ? $newValues['email'] : '');
+			return Utilities::hashPasswordSalt(Utilities::hashPassword($value), $email);
 		else
 			return Utilities::hashPassword($value);
 	}

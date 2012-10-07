@@ -41,7 +41,7 @@ class BaseLoginModel extends AbstractVirtualModel {
 	 */
 	protected function checkAllFieldsValue(&$newData, &$preddefinedData) {
 		$usersMatch = Environment::getPackage('Base')->getController('Users')->tryLogin($newData['email'], $newData['password']);
-		if (count($usersMatch)) {
+		if ($usersMatch && count($usersMatch)) {
 			$this->user = $usersMatch[0];
 		}
 		if (!$this->user) {

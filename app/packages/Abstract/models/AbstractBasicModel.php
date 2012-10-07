@@ -522,14 +522,24 @@ class AbstractBasicModel {
 			case Form::FORM_INPUT_PASSWORD:
 				$value = &$newData[$meta->getName()];
 				// we do not hash the password if it should not be changed on empty and the field is empty
+				$email = false;
+				if (isset($newData['email']) && $newData['email'])
+					$email = $newData['email'];
+				elseif ($this->id) {
+					$u = new BaseUsersModel($this->id);
+					if ($u)
+						$email = $u->email;
+				}
+				if (!$email)
+					throw new Exception('User does not exist or new value email is not set.');
 				if ($value || !Restriction::hasRestrictions($meta->getRestrictions(), Restriction::R_NO_EDIT_ON_EMPTY)) {
-					$value = $meta->hashValue($value, $newData);
+					$value = $meta->hashValue($value, $email);
 				}
 				if (Restriction::hasRestrictions($meta->getRestrictions(), Restriction::R_CONFIRM_DOUBLE)) {
 					$confirmFieldName = Restriction::R_CONFIRM_PREFIX . $meta->getName();
 					// we do not hash the password if it should not be changed on empty and the field is empty
 					if ($newData[$confirmFieldName] || !Restriction::hasRestrictions($meta->getRestrictions(), Restriction::R_NO_EDIT_ON_EMPTY)) {
-						$newData[$confirmFieldName] = $meta->hashValue($newData[$confirmFieldName], $newData);
+						$newData[$confirmFieldName] = $meta->hashValue($newData[$confirmFieldName], $email);
 					}
 				}
 				break;
@@ -600,6 +610,10 @@ class AbstractBasicModel {
 			if ($_FILES[$meta->getName()]['error']) {
 				$this->addMessageField('errors', $meta, tg('Error while uploading file: ') . $_FILES[$meta->getName()]['error']);
 			}
+		}
+		
+		if ($method = $meta->getCheckMethod()) {
+			$this->$method($value, $meta, $newData);
 		}
 		
 	}
@@ -823,7 +837,7 @@ class AbstractBasicModel {
 	 * @param &$meta
 	 */
 	protected function adjustFunctionToLower(&$meta, &$newData) {
-		return strtolower($newData[$meta->getName()]);
+		return strtolower(isset($newData[$meta->getName()]) ? $newData[$meta->getName()] : '');
 	}
 	
 	
@@ -835,8 +849,8 @@ class AbstractBasicModel {
 		$this->addMessage($type, "default", $message);
 	}
 
-	protected function addMessageField($type, &$meta, $message) {
-		$this->addMessage($type, $meta->getName(), tg("Field") . " <strong>" . tg($meta->getLabel()) . "</strong> " . $message . ".");
+	protected function addMessageField($type, $meta, $message, $label='') {
+		$this->addMessage($type, (is_object($meta) ? $meta->getName() : $meta), tg("Field") . " <strong>" . tg(is_object($meta) ? $meta->getLabel() : $label) . "</strong> " . $message . ".");
 	}
 
 	private function adjustFunctionCurrentDateTime(&$meta, &$newData) {

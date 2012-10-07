@@ -118,10 +118,16 @@ class BaseUsersController extends AbstractDefaultController {
 	
 	public function actionEditProfile($args) {
 		$user = Permission::getActualUserInfo();
-		$user->setMetadata('permissions', 'isEditable', ModelMetaItem::NEVER);
-		$user->setMetadata('last_logged', 'isEditable', ModelMetaItem::NEVER);
-		$user->setMetadata('active', 'isEditable', ModelMetaItem::NEVER);
-		$user->setMetadata('private_config', 'isEditable', ModelMetaItem::NEVER);
+		$user->getMetadata('email')
+			->setIsEditable(ModelMetaItem::NEVER);
+		$user->getMetadata('permissions')
+			->setIsEditable(ModelMetaItem::NEVER);
+		$user->getMetadata('last_logged')
+			->setIsEditable(ModelMetaItem::NEVER);
+		$user->getMetadata('active')
+			->setIsEditable(ModelMetaItem::NEVER);
+		$user->getMetadata('private_config')
+			->setIsEditable(ModelMetaItem::NEVER);
 		$form = new Form();
 		$form->setIdentifier('profile');
 		$form->fill($user);
