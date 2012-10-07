@@ -960,6 +960,11 @@ class AbstractBasicModel {
 			case Form::FORM_INPUT_TEXT:
 				$value = htmlspecialchars(Utilities::truncate(strip_tags($value), 30));
 				break;
+			case Form::FORM_INPUT_DATE:
+			case Form::FORM_INPUT_TIME:
+			case Form::FORM_INPUT_DATETIME:
+				$value = str_replace(' ', '&nbsp;', Utilities::dateRelative($value));
+				break;
 			case Form::FORM_CHECKBOX: 
 				$value = "<div style=\"text-align: center;\">" . ($value 
 					? "<img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "24/accept.png\" alt=\"".tg("Yes")."\" />" 
@@ -972,7 +977,9 @@ class AbstractBasicModel {
 			case Form::FORM_TEXTAREA: 
 			case Form::FORM_HTML: 
 			case Form::FORM_HTML_BBCODE:
-				$value = htmlspecialchars(Utilities::truncate(strip_tags($value), 150));
+				$value = '<span title="' . htmlspecialchars(Utilities::truncate(Utilities::stripTags($value), 600)) . '">' 
+					. htmlspecialchars(Utilities::truncate(Utilities::stripTags($value), 150))
+					.'</span>';
 				break;
 			case Form::FORM_SELECT:
 				$newValue = $value;

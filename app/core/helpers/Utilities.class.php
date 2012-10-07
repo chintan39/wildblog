@@ -67,17 +67,17 @@ class Utilities {
 		$prefix = (($timestamp<$now) ? tg('before') : tg('in')) . ' ';
 		$interval = date_diff($timestamp, $now);
 		if ($interval->y)
-			return $prefix.$interval->format('%y '.tg('years'));
+			return $prefix.$interval->format('%y '.tg($interval->y>1 ? 'years' : 'year'));
 		if ($interval->m)
-			return $prefix.$interval->format('%m '.tg('months'));
+			return $prefix.$interval->format('%m '.tg($interval->m>1 ? 'months' : 'month'));
 		if ($interval->d)
-			return $prefix.$interval->format('%d '.tg('days'));
+			return $prefix.$interval->format('%d '.tg($interval->d>1 ? 'days' : 'day'));
 		if ($interval->h)
-			return $prefix.$interval->format('%h '.tg('hours'));
+			return $prefix.$interval->format('%h '.tg($interval->h>1 ? 'hours' : 'hour'));
 		if ($interval->i)
-			return $prefix.$interval->format('%i '.tg('minutes'));
+			return $prefix.$interval->format('%i '.tg($interval->i>1 ? 'minutes' : 'minute'));
 		if ($interval->s)
-			return $prefix.$interval->format('%s '.tg('seconds'));
+			return $prefix.$interval->format('%s '.tg($interval->s>1 ? 'seconds' : 'second'));
 		return tg('now');
 	}
 	
@@ -886,6 +886,12 @@ class Utilities {
 		return base64_encode($iv . mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $value, MCRYPT_MODE_CFB, $iv));
 	}
 	
+	
+	static public function stripTags($value) {
+		$value = strip_tags(str_replace(array('<br', '</p>', '<table'), array("\n\n<br", "\n\n</p>", "\n\n<table"), $value));
+		$value = preg_replace("/(\S)(\n\n)\s+/m", '$1$2', $value);
+		return $value;
+	}
 }
 
 /**
