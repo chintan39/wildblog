@@ -89,14 +89,17 @@ class BaseUsersController extends AbstractDefaultController {
 
 	
 	/**
-	 * Try to login using username (email) and password (will be hashed using MD5).
+	 * Try to login using username (email) and password (will be hashed using MD5 and SHA1 with salt).
+	 * This function tries two hashed passwords, first is pure MD5 and is used for backward compatibility,
+	 * the second is SHA1(MD5($password).$email). Any of the hashes found is success.
 	 * @param string $email email of the user (username)
 	 * @param string $password password of the user (will be hashed using MD5)
 	 * @return object Returns data entry if found, false if not found.
 	 */
 	public function tryLogin($email, $password) {
 		$data = new $this->model();
-		$item = $data->Find($this->model, array('email = ?', 'password = ?'), array($email, $password));
+		$item = $data->Find($this->model, array('email = ?', 'password = ? or password = ?'), 
+			array($email, $password, Utilities::hashPasswordSalt($password, $email)));
 		return $item;
 	}
 

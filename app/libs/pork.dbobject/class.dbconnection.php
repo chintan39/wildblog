@@ -324,6 +324,15 @@ class dbConnection
 		return($this->adapter->getColumns($table));
 	}
 	
+	static public function getTypeSQL($type) {
+		$mainType = strtolower(preg_replace('/^\s*(\w+)\W*(.*)$/', '$1', $type));
+		if (in_array($mainType, array('int', 'varchar'))) {
+			$typeSize = preg_replace('/^\s*(\w+)\W*\((\d+)\)(.*)$/', '$2', $type);
+			if (is_numeric($typeSize))
+				$mainType .= '('.$typeSize.')';
+		}
+		return $mainType;
+	}
 }
 
 
@@ -599,7 +608,7 @@ class PDOAdapter
 		$columns = $columns ? $columns : array();
 		$result = array();
 		foreach ($columns as $column) {
-			$result[] = new ModelMetaColumn(strtolower($column['COLUMN_NAME']), strtolower(preg_replace('/^\s*(\w+)\W*(.*)$/', '$1', $column['COLUMN_TYPE'])));
+			$result[] = new ModelMetaColumn(strtolower($column['COLUMN_NAME']), dbConnection::getTypeSQL($column['COLUMN_TYPE']));
 		}
 		return $result;
 	}

@@ -348,7 +348,7 @@ class Utilities {
 	 * Hash function to hash the password with salt.
 	 */
 	static public function hashPasswordSalt($text, $salt) {
-		return crypt($text, $salt);
+		return sha1($text.$salt);
 	}
 	
 	

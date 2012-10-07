@@ -66,6 +66,7 @@ class ModelMetaItem {
 	private $updateHandleDefault = false;
 	private $uploadMultipleFiles = false;
 	private $isInDb = null;
+	private $useSalt = true;
 	
 	static private $newOrder = 1;
 	
@@ -520,7 +521,22 @@ class ModelMetaItem {
     	
 		return !in_array($this->getType(), $fields_not_in_db);
 	}
+
+	public function hashValue($value, &$newValues) {
+		if ($this->getUseSalt())
+			return Utilities::hashPasswordSalt(Utilities::hashPassword($value), isset($newValues['email']) ? $newValues['email'] : '');
+		else
+			return Utilities::hashPassword($value);
+	}
 	
+	public function setUseSalt($useSalt) {
+		$this->useSalt = $useSalt;
+		return $this;
+	}
+	
+	public function getUseSalt() {
+		return $this->useSalt;
+	}
 }
 
 ?>

@@ -242,6 +242,8 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 	}	
 	
 	
+	
+	
 	/**
 	 * Checks the database and returns the changes.
 	 * @param string $table Name of the table to check
@@ -296,11 +298,11 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 				if ($column->name == $meta->getName()) {
 					unset($dbColumns[$key]);
 					$found = true;
-					$type = preg_replace('/^\s*(\w+)\W*(.*)$/', '$1', $meta->getSqlType());
-					$typeNow = preg_replace('/^\s*(\w+)\W*(.*)$/', '$1', $column->type);
-					if (strcmp(strtolower($typeNow), strtolower($type)) !== 0) {
+					$type = dbConnection::getTypeSQL($meta->getSqlType());
+					$typeNow = $column->type;
+					if (strcmp($typeNow, $type) !== 0) {
 						// typy nesouhlasi
-						$sqlItems[] = 'CHANGE `' . $meta->getName() . '` `' . $meta->getName() . '` ' . $meta->getSqlType() . " /* should be $type, but $typeNow is */";
+						$sqlItems[] = 'CHANGE `' . $meta->getName() . '` `' . $meta->getName() . '` ' . $meta->getSqlType() . " /* should be $type, but is $typeNow */";
 					}
 				}
 			}

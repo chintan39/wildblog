@@ -249,7 +249,8 @@ abstract class AtributesFactory {
 			->setLabel('Password')
 			->setDescription('write your private password')
 			->setType(Form::FORM_INPUT_PASSWORD)
-			->setDefaultValue('');
+			->setDefaultValue('')
+			->setUseSalt(false);
 	}
 
 	/**
@@ -329,7 +330,7 @@ abstract class AtributesFactory {
 			->setType(Form::FORM_INPUT_PASSWORD)
 			->setDefaultValue('')
 			->setIsVisible(ModelMetaItem::NEVER)
-			->setSqlType('varchar(32) NOT NULL')
+			->setSqlType('varchar(40) NOT NULL')
 			->setSqlindex(ModelMetaIndex::INDEX);
 	}
 	

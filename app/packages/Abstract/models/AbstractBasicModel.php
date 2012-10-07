@@ -523,13 +523,13 @@ class AbstractBasicModel {
 				$value = &$newData[$meta->getName()];
 				// we do not hash the password if it should not be changed on empty and the field is empty
 				if ($value || !Restriction::hasRestrictions($meta->getRestrictions(), Restriction::R_NO_EDIT_ON_EMPTY)) {
-					$value = Utilities::hashPassword($value);
+					$value = $meta->hashValue($value, $newData);
 				}
 				if (Restriction::hasRestrictions($meta->getRestrictions(), Restriction::R_CONFIRM_DOUBLE)) {
 					$confirmFieldName = Restriction::R_CONFIRM_PREFIX . $meta->getName();
 					// we do not hash the password if it should not be changed on empty and the field is empty
 					if ($newData[$confirmFieldName] || !Restriction::hasRestrictions($meta->getRestrictions(), Restriction::R_NO_EDIT_ON_EMPTY)) {
-						$newData[$confirmFieldName] = Utilities::hashPassword($newData[$confirmFieldName]);
+						$newData[$confirmFieldName] = $meta->hashValue($newData[$confirmFieldName], $newData);
 					}
 				}
 				break;
