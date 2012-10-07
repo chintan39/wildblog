@@ -64,7 +64,14 @@ div#ajax_loader {
 	z-index: 1000;
 	border: none;
 	margin: 0;
-	padding: 0;
+	padding: 20px;
+	background: #ffffff;
+	border: 1px solid #888888;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 3px 3px 5px #000;
+	-webkit-box-shadow: 3px 3px 5px #000;
+	box-shadow: 3px 3px 5px #000;
 }
 div#ajax_loader img {
 	border: none;
