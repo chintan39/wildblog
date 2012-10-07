@@ -293,6 +293,9 @@ class AbstractDBObjectModel extends AbstractBasicModel
 	 */
 	public function DeleteYourself() { //deletes the current object from database.
 		
+		// erase all links in fields that are Form::FORM_LINK
+		$this->removeLinksFields();
+		
 		// delete all related items too (only RELATION_MANY)
 		foreach ($this->relations as $model => $relation) {
 			if ($relation->relationType == RELATION_MANY) {
@@ -318,6 +321,40 @@ class AbstractDBObjectModel extends AbstractBasicModel
 			// delete all depending items too
 			if ($this->extendedTextsSupport) {
 				dbConnection::getInstance($this->connection)->query("delete from `{$this->tableExt}` where `item` = {$this->id}");
+			}
+		}
+	}
+	
+	/**
+	 * Removes links in all objects that link to this one using Form::FORM_LINK.
+	 */
+	private function removeLinksFields() {
+		foreach (Environment::getPackages() as $package) {
+			$package->loadControllers();
+			$controllers = $package->getControllers();
+			foreach ($controllers as $controller) {
+				if (method_exists($controller, 'removeLinksFieldsSelf'))
+					$controller->removeLinksFieldsSelf($this->package, $this->getNameShort(), $this->id);
+			}
+		}
+	}
+
+	/**
+	 * Removes links in all objects that link to this one using Form::FORM_LINK.
+	 */
+	public function removeLinksFieldsSelf($package, $modelName, $id) {
+		$searchPattern = $package . '::' . $modelName . '::%::' . $id;
+		foreach ($this->getMetadata() as $meta) {
+			if ($meta->getType() == Form::FORM_LINK) {
+				$metaName = $meta->getName();
+				$itemsToEdit = $this->Find($this->getName(), array("$metaName LIKE ?"), array($searchPattern));
+				if ($itemsToEdit) {
+					foreach ($itemsToEdit as $item) {
+						$item->$metaName = Config::Get('HOMEPAGE_ACTION');
+						$item->Save();
+						MessageBus::sendMessage(tg('Deleted item has been removed from item') . ' ' . $item->getName() . '(' . $item->id . ') ' . tg('and replaced by homepage action.'));
+					}
+				}
 			}
 		}
 	}

@@ -271,7 +271,20 @@ class AbstractDefaultController extends AbstractBasicController{
 		}
 		Request::redirect(Request::getLinkSimple($this->package, $this->name, ($isSimple ? 'actionEmpty' : 'actionListing')));
 	}
+
 	
+	/**
+	 * Removes links in all objects that link to this one using Form::FORM_LINK.
+	 */
+	public function removeLinksFieldsSelf($package, $modelName, $id) {
+		if (!$this->model)
+			return;
+
+		$model = new $this->model();
+		if (method_exists($model, 'removeLinksFieldsSelf'))
+			$model->removeLinksFieldsSelf($package, $modelName, $id);
+	}
+
 	
 	/**
 	 *
