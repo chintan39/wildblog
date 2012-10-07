@@ -19,6 +19,7 @@
 
 class AbstractSimpleController extends AbstractDefaultController {
 	
+
 }
 
 ?>

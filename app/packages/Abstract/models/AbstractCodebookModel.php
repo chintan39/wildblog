@@ -45,7 +45,7 @@ class AbstractCodebookModel extends AbstractDefaultModel {
 		$value =& $newData[$meta->getName()];
 		$value = trim($value);
 		if ($source == '') {
-			$source = $this->nameShort;
+			$source = strtolower($this->nameShort);
 		}
 		if ($value == '') {
 			$value = Utilities::makeUrlPartFormat('');

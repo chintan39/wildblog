@@ -46,7 +46,7 @@ class AbstractBasicModel {
     function __construct($id = false) {
     	
     	$this->name = get_class($this);
-    	$this->nameShort = str_replace('model', '', str_replace(strtolower($this->package), '', strtolower(get_class($this))));
+		$this->nameShort = preg_replace('/^' . $this->package . '(.*)Model$/', '$1', get_class($this));
 		$this->attributesDefinition();
 		$this->propertiesDefinition();
 		$this->cleanAttributes();
@@ -965,11 +965,18 @@ class AbstractBasicModel {
 			case Form::FORM_INPUT_DATETIME:
 				$value = str_replace(' ', '&nbsp;', Utilities::dateRelative($value));
 				break;
-			case Form::FORM_CHECKBOX: 
-				$value = "<div style=\"text-align: center;\">" . ($value 
-					? "<img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "24/accept.png\" alt=\"".tg("Yes")."\" />" 
-					: "<img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "24/remove.png\" alt=\"".tg("No")."\" />")
-					."</div>";
+			case Form::FORM_CHECKBOX:
+				if ($meta->getName() == 'active' && Router::hasAction($this->package, $this->nameShort, 'actionToggleActive')) {
+					$value = "<div style=\"text-align: center;\">" . ($value 
+						? "<a href=\"".Request::getLinkItem($this->package, $this->nameShort, 'actionToggleActive', $this, array('token' => Request::$tokenCurrent))."\" title=\"".tg("Disable item")."\" class=\"active_enabled\"><img src=\"" . DIR_COMMON_IMAGES . "transparent.gif\" alt=\"".tg("Yes")."\" style=\"width=24px;height=24px;\" /></a>" 
+						: "<a href=\"".Request::getLinkItem($this->package, $this->nameShort, 'actionToggleActive', $this, array('token' => Request::$tokenCurrent))."\" title=\"".tg("Enable item")."\" class=\"active_disabled\"><img src=\"" . DIR_COMMON_IMAGES . "transparent.gif\" alt=\"".tg("No")."\" style=\"width=24px;height=24px;\" /></a>")
+						."</div>";
+				} else {
+					$value = "<div style=\"text-align: center;\">" . ($value 
+						? "<img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "24/accept.png\" alt=\"".tg("Yes")."\" />" 
+						: "<img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "24/remove.png\" alt=\"".tg("No")."\" />")
+						."</div>";
+				}
 				break;
 			case Form::FORM_INPUT_PASSWORD: 
 				$value = "";

@@ -105,6 +105,14 @@ class AbstractAdminRoutes {
 				->setBranch(Themes::BACK_END)
 				->setPermission($permission);
 		}
+
+		if ($object instanceof AbstractPagesRoutes) {
+			Router::registerAction($object, 'actionToggleActive') 
+				->addRuleUrl($actionsPrefix . 'toggleactive/$')
+				->addRuleGet(array('id'=>'[id]'))
+				->setBranch(Themes::BACK_END)
+				->setPermission($permission);
+		}
 	}
 
 }

@@ -61,6 +61,7 @@ define('PACKAGE_ABSTRACT', 'Abstract');
 
 define('DIR_THEMES', DIR_APP . 'themes/');
 define('DIR_COMMON', DIR_THEMES . 'Common/');
+define('DIR_COMMON_IMAGES', DIR_COMMON . 'images/');
 define('DIR_ICONS_IMAGES_DIR_ORIGINAL', DIR_COMMON . 'images/ico/');
 define('DIR_ICONS_IMAGES_DIR_THUMBS_PATH', DIR_PROJECT_PATH_MEDIA . '.ico/');
 define('DIR_ICONS_IMAGES_DIR_THUMBS_URL', DIR_PROJECT_URL_MEDIA . '.ico/');

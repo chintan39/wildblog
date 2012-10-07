@@ -52,7 +52,6 @@ class AbstractBasicRoutes {
 		AbstractAdminRoutes::setRouter($this);
 	}
 	
-	
 	public function getName() {
 		return $this->name;
 	}

@@ -5,6 +5,25 @@ a.increase {
 	margin-right: 5px;
 }
 
+a.active_enabled, a.active_disabled {
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: 24px;
+	height: 24px;
+	display: block;
+	margin: auto auto;
+}
+
+a.active_disabled:hover,
+a.active_enabled {
+	background-image: url('/media/.ico/24/accept.png');
+}
+
+a.active_enabled:hover,
+a.active_disabled {
+	background-image: url('/media/.ico/24/remove.png');
+}
+
 div.admin_edit {
 	margin: 0px;
 	padding: 0px;

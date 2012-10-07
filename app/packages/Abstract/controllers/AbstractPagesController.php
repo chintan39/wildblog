@@ -72,6 +72,16 @@ class AbstractPagesController extends AbstractNodesController {
 			);
 		return $buttons;
 	}
+
+	public function actionToggleActive($item) {
+		if (Request::checkCsrf()) {
+			$item->active = (int)(!$item->active);
+			$item->Save();
+		} else {
+			MessageBus::sendMessage(tg('Item') . " " . tg('could not be moved.').' '.tg('CSRF protection failed.'));
+		}
+		Request::redirect(Request::getLinkSimple($this->package, $this->name, "actionListing", array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE)));
+	}
 }
 
 ?>

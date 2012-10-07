@@ -125,6 +125,27 @@ class Router {
 
 
 	/**
+	 * @param object $routesObject
+	 * @param string $methodName
+	 * @see addSimpleRule()
+	 */
+	static public function hasAction($package, $routesName, $methodName, $actionType=RouterRule::RULE_ACTION) {
+		// we have to decide if the order is action or subaction and to store it to the right place
+		if ($actionType == RouterRule::RULE_ACTION) {
+			$routes = &self::getInstance()->routesActions;
+		} else {
+			$routes = &self::getInstance()->routesSubactions;
+		}
+		
+		if (!isset($routes[$package])
+			|| !isset($routes[$package][$routesName]) 
+			|| !isset($routes[$package][$routesName][$methodName]))
+				return false;
+		return true;
+	}
+
+
+	/**
 	 * Adds a subaction rule to the set of route rules.
 	 * This is more comfortable version, it is not possible define the rules manualy, 
 	 * rules are parsed from the format of the url, get and post arguments.

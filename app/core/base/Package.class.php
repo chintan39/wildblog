@@ -191,7 +191,14 @@ class Package {
 	 * Returns the controllers array.
 	 * @return array Controllers (array of objects)
 	 */
-	public function getRoutes() {
+	public function getRoutes($search=false) {
+		if ($search) {
+			if (is_string($this->routes[$search])) {
+				$this->createRoutes($search);
+			}
+			return $this->routes[$search];
+		}
+			
 		foreach (array_keys($this->routes) as $routesName) {
 			if (is_string($this->routes[$routesName])) {
 				$this->createRoutes($routesName);
