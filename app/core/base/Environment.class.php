@@ -108,6 +108,7 @@ class Environment {
 	static public $packages=array();		// packages objects list
 	static public $allowedPackages=array();		// packages objects list allowed
 	static public $profiler = null;
+	static public $cacheInvalidation = true;
 	
 	
 	/**
@@ -283,6 +284,14 @@ class Environment {
 	}
 		
 	
+	static public function setCacheInvalidation($cacheInvalidation) {
+		self::$cacheInvalidation = $cacheInvalidation;
+	}
+	
+	
+	static public function getCacheInvalidation() {
+		return self::$cacheInvalidation;
+	}
 }
 
 ?>

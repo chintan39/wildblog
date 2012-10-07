@@ -29,6 +29,7 @@ class BaseSearchController extends AbstractBasicController {
 	
 		$results = array();
 		foreach (Environment::getPackages() as $package) {
+			$package->loadControllers();
 			// Try to get links from all controllers in the package
 			foreach ($package->getControllers() as $controller) {
 				$results[$package->getName().'.'.$controller->getName()] = $controller->getSearchItems($text);

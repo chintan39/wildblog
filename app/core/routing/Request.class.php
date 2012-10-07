@@ -131,7 +131,7 @@ class Request {
 		
 		// check actual APP version with project version, if not the same, DB need to be checked
 		if (Config::Get('PROJECT_STATUS') == PROJECT_READY && strcmp(trim(file_get_contents(VERSION_FILE)), APP_VERSION) != 0) {
-			Config::Set('PROJECT_STATUS', PROJECT_DB_NEED_CHECK, 'Project status', Config::INT, false); 
+			Config::Set('PROJECT_STATUS', PROJECT_DB_NEED_CHECK, 'Project status', Config::INT, false);
 			Environment::getPackage('Base')->getController('Cache')->actionClearCache(null);
 		}
 

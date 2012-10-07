@@ -32,7 +32,7 @@ Config::Set('DEFAULT_LANGUAGE_BACK_END', 'cs');
 Config::Set('DEFAULT_PROJECT_PAGING_LIMIT', DEFAULT_PAGING_LIMIT);
 
 // Cache settings
-Config::Set('ALLOW_CACHE', false);
+Config::Set('ALLOW_CACHE', true);
 
 // path to image on error page
 Config::Set('ERROR_IMAGE_PATH', 'app/error_page.jpg');

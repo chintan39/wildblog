@@ -25,13 +25,18 @@ class BaseCacheController extends AbstractBasicController {
 	}
 	
 	public function actionClearCache($args) {
+		if (!Environment::getCacheInvalidation())
+			return;
 		$this->clearCache(DIR_SMARTY_TEMPLATES_C);
 		$this->clearCache(DIR_MODELS_CACHE);
 		$this->clearCache(DIR_CONTROLLERS_CACHE);
+		$this->removeCacheOnUpdate();
 		$this->assign('message', tg('Cache has been removed.'));
 	}
 
 	private function clearCache($dir) {
+		if (!Environment::getCacheInvalidation())
+			return;
 		$files = scandir($dir);
 		foreach ($files as $file) {
 			if (is_dir($dir . $file)) {
@@ -57,6 +62,38 @@ class BaseCacheController extends AbstractBasicController {
 				'action' => 'actionClearCache')));
 		$link->setOrder($this->order);
 		return array($link);
+	}
+
+
+	private function getFileNameCacheOnUpdate() {
+		return DIR_CONTROLLERS_CACHE . 'removeOnUpdate';
+	}
+	
+	private function getFileContentCacheOnUpdate() {
+		$fileName = $this->getFileNameCacheOnUpdate();
+		if (Config::Get('ALLOW_CACHE') && file_exists($fileName)) {
+			$ids = unserialize(file_get_contents($fileName));
+		} else {
+			$ids = array();
+		}
+		return $ids;
+	}
+
+	
+	private function removeCacheOnUpdate() {
+		$ids = $this->getFileContentCacheOnUpdate();
+		foreach ($ids as $file) {
+			if (is_file($file))
+				unlink($file);
+		}
+	}
+
+	public function addCacheRemoveOnUpdate($fileToRemove) {
+		$ids = $this->getFileContentCacheOnUpdate();
+		$ids = array_unique(array_merge($ids, array($fileToRemove)));
+		$fileName = $this->getFileNameCacheOnUpdate();
+		file_put_contents($fileName, serialize($ids));
+		chmod($fileName, 0600);
 	}
 
 }

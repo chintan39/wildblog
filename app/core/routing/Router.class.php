@@ -239,7 +239,9 @@ class Router {
 				$visitors = $visitors[0];
 			}
 			$visitors->text++;
+			Environment::setCacheInvalidation(false);
 			$visitors->Save();
+			Environment::setCacheInvalidation(true);
 		}
 	}
 	

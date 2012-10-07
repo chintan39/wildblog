@@ -77,6 +77,80 @@ class AbstractBasicController {
 	public function getSearchItems($text) {
 		return array();
 	}
+
+	protected function getCacheFile($cacheIdentification) {
+		return DIR_CONTROLLERS_CACHE . $this->package . '__' . $this->name . '__' . $cacheIdentification . '.inc';
+	}
+	
+	protected function getAllCacheFiles() {
+		$result = array();
+		foreach (scandir(DIR_CONTROLLERS_CACHE) as $file) {
+			if (is_file(DIR_CONTROLLERS_CACHE . $file) && preg_match('/^' . $this->package . '__' . $this->name . '__/', $file)) {
+				$result[] = DIR_CONTROLLERS_CACHE . $file;
+			}
+		}
+		return $result;
+	}
+	
+	protected function removeAllCacheFiles() {
+		foreach ($this->getAllCacheFiles() as $file) {
+			unlink($file);
+		}
+	}
+	
+	protected function loadCache($cacheIdentification) {
+		if (Config::Get('ALLOW_CACHE') && file_exists($this->getCacheFile($cacheIdentification))) {
+			return unserialize(file_get_contents($this->getCacheFile($cacheIdentification)));
+		} else {
+			return false;
+		}
+	}
+	
+	private function cacheRemoveNeedlessParts(&$data) {
+		if (is_object($data) && (get_class($data) == 'ItemCollection' 
+			|| is_subclass_of($data, 'ItemCollection') 
+			|| is_subclass_of($data, 'AbstractDefaultModel')
+			|| is_subclass_of($data, 'AbstractDefaultController')))
+		{
+			return $data->removeNeedlessParts();
+		} elseif (is_array($data)) {
+			$result = array();
+			foreach ($data as $key => $item) {
+				$result[$key] = $this->removeNeedlessParts($item);
+			}
+		} else {
+			return $data;
+		} 
+	}
+	
+	protected function saveCache($cacheIdentification, $data, $modelsAffected = array(), $notRemoveNeedless=false) {
+		if (!Config::Get('ALLOW_CACHE')) {
+			return;
+		}
+		if ($notRemoveNeedless)
+			file_put_contents($this->getCacheFile($cacheIdentification), serialize($data));
+		else
+			file_put_contents($this->getCacheFile($cacheIdentification), serialize($this->cacheRemoveNeedlessParts($data)));
+		foreach ($modelsAffected as $m) {
+			if ($m == 'Static') {
+				Environment::getPackage('Base')->getController('Cache')->addCacheRemoveOnUpdate($this->getCacheFile($cacheIdentification));
+			} else {
+				$mo = new $m();
+				$mo->cacheAddAffected($this->getCacheFile($cacheIdentification));
+			}
+		}
+		chmod($this->getCacheFile($cacheIdentification), 0600);
+	}
+	
+	protected function invalidateCache() {
+		$this->removeAllCacheFiles();
+	}
+
+	public function removeNeedlessParts() {
+		$clone = clone $this;
+		$this->tpl = null;
+		return $clone;
+	}
 }
 
 ?>
