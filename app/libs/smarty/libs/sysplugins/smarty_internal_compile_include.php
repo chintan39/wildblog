@@ -62,6 +62,9 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase {
     {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
+        // don't include another template if request is ajax, unless ajax parameter is true
+        if (Request::isAjax() && (!isset($_attr['ajax']) || !$_attr['ajax']))
+        	return '';
         // save posible attributes
         $include_file = $_attr['file'];
 

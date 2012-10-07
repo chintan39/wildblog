@@ -1,0 +1,13 @@
+diff -up libs/sysplugins/smarty_internal_compile_include.php.orig libs/sysplugins/smarty_internal_compile_include.php
+--- libs/sysplugins/smarty_internal_compile_include.php.orig	2012-10-07 08:41:34.360307908 +0200
++++ libs/sysplugins/smarty_internal_compile_include.php	2012-10-07 08:54:58.124557115 +0200
+@@ -62,6 +62,9 @@ class Smarty_Internal_Compile_Include ex
+     {
+         // check and get attributes
+         $_attr = $this->getAttributes($compiler, $args);
++        // don't include another template if request is ajax, unless ajax parameter is true
++        if (Request::isAjax() && (!isset($_attr['ajax']) || !$_attr['ajax']))
++        	return '';
+         // save posible attributes
+         $include_file = $_attr['file'];
+ 
