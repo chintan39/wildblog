@@ -82,8 +82,10 @@ class MessageBus {
 		
 		// TODO: what if user is not logged? message cannot be logged.. ... save Utilities::generatePassword() to session
 		// TODO: add segment - to separate form messages from system-wide ones
-		if ($recipient === false)
-			$recipient = 'user::' . Permission::getActualUserId();
+		if ($recipient === false) {
+			$userId = Permission::getActualUserId();
+			$recipient = is_numeric($userId) ? ('user::' . $userId) : $userId;
+		}
 		
 		self::loadBuffer($recipient);
 

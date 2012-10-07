@@ -83,6 +83,27 @@ class Utilities {
 	
 	
 	/**
+	 * This returns time period in reasonable text string (translated using tg).
+	 * @return number $seconds time period in seconds
+	 */
+	static public function timePeriodRelative($seconds) {
+		if ($seconds > 60*60*24*365)
+			return ($seconds / (60*60*24*365)) . ' ' . tg('years');
+		if ($seconds > 60*60*24*31)
+			return ($seconds / (60*60*24*12)) . ' ' . tg('months');
+		if ($seconds > 60*60*24*7)
+			return ($seconds / (60*60*24*12)) . ' ' . tg('weeks');
+		if ($seconds > 60*60*24)
+			return ($seconds / (60*60*24)) . ' ' . tg('days');
+		if ($seconds > 60*60)
+			return ($seconds / (60*60)) . ' ' . tg('hours');
+		if ($seconds > 60)
+			return ($seconds / 60) . ' ' . tg('minutes');
+		return $seconds . ' ' . tg('seconds');
+	}
+	
+	
+	/**
 	 * Convert digit place of the number to the nice form and retuns units as the second parameter.
 	 * For example input 10029 (with precision 1) will be changed to 10.1 and unit will be kB.
 	 * @param float &$value Number to convert (will be changed).

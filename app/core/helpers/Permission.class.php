@@ -96,6 +96,9 @@ class Permission {
 	static public function clearSession() {
 		unset($_SESSION['actualUserId']);
 		unset($_SESSION['timeout_idle']);
+		MessageBus::sendMessage(tg('You have been logged out due to inactivity for #$time#',
+			array('time' => Utilities::timePeriodRelative(Config::Get('SESSION_TIMEOUT')))), 
+			false, false, self::getUserIdFromSession());
 		Request::redirect(Request::getLinkSimple('Base', 'Users', 'actionLogin'));
 	}
 	
@@ -106,7 +109,7 @@ class Permission {
 //			throw new Exception("timeout_idle session value not defined");
 			$_SESSION['timeout_idle'] = time() + Config::Get('SESSION_TIMEOUT');
 		} else {
-			if ($_SESSION['timeout_idle'] < time()) {   
+			if ($_SESSION['timeout_idle'] < time()) {
 				//destroy session
 				self::clearSession();
 			} else {

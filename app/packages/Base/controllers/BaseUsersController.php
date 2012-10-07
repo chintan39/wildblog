@@ -76,7 +76,6 @@ class BaseUsersController extends AbstractDefaultController {
 		$form->handleRequest($sendAjax ? array() : $adminHome, tg('You have been logged successfully.'));
 		$this->assign($form->getIdentifier(), $form->toArray());
 		$_SESSION['login_redirect'] = $sessionLink;
-		//$this->display('login', Themes::BACK_END);
 	}
 
 
