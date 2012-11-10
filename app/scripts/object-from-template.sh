@@ -31,24 +31,26 @@ createpackage() {
 	echo "Done."
 }
 
-createclass() {
+createclasses() {
 	# this function creates trio of model/controller/routes objects
         # name of the package is retrived from actual directory name
 
 	if ! ls controllers routes models>/dev/null 2>&1 ; then
 		echo "This command has to be run inside package directory (cd app/packages/somepackage)."
+		echo "You may want to run `basename $0` create-package."
 		exit 1
 	fi
 
-	if [ $# -lt 2 ] ; then
+	if [ $# -lt 1 ] ; then
 		echo "Object name has to be specified for create-classes"
 		usage
 	fi
 
         PACKAGE=`basename $(pwd)`
         PACKAGE_UPPER=`echo $PACKAGE | tr '[a-z]' '[A-Z]'`
-	OBJECT=$2
+	OBJECT=$1
         OBJECT_UPPER=`echo $OBJECT | tr '[a-z]' '[A-Z]'`
+        OBJECT_LOWER=`echo $OBJECT | tr '[A-Z]' '[a-z]'`
 
 	echo "Creating controller/model/routes objects for object $OBJECT in package $PACKAGE ..."
 
@@ -56,18 +58,21 @@ createclass() {
             -e "s/PackageName/$PACKAGE/" \
             -e "s/OBJECTNAME/$OBJECT_UPPER/" \
             -e "s/ObjectName/$OBJECT/" \
+            -e "s/objectname/$OBJECT_LOWER/" \
             <"../templates/controllers/PackageNameObjectNameController.php" >"controllers/${PACKAGE}${OBJECT}Controller.php"
 
 	sed -e "s/PACKAGENAME/$PACKAGE_UPPER/" \
             -e "s/PackageName/$PACKAGE/" \
             -e "s/OBJECTNAME/$OBJECT_UPPER/" \
             -e "s/ObjectName/$OBJECT/" \
+            -e "s/objectname/$OBJECT_LOWER/" \
             <"../templates/models/PackageNameObjectNameModel.php" >"models/${PACKAGE}${OBJECT}Model.php"
 
 	sed -e "s/PACKAGENAME/$PACKAGE_UPPER/" \
             -e "s/PackageName/$PACKAGE/" \
             -e "s/OBJECTNAME/$OBJECT_UPPER/" \
             -e "s/ObjectName/$OBJECT/" \
+            -e "s/objectname/$OBJECT_LOWER/" \
             <"../templates/routes/PackageNameObjectNameRoutes.php" >"routes/${PACKAGE}${OBJECT}Routes.php"
 
         echo "Please see controllers/${PACKAGE}${OBJECT}Controller.php,"
@@ -88,7 +93,7 @@ if [ "$1" == "create-package" ] ; then
 fi
 
 if [ "$1" == "create-classes" ] ; then
-        createclasses
+        createclasses $2
 	exit 0
 fi
 
