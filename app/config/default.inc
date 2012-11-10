@@ -8,6 +8,7 @@ date_default_timezone_set('Europe/Prague');
 
 // version of the application
 define('APP_VERSION', '0.4.10');
+define('APP_VERSION', '0.4.11');
 define('APP_GENERATOR_NAME', 'WildBlog');
 
 define('DIR_APP', 'app/');
