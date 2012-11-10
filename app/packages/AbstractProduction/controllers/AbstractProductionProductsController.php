@@ -43,12 +43,12 @@ class AbstractProductionProductsController extends AbstractPagesController {
 			$categoryLink = new Link(array(
 				//'link' => Request::getLinkItem($this->package, "Categories", "actionCategoryDetail", $product->categoryItems[0]), 
 				'label' => $product->categoryItems[0]->title, 
-				'title' => $product->categoryItems[0]->title),
+				'title' => $product->categoryItems[0]->title,
 				'action' => array(
 					'package' => $this->package, 
 					'controller' => "Categories", 
 					'action' => 'actionCategoryDetail',
-					'item' => $product->categoryItems[0]));
+					'item' => $product->categoryItems[0])));
 			$navigation->addLink($categoryLink);
 		}
 		$this->assign("navigation", $navigation->getLinks());
