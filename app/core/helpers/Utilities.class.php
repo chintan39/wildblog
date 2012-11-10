@@ -22,6 +22,7 @@
  */
 
 class Utilities {
+
 	/**
 	 * This returns the actual date and time in the DB format (YYYY-mm-dd HH:ii:ss).
 	 * @return string Present data and time in the DB format (YYYY-mm-dd HH:ii:ss).
@@ -29,8 +30,17 @@ class Utilities {
 	static public function now() {
 		return date("Y-m-d H:i:s");
 	}
-	
-	
+
+
+	/**
+	 * This returns the actual date in the DB format (YYYY-mm-dd).
+	 * @return string Present data and time in the DB format (YYYY-mm-dd).
+	*/
+	static public function dateNow() {
+		return date('Y-m-d');
+	}
+
+
 	/**
 	 * This returns month's long name.
 	 * @return number $number month number
