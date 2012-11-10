@@ -416,6 +416,36 @@ abstract class AtributesFactory {
 	}
 		
 	/**
+	 * Attribute Date from in YYYY-MM-DD format
+	 */
+	static public function stdDateFrom() {
+		return self::create('date_from')
+			->setLabel('Date from')
+			->setDescription('write or select a date using an icon')
+			->setType(Form::FORM_INPUT_DATE)
+			->setDefaultValue('0000-00-00')
+			->setSqlType('date NOT NULL DEFAULT \'0000-00-00\'')
+			->setSqlindex(ModelMetaIndex::INDEX)
+			->setAdjustMethod('CurrentDateOnEmpty')
+			->setIsAutoFilled(ModelMetaItem::ALWAYS);
+	}
+		
+	/**
+	 * Attribute Date to in YYYY-MM-DD format
+	 */
+	static public function stdDateTo() {
+		return self::create('date_to')
+			->setLabel('Date to')
+			->setDescription('write or select a date using an icon')
+			->setType(Form::FORM_INPUT_DATE)
+			->setDefaultValue('0000-00-00')
+			->setSqlType('date NOT NULL DEFAULT \'0000-00-00\'')
+			->setSqlindex(ModelMetaIndex::INDEX)
+			->setAdjustMethod('CurrentDateOnEmpty')
+			->setIsAutoFilled(ModelMetaItem::ALWAYS);
+	}
+		
+	/**
 	 * Attribute Link - URL
 	 */
 	static public function stdLink() {
@@ -620,6 +650,18 @@ abstract class AtributesFactory {
 		return self::create('ip')
 			->setLabel('IP')
 			->setDescription('IP address')
+			->setType(Form::FORM_INPUT_TEXT)
+			->setDefaultValue('')
+			->setSqlType('varchar(255) NOT NULL');
+	}
+	
+	/**
+	 * Attribute location. Currently only text field, but there can be something
+	 * for location search or some integration with Google Maps in the future.
+	 */
+	static public function stdLocation() {
+		return self::create('location')
+			->setLabel('Location')
 			->setType(Form::FORM_INPUT_TEXT)
 			->setDefaultValue('')
 			->setSqlType('varchar(255) NOT NULL');

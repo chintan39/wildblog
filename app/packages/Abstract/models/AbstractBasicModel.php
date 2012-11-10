@@ -864,6 +864,13 @@ class AbstractBasicModel {
 		return false;
 	}
 	
+	private function adjustFunctionCurrentDateOnEmpty(&$meta, &$newData) {
+		if (!$this->id && (!array_key_exists($meta->getName(), $newData) || trim($newData[$meta->getName()]) == '')) {
+			return Utilities::dateNow();
+		}
+		return false;
+	}
+	
 	protected function adjustFunctionNewTokenOnNew(&$meta, &$newData) {
 		if (!$this->id && (!array_key_exists($meta->getName(), $newData) || trim($newData[$meta->getName()]) == '')) {
 			return Utilities::generateToken();

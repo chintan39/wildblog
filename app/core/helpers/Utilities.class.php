@@ -896,7 +896,6 @@ class Utilities {
 		return base64_encode($iv . mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $value, MCRYPT_MODE_CFB, $iv));
 	}
 	
-	
 	static public function stripTags($value) {
 		$value = strip_tags(str_replace(array('<br', '</p>', '<table'), array("\n\n<br", "\n\n</p>", "\n\n<table"), $value));
 		$value = preg_replace("/(\S)(\n\n)\s+/m", '$1$2', $value);
