@@ -21,13 +21,6 @@ class AttendanceEventsController extends AbstractNodesController {
 	
 	var $detailMethodName = 'actionDetail';
 
-	/**
-	 * Returns all articles, that should be in Sitemap.
-	 */
-	public function getLinksSitemap() {
-		return $this->getItemsLinksDefault();
-	}
-	
 	public function actionDetail($event) {
 		
 		// event detail processing
@@ -55,6 +48,13 @@ class AttendanceEventsController extends AbstractNodesController {
 			'action' => 'actionDetail',
 			'item' => $event)));
 		$this->assign($form->getIdentifier(), $form->toArray());
+	}
+	
+	/**
+	 * Returns all articles, that should be in Sitemap.
+	 */
+	public function getLinksSitemap() {
+		return $this->getItemsLinksDefault(array(), array('actionDetail' => tg('Registration for event')));
 	}
 }
 
