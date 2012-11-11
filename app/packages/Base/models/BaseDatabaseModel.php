@@ -409,7 +409,7 @@ class BaseDatabaseModel extends AbstractVirtualModel {
 		
 		// Compare columns in DB and columns according model definition 
 		foreach ($metadata as $meta) {
-			if ($meta->getIsInDB()) {
+			if (!$meta->getIsInDB()) {
 				continue;
 			}
 			if ($model->extendedTextsSupport && ($ext && !$meta->getExtendedTable() || !$ext && $meta->getExtendedTable())) {

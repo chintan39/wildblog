@@ -107,9 +107,12 @@ class BaseDatabaseController extends AbstractDefaultController {
 		if (isset($_GET['doChangesInDB']) && $_GET['doChangesInDB'] == 1) {
 			$errors = array();
 			if (BaseDatabaseModel::doMultipleQueries($checkSQL, $errors)) {
-				file_put_contents(VERSION_FILE, APP_VERSION);
+				if (!file_put_contents(VERSION_FILE, APP_VERSION))
+					throw new Exception('Version file '.VERSION_FILE.' could not be updated.');
 				Request::redirect(Request::getSameLink(array('doChangesInDB' => '0')));
 				exit;
+			} else {
+				throw new Exception("Multiple queries failed to be executed in check DB:\n".implode("\n", $errors));
 			}
 		}
 		$this->assign("title", "Database Check SQL for database");

@@ -166,11 +166,64 @@ class dbConnection
 				break;
 		}
 		if ($this->insertID != false) { return ($this->insertID); }
-
 		return true;
-		
 	}
 
+	private function multyQuery ($queryBlock, $delimiter = ';' ) {
+		$inString = false;
+		$escChar = false;
+		$sql = '';
+		$stringChar = '';
+		$queryLine = array();
+		$sqlRows = explode ( "\n", $queryBlock );
+		$delimiterLen = strlen ( $delimiter );
+		do {
+			$sqlRow = current ( $sqlRows ) . "\n";
+			$sqlRowLen = strlen ( $sqlRow );
+			for ( $i = 0; $i < $sqlRowLen; $i++ ) {
+				if ( ( substr ( ltrim ( $sqlRow ), $i, 2 ) === '--' || substr ( ltrim ( $sqlRow ), $i, 1 ) === '#' ) && !$inString ) {
+					break;
+				}
+				$znak = substr ( $sqlRow, $i, 1 );
+				if ( $znak === '\'' || $znak === '"' ) {
+					if ( $inString ) {
+						if ( !$escChar && $znak === $stringChar ) {
+							$inString = false;
+						}
+					}
+					else {
+						$stringChar = $znak;
+						$inString = true;
+					}
+				}
+				if ( $znak === '\\' && substr ( $sqlRow, $i - 1, 2 ) !== '\\\\' ) {
+					$escChar = !$escChar;
+				}
+				else {
+					$escChar = false;
+				}
+				if ( substr ( $sqlRow, $i, $delimiterLen ) === $delimiter ) {
+					if ( !$inString ) {
+						$sql = trim ( $sql );
+						$delimiterMatch = array();
+						if ( preg_match ( '/^DELIMITER[[:space:]]*([^[:space:]]+)$/i', $sql, $delimiterMatch ) ) {
+							$delimiter = $delimiterMatch [1];
+							$delimiterLen = strlen ( $delimiter );
+						}
+						else {
+							$queryLine [] = $sql;
+						}
+						$sql = '';
+						continue;
+					}
+				}
+				$sql .= $znak;
+			}
+		} while ( next( $sqlRows ) !== false );
+		
+		return $queryLine;
+	}
+	
 	/**
 	 * dbConnection::multipleQueries()
 	 * Execute multiple passed queries on the database
@@ -179,13 +232,15 @@ class dbConnection
 	 */
 	public function multipleQueries($sql, &$errors=null) 
 	{
-		$queries = preg_split("/;+(?=([^'|^\\\']*['|\\\'][^'|^\\\']*['|\\\'])*[^'|^\\\']*[^'|^\\\']$)/", $sql);
+		$queries = $this->multyQuery($sql);
+		//$queries = preg_split("/;+(?=([^'|^\\\']*['|\\\'][^'|^\\\']*['|\\\'])*[^'|^\\\']*[^'|^\\\']$)/", $sql);
 		$result = true;
 		foreach ($queries as $query) {
 		   if (strlen(trim($query)) > 0) {
 		   	   $newRes = $this->query($query);
-		   	   if (!$newRes && $errors !== null)
+		   	   if (!$newRes && $errors !== null) {
 		   	   	   $errors[] = $query;
+		   	   }
 		   	   $result = $result && $newRes;
 		   }
 		}
@@ -560,6 +615,8 @@ class PDOAdapter
 				return $this->getError() == '00000';
 			else
 				return ($input !== false);
+			//$input = $this->fetchOne('show tables like \''.$table.'\'');
+			//return ($input && $input[0]);
 		} catch (DBQueryException $e) {
 			return false;
 		}
