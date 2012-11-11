@@ -103,7 +103,8 @@ class BaseDatabaseController extends AbstractDefaultController {
 	 */
 	public function actionDbCheckSimple() {
 		$this->assign('action', '<p><a href="?doChangesInDB=1">Do changes in DB.</a></p>');
-		$checkSQL = BaseDatabaseModel::getCheckDbSQL($this->getMainListIdentifier(), $this);
+		$versionFileWritable=is_writable(VERSION_FILE)?'':('-- !!!! Version file '.VERSION_FILE.' is not writeable !!!!'."\n\n");
+		$checkSQL = $versionFileWritable.BaseDatabaseModel::getCheckDbSQL($this->getMainListIdentifier(), $this);
 		if (isset($_GET['doChangesInDB']) && $_GET['doChangesInDB'] == 1) {
 			$errors = array();
 			if (BaseDatabaseModel::doMultipleQueries($checkSQL, $errors)) {
