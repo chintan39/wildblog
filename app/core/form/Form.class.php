@@ -768,12 +768,12 @@ class Form {
 				if (is_array($oldItems)) {
 					foreach ($oldItems as $oldItem) {
 						// the item is no more connected
-						if (array_key_exists($field, $this->req) && is_array($this->req[$field]) && !in_array($oldItem->id, $this->req[$field])) {
-							$this->dataModel->Disconnect($oldItem);
-							$connectChange .= "- {$oldItem->id}\n";
-						} else {
+						if (array_key_exists($field, $this->req) && is_array($this->req[$field]) && in_array($oldItem->id, $this->req[$field])) {
 							// if the item is connected and the connection should remain, store the Id for the future
 							$oldIds[] = $oldItem->id;
+						} else {
+							$this->dataModel->Disconnect($oldItem);
+							$connectChange .= "- {$oldItem->id}\n";
 						}
 					}
 				}

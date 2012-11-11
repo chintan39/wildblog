@@ -27,7 +27,7 @@ class AttendanceEventsController extends AbstractNodesController {
 		$event->addNonDbProperty('participants');
 		$event->addNonDbProperty('participantsCount');
 		$event->participants = $event->Find('AttendanceParticipantsModel');
-		$event->participantsCount = count($event->participants);
+		$event->participantsCount = $event->participants ? count($event->participants) : 0;
 
 		// assign to template
 		$this->assign('title', $event->title);

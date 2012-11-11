@@ -72,6 +72,8 @@ class Utilities {
 	 * @return number $timestamp time in any format
 	 */
 	static public function dateRelative($timestamp) {
+		if (!function_exists('date_diff'))
+			return date('j. n. Y', $timestamp);
 		$now = date_create();
 		$timestamp = (((int)$timestamp) > 10000) ? date_create('@'.$timestamp) : date_create($timestamp);
 		$prefix = (($timestamp<$now) ? tg('before') : tg('in')) . ' ';

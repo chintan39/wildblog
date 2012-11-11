@@ -455,6 +455,7 @@ class FormFieldMultiSelect extends FormFieldSelect {
 			$this->html .= "<option value=\"" . $o["id"] . "\"". ((in_array($o["id"], $this->value)) ? " selected=\"selected\"" : ""). (array_key_exists("disabled", $o) && $o["disabled"] ? " disabled=\"disabled\"" : "") .">" . $o["value"] . "</option>\n";
 		}
 		$this->html .= "</select>";
+		$this->html .= "<a href=\"#\" onclick=\"\$\$('#" . $this->getIdValue() . " option').find(function(ele){ele.selected=false;}); return false;\" title=\"Clear item\"><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "24/remove.png\" alt=\"Clear item\" /></a>\n";
 		if ($this->meta->getSelector()) {
 			$this->html .= "<div " . $this->getIdAttr('container') . " class=\"selector\"></div>\n";
 		}
