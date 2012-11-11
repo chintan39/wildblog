@@ -30,7 +30,7 @@ define('DIR_PACKAGES', DIR_APP . 'packages/');
 define('DIR_PROJECT_PACKAGES', DIR_PROJECT_PATH . 'packages/');
 define('DIR_CONFIG', DIR_APP . 'config/');
 define('DIR_PROJECT_CONFIG', DIR_PROJECT_PATH . 'config/');
-define('SUBDIR_MEDIA', 'media/');
+define('SUBDIR_MEDIA', '/media/');
 define('SUBDIR_THUMBS', '.thumbs/');
 define('DIR_PROJECT_URL_MEDIA', SUBDIR_MEDIA);
 define('DIR_PROJECT_URL_MEDIA_THUMBS', DIR_PROJECT_URL_MEDIA . SUBDIR_THUMBS);
