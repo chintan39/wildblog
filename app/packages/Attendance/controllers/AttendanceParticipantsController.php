@@ -19,11 +19,8 @@
 
 class AttendanceParticipantsController extends AbstractSimpleController {
 	
-	/**
-	 * Returns all articles, that should be in Sitemap.
-	 */
-	public function getLinksSitemap() {
-		return $this->getItemsLinksDefault();
+	public function getLinksAdminMenuLeft() {
+		return AbstractAdminController::getLinksAdminMenuLeft($this);
 	}
 }
 

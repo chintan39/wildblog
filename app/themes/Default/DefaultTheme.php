@@ -25,6 +25,10 @@ class DefaultTheme extends AbstractTheme {
 	var $name = 'Default';
 	
 	var $templatesDependency = array(
+		'Attendance.eventDetail' => array(
+			'Base.part.header', 
+			'Base.part.footer',
+			),
 		'Base.index' => array(
 			'Base.part.header', 
 			'Base.part.footer',

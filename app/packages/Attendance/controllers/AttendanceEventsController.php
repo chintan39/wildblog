@@ -19,11 +19,42 @@
 
 class AttendanceEventsController extends AbstractNodesController {
 	
+	var $detailMethodName = 'actionDetail';
+
 	/**
 	 * Returns all articles, that should be in Sitemap.
 	 */
 	public function getLinksSitemap() {
 		return $this->getItemsLinksDefault();
+	}
+	
+	public function actionDetail($event) {
+		
+		// event detail processing
+		$event->addNonDbProperty('participants');
+		$event->addNonDbProperty('participantsCount');
+		$event->participants = $event->Find('AttendanceParticipantsModel');
+		$event->participantsCount = count($event->participants);
+
+		// assign to template
+		$this->assign('title', $event->title);
+		$this->assign('pageTitle', $event->title . ' | ' . tp('Project Title Short'));
+		$this->assign('event', $event);
+		
+		$registration = new AttendanceRegistrationModel();
+		$registration->event = $event;
+		$form = new Form();
+		$form->useRecaptcha(true);
+		$form->setIdentifier('registrationForm');
+		$form->fill($registration);
+		$form->setLabel(tg('Register'));
+		// handeling the form request
+		$form->handleRequest(array('all' => array(
+			'package' => $this->package, 
+			'controller' => $this->name, 
+			'action' => 'actionDetail',
+			'item' => $event)));
+		$this->assign($form->getIdentifier(), $form->toArray());
 	}
 }
 

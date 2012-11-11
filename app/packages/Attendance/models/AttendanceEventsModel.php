@@ -20,7 +20,7 @@
 class AttendanceEventsModel extends AbstractNodesModel {
 
 	var $package = 'Attendance';
-	var $icon = 'comment', $table = 'events';
+	var $icon = 'newsletter', $table = 'events';
 
     protected function attributesDefinition() {
     	

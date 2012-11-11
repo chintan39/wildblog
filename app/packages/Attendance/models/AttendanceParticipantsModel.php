@@ -20,7 +20,7 @@
 class AttendanceParticipantsModel extends AbstractSimpleModel {
 
 	var $package = 'Attendance';
-	var $icon = 'comment', $table = 'participants';
+	var $icon = 'user', $table = 'participants';
 
     protected function attributesDefinition() {
     	
@@ -44,6 +44,13 @@ class AttendanceParticipantsModel extends AbstractSimpleModel {
         $this->addCustomRelationMany('AttendanceEventsModel', 'AttendanceEventsParticipantsModel', 'participant', 'event');
     }
 
+    /**
+     * Method creates the title used in the select box.
+     * @return string title of the item to use in the select box
+     */
+    public function makeSelectTitle() {
+    	return implode(' ', array($this->surname, $this->surname, '(' . $this->email . ')'));
+    }
 } 
 
 ?>

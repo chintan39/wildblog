@@ -32,6 +32,9 @@ class AttendanceEventsRoutes extends AbstractNodesRoutes {
 
 		AbstractAdminRoutes::setRouter($this);
 		
+		Router::registerAction($this, 'actionDetail')
+			->addRuleUrl('event/[url]/$')
+			->setTemplate('eventDetail');
 	}
 	
 
