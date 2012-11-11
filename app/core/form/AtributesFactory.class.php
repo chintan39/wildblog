@@ -666,6 +666,17 @@ abstract class AtributesFactory {
 			->setDefaultValue('')
 			->setSqlType('varchar(255) NOT NULL');
 	}
+	
+	/**
+	 * Attribute phone. Currently no checks are done.
+	 */
+	static public function stdPhone() {
+		return self::create('phone')
+			->setLabel('Phone')
+			->setType(Form::FORM_INPUT_TEXT)
+			->setDefaultValue('')
+			->setSqlType('varchar(32) NOT NULL');
+	}
 }
 
 ?>

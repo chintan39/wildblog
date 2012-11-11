@@ -17,7 +17,7 @@
 */
 
 
-class AttendanceParticipantsModel extends AbstractPagesModel {
+class AttendanceParticipantsModel extends AbstractSimpleModel {
 
 	var $package = 'Attendance';
 	var $icon = 'comment', $table = 'participants';
@@ -32,6 +32,8 @@ class AttendanceParticipantsModel extends AbstractPagesModel {
     	$this->addMetaData(AtributesFactory::stdFirstname());
     	
     	$this->addMetaData(AtributesFactory::stdSurname());
+    	
+    	$this->addMetaData(AtributesFactory::stdPhone());
     	
     }
 

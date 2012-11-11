@@ -17,7 +17,7 @@
 */
 
 
-class AttendanceEventsModel extends AbstractPagesModel {
+class AttendanceEventsModel extends AbstractNodesModel {
 
 	var $package = 'Attendance';
 	var $icon = 'comment', $table = 'events';
@@ -25,6 +25,10 @@ class AttendanceEventsModel extends AbstractPagesModel {
     protected function attributesDefinition() {
     	
     	parent::attributesDefinition();
+
+		$this->addMetaData(AtributesFactory::stdText()->setSqlindex(ModelMetaIndex::FULLTEXT));
+
+		$this->addMetaData(AtributesFactory::stdDescription()->setSqlindex(ModelMetaIndex::FULLTEXT));
 
 		$this->addMetaData(AtributesFactory::stdDateFrom());
 		

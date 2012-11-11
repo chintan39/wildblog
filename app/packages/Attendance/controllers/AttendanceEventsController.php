@@ -17,7 +17,7 @@
 */
 
 
-class AttendanceEventsController extends AbstractPagesController {
+class AttendanceEventsController extends AbstractNodesController {
 	
 	/**
 	 * Returns all articles, that should be in Sitemap.

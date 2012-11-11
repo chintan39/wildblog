@@ -17,7 +17,7 @@
 */
 
 
-class AttendanceParticipantsController extends AbstractPagesController {
+class AttendanceParticipantsController extends AbstractSimpleController {
 	
 	/**
 	 * Returns all articles, that should be in Sitemap.

@@ -17,7 +17,7 @@
 */
 
 
-class AttendanceParticipantsRoutes extends AbstractPagesRoutes {
+class AttendanceParticipantsRoutes extends AbstractSimpleRoutes {
 	
 
 	/**
