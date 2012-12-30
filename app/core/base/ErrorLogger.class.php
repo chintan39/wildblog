@@ -163,8 +163,10 @@ class ErrorLogger {
 		if ((@filemtime(self::$logFileTmp) < strtotime('-' . self::$config['emails_notify_limit_minutes'] . ' MINUTES') )
 			|| ((strlen($tmpFileContent) / 1024) > self::$config['emails_notify_limit_kb'])) {
 			$messageBody = $tmpFileContent . $csvLine;
-			file_put_contents(self::$logFileTmp, '');
-			if (self::$config['sent_error_to_emails']) {
+			$r = file_put_contents(self::$logFileTmp, '');
+			if ($r === false)
+				$messageBody .= "Tmp log file '" . self::$logFileTmp . "' couldn't be erased.\n\n";
+			if ($r === false || self::$config['sent_error_to_emails']) {
 				self::sendMessage($messageBody);
 			}
 		} else {
