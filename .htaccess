@@ -1,6 +1,17 @@
 # not allowed to change magic_quotes_gpc on some hostings
 # php_flag magic_quotes_gpc off
 RewriteEngine On 
+
+# uncomment the following two lines and comment the two bellow
+# if you want to use example.com variant (without www.)
+# RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+# RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+# uncomment the following two lines and comment the two above
+# if you want to use www.example.com variant
+# RewriteCond %{HTTP_HOST} ^(?!www\.)(.*)$ [NC]
+# RewriteRule ^(.*)$ http://www.%1/$1 [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ index.php [QSA,L]
 
