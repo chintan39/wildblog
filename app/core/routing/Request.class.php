@@ -30,7 +30,10 @@ require_once('RouterAction.class.php');
 
 class Request {
 
-	static public $url, $get, $post, $session, $cookie, $action, $homepageAction, $router, $startTime, $actionLink, $implicit=false, $tokenPrevious, $tokenCurrent; 
+	static public $url, $get, $post, $session, $cookie, $action;
+	static public $homepageAction, $router, $startTime, $actionLink;
+	static public $implicit=false, $tokenPrevious, $tokenCurrent;
+	static public $referer = '';
 
 	static private $uniqueNumber = 0;
 	
@@ -57,6 +60,10 @@ class Request {
 			
 			self::$tokenCurrent = self::$tokenPrevious = isset($_SESSION['csrf_token']) ? $_SESSION['csrf_token'] : '';
 		}
+		
+		// store referer
+		if (isset($_SERVER['HTTP_REFERER']))
+			self::$referer = $_SERVER['HTTP_REFERER'];
 	}
 
 	static public function reGenerateToken() {

@@ -20,7 +20,7 @@
 class BaseImplicitController extends AbstractDefaultController {
 	
 	public function actionImplicit($args) {
-		ErrorLogger::log(ErrorLogger::ERR_WARNING, "Implicit action fired.");
+		ErrorLogger::log(ErrorLogger::ERR_WARNING, 'Implicit action fired with referer "' . Request::$referer . '".');
 	}
 }
 

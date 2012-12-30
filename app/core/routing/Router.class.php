@@ -286,7 +286,7 @@ class Router {
 		}
 		$hit->lang = Language::getCode();
 		if (Request::$implicit)
-			ErrorLogger::log(ErrorLogger::ERR_WARNING, "Implicit request '{$hit->url}'.");
+			ErrorLogger::log(ErrorLogger::ERR_WARNING, "Implicit request '{$hit->url}' with referer '{$hit->referer}'.");
 		else
 			$hit->Save();
 	}
