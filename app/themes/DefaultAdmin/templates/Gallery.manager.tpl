@@ -1,11 +1,5 @@
 {include file='Base.part.pageHeader.tpl' }
 
-{*php}
-TODO: implement this
-Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'mediamanager/popup.js');
-Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'mediamanager/manager.js');
-{/php*}
-
 <div class="manager">
 
 <form name="imageform" action="" method="post"><fieldset>
