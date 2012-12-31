@@ -101,8 +101,10 @@ class Thumbnail {
 	}
 
 	public function checkPermitFile() {
-		if (Permission::check(Permission::$CONTENT_ADMIN || Permission::$ADMIN))
+		if (Permission::check(Permission::$CONTENT_ADMIN || Permission::$ADMIN)) {
+			$this->createPermitFile();
 			return true;
+		}
 		$permitFile = $this->getPermitFilePath();
 		if (!file_exists($permitFile)) {
 			throw new Exception("Image's permit file '" . $permitFile . "' doesn't exist.");

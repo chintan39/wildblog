@@ -176,7 +176,7 @@ function MediaManager()
 
 MediaManager.prototype.filebrowserCallBack = function(field_name, url, type, win)
 {
-
+	// TODO: implement window open using prototype windows
 	if (type == 'file') {
 		var image = win.document.forms[0].elements[field_name];
 		selectMedia(image, 'file');		
