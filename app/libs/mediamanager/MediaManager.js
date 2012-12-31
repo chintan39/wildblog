@@ -130,6 +130,7 @@ MediaDialog.agt = navigator.userAgent.toLowerCase();
 MediaDialog.is_ie	   = ((MediaDialog.agt.indexOf("msie") != -1) && (MediaDialog.agt.indexOf("opera") == -1));
 
 function selectMedia(image, type) {
+	// TODO: implement window open using prototype windows
 	var dir = '';
 	if (image) {
 		var reg = new RegExp('^media\/(.*)\/([^\/]*)$');
@@ -176,7 +177,6 @@ function MediaManager()
 
 MediaManager.prototype.filebrowserCallBack = function(field_name, url, type, win)
 {
-	// TODO: implement window open using prototype windows
 	if (type == 'file') {
 		var image = win.document.forms[0].elements[field_name];
 		selectMedia(image, 'file');		
