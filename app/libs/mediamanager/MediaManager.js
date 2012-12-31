@@ -132,16 +132,16 @@ MediaDialog.is_ie	   = ((MediaDialog.agt.indexOf("msie") != -1) && (MediaDialog.
 function selectMedia(image, type) {
 	var dir = '';
 	if (image) {
-		var reg = new RegExp('^media\/(.*)\/([^\/]*)$');
-		var regThumb = new RegExp('^media\/' + IM_THUMB_DIR + '\/(.*\/)?([^\/]*)$');
+		var reg = new RegExp('^(\/)?media\/(.*)\/([^\/]*)$');
+		var regThumb = new RegExp('^(\/)?media\/' + IM_THUMB_DIR + '\/(.*\/)?([^\/]*)$');
 		var regLastCut = new RegExp('[\/]$');
 		if (image.value.match(regThumb)) {
-			dir = image.value.replace(regThumb, "$1");
+			dir = image.value.replace(regThumb, '$2');
 			if (dir.match(regLastCut)) {
 				dir = dir.replace(regLastCut, "");
 			}
 		} else if (image.value.match(reg)) {
-			dir = image.value.replace(reg, "$1");
+			dir = image.value.replace(reg, "$2");
 		}
 	}
     

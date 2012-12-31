@@ -187,11 +187,26 @@ class GalleryImagesController extends AbstractPagesController {
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'mediamanager/popup.js');
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'mediamanager/manager.js');
 
+		// parse thumbnail sizes
+		$tsr = array();
+		foreach (explode("\n", Config::Get('THUMBNAIL_SIZES')) as $k => $v) {
+			if (!preg_match('/^(\d+x\d+)([bcer])$/', trim($v), $match))
+				continue;
+			switch ($match[2]) {
+			case 'b': $mode = tg('Resize, keep ratio and use background'); break;
+			case 'c': $mode = tg('Resize and crop image'); break;
+			case 'e': $mode = tg('Resize with exact dimensions'); break;
+			default: case 'r': $mode = tg('Resize and keep ratio'); break;
+			}
+			$tsr[trim($v)] = $match[1] . 'px ' . $mode;
+		}
+
+		$this->assign('thumbnailDimensions', $tsr);
 		$this->assign('actualDir', $dirPart);
 		$this->assign('actualType', $type);
 		$this->assign('advanceUploadAppletScript', $this->getAdvanceUploadAppletScript());
 		$this->assign('advanceUploadAppletWindowOpenJS', $this->getAdvanceUploadAppletWindowOpenJS());
-		
+
 		$this->assign('title', tp('Listing directory') . ': ' . $dirPart);
 		$this->assign('errors', $errors);
 		$this->assign('dirItems', $dirItems);

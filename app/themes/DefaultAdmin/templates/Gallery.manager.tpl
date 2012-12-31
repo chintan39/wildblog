@@ -25,6 +25,13 @@ function uploaderStatusChanged( uploader) {ldelim}
 <a href="#" onclick="{$advanceUploadAppletWindowOpenJS}"><img src="{$iconsPath}32/image_multi_add.png" alt="new dir" /></a>
 {*$advanceUploadAppletScript*}
 <input type="text" value="" name="f_size" id="f_size" />
+<select name="f_size_select" id="f_size_select">
+<option value="">{tg}Arbitrary dimensions{/tg}</option>
+<option value="">{tg}Original size{/tg}</option>
+{foreach from=$thumbnailDimensions item=item key=key}
+<option value="{$key}">{$item}</option>
+{/foreach}
+</select>
 </div>
 
 <div class="items" id="mediaManagerItems">

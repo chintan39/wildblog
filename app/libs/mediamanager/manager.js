@@ -31,6 +31,14 @@ var IM_THUMB_DIR = '.thumbs';
 //initialise the form
 init = function () 
 {
+	$('f_size').onchange=function() {
+		$('f_size_select').selectedIndex = 0;
+	}
+	
+	$('f_size_select').onchange=function() {
+		$('f_size').value = $$('#f_size_select option').find(function(ele){return !!ele.selected}).value;
+	}
+	
 	__dlg_init();
 
 	var uploadForm = document.getElementById('uploadForm');
@@ -58,7 +66,7 @@ init = function ()
 		// we do not use the thumbnail
 		$('f_url').value = url;
 	}
-		
+	
 	$('f_url').focus();
 }
 
@@ -77,7 +85,7 @@ function onCancel()
 function getImageThumb() {
 	var x = $('f_size');
 	if (x && x.value) {
-		return x.value + 'r';
+		return x.value;
 	} else {
 		return false;
 	}
@@ -86,7 +94,7 @@ function getImageThumb() {
 // initing the form following the thumb properties
 function setImageThumb(dir, width, height, mode, fileName) {
 	$('f_url').value = dir + fileName;
-	$('f_size').value = width + 'x' + height;
+	$('f_size').value = width + 'x' + height + mode;
 }
 
 function onOK() 
@@ -99,8 +107,8 @@ function onOK()
 		var thumb = getImageThumb();
 		var fileName = el.value;
 		if (thumb.length > 0) {
-			var reg = new RegExp('^(media\/)(.*\/)?([^\/]*)$');
-			fileName = fileName.replace(reg, "$1" + IM_THUMB_DIR + "/$2" + thumb + "_thumb_$3");
+			var reg = new RegExp('^(\/)?(media\/)(.*\/)?([^\/]*)$');
+			fileName = fileName.replace(reg, "$2" + IM_THUMB_DIR + "/$3" + thumb + "_thumb_$4");
 		}
 		param[id] = fileName;
 		param[id + '__original'] = el.value;
@@ -145,5 +153,4 @@ function addEvent(obj, evType, fn)
 } 
 
 
-
-//addEvent(window, 'load', init);
+addEvent(window, 'load', init);
