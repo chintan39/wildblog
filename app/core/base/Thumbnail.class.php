@@ -27,6 +27,7 @@ class Thumbnail {
 	const MODE_CROP = 'c';     					// aspect ratio is kept, when image has other ration, it is cropped
 	const PREFIX_SUFFIX = '_thumb_';            // special string to identify the thumbs
 	const DEFAULT_IMAGE = 'default.png';		// this image from DIR_PROJECT_PATH_MEDIA_THUMBS directory will be displayed if original is not set or does not exist
+	const DEFAULT_IMAGE_APP = 'default.png';		// this image will be coppied into DIR_PROJECT_PATH_MEDIA_THUMBS directory if no default.png image exists there
 	const TRANSPARENT_IMAGE = 'transparent.gif';
 	const PERMIT_FILE_SUFFIX = '.permit';
 	
@@ -256,6 +257,8 @@ class Thumbnail {
 	private function computeThumbnailImagePath() {
 		if ($this->getOriginalImagePath() == '' || !file_exists(Utilities::url2path($this->getOriginalImagePath()))) {
 			$thumbPath = DIR_PROJECT_PATH_MEDIA_THUMBS . self::DEFAULT_IMAGE;
+			if (!file_exists($thumbPath))
+				$this->createDefaultThumb($thumbPath);
 		} else {
 			$thumbPath = str_replace(DIR_PROJECT_PATH_MEDIA, DIR_PROJECT_PATH_MEDIA_THUMBS, Utilities::path2url($this->getOriginalImagePath()));
 		}
@@ -267,6 +270,16 @@ class Thumbnail {
 		$this->thumbnailImagePath = $thumbPath;
 	}
 
+	
+	/**
+	 * Copies default thumbnail of app to given path as a default thumbnail of the project
+	 */
+	private function createDefaultThumb($thumbPath) {
+		if (!copy(DIR_CONFIG . self::DEFAULT_IMAGE_APP, $thumbPath)) {
+			throw new Exception("Could not copy app default thumbnail from Regular expression replace error.");
+		}
+	}
+	
 	
 	/**
 	 * Gets the width, height, mode, original image path... from thumbnail image path
@@ -455,11 +468,12 @@ class Thumbnail {
 	private function getOrigImage() {
 		if ($this->origImage === null) {
 			if (!file_exists($this->originalImagePath)) {
-				$this->origImage = imagecreatetruecolor($this->getWidth(), $this->getHeight());
+				/*$this->origImage = imagecreatetruecolor($this->getWidth(), $this->getHeight());
 				$this->fillTransparentBackground($this->origImage);
 				list($r, $g, $b, $a) = $this->getContrastColor($this->getColorsFromHexa($this->getBackground()));
 				$textColor = imagecolorallocate($this->origImage, $r, $g, $b);
-				imagestring($this->origImage, 1, 5, 5,  tg("Image not found"), $textColor);
+				imagestring($this->origImage, 1, 5, 5,  tg("Image not found"), $textColor);*/
+				$this->origImage = imagecreatefrompng(DIR_CONFIG . self::DEFAULT_IMAGE_APP);
 				$this->willBeStored = false;
 			} else {
 				switch ($this->getExtention()) {
