@@ -130,7 +130,6 @@ MediaDialog.agt = navigator.userAgent.toLowerCase();
 MediaDialog.is_ie	   = ((MediaDialog.agt.indexOf("msie") != -1) && (MediaDialog.agt.indexOf("opera") == -1));
 
 function selectMedia(image, type) {
-	// TODO: implement window open using prototype windows
 	var dir = '';
 	if (image) {
 		var reg = new RegExp('^media\/(.*)\/([^\/]*)$');
@@ -146,6 +145,8 @@ function selectMedia(image, type) {
 		}
 	}
     
+	// TODO: implement window open using prototype windows
+
 	var outparam = {
 		f_url    : (image ? image.value : null) 
 	};

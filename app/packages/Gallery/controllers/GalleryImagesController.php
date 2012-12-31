@@ -184,6 +184,9 @@ class GalleryImagesController extends AbstractPagesController {
 			$dirItems = array_merge($upperDirectory, $directories, $images);
 		}
 
+		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'mediamanager/popup.js');
+		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'mediamanager/manager.js');
+
 		$this->assign('actualDir', $dirPart);
 		$this->assign('actualType', $type);
 		$this->assign('advanceUploadAppletScript', $this->getAdvanceUploadAppletScript());
