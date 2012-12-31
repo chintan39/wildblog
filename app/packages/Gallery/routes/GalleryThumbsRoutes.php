@@ -35,10 +35,10 @@ class GalleryThumbsRoutes extends AbstractBasicRoutes {
 		parent::setRouter();
 		
 		Router::registerAction($this, 'actionThumbnail')
-			->addRuleUrl(DIR_PROJECT_URL_MEDIA_THUMBS);
+			->addRuleUrl(preg_replace('/^\/(.*)$/', '$1', DIR_PROJECT_URL_MEDIA_THUMBS));
 		
 		Router::registerAction($this, 'actionIcons')
-			->addRuleUrl(DIR_ICONS_IMAGES_DIR_THUMBS_URL);
+			->addRuleUrl(preg_replace('/^\/(.*)$/', '$1', DIR_ICONS_IMAGES_DIR_THUMBS_URL));
 		
 	}
 

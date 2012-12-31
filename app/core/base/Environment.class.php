@@ -94,6 +94,7 @@ require_once(DIR_CORE_HELPERS . 'Permission.class.php');
 require_once(DIR_SMARTY . 'Smarty.class.php');
 require_once(DIR_SMARTY . 'wwplugins/outputfilter.addautolinks.php');
 require_once(DIR_SMARTY . 'wwplugins/outputfilter.specialinfoondebug.php');
+require_once(DIR_SMARTY . 'wwplugins/outputfilter.thumbnailpermit.php');
 
 /**
  * This is the Environment class. Environment is the first layer between 
@@ -125,6 +126,7 @@ class Environment {
 		self::$smarty->registerPlugin('block', 'tu','Utilities__smarty_translate_u');
 		self::$smarty->registerFilter('output', 'smarty_outputfilter_specialinfoondebug');
 		self::$smarty->registerFilter('output', 'smarty_outputfilter_addautolinks');
+		self::$smarty->registerFilter('output', 'smarty_outputfilter_thumbnailpermit');
 		self::$smarty->registerFilter('output', 'Javascript__addHTML');
 		self::$smarty->registerFilter('output', 'MessageBus__exportMessages');
 

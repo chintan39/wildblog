@@ -25,12 +25,9 @@ class GalleryThumbsController extends AbstractBasicController {
 	public function actionThumbnail($args) {
 		// convert url to path
 		$path = Utilities::url2path(Request::$url['pathRaw']);
-		// create the all path
-		$path = preg_replace('/^\/(.*)$/', '$1', $path);
-		Utilities::createPath($path);
-		// we cut slash characters from the beggining of the path
-		// TODO: check if the character '$' can be on the next line - what?
 		$thumb = new Thumbnail($path);
+		if (!$thumb->checkPermitFile())
+			return;
 		$thumb->store();
 		$thumb->show();
 	}

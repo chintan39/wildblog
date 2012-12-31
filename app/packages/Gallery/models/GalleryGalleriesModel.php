@@ -155,7 +155,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 
 	public function getTableValue() {
 		if ($this->titleimage) {
-			$thumb = new Thumbnail(null, $this->titleimage->image, 120, 80, 'b');
+			$thumb = new Thumbnail(null, $this->titleimage->image, 128, 80, 'b');
 			$value = '<img src="' . $thumb->getThumbnailImagePath() . '" alt="#" />';
 			return $value;
 		}

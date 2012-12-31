@@ -663,8 +663,7 @@ class Utilities {
 	 * @return string relative url
 	 */
 	static public function path2url($path) {
-		$prefix = ($path{0} == '/') ? '/' : '';
-		return preg_replace('/^' . self::string2regexp($prefix.DIR_PROJECT_PATH_MEDIA) . '/', $prefix.DIR_PROJECT_URL_MEDIA, $path);
+		return self::concatPath(preg_replace('/^' . self::string2regexp(DIR_PROJECT_PATH_MEDIA) . '/', DIR_PROJECT_URL_MEDIA, $path));
 	}
 	
 		
@@ -674,8 +673,8 @@ class Utilities {
 	 * @return string relative path
 	 */
 	static public function url2path($url) {
-		$prefix = ($url{0} == '/') ? '/' : '';
-		return preg_replace('/^' . self::string2regexp($prefix.DIR_PROJECT_URL_MEDIA) . '/', $prefix.DIR_PROJECT_PATH_MEDIA, $url);
+		$prefix = ($url{0} == '/') ? 0 : 1;
+		return self::concatPath(preg_replace('/^' . self::string2regexp(substr(DIR_PROJECT_URL_MEDIA, $prefix)) . '/', DIR_PROJECT_PATH_MEDIA, $url));
 	}
 	
 	
@@ -688,6 +687,17 @@ class Utilities {
 		return str_replace(array('/', '.'), array('\/', '\.'), $str);
 	}
 	
+	
+	/**
+	 * Removes opening slash if needed.
+	 * @param relative path
+	 * @return Relative path without opening slash
+	 */
+	static public function removeOpeningSlash($url) {
+		if (strlen($url)>0 && $url{0} == '/')
+			return substr($url, 1);
+		return $url;
+	}
 	
 	/**
 	 * Concats two or more elements into one path.

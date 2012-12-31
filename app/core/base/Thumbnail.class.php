@@ -28,6 +28,7 @@ class Thumbnail {
 	const PREFIX_SUFFIX = '_thumb_';            // special string to identify the thumbs
 	const DEFAULT_IMAGE = 'default.png';		// this image from DIR_PROJECT_PATH_MEDIA_THUMBS directory will be displayed if original is not set or does not exist
 	const TRANSPARENT_IMAGE = 'transparent.gif';
+	const PERMIT_FILE_SUFFIX = '.permit';
 	
 	var $originalImagePath;		// relative path
 	var $thumbnailImagePath;	// relative path
@@ -44,6 +45,7 @@ class Thumbnail {
 	var $origImage=null;        // original image resource
 	var $newImage=null;         // new image resource
 	var $willBeStored=true;     // should the thumbnail be stored? if not found - do not store it
+	var $permitCreated=false;	// file with .permit suffix is created at a time of calling Thumb->getThumbPath, but only the first time
 
 	/**
 	 * Constructor
@@ -63,9 +65,54 @@ class Thumbnail {
 		if ($background) {
 			$this->background = $background;
 		}
+		if (!$this->checkDimensions()) {
+			throw new Exception("Image's dimensions are wrong.");
+		}
 		if (($this->originalImagePath === null || !$this->width || !$this->height || !$this->mode) && !$this->thumbnailImagePath) {
 			throw new Exception("Image's original path and parameters nor thumbnail path is not set.");
 		}
+	}
+
+	
+	/**
+	 * Checks if dimensions of thumbnail are valid. We shouldn't allow to create
+	 * arbitrary dimensions, because it would be DOS vulnerability.
+	 * Ordinary visitors could waste all the disk space by sending
+	 * valid requests with all possible dimensions.
+	 * Not implemented yet, better allow only images strictly intended to display.
+	 */
+	public function checkDimensions() {
+		return true;
+	}
+
+	
+	/**
+	 * Stores permit file (thumbnail path + suffix .permit) to sign, that
+	 * this thumbnail file can be created.
+	 * This should protect of creating arbitrary dimensions, because it
+	 * would be DOS vulnerability.
+	 * Ordinary visitors could waste all the disk space by sending
+	 * valid requests with all possible dimensions.
+	 */
+	public function createPermitFile() {
+		$permitFile = $this->getPermitFilePath();
+		if (file_put_contents($permitFile, '') === false)
+			throw new Exception("Image's permit file '" . $permitFile . "' couldn't be created.");
+	}
+
+	public function checkPermitFile() {
+		if (Permission::check(Permission::$CONTENT_ADMIN || Permission::$ADMIN))
+			return true;
+		$permitFile = $this->getPermitFilePath();
+		if (!file_exists($permitFile)) {
+			throw new Exception("Image's permit file '" . $permitFile . "' doesn't exist.");
+			return false;
+		}
+		return true;
+	}
+
+	public function getPermitFilePath() {
+		return $this->thumbnailImagePath . self::PERMIT_FILE_SUFFIX;
 	}
 
 	
@@ -143,6 +190,13 @@ class Thumbnail {
 		if ($this->thumbnailImagePath === null) {
 			$this->computeThumbnailImagePath();
 		}
+		/*
+		 * We create permit files after whole template is created (for all images)
+		if (!$this->permitCreated) {
+			$this->createPermitFile();
+			$this->permitCreated = true;
+		}
+		 */
 		return $this->thumbnailImagePath;
 	}
 
@@ -234,6 +288,9 @@ class Thumbnail {
 		/*if (!file_exists($this->originalImagePath)) {
 			throw new Exception("File {$this->originalImagePath} does not exist.");
 		}*/
+		if (!$this->checkDimensions()) {
+			throw new Exception("Image's dimensions are wrong.");
+		}
 	}
 
 	
@@ -251,6 +308,7 @@ class Thumbnail {
 	 * //TODO: check security if thumbnail is something like ../../../
 	 */
 	public function store() {
+		Utilities::createPath($this->getThumbnailImagePath());
 		switch ($this->getExtention()) {
 			case "png":
 				imagepng($this->getNewImage(), $this->getThumbnailImagePath());

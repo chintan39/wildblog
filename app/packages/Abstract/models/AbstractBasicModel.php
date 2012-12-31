@@ -1027,7 +1027,7 @@ class AbstractBasicModel {
 				$value = htmlspecialchars(Utilities::truncate(implode(', ', $newValues), 30));
 				break;
 			case Form::FORM_INPUT_IMAGE:
-				$thumb = new Thumbnail(null, $value, 120, 80, 'b');
+				$thumb = new Thumbnail(null, $value, 128, 80, 'b');
 				$value = '<img src="' . $thumb->getThumbnailImagePath() . '" alt="#" />';
 				break;
 			default: 
