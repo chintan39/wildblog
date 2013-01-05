@@ -264,6 +264,10 @@ class AbstractDefaultController extends AbstractBasicController{
 		$item = $args;
 		$id = $item->id;
 		if (Request::checkCsrf()) {
+			$className = get_class($item);
+			$userId = Permission::getActualUserId();
+			$backupData = Utilities::truncate(serialize($this->cacheRemoveNeedlessParts($item)), 50000);
+			ErrorLogger::log(ErrorLogger::ERR_WARNING, "Item $className($id) has been deleted by user $userId. Backup data:\n$backupData"); 
 			$item->DeleteYourself();
 			MessageBus::sendMessage(tg('Item') . " #$id " . tg('has been deleted.'));
 		} else {

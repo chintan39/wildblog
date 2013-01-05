@@ -106,7 +106,7 @@ class AbstractBasicController {
 		}
 	}
 	
-	private function cacheRemoveNeedlessParts(&$data) {
+	protected function cacheRemoveNeedlessParts(&$data) {
 		if (is_object($data) && (get_class($data) == 'ItemCollection' 
 			|| is_subclass_of($data, 'ItemCollection') 
 			|| is_subclass_of($data, 'AbstractDefaultModel')

@@ -1025,7 +1025,7 @@ class AbstractDBObjectModel extends AbstractBasicModel
 				// Initialize the diff class
 				require_once(DIR_LIBS . 'phpdiff/lib/Diff.php');
 				require_once(DIR_LIBS . 'phpdiff/lib/Diff/Renderer/Text/Unified.php');
-				$diff = new Diff(explode("\n", $this->databaseValues[$field]), explode("\n", $value));
+				$diff = new Diff(explode("\n", $oldValue), explode("\n", $value));
 				$renderer = new Diff_Renderer_Text_Unified;
 				$change->data = $diff->render($renderer);
 			} else { 
