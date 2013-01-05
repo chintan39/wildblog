@@ -49,7 +49,7 @@ class AttendanceParticipantsModel extends AbstractSimpleModel {
      * @return string title of the item to use in the select box
      */
     public function makeSelectTitle() {
-    	return implode(' ', array($this->surname, $this->surname, '(' . $this->email . ')'));
+    	return implode(' ', array($this->firstname, $this->surname, '(' . $this->email . ')'));
     }
 } 
 
