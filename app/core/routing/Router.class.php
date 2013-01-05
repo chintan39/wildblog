@@ -594,7 +594,9 @@ class Router {
 						throw new Exception('Method getRouteItemLink can not accept routes with item specification or un-existed item used.');
 					} else {
 						if (!$item->$attr) {
-							throw new Exception('Attribute ' . $attr . ' of model ' . get_class($item) . ' is empty! (maybe table problem?)');
+							//throw new Exception('Attribute ' . $attr . ' of model ' . get_class($item) . ' (' . $item->id . ') is empty! (maybe table problem?)');
+							ErrorLogger::log(ErrorLogger::ERR_WARNING, 'Attribute ' . $attr . ' of model ' . get_class($item) . ' (' . $item->id . ') is empty! (maybe table problem?)');
+							return Request::getLinkHomePage()->getLink();
 						}
 						$src = $item->$attr;
 					}
