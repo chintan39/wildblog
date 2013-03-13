@@ -81,6 +81,9 @@ class GalleryImagesModel extends AbstractNodesModel {
     	$selectItems = array();
     	if (is_array($items)) {
 			foreach ($items as $i) {
+				// TODO: this shouldn't happen
+				if (!$i->image)
+					continue;
 				$thumb = new Thumbnail(null, $i->image, 80, 80, 'c');
 				$selectItems[] = array('id' => $i->id, 'value' => $i->makeSelectTitle(), 'image' => $thumb->getThumbnailImagePath());
 			}
