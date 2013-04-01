@@ -262,9 +262,11 @@ class Thumbnail {
 		} else {
 			$thumbPath = str_replace(DIR_PROJECT_PATH_MEDIA, DIR_PROJECT_PATH_MEDIA_THUMBS, Utilities::path2url($this->getOriginalImagePath()));
 		}
+		if ($thumbPath{0} != '/')
+			$thumbPath = '/'.$thumbPath;
 		$prefix = $this->getWidth() . 'x' . $this->getHeight() . $this->getMode() . self::PREFIX_SUFFIX;
 		$thumbPath = preg_replace('/^('. Utilities::string2regexp(SUBDIR_MEDIA) . ')(.*\/)?([^\/]*)\.([^\/\.]*)$/', '${1}' . SUBDIR_THUMBS  . '${2}' . $prefix . '${3}.${4}', $thumbPath, 1, $count);
-		if (false && $count != 1) { // disable control
+		if ($count != 1) { // disable control
 			throw new Exception("Regular expression replace error.");
 		}
 		$this->thumbnailImagePath = $thumbPath;
@@ -441,7 +443,7 @@ class Thumbnail {
 	 * Getter with value checking and computing if needed
 	 * @return int
 	 */
-	private function getOrigWidth() {
+	public function getOrigWidth() {
 		if ($this->origWidth === null) {
 			$this->getOrigSize();
 		}
@@ -453,7 +455,7 @@ class Thumbnail {
 	 * Getter with value checking and computing if needed
 	 * @return int
 	 */
-	private function getOrigHeight() {
+	public function getOrigHeight() {
 		if ($this->origHeight === null) {
 			$this->getOrigSize();
 		}

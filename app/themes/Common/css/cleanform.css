@@ -265,6 +265,60 @@ form.cleanform input.error, form.cleanform textarea.error, form.cleanform select
 }
 
 /**
+ * simple thumbnails in gallery
+ */
+
+div.simplethumb {
+	float: left;
+	border: solid 1px #cccccc;
+	padding: 3px;
+	margin: 2px;
+}
+
+div.simplethumb:hover {
+	background: #ffffff;
+	border-color: #999999;
+}
+
+div.simplethumb:hover span.buttons,
+div.simplethumb:hover span.text {
+	display: block;
+}
+
+div.simplethumb span.buttons,
+div.simplethumb span.text {
+	position: absolute;
+	width: 146px;
+	left: 7px;
+	background-color: rgba(255,255,255,0.6);
+	color: #000000;
+	padding: 3px;
+	display: none;
+}
+
+div.simplethumb span.text {
+	top: 2px;
+}
+
+div.simplethumb span.buttons {
+	bottom: 2px;
+	text-align: center;
+}
+
+div.simplethumb span.buttons a {
+	padding: 2px;
+}
+
+div.simplethumb span.buttons a img {
+	border: 1px solid transparent;
+}
+
+div.simplethumb span.buttons a:hover img {
+	background: rgba(255, 255, 255, 1.0);
+	border-color: #cccccc;
+}
+
+/**
  *------------------------------------------------
  * end 
  *------------------------------------------------

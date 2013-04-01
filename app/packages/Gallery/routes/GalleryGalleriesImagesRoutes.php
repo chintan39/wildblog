@@ -17,7 +17,7 @@
 */
 
 
-class GalleryGalleriesRoutes extends AbstractPagesRoutes {
+class GalleryGalleriesImagesRoutes extends AbstractDefaultRoutes {
 	
 	/**
 	 * This is overloaded method, to specify the definitions of the request 
@@ -31,24 +31,19 @@ class GalleryGalleriesRoutes extends AbstractPagesRoutes {
 
 		AbstractAdminRoutes::setRouter($this);
 
-		Router::registerAction($this, 'actionGalleriesList')
-			->addRuleUrl('galleries/$')
-			->setTemplate('galleriesList');
-		
-		Router::registerAction($this, 'actionGalleryDetail')
-			->addRuleUrl('gallery/[url]/$')
-			->setTemplate('galleryDetail');
-		
-		Router::registerSubaction($this, 'subactionGalleriesList') 
-			->setTemplate('part.galleriesList');
-
-		Router::registerAction($this, 'actionSimpleImages')
-			->addRuleUrl('admin/gallery/galleries/images/$')
-			->addRuleGet(array('id'=>'[id]'))
+		Router::registerAction($this, 'actionRemoveImage')
+			->addRuleUrl('admin/gallery/galleries/removeimage/$')
+			->addRuleGet(array('gallery'=>'[gallery]', 'image' => '[image]'))
 			->setBranch(Themes::BACK_END)
-			->setTemplate('simpleImages')
 			->setPermission(Permission::$CONTENT_ADMIN | Permission::$ADMIN);
 
+		Router::registerAction($this, 'actionSetTitle')
+			->addRuleUrl('admin/gallery/galleries/setastitle/$')
+			->addRuleGet(array('gallery'=>'[gallery]', 'image' => '[image]'))
+			->setBranch(Themes::BACK_END)
+			->setPermission(Permission::$CONTENT_ADMIN | Permission::$ADMIN);
+
+			
 	}
 	
 	

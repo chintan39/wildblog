@@ -79,6 +79,11 @@ class DefaultAdminTheme extends AbstractTheme {
 		'Base.part.languages' => array(),
 		'Base.part.menuLeft' => array(),
 		'Base.part.userInfo' => array(),
+		'Gallery.simpleImages' => array(
+			'Base.part.header',
+			'Base.part.footer',
+			'Base.part.cleanForm',
+			),
 		);
 		
 }

@@ -36,13 +36,6 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 			->setForceIsInDb(false));
 
     	$this->addMetaData(AtributesFactory::stdPublished());
-
-		$this->addMetaData(AtributesFactory::create('imageGalleryConnection')
-			->setLabel('Images')
-			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
-			->setOptionsMethod('listSelectSelector')
-			->setSelector(true)
-			->setSelectorDisplayMode(Javascript::SELECTOR_DIPLAY_MODE_IMAGES));
 		
 		$this->addMetaData(AtributesFactory::create('titleimage')
 			->setLabel('Title image')
@@ -52,6 +45,12 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 			->setUpdateHandleDefault(true)
 			->setRenderObject($this)
 			->setSelectorDisplayMode(Javascript::SELECTOR_DIPLAY_MODE_IMAGES));
+		
+		$this->addMetaData(AtributesFactory::create('imagesthumbs')
+    		->setLabel('Images in the gallery')
+			->setType(Form::FORM_SPECIFIC_NOT_IN_DB)
+			->setRenderObject($this)
+			->setForceIsInDb(false));
 		
 		$this->addNonDbProperty('titleimage', false);
     }
@@ -176,40 +175,61 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 		if ($fieldName == 'titleimage') {
 			if (!$model->id) {
 				$output .= '<span class="note">' . tg('Title image will be able to select after saving.') . '</span>';
+			} elseif (!$model->titleimage) {
+				$output .= '<span class="note">' . tg('Title image is not set yet, please, set it.') . '</span>';
 			} else {
-				// TODO: element ID is not right
-				$output .= '<select '.$formField->getIdAttr().' name="' . $fieldName . '">';
-				if ($model->id) {
-					$images = $model->Find('GalleryImagesModel');
-				} else {
-					$images = GalleryImagesModel::Search('GalleryImagesModel');
-				}
-		
-				$selectorDefinition = array(array(
-								'image' => '', 
-								'indent' => isset($o['indent']) ? $o['indent'] : 0));
-				
-				$output .= '<option value=""'. ((!$model->titleimage) ? ' selected="selected"' : '') . '>' . '[' . tg('not selected') . ']' . '</option>'."\n";
-				$script = '';
+				$thumb = new Thumbnail(null, $model->titleimage->image, 160, 160, 'c');
+				$thumbUrl = $thumb->getThumbnailImagePath();
+				$origUrl = $thumb->getOriginalImagePath();
+				$thumbSize = $thumb->getOrigWidth().'x'.$thumb->getOrigHeight().'px';
+				$buttons = '';
+				$buttons .= '<a href="'.Request::getLinkItem($this->package, 'Images', 'actionEdit', $model->titleimage).'" title="'.tg('Edit image').'">'
+					.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/edit.png" alt="Edit" />'
+					."</a>\n";
+				$buttons .= '<a href="'.$origUrl.'" title="'.tg('View image').'" rel="lightbox[titleimage]">'
+					.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/view.png" alt="View" />'
+					."</a>\n";
+				$output .= "<div class=\"simplethumb\">\n";
+				$output .= "<img src=\"{$thumbUrl}\" alt=\"{$model->titleimage->image}\" title=\"{$model->titleimage->title}\" />\n";
+				$output .= "<span class=\"text\"><strong>{$model->titleimage->title}</strong><br />{$thumbSize}</span>\n";
+				$output .= "<span class=\"buttons\">{$buttons}</span>\n";
+				$output .= "</div>\n";
+			}
+		} elseif ($fieldName == 'imagesthumbs') {
+			if (!$model->id) {
+				$output .= '<span class="note">' . tg('Title image will be able to select after saving.') . '</span>';
+			} else {
+				$images = $model->Find('GalleryImagesModel');
 				if ($images) {
+					$output .= "\n".'<div class="clear"></div>'."\n";
 					foreach ($images as $image) {
-						$output .= '<option value="' . $image->id . '"'. ($model->titleimage && ($model->titleimage->id == $image->id) ? ' selected="selected"' : ''). '>' . $image->makeSelectTitle() . '</option>'."\n";
-						$thumb = new Thumbnail(null, $image->image, 80, 80, 'c'); 
-						$selectorDefinition[] = array(
-							'image' => $thumb->getThumbnailImagePath(), 
-							'indent' => 1);
+						$thumb = new Thumbnail(null, $image->image, 160, 160, 'c');
+						$thumbUrl = $thumb->getThumbnailImagePath();
+						$origUrl = $thumb->getOriginalImagePath();
+						$thumbSize = $thumb->getOrigWidth().'x'.$thumb->getOrigHeight().'px';
+						$fakeObject = new stdClass;
+						$fakeObject->image = $image->id;
+						$fakeObject->gallery = $model->id;
+						$buttons = '';
+						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'GalleriesImages', 'actionSetTitle', $fakeObject).'" title="'.tg('Set as title image').'">'
+							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/home.png" alt="Title" />'
+							."</a>\n";
+						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'Images', 'actionEdit', $image).'" title="'.tg('Edit image').'">'
+							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/edit.png" alt="Edit" />'
+							."</a>\n";
+						$buttons .= '<a href="'.$origUrl.'" title="'.tg('View image').'" rel="lightbox[images]">'
+							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/view.png" alt="View" />'
+							."</a>\n";
+						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'GalleriesImages', 'actionRemoveImage', $fakeObject).'" title="'.tg('Remove image').'">'
+							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/remove.png" alt="Remove" />'
+							."</a>\n";
+						$output .= "<div class=\"simplethumb\">\n";
+						$output .= "<img src=\"{$thumbUrl}\" alt=\"{$image->image}\" title=\"{$image->title}\" />\n";
+						$output .= "<span class=\"text\"><strong>{$image->title}</strong><br />{$thumbSize}</span>\n";
+						$output .= "<span class=\"buttons\">{$buttons}</span>\n";
+						$output .= "</div>\n";
 					}
-					$script = Javascript::addSelector($formField, null, $selectorDefinition);
-				}
-		
-				$output .= '</select>'."\n";
-				$output .= '<div class="clear"></div>';
-				$output .= '<div ' . $formField->getIdAttr('container') . ' class="selector"></div>'."\n";
-				$output .= '<div class="clear"></div>';
-				if (Config::Get('SELECTOR_IMMEDIATELY')) {
-					$output .= '<script type="text/javascript">'."\n";
-					$output .= $script;
-					$output .= '</script>'."\n";
+					$output .= "\n".'<div class="clear"></div>'."\n";
 				}
 			}
 		}
@@ -244,15 +264,9 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 		return false;
 	}
 
-	private function saveTitleImage() {
-		if (!$this->id) {
-			return false;
-		}
-		
+	static public function clearTitleImage($galleryID) {
 		$galleriesImagesObject = new GalleryGalleriesImagesModel();
 		$galleriesImagesTable = '`' . $galleriesImagesObject->getTableName() . '`';
-		$galleryID = $this->id;
-		$imageID = $this->titleimage;
 
 		$query = "
 			UPDATE $galleriesImagesTable 
@@ -266,6 +280,19 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 		}
 		
 		$result1 = dbConnection::getInstance()->query($query);
+	}
+	
+	private function saveTitleImage() {
+		if (!$this->id) {
+			return false;
+		}
+		
+		$galleriesImagesObject = new GalleryGalleriesImagesModel();
+		$galleriesImagesTable = '`' . $galleriesImagesObject->getTableName() . '`';
+		$galleryID = $this->id;
+		$imageID = $this->titleimage;
+		
+		$this->clearTitleImage($galleryID);
 		
 		if ($imageID) {
 			$query = "

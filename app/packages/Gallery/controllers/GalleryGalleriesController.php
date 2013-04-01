@@ -104,6 +104,67 @@ class GalleryGalleriesController extends AbstractPagesController {
 	public function getLinksSitemap() {
 		return $this->getItemsLinksDefault(array('actionGalleriesList' => tg('Galleries list')), array('actionGalleryDetail' => tg('Gallery')));
 	}	
+
+
+	/**
+	 * Displays images of the gallery and allows to upload images in a simple way.
+	 */
+	public function actionSimpleImages($gallery) {
+		Request::reGenerateToken();
+		$this->actionEditAdjustItem($item);
+		$form = new Form();
+		$form->setFocusFirstItem(true);
+		$form->setSendAjax(Request::isAjax());
+		$form->setUseTabs(true);
+		$form->setCsrf(true);
+		$form->setIdentifier(strtolower($this->name));
+
+		// new action if specified
+		if ($this->newMethodName) {
+			$form->setSaveAsAction(Request::getLinkSimple($this->package, $this->name, $this->newMethodName));
+		}
+		
+		$form->fill($item, $this->getEditButtons());
+		$form->addAlternativeAction($this->package, $this, 'actionEdit', $item, tg('Edit item form'));
+		$form->addAlternativeAction($this->package, $this, 'actionListing', null, tg('Items list'));
+		$form->setDescription($this->getFormDescription());
+		
+		// handeling the form request
+		$form->handleRequest($this->getEditActionsAfterHandlin(), tg('Item has been saved.'));
+		$this->assign('form', $form->toArray());
+		$this->assign('gallery', $gallery);
+
+		$this->assign('title', tg('Edit ' . strtolower($this->name)));
+		$this->assign('help', tg($this->description));
+		
+		// detail action if specified
+		if ($this->detailMethodName && !$isSimple) {
+			$this->assign('detailLink', Request::getLinkItem($this->package, $this->name, $this->detailMethodName, $item));
+		}
+		
+		// view action if specified
+		if ($this->viewMethodName && !$isSimple) {
+			$this->assign('viewLink', Request::getLinkItem($this->package, $this->name, $this->viewMethodName, $item));
+		}
+		
+		// detail action if specified
+		if ($this->removeMethodName && !$isSimple) {
+			$this->assign('removeLink', Request::getLinkItem($this->package, $this->name, $this->removeMethodName, $item, array('token' => Request::$tokenCurrent)));
+		}
+		
+		// detail action if specified
+		if ($this->removeSimpleMethodName && $isSimple) {
+			$this->assign('removeLinkSimple', Request::getLinkItem($this->package, $this->name, $this->removeSimpleMethodName, $item, array('token' => Request::$tokenCurrent)));
+		}
+		
+		// Top menu
+		$this->addTopMenu();
+		
+		if (Config::Get('EDIT_TIMEOUT_WARNING')) {
+			Javascript::addTimeout('Your session will time out soon.', Config::Get('EDIT_TIMEOUT_WARNING'));
+		}
+	}
+
 }
 
 ?>
