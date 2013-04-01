@@ -273,6 +273,7 @@ div.simplethumb {
 	border: solid 1px #cccccc;
 	padding: 3px;
 	margin: 2px;
+	overflow: hidden;
 }
 
 div.simplethumb:hover {
@@ -285,23 +286,38 @@ div.simplethumb:hover span.text {
 	display: block;
 }
 
+
+div.simplethumb:hover span.buttons {
+	bottom: 2px;
+}
+
+
+div.simplethumb:hover span.text {
+	top: 2px;
+}
+
 div.simplethumb span.buttons,
 div.simplethumb span.text {
+	transition-duration: 1s;
+	-moz-transition-duration: 1s; /* Firefox 4 */
+	-webkit-transition-duration: 1s; /* Safari and Chrome */
+	-o-transition-duration: 1s; /* Opera */ 
 	position: absolute;
 	width: 146px;
 	left: 7px;
 	background-color: rgba(255,255,255,0.6);
 	color: #000000;
 	padding: 3px;
-	display: none;
+/*	display: none;*/
+
 }
 
 div.simplethumb span.text {
-	top: 2px;
+	top: -30px;
 }
 
 div.simplethumb span.buttons {
-	bottom: 2px;
+	bottom: -30px;
 	text-align: center;
 }
 

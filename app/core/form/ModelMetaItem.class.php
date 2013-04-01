@@ -68,6 +68,7 @@ class ModelMetaItem {
 	private $uploadMultipleFiles = false;
 	private $isInDb = null;
 	private $useSalt = true;
+	private $storeToProp = false;	// we want to work with some value, which is not in DB
 	
 	static private $newOrder = 1;
 	
@@ -547,6 +548,16 @@ class ModelMetaItem {
 	public function getUseSalt() {
 		return $this->useSalt;
 	}
+	
+	public function setStoreToProp($storeToProp) {
+		$this->storeToProp = $storeToProp;
+		return $this;
+	}
+	
+	public function getStoreToProp() {
+		return $this->storeToProp;
+	}
+	
 }
 
 ?>

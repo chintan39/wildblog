@@ -27,7 +27,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
     	
     	parent::attributesDefinition();
 
-    	$this->addMetaData(AtributesFactory::create('imagesUpload')
+    	$this->addMetaData(AtributesFactory::create('imagesupload')
     		->setLabel('Images upload')
 			->setDescription('upload one or more images quickly')
 			->setType(Form::FORM_UPLOAD_FILE)
@@ -35,8 +35,15 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 			->setUploadMultipleFiles(true)
 			->setForceIsInDb(false));
 
+    	$this->addMetaData(AtributesFactory::create('imagesselect')
+    		->setLabel('Select image')
+			->setDescription('select already uploaded image using manager')
+			->setType(Form::FORM_INPUT_IMAGE)
+			->setStoreToProp('imageselectsaved')
+			->setForceIsInDb(false));
+
     	$this->addMetaData(AtributesFactory::stdPublished());
-		
+
 		$this->addMetaData(AtributesFactory::create('titleimage')
 			->setLabel('Title image')
 			->setType(Form::FORM_SPECIFIC_NOT_IN_DB)
@@ -53,6 +60,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 			->setForceIsInDb(false));
 		
 		$this->addNonDbProperty('titleimage', false);
+		$this->addNonDbProperty('imageselectsaved');
     }
 
     protected function relationsDefinition() {
@@ -108,8 +116,6 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 	{
 		$ret = parent::Save($forceSaving);
 		
-		$this->saveTitleImage();
-
 		return $ret;
 	}
 	
@@ -123,10 +129,11 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 				$oldImagesIds[$image->id] = true;
 		}
 		
-		$firstImage = true;
-		
-		if (isset($this->uploadedFiles['imagesUpload']) && is_array($this->uploadedFiles['imagesUpload'])) {
-			foreach ($this->uploadedFiles['imagesUpload'] as $path) {
+		$this->titleimage = $this->getTitleImage();
+		// trick -- we don't want to set title image at all if already set
+		$firstImage = !$this->titleimage;
+		if (isset($this->uploadedFiles['imagesupload']) && is_array($this->uploadedFiles['imagesupload'])) {
+			foreach ($this->uploadedFiles['imagesupload'] as $path) {
 				list($dir, $file) = Utilities::getDirFileFromPath($path);
 				$image = GalleryImagesModel::addImage2db($dir, $file);
 				if (!isset($oldImagesIds[$image->id])) {
@@ -142,6 +149,11 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 					}
 				}
 			}
+		}
+		
+		// now add images selected using manager (stored in imagesselect field)
+		if ($matchedImages = GalleryImagesModel::Search('GalleryImagesModel', array('image = ?'), array($this->imageselectsaved))) {
+			$this->Connect($matchedImages[0]);
 		}
 	}
 	
@@ -200,7 +212,9 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 				$output .= '<span class="note">' . tg('Title image will be able to select after saving.') . '</span>';
 			} else {
 				$images = $model->Find('GalleryImagesModel');
-				if ($images) {
+				if (!$images) {
+					$output .= '<span class="note">' . tg('Upload images from your computer or select already uploaded images using the manager.') . '</span>';
+				} else {
 					$output .= "\n".'<div class="clear"></div>'."\n";
 					foreach ($images as $image) {
 						$thumb = new Thumbnail(null, $image->image, 160, 160, 'c');
@@ -220,7 +234,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 						$buttons .= '<a href="'.$origUrl.'" title="'.tg('View image').'" rel="lightbox[images]">'
 							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/view.png" alt="View" />'
 							."</a>\n";
-						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'GalleriesImages', 'actionRemoveImage', $fakeObject).'" title="'.tg('Remove image').'">'
+						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'GalleriesImages', 'actionRemoveImage', $fakeObject).'" onclick="return confirm(\''.tg('Are you sure to remvoe this image from the gallery?').'\');" title="'.tg('Remove image').'">'
 							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/remove.png" alt="Remove" />'
 							."</a>\n";
 						$output .= "<div class=\"simplethumb\">\n";

@@ -722,6 +722,14 @@ class Form {
 	 */
 	private function updateDataModelFromRequest() {
 		$metadata = $this->dataModel->getMetadata();
+		
+		// store metadata that we don't want to have in DB
+		foreach ($metadata as $field => $meta) {
+			if ($fieldToSave = $meta->getStoreToProp()) {
+				$this->dataModel->$fieldToSave = isset($this->req[$field]) ? $this->req[$field] : "";
+			}
+		}
+		
 		foreach ($this->dataModel->getChangeAbleOrAutoFilledMetaData() as $field => $meta) {
 			if ($meta->getType() == Form::FORM_MULTISELECT_FOREIGNKEY_INTERACTIVE) {
 				continue;
