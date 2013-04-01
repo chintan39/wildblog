@@ -6,7 +6,7 @@
 {foreach from=$changableColumns item=column}
 	<h2>{$column->getLabel()}</h2>
 	{assign var=itemName value=$column->getName()}
-	<div class="value">{$item->$itemName|default:'&nbsp;'}</div>
+	<div class="value">{$item->getValueView($itemName)|default:'&nbsp;'}</div>
 	<div class="clear"></div>
 {/foreach}
 </div> <!-- viewItemValues -->

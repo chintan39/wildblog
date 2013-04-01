@@ -1027,8 +1027,12 @@ class AbstractBasicModel {
 				$value = htmlspecialchars(Utilities::truncate(implode(', ', $newValues), 30));
 				break;
 			case Form::FORM_INPUT_IMAGE:
-				$thumb = new Thumbnail(null, $value, 128, 80, 'b');
-				$value = '<img src="' . $thumb->getThumbnailImagePath() . '" alt="#" />';
+				if (!$value) {
+					$value = tg('No image');
+				} else {
+					$thumb = new Thumbnail(null, $value, 128, 80, 'b');
+					$value = '<img src="' . $thumb->getThumbnailImagePath() . '" alt="#" />';
+				}
 				break;
 			default: 
 				break;

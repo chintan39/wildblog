@@ -313,11 +313,11 @@ div.simplethumb span.text {
 }
 
 div.simplethumb span.text {
-	top: -30px;
+	top: -100%;
 }
 
 div.simplethumb span.buttons {
-	bottom: -30px;
+	bottom: -100%;
 	text-align: center;
 }
 

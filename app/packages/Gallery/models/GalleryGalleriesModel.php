@@ -349,6 +349,37 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 		
 	}
 
+	public function getValueView($fieldName) {
+		if ($fieldName == 'imagesselect')
+			return '';
+		if ($fieldName == 'imagesthumbs') {
+			$images = $this->Find('GalleryImagesModel');
+			if (!$images) {
+				return tg('Upload images from your computer or select already uploaded images using the manager.');
+			} else {
+				$output = "\n".'<div class="clear"></div>'."\n";
+				foreach ($images as $image) {
+					$thumb = new Thumbnail(null, $image->image, 160, 160, 'c');
+					$thumbUrl = $thumb->getThumbnailImagePath();
+					$origUrl = $thumb->getOriginalImagePath();
+					$thumbSize = $thumb->getOrigWidth().'x'.$thumb->getOrigHeight().'px';
+					$buttons = '';
+					$buttons .= '<a href="'.$origUrl.'" title="'.tg('View image').'" rel="lightbox[images]">'
+						.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/view.png" alt="View" />'
+						."</a>\n";
+					$output .= "<div class=\"simplethumb\">\n";
+					$output .= "<img src=\"{$thumbUrl}\" alt=\"{$image->image}\" title=\"{$image->title}\" />\n";
+					$output .= "<span class=\"text\"><strong>{$image->title}</strong><br />{$thumbSize}</span>\n";
+					$output .= "<span class=\"buttons\">{$buttons}</span>\n";
+					$output .= "</div>\n";
+				}
+				$output .= "\n".'<div class="clear"></div>'."\n";
+				return $output;
+			}
+		}
+		return parent::getValueView($fieldName);
+	}
+
 } 
 
 ?>
