@@ -48,6 +48,7 @@ class ErrorLogger {
 	static public $config;
 	static public $logFile;
 	static public $logFileTmp;
+	static public $logFileTmpCreated;
 	
 	/**
 	 * Initialize the ErrorLogger.
@@ -61,6 +62,8 @@ class ErrorLogger {
 		self::$logFile = str_replace('[m]', date('m'), self::$logFile);
 		self::$logFile = str_replace('[d]', date('d'), self::$logFile);
 		self::$logFileTmp = DIR_PROJECT_PATH . self::$config['log_file_tmp'];
+		self::$logFileTmpCreated = DIR_PROJECT_PATH . self::$config['log_file_tmp'] . '.created';
+		
 		if (isset($_GET['__display_error_page__'])) {
 			self::displayErrorPage();
 		}
@@ -150,32 +153,33 @@ class ErrorLogger {
 		$message = strip_tags($message);
 		$errorType = self::getErrorTypeString($type);
 		$actualDatetime = date('Y-m-d H:i:s');
-		$csvLine = 'Date/Time: ' . $actualDatetime . "\n" 
+		$newRecord = 'Date/Time: ' . $actualDatetime . "\n" 
 				 . 'Error type: ' . $errorType . "\n\n" 
 				 . 'Message: ' . "\n" . $message . "\n\n" 
 				 . 'Url: ' . $url . "\n---\n\n";
+
+		// when the tmp log file was created?
+		$logTmpCreated = 0;
+		if (file_exists(self::$logFileTmpCreated))
+			$logTmpCreated = (int)file_get_contents(self::$logFileTmpCreated);
 		
 		// if old enough or tmp file size is too large
-		if (file_exists(self::$logFile))
-			$tmpFileContent = @file_get_contents(self::$logFile);
-		else
-			$tmpFileContent = '';
-		if ((@filemtime(self::$logFileTmp) < strtotime('-' . self::$config['emails_notify_limit_minutes'] . ' MINUTES') )
-			|| ((strlen($tmpFileContent) / 1024) > self::$config['emails_notify_limit_kb'])) {
-			$messageBody = $tmpFileContent . $csvLine;
+		if (file_exists(self::$logFileTmp) && ((filesize(self::$logFileTmp) > self::$config['emails_notify_limit_kb'] * 1024)
+			|| ($logTmpCreated < strtotime('-' . self::$config['emails_notify_limit_minutes'] . ' MINUTES')))) {
+			$messageBody = file_get_contents(self::$logFileTmp) . $newRecord;
+			// clearing the temporary
 			$r = file_put_contents(self::$logFileTmp, '');
-			if ($r === false)
-				$messageBody .= "Tmp log file '" . self::$logFileTmp . "' couldn't be erased.\n\n";
+			$r = file_put_contents(self::$logFileTmpCreated, time());
 			if ($r === false || self::$config['sent_error_to_emails']) {
-				self::sendMessage($messageBody);
+				self::sendMessage($messageBody . (($r === false) ? ("Tmp log file '" . self::$logFileTmp . "' couldn't be erased.\n\n") : '') );
 			}
 		} else {
-			self::appendToFile(self::$logFileTmp, $csvLine);
+			// not right time to send a message yet
+			self::appendToFile(self::$logFileTmp, $newRecord);
 		}
 	
-		// log to file
-		$logFilename = self::$logFile;
-		self::appendToFile($logFilename, $csvLine);
+		// log to standard log file
+		self::appendToFile(self::$logFile, $newRecord);
 	}
 	
 	

@@ -29,10 +29,10 @@ emails_notify_limit_kb = 10
 emails_notify_limit_minutes = 60
 
 ; where to store log - [Y][m][d] will be replaced by current year, month or day
-log_file = "log/log_[Y]_[m].csv"
+log_file = "log/log_[Y]_[m].log"
 
 ; where to store temporary messages
-log_file_tmp = "log/log_tmp.csv"
+log_file_tmp = "log/log_tmp.log"
 
 ; should error e-mail been sent?
 sent_error_to_emails = 0
