@@ -43,6 +43,7 @@ class Javascript {
 	static private $syntaxHighlighters = array();
 	static private $tabs = array();
 	static private $actualTranslations = array();
+	static private $protectedForms = array();
 	
 	
 	/**
@@ -405,6 +406,14 @@ class Javascript {
 			self::addScriptaculous();
 		}
 		
+		// specify formIds that should be protect from unwilling escape by
+		// <!-- protectedForm:myFormId -->
+		if (preg_match_all('/<!-- protectedForm:(\w+) -->/', $tpl_output, $matches) !== false) {
+			foreach ($matches[0] as $k => $formId)
+				self::addProtectedForm('form'.trim($matches[1][$k]));
+		}
+		self::protectForms();
+		
 		if (stripos($tpl_output, 'windowPopup') !== false) {
 			self::addWindows();
 		}
@@ -420,6 +429,32 @@ class Javascript {
 			self::cssToHTML(), 
 			$temp
 			);
+	}
+	
+	
+	public static function addProtectedForm($formId) {
+		self::$protectedForms[] = $formId;
+	}
+	
+	public static function protectForms() {
+		if (!self::$protectedForms)
+			return;
+		$output = '';
+		$condition = "0 == 1";
+		foreach (self::$protectedForms as $form) {
+			$output .= "$(\"$form\").serializedEmpty = $(\"$form\").serialize();\n";
+			$condition .= " || $(\"$form\").serializedEmpty != $(\"$form\").serialize()";
+		}
+		$warning = tg('Are you sure to leave the form without saving?');
+		$output .= <<<EOF
+// compare clean and actual form contents before leaving
+window.onbeforeunload = function (e) {
+    if($condition) {
+        return '$warning';
+    }
+};
+EOF;
+		self::addScript("Event.observe(window, 'load', function() { $output });");
 	}
 	
 	
