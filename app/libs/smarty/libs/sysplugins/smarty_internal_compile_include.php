@@ -62,9 +62,10 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase {
     {
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);
+        
         // don't include another template if request is ajax, unless ajax parameter is true
-        if (Request::isAjax() && (!isset($_attr['ajax']) || !$_attr['ajax']))
-        	return '';
+        $notIncludeIfAjax = (!isset($_attr['ajax']) || !$_attr['ajax']);
+        
         // save posible attributes
         $include_file = $_attr['file'];
 
@@ -208,7 +209,10 @@ class Smarty_Internal_Compile_Include extends Smarty_Internal_CompileBase {
         if (isset($_assign)) {
             $_output = "<?php \$_smarty_tpl->tpl_vars[$_assign] = new Smarty_variable(\$_smarty_tpl->getSubTemplate ($include_file, $_cache_id, $_compile_id, $_caching, $_cache_lifetime, $_vars, $_parent_scope));?>\n";;
         } else {
-            $_output = "<?php echo \$_smarty_tpl->getSubTemplate ($include_file, $_cache_id, $_compile_id, $_caching, $_cache_lifetime, $_vars, $_parent_scope);?>\n";
+            if ($notIncludeIfAjax)
+                $_output = "<?php if (!Request::isAjax()) {echo \$_smarty_tpl->getSubTemplate ($include_file, $_cache_id, $_compile_id, $_caching, $_cache_lifetime, $_vars, $_parent_scope);}?>\n";
+            else
+                $_output = "<?php echo \$_smarty_tpl->getSubTemplate ($include_file, $_cache_id, $_compile_id, $_caching, $_cache_lifetime, $_vars, $_parent_scope);?>\n";
         }
         return $_output;
     }
