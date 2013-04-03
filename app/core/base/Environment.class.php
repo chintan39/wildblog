@@ -130,8 +130,6 @@ class Environment {
 		self::$smarty->registerFilter('output', 'Javascript__addHTML');
 		self::$smarty->registerFilter('output', 'MessageBus__exportMessages');
 		
-		ErrorLogger::log(ErrorLogger::ERR_WARNING, "Just testing");
-
 		self::loadPackages();
 		$permission = new Permission();
 
@@ -140,7 +138,7 @@ class Environment {
 		self::initPackages();
 		Themes::loadThemes();
 		
-		// load languages and init
+		// load languages and init them
 		Language::init();
 
 	}
