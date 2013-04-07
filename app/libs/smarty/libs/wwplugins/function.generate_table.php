@@ -146,7 +146,7 @@ function smarty_function_generate_table($params, &$smarty)
 				$value = $item->$column;
 				$columnClass = array();
 				
-				$value = $item->getValueView($column);
+				$value = $item->getValueViewTable($column);
 				switch ($column) {
 					case "id":
 						$columnClass[] = "align-center";

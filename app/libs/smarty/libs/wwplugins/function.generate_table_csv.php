@@ -68,7 +68,7 @@ function smarty_function_generate_table_csv($params, &$smarty)
 			$first = true;
 			foreach ($collection->data["columns"] as $column) {
 				$value = $item->$column;
-				$value = $item->getValueView($column);
+				$value = $item->getValueViewTable($column);
 				$output .= ($first ? '' : ';') . '"' . str_replace(array('"', "\n"), array('\"', '\n'), $value) . '"';
 				$first = false;
 			}

@@ -942,6 +942,16 @@ class AbstractBasicModel {
 			return null;
 	}
 	
+
+	/**
+	 *
+	 * @param $fieldName
+	 * @return
+	 */
+	public function getValueViewTable($fieldName) {
+		return $this->getValueView($fieldName);
+	}
+
 	
 	/**
 	 *

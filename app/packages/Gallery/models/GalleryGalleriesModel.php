@@ -349,6 +349,13 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 		
 	}
 
+	public function getValueViewTable($fieldName) {
+		if ($fieldName == 'imagesthumbs') {
+			return (int)$this->FindCount('GalleryImagesModel') . ' ' . tg('images in the gallery');
+		}
+		return $this->getValueView($fieldName);
+	}
+	
 	public function getValueView($fieldName) {
 		if ($fieldName == 'imagesselect')
 			return '';
