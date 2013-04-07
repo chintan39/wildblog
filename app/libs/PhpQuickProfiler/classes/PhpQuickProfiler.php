@@ -215,7 +215,7 @@ class PhpQuickProfiler {
 		$this->gatherMemoryData();
 		$this->gatherQueryData();
 		$this->gatherSpeedData();
-		require_once(__dir__ . '/../display.php');
+		require_once(dirname(__FILE__) . '/../display.php');
 		return getPqp($this->output, $this->config);
 	}
 	

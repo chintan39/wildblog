@@ -12,7 +12,7 @@ define('APP_GENERATOR_NAME', 'WildBlog');
 
 define('DIR_APP', 'app/');
 define('DIR_PROJECT_BASE', '../');
-define('BASE_PATH', preg_replace('/app\/config$/', '', __dir__));
+define('BASE_PATH', preg_replace('/app\/config$/', '', dirname(__FILE__)));
 
 // $_GET['__project__'] is set by .htaccess to support multiple project
 if (isset($_GET['__project__']) && preg_match('/^[a-zA-Z0-9\/\-_]*$/', $_GET['__project__']))
