@@ -1,7 +1,6 @@
 <!-- ##title={$title|default:'Edit':tg}## -->
 <!-- ##size=700x500## -->
 {include file='Base.part.pageHeader.tpl'  ajax=1}
-<!-- protectedForm:{$form.identifier} -->
 {include file='Base.part.cleanForm.tpl'  ajax=1}
 {if $detailLink}<a href="{$detailLink}" class="detailItem" title="{tg}View item on front-page{/tg}"></a>{/if}
 {if $viewLink}<a href="{$viewLink}" class="viewItem" title="{tg}View item detail{/tg}"></a>{/if}

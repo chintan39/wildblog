@@ -184,6 +184,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 		$model = $formField->getDataModel();
 		$fieldName = $meta->getName();
 		$output = '';
+		$isSimple = Request::$action['method'] == 'actionSimpleEdit';
 		if ($fieldName == 'titleimage') {
 			if (!$model->id) {
 				$output .= '<span class="note">' . tg('Title image will be able to select after saving.') . '</span>';
@@ -195,7 +196,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 				$origUrl = $thumb->getOriginalImagePath();
 				$thumbSize = $thumb->getOrigWidth().'x'.$thumb->getOrigHeight().'px';
 				$buttons = '';
-				$buttons .= '<a href="'.Request::getLinkItem($this->package, 'Images', 'actionEdit', $model->titleimage, array(REQUEST_TYPE_PARAM_NAME => REQUEST_TYPE_AJAX)).'" title="'.tg('Edit image').'">'
+				$buttons .= '<a href="'.Request::getLinkItem($this->package, 'Images', ($isSimple ? 'actionSimpleEdit' : 'actionEdit'), $model->titleimage, array(REQUEST_TYPE_PARAM_NAME => REQUEST_TYPE_AJAX)).'" title="'.tg('Edit image').'">'
 					.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/edit.png" alt="Edit" />'
 					."</a>\n";
 				$buttons .= '<a href="'.$origUrl.'" title="'.tg('View image').'" rel="lightbox[titleimage]">'
@@ -228,7 +229,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'GalleriesImages', 'actionSetTitle', $fakeObject, array(REQUEST_TYPE_PARAM_NAME => REQUEST_TYPE_AJAX)).'" title="'.tg('Set as title image').'">'
 							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/home.png" alt="Title" />'
 							."</a>\n";
-						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'Images', 'actionEdit', $image, array(REQUEST_TYPE_PARAM_NAME => REQUEST_TYPE_AJAX)).'" title="'.tg('Edit image').'">'
+						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'Images', ($isSimple ? 'actionSimpleEdit' : 'actionEdit'), $image, array(REQUEST_TYPE_PARAM_NAME => REQUEST_TYPE_AJAX)).'" title="'.tg('Edit image').'">'
 							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/edit.png" alt="Edit" />'
 							."</a>\n";
 						$buttons .= '<a href="'.$origUrl.'" title="'.tg('View image').'" rel="lightbox[images]">'
