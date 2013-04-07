@@ -54,7 +54,7 @@ function smarty_function_form_button($params, &$smarty)
 	$button = $params['button'];
 	$sendAjax = isset($params['sendAjax']) ? $params['sendAjax'] : false;
 	$textChange = "";
-	$onclick = "return " . ($sendAjax ? "ajaxSendFormDisplayMessage(this.form);" : "changeTextAndDisable(this, '" . tg("Sending...") . "');");
+	$onclick = "window.formProtection=false; return " . ($sendAjax ? "ajaxSendFormDisplayMessage(this.form);" : "changeTextAndDisable(this, '" . tg("Sending...") . "');");
 	switch ($button["type"]) {
 		case Form::FORM_BUTTON_SAVE: 
 			$onclick = " onclick=\"$onclick\"";

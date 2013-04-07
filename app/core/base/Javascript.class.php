@@ -443,14 +443,14 @@ class Javascript {
 		$condition = "0 == 1";
 		foreach (self::$protectedForms as $form) {
 			$output .= "$(\"$form\").serializedEmpty = null;\n";
-			$output .= "window.setInterval(function(){ $(\"$form\").serializedEmpty = $(\"$form\").serialize(); }, ".(FORM_PROTECTION_SAVE_SECONDS*1000).");\n";
+			$output .= "window.setInterval(function(){ window.formProtection=true; $(\"$form\").serializedEmpty = $(\"$form\").serialize(); }, ".(FORM_PROTECTION_SAVE_SECONDS*1000).");\n";
 			$condition .= " || ( $(\"$form\").serializedEmpty != null && $(\"$form\").serializedEmpty != $(\"$form\").serialize())";
 		}
 		$warning = tg('Are you sure to leave the form without saving?');
 		$output .= <<<EOF
 // compare clean and actual form contents before leaving
 window.onbeforeunload = function (e) {
-    if($condition) {
+    if (window.formProtection && ($condition)) {
         return '$warning';
     }
 };
