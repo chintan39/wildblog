@@ -442,8 +442,9 @@ class Javascript {
 		$output = '';
 		$condition = "0 == 1";
 		foreach (self::$protectedForms as $form) {
-			$output .= "$(\"$form\").serializedEmpty = $(\"$form\").serialize();\n";
-			$condition .= " || $(\"$form\").serializedEmpty != $(\"$form\").serialize()";
+			$output .= "$(\"$form\").serializedEmpty = null;\n";
+			$output .= "window.setInterval(function(){ $(\"$form\").serializedEmpty = $(\"$form\").serialize(); }, ".(FORM_PROTECTION_SAVE_SECONDS*1000).");\n";
+			$condition .= " || ( $(\"$form\").serializedEmpty != null && $(\"$form\").serializedEmpty != $(\"$form\").serialize())";
 		}
 		$warning = tg('Are you sure to leave the form without saving?');
 		$output .= <<<EOF

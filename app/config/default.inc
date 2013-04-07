@@ -158,6 +158,10 @@ define('CAPTCHA_LENGTH', 5);
 define('CAPTCHA_WIDTH', 150);
 define('CAPTCHA_HEIGHT', 75);
 
+// how many seconds wait until form gets lock by protection of leaving
+// without saving
+define('FORM_PROTECTION_SAVE_SECONDS', 10);
+
 // request type param name
 define('REQUEST_TYPE_PARAM_NAME', '__request_type__');
 define('REQUEST_TYPE_AJAX', 'ajax');
