@@ -140,7 +140,6 @@ class AbstractDefaultController extends AbstractBasicController{
 	 *
 	 */
 	public function actionEditSelf($args, $isSimple=false) {
-		
 		$item = $args;
 		Request::reGenerateToken();
 		$this->actionEditAdjustItem($item);

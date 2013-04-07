@@ -25,7 +25,7 @@ class GalleryGalleriesImagesController extends AbstractDefaultController {
 	public function actionRemoveImage($galleryImage) {
 		$galleryId = $galleryImage->gallery;
 		$galleryImage->DeleteYourself();
-		Request::redirect(Request::getLinkItem($this->package, 'Galleries', 'actionEdit', new GalleryGalleriesModel($galleryId)));
+		Request::redirect(Request::getLinkItem($this->package, 'Galleries', (Request::isAjax() ? 'actionSimpleEdit' : 'actionEdit'), new GalleryGalleriesModel($galleryId)));
 	}
 	
 	/**
@@ -36,7 +36,7 @@ class GalleryGalleriesImagesController extends AbstractDefaultController {
 		GalleryGalleriesModel::clearTitleImage($galleryId);
 		$galleryImage->titleimage = 1;
 		$galleryImage->Save();
-		Request::redirect(Request::getLinkItem($this->package, 'Galleries', 'actionEdit', new GalleryGalleriesModel($galleryId)));
+		Request::redirect(Request::getLinkItem($this->package, 'Galleries', (Request::isAjax() ? 'actionSimpleEdit' : 'actionEdit'), new GalleryGalleriesModel($galleryId)));
 	}
 	
 	

@@ -195,7 +195,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 				$origUrl = $thumb->getOriginalImagePath();
 				$thumbSize = $thumb->getOrigWidth().'x'.$thumb->getOrigHeight().'px';
 				$buttons = '';
-				$buttons .= '<a href="'.Request::getLinkItem($this->package, 'Images', 'actionEdit', $model->titleimage).'" title="'.tg('Edit image').'">'
+				$buttons .= '<a href="'.Request::getLinkItem($this->package, 'Images', 'actionEdit', $model->titleimage, array(REQUEST_TYPE_PARAM_NAME => REQUEST_TYPE_AJAX)).'" title="'.tg('Edit image').'">'
 					.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/edit.png" alt="Edit" />'
 					."</a>\n";
 				$buttons .= '<a href="'.$origUrl.'" title="'.tg('View image').'" rel="lightbox[titleimage]">'
@@ -225,16 +225,16 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 						$fakeObject->image = $image->id;
 						$fakeObject->gallery = $model->id;
 						$buttons = '';
-						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'GalleriesImages', 'actionSetTitle', $fakeObject).'" title="'.tg('Set as title image').'">'
+						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'GalleriesImages', 'actionSetTitle', $fakeObject, array(REQUEST_TYPE_PARAM_NAME => REQUEST_TYPE_AJAX)).'" title="'.tg('Set as title image').'">'
 							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/home.png" alt="Title" />'
 							."</a>\n";
-						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'Images', 'actionEdit', $image).'" title="'.tg('Edit image').'">'
+						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'Images', 'actionEdit', $image, array(REQUEST_TYPE_PARAM_NAME => REQUEST_TYPE_AJAX)).'" title="'.tg('Edit image').'">'
 							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/edit.png" alt="Edit" />'
 							."</a>\n";
 						$buttons .= '<a href="'.$origUrl.'" title="'.tg('View image').'" rel="lightbox[images]">'
 							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/view.png" alt="View" />'
 							."</a>\n";
-						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'GalleriesImages', 'actionRemoveImage', $fakeObject).'" onclick="return confirm(\''.tg('Are you sure to remvoe this image from the gallery?').'\');" title="'.tg('Remove image').'">'
+						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'GalleriesImages', 'actionRemoveImage', $fakeObject, array(REQUEST_TYPE_PARAM_NAME => REQUEST_TYPE_AJAX)).'" onclick="return confirm(\''.tg('Are you sure to remvoe this image from the gallery?').'\');" title="'.tg('Remove image').'">'
 							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/remove.png" alt="Remove" />'
 							."</a>\n";
 						$output .= "<div class=\"simplethumb\">\n";

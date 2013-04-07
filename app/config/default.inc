@@ -160,6 +160,7 @@ define('CAPTCHA_HEIGHT', 75);
 
 // request type param name
 define('REQUEST_TYPE_PARAM_NAME', '__request_type__');
+define('REQUEST_TYPE_AJAX', 'ajax');
 
 // pattern to define directory by another field
 define('DYNAMIC_NAME_PATTERN', 'DYNAMIC::');

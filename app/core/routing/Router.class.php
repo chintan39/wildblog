@@ -659,6 +659,8 @@ class Router {
 	
 	/**
 	 * Generates the link from the modified request structure.
+	 * $args has array format and if value is PRESERVE_VALUE, then
+	 * the original value is preserved
 	 * @param array $reqStructure preddefined request structure
 	 * @param array 
 	 */
