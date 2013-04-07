@@ -27,5 +27,5 @@
 
 {include file='Base.part.adminBox.tpl' }
 
-{include file='Base.part.footer.tpl' }
+{include file='Base.part.pageFooter.tpl' }
 

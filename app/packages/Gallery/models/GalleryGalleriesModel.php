@@ -204,7 +204,8 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 					.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/view.png" alt="View" />'
 					."</a>\n";
 				$output .= "<div class=\"simplethumb\">\n";
-				$output .= "<img src=\"{$thumbUrl}\" alt=\"{$model->titleimage->image}\" title=\"{$model->titleimage->title}\" />\n";
+				$popup = $model->titleimage->title . ' (' . Utilities::niceSize(filesize(Utilities::url2path($model->titleimage->image))) . ')';
+				$output .= "<img src=\"{$thumbUrl}\" alt=\"{$model->titleimage->image}\" title=\"{$popup}\" />\n";
 				$output .= "<span class=\"text\"><strong>{$model->titleimage->title}</strong><br />{$thumbSize}</span>\n";
 				$output .= "<span class=\"buttons\">{$buttons}</span>\n";
 				$output .= "</div>\n";
@@ -240,7 +241,8 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/remove.png" alt="Remove" />'
 							."</a>\n";
 						$output .= "<div class=\"simplethumb\">\n";
-						$output .= "<img src=\"{$thumbUrl}\" alt=\"{$image->image}\" title=\"{$image->title}\" />\n";
+						$popup = $image->title . ' (' . Utilities::niceSize(filesize(Utilities::url2path($image->image))) . ')';
+						$output .= "<img src=\"{$thumbUrl}\" alt=\"{$image->image}\" title=\"{$popup}\" />\n";
 						$output .= "<span class=\"text\"><strong>{$image->title}</strong><br />{$thumbSize}</span>\n";
 						$output .= "<span class=\"buttons\">{$buttons}</span>\n";
 						$output .= "</div>\n";

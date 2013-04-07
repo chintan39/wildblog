@@ -353,6 +353,7 @@ windowPopupAjax = function (_link, _resultAction, _resultContainer, _resultLink,
 	var win = new Window({
 			className: 'alphacube', 
 			url: _link, 
+			zIndex: 1000,
 			showEffectOptions: {duration:1.5}
 	}); 
 	applyWindowParams(_windowParams, win);
@@ -377,7 +378,8 @@ windowPopupAjax = function (_link, _resultAction, _resultContainer, _resultLink,
 windowPopupAjaxGetContent = function (_link, _resultAction, _resultContainer, _resultLink, _windowParams) {
 	_windowParams = getWindowParams(_windowParams);
 	var win = new Window({
-			className: 'alphacube', 
+			className: 'alphacube',
+			zIndex: 1000,
 			showEffectOptions: {duration:1.5}
 	}); 
 	ajaxLoaderShow();
@@ -417,6 +419,7 @@ windowPopupAjaxTranslations = function (_link, _translations) {
 			className: 'alphacube', 
 			width: 500,
 			height: 400,
+			zIndex: 1000,
 			title: "Translations",
 			showEffectOptions: {duration:1.5}
 	}); 

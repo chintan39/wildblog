@@ -913,6 +913,16 @@ class Utilities {
 		$value = preg_replace("/(\S)(\n\n)\s+/m", '$1$2', $value);
 		return $value;
 	}
+	
+	static public function niceSize($bytes) {
+		$prefixes='BKMGTPE';
+		$index = 0;
+		while ($bytes>1024 && $index<6) {
+			$index++;
+			$bytes /= 1024;
+		}
+		return round($bytes).$prefixes{$index};
+	}
 }
 
 /**

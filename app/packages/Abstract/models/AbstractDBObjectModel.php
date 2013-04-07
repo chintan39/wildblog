@@ -802,6 +802,7 @@ class AbstractDBObjectModel extends AbstractBasicModel
 		if ($this->extendedTextsSupport && (!isset($values['lang']) || !$values['lang'])) {
 			// the ext_table item does not exist now
 			$this->loadDefaultLanguage();
+			$this->databaseValues = $values;
 			return false;
 		} else {
 			$this->databaseValues = $values;
