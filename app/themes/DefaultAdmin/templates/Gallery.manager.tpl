@@ -37,7 +37,7 @@ function uploaderStatusChanged( uploader) {ldelim}
 <div class="items" id="mediaManagerItems">
 {foreach from=$dirItems item=item}
 <div class="item {$item->class}">
-<a href="{$item->link}" title="{$item->desc}{if $item->size}{$item->size}{/if}" class="{$item->class}"{if $item->onclick} onclick="{$item->onclick}"{/if}{if $item->ondoubleclick} ondblclick="{$item->ondoubleclick}"{/if}>
+<a href="{$item->link}" title="{$item->desc}{if $item->size} [{$item->size}]{/if}{if $item->dimensions} [{$item->dimensions}]{/if}" class="{$item->class}"{if $item->onclick} onclick="{$item->onclick}"{/if}{if $item->ondoubleclick} ondblclick="{$item->ondoubleclick}"{/if}>
 <span class="image"><img src="{$item->image}" alt="" /></span>
 <span class="title">{$item->title}</span>
 </a>

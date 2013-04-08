@@ -118,6 +118,7 @@ class GalleryImagesController extends AbstractPagesController {
 					$newDir->delete = Request::getLinkSimple($this->package, $this->name, 'actionImageManagerDel', array('dir' => $dirPart, 'type' => $type, 'subdir' => $file));
 					$newDir->edit = Request::getLinkSimple($this->package, $this->name, 'actionImageManagerEditDir', array('dir' => $dirPart, 'type' => $type, 'subdir' => $file));
 					$newDir->size = '';
+					$newDir->dimensions = '';
 					$directories[] = $newDir;
 				}
 				
@@ -137,6 +138,7 @@ class GalleryImagesController extends AbstractPagesController {
 					$newImage->desc = $image->image;
 					$imagePath = Utilities::url2path($image->image);
 					$newImage->size = Utilities::niceSize(filesize($imagePath));
+					$newImage->dimensions = '';
 					if (!file_exists($imagePath))
 						continue;
 					if ($type == 'image') {
@@ -144,6 +146,7 @@ class GalleryImagesController extends AbstractPagesController {
 							continue;
 						$thumb = new Thumbnail(null, $image->image, 64, 64, 'c');
 						$newImage->image = Utilities::path2url($thumb->getThumbnailImagePath());
+						$newImage->dimensions = $thumb->getOrigWidth().'x'.$thumb->getOrigHeight().'px';
 					} else {
 						if (preg_match('/\.([^\.\/]+)$/', $image->image, $ext)) {
 							if (file_exists(DIR_ICONS_IMAGES_DIR_ORIGINAL . '128/filetype_' . $ext[1] . '.png')) {
@@ -187,6 +190,7 @@ class GalleryImagesController extends AbstractPagesController {
 				$upperDirectory->delete = '';
 				$upperDirectory->edit = '';
 				$upperDirectory->size = '';
+				$upperDirectory->dimensions = '';
 				$upperDirectory = array($upperDirectory);
 			}
 			$dirItems = array_merge($upperDirectory, $directories, $images);
