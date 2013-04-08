@@ -102,7 +102,7 @@ class Thumbnail {
 	}
 
 	public function checkPermitFile() {
-		if (Permission::check(Permission::$CONTENT_ADMIN || Permission::$ADMIN)) {
+		if (Permission::check(Permission::$CONTENT_ADMIN | Permission::$ADMIN)) {
 			$this->createPermitFile();
 			return true;
 		}
