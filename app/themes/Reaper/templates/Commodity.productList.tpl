@@ -2,7 +2,7 @@
 
 <h1>{$title}</h1>
 	
-{include file=Commodity.part.productList.tplpackage=Commodity}
+{include file='Commodity.part.productList.tpl'}
 
 {include file='Basic.part.contactForm.tpl' package=Basic}
 			

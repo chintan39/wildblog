@@ -6,7 +6,7 @@
 
 {if $manofacturer->link}<p>{tg}Web{/tg}: <a href="{$manofacturer->link}" rel="external">{$manofacturer->link}</a></p>{/if}
 
-{include file=Commodity.part.productList.tplpackage=Commodity products=$manofacturer->products}
+{include file='Commodity.part.productList.tpl' products=$manofacturer->products}
 
 {$manofacturer->text}
 

@@ -8,5 +8,5 @@
 		<div id="mainleft">	
 		<div id="main">	
 
-		{include file=Basic.part.homepageArticle.tplpackage=Basic}
+		{include file='Basic.part.homepageArticle.tpl'}
 

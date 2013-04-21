@@ -25,7 +25,7 @@
 
 {generate_paging collection=$galleriesList}
 
-{include file=References.part.references.tplpackage=References}
+{include file='References.part.references.tpl'}
 
 {include file='Base.part.footer.tpl'}
 

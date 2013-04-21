@@ -3,9 +3,9 @@
 			
 		<div id="rightbar">
 			
-			{include file=Commodity.part.references.tplpackage=Commodity}
-			{include file=Commodity.part.actions.tplpackage=Commodity}
-			{include file=Commodity.part.favourites.tplpackage=Commodity}
+			{include file='Commodity.part.references.tpl'}
+			{include file='Commodity.part.actions.tpl'}
+			{include file='Commodity.part.favourites.tpl'}
 			{include file='Basic.part.advertisements.tpl' package=Basic}
 			{include file='Basic.part.htmlAreas.tpl' package=Basic}
 			
@@ -16,9 +16,9 @@
 		
 		<div id="sidebar" >							
 				
-			{include file=Basicpart.articlesMenu.tplpackage=Basic}
-			{include file=Commodity.part.categoriesMenu.tplpackage=Commodity}
-			{include file=Commodity.part.manofacturersList.tplpackage=Commodity}
+			{include file='Basicpart.articlesMenu.tpl'}
+			{include file='Commodity.part.categoriesMenu.tpl'}
+			{include file='Commodity.part.manofacturersList.tpl'}
 			
 		</div><!-- sidebar -->
 			

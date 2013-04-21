@@ -4,7 +4,7 @@
 	
 {$category->text}
 
-{include file=Commodity.part.productList.tplpackage=Commodity products=$category->products}
+{include file='Commodity.part.productList.tpl' products=$category->products}
 
 {include file='Base.part.footer.tpl'}
 
