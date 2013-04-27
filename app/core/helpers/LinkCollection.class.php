@@ -112,19 +112,7 @@ class LinkCollection {
 			return array();
 		$links = array();
 		foreach ($items as $item) {
-			if (!$item->hasMetadata('link')) {
-				throw new Exception('Item being converted to LinkCollection does not have attribute link');
-			}
-			$requestLocation = Request::getRequestLocationFromString($item->link);
-			$newLink = new Link(array(
-				//'link' => Request::getLinkFromRequestLocation($requestLocation), 
-				'label' => $item->makeSelectTitle(),
-				'title' => $item->makeSelectTitle(), 
-				'action' => array(
-					'package' => $requestLocation->package, 
-					'controller' => $requestLocation->controller, 
-					'action' => $requestLocation->method,
-					'item' => $requestLocation->item)));
+			$newLink = $item->getLink('link');
 			$newLink->addSubLinks(self::getContentFromItemCollectionRecursive($item->subItems));
 			$links[] = $newLink;
 		}

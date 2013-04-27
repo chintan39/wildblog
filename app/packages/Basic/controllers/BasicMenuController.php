@@ -37,15 +37,9 @@ class BasicMenuController extends AbstractPagesController {
 				$allPagesMenus = array();
 				foreach ($menus as $menu) {
 					$menuName = str_replace('-', '_', $menu->url);
-					$menuTree = new ItemCollectionTree($menuName, $this);
-					$menuTree->addQualification(array('menu' => array(new ItemQualification('menu = ?', array($menu->id)))));
-					$menuTree->setSorting(array(new ItemSorting('rank')));
-					$menuTree->setDm(new BasicMenuItemsModel());
-					//$menuTree->treePull(ItemCollectionTree::treeAncestors | ItemCollectionTree::treeSiblings);
-					$menuTree->loadCollection();
 					$menuLinkTree = new LinkCollection();
 					$menuLinkTree->setIgnorePermissionDenied(true);
-					$menuLinkTree->getContentFromItemCollection($menuTree);
+					$menuLinkTree->getContentFromItemCollection($menu->getMenuItemsCollection($this));
 					$menuLinkTree->markAllLinks();
 					$allPagesMenus[$menuName] = $menuLinkTree;
 				}

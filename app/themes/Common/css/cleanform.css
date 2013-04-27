@@ -334,6 +334,50 @@ div.simplethumb span.buttons a:hover img {
 	border-color: #cccccc;
 }
 
+
+/**
+ * menuItems
+ */
+div.menuLinkWrap {
+	clear: both;
+}
+
+div.menuLink {
+	padding: 2px 106px 2px 2px;
+	margin: 2px;
+}
+
+img.menuItemIcon {
+	display: block;
+	float: left;
+}
+
+span.indent {
+	display: block;
+	float: left;
+	height: 32px;
+	width: 32px;
+}
+
+div.menuLinkTitleWrap {
+	display: block;
+	float: left;
+	height: 32px;
+}
+
+div.menuLinkTitle {
+	font-weight: bold;
+}
+
+div.menuLinkLink {
+}
+
+div.menuLinkIcons {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
 /**
  *------------------------------------------------
  * end 

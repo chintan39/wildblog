@@ -20,7 +20,7 @@
 class BasicMenuItemsModel extends AbstractStructuredCodebookModel {
 	
 	var $package = 'Basic';
-	var $icon = 'page', $table = 'menu_items';
+	var $icon = 'link', $table = 'menu_items';
 	var $languageSupportAllowed = true;
 	var $activity;
 

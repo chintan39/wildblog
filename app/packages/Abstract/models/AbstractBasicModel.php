@@ -952,6 +952,11 @@ class AbstractBasicModel {
 		return $this->getValueView($fieldName);
 	}
 
+
+	public function getTableValue($fieldName) {
+		return '';
+	}
+
 	
 	/**
 	 *
@@ -969,7 +974,7 @@ class AbstractBasicModel {
 		}
 		switch ($meta->getType()) {
 			case Form::FORM_SPECIFIC_NOT_IN_DB:
-				$value = $this->getTableValue();
+				$value = $this->getTableValue($fieldName);
 				break;
 			case Form::FORM_ID:
 				$value = "<img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . "32/" . $this->getIcon() . ".png\" alt=\"\" /><br />" . $value;
@@ -1058,6 +1063,24 @@ class AbstractBasicModel {
 	
 	public function getChanges() {
 		return array();
+	}
+
+	
+	public function getLink($fieldName='link') {
+		if (!$this->hasMetadata($fieldName)) {
+			throw new Exception('Item being converted to LinkCollection does not have attribute "'.$fieldName.'"');
+		}
+		$requestLocation = Request::getRequestLocationFromString($this->$fieldName);
+		$newLink = new Link(array(
+			//'link' => Request::getLinkFromRequestLocation($requestLocation), 
+			'label' => $this->makeSelectTitle(),
+			'title' => $this->makeSelectTitle(), 
+			'action' => array(
+				'package' => $requestLocation->package, 
+				'controller' => $requestLocation->controller, 
+				'action' => $requestLocation->method,
+				'item' => $requestLocation->item)));
+		return $newLink;
 	}
 	
 }

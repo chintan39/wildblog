@@ -632,7 +632,7 @@ class AbstractDefaultModel extends AbstractDBObjectModel {
 				$totalCount++;
 				$tmp = new self($tmpId);
 				$tmp->addNonDbProperty('subItems'); 
-				$tmp->subItems = $resultItems;
+				$tmp->subItems = $resultItems ? $resultItems : array();
 				$returnItems = array($tmp);
 				$tmpId = $tmp->parent;
 			}

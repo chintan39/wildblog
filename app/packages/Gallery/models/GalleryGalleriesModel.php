@@ -164,11 +164,13 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 		return $ret;
 	}
 
-	public function getTableValue() {
-		if ($this->titleimage) {
-			$thumb = new Thumbnail(null, $this->titleimage->image, 128, 80, 'b');
-			$value = '<img src="' . $thumb->getThumbnailImagePath() . '" alt="#" />';
-			return $value;
+	public function getTableValue($fieldName) {
+		if ($fieldName == 'titleimage') {
+			if ($this->titleimage) {
+				$thumb = new Thumbnail(null, $this->titleimage->image, 128, 80, 'b');
+				$value = '<img src="' . $thumb->getThumbnailImagePath() . '" alt="#" />';
+				return $value;
+			}
 		}
 		return '';
 	}
@@ -178,6 +180,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 	 * Note: there is a problem with using $this inside this method. While we use
 	 * MetaDataContainer, we have mished up objects, so we use $model to have correct
 	 * model to access.
+	 * TODO: This method should actually be part of controller
 	 */
 	public function getFormHTML($formField) {
 		$meta = $formField->getMeta();
