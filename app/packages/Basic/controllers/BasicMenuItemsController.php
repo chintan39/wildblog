@@ -21,6 +21,16 @@ class BasicMenuItemsController extends AbstractStructuredCodebookController {
 	
 	public $order = 2;				// order of the controller (0-10 asc)
 
+	public function actionMoveUp($arg) {
+		$this->moveItem($arg, 'up');
+		Request::redirect(Request::getLinkItem($this->package, 'Menu', 'actionEdit', $arg->menu, array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE)));
+	}
+	
+	public function actionMoveDown($arg) {
+		$this->moveItem($arg, 'down');
+		Request::redirect(Request::getLinkItem($this->package, 'Menu', 'actionEdit', $arg->menu, array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE)));
+	}
+	
 	
 }
 

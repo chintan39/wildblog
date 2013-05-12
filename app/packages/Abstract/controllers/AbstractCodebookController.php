@@ -36,7 +36,10 @@ class AbstractCodebookController extends AbstractDefaultController {
 		 */
 		$operator = ($sortableDirection == 'desc' xor $direction == 'up') ? '<' : '>';
 		$findingDirection = ($sortableDirection == 'desc' xor $direction == 'up') ? 'desc' : 'asc';
-		$prev = $model->Find($this->model, array("rank $operator ?"), array($item->rank), array("order by rank $findingDirection", "limit 1"));
+		$values = array($item->rank);
+		if ($item->hasMetaData('parent'))
+			$values[] = $item->parent;
+		$prev = $model->Find($this->model, array("rank $operator ?".($item->hasMetaData('parent') ? " and parent = ? " : "")), $values, array("order by rank $findingDirection", "limit 1"));
 		if ($prev) {
 			$tmp1 = $prev[0]->rank;
 			$tmp2 = $item->rank;

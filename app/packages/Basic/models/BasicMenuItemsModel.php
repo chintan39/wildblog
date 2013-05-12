@@ -36,6 +36,9 @@ class BasicMenuItemsModel extends AbstractStructuredCodebookModel {
 			->setOptionsMethod('listSelect')
 			->setSqlType('int(11) NOT NULL DEFAULT \'0\'')
 			->setSqlindex(ModelMetaIndex::INDEX));
+		
+		$this->getMetaData('parent')->setFormTab(Form::TAB_BASIC);
+
 
     }
     
