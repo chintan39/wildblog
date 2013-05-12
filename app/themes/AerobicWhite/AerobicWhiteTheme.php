@@ -52,12 +52,10 @@ class AerobicWhiteTheme extends AbstractTheme {
 			'Base.part.header',
 			'Base.part.footer',
 			'Basic.part.recentNews',
-			'Gallery.part.galleriesList',
 		),
 		'Commodity.productList' => array(
 			'Base.part.header',
 			'Base.part.footer',
-			'Basic.part.recentNews',
 			'Gallery.part.galleriesList',
 		),
 		'Gallery.galleryDetail' => array(

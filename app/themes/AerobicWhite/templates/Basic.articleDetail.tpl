@@ -12,8 +12,8 @@
                 <p class="color-4">{$article->text}</p>
                 <p>&nbsp;</p>
 				{include  file='Base.part.editItem.tpl' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
-				<a href="#" class="button">více o stylech cvičení</a>
-				<a href="#" class="button">více o kosmetice</a>
+				<a href="{linkto package=Basic controller=Articles action=actionDetail dataItem=9}" class="button">více o stylech cvičení</a>
+				<a href="{linkto package=Basic controller=Articles action=actionDetail dataItem=36}" class="button">více o kosmetice</a>
                 </div>
             </div>
         </div>    
@@ -38,6 +38,7 @@
                 <h2 class="top-2">{$article->title}</h2>
                 {$article->text}
                 </div>
+                {include  file='Base.part.editItem.tpl' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
         </div>
         <div class="grid_5">
         	{include file='Basic.part.recentNews.tpl'}
