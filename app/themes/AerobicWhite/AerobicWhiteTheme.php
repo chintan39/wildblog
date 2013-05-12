@@ -65,7 +65,7 @@ class AerobicWhiteTheme extends AbstractTheme {
 			'Base.part.footer',
 			'Basic.part.recentNews',
 		),
-		'Gallery.galeriesList' => array(
+		'Gallery.galleriesList' => array(
 			'Base.part.header',
 			'Base.part.footer',
 			'Basic.part.recentNews',

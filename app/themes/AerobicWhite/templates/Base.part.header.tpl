@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <title></title>
     <meta charset="utf-8">
+    <meta name="description" content="{$seoDescription|default:$pageDescription|default:$projectDescription}" />
+    <meta name="keywords" content="{$seoKeywords|default:$projectKeywords}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="robots" content="{if $noindex}noindex, nofollow{else}index, follow{/if}" />
+    <meta name="rating" content="general" />
+    <meta name="author" content="Honza Horák; mailto:horak.jan@centrum.cz" />
+    <meta name="generator" content="{$appGenerator}" />
+    <meta name="copyright" content="Honza Horák" />
+    {include file='Base.part.rssFeeds.tpl'}
+    <link rel="shortcut icon" type="image/x-icon" href="{$base}{if $useThemeFavicon}app/themes/{$generalTheme}/images/{else}media/{/if}favicon.ico" />
+    <title>{$pageTitle|default:$title}</title>
+    <!-- css_adding -->
     <link rel="stylesheet" type="text/css" media="screen" href="{$base}app/themes/{$generalTheme}/css/reset.css">
     <link rel="stylesheet" type="text/css" media="screen" href="{$base}app/themes/{$generalTheme}/css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="{$base}app/themes/{$generalTheme}/css/grid_16.css">
@@ -12,13 +23,14 @@
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link href='http://fonts.googleapis.com/css?family=Marck+Script&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="{$base}app/themes/{$generalTheme}/js/jquery-1.7.min.js"></script>
+    <!-- javascript_adding -->
+    {*<script type="text/javascript" src="{$base}app/themes/{$generalTheme}/js/jquery-1.7.min.js"></script>
     <script type="text/javascript" src="{$base}app/themes/{$generalTheme}/js/jquery.easing.1.3.js"></script>
     <script type="text/javascript" src="{$base}app/themes/{$generalTheme}/js/jquery.atooltip.min.js"></script>
     <script type="text/javascript" src="{$base}app/themes/{$generalTheme}/js/superfish.js"></script>
     <script type="text/javascript" src="{$base}app/themes/{$generalTheme}/js/scrollTop.js"></script>
     <script type="text/javascript" src="{$base}app/themes/{$generalTheme}/js/jquery.prettyPhoto.js"></script>
-    <script type="text/javascript" src="{$base}app/themes/{$generalTheme}/js/FF-cash.js"></script>
+    <script type="text/javascript" src="{$base}app/themes/{$generalTheme}/js/FF-cash.js"></script>*}
     <script type="text/javascript">
 		$(function(){ldelim}
 			$('a.normalTip').aToolTip();
@@ -38,6 +50,7 @@
    		<script type="text/javascript" src="js/html5.js"></script>
     	<link rel="stylesheet" type="text/css" media="screen" href="css/ie.css">
 	<![endif]-->
+    <base href="{$base}" />
 </head>
 <body>
 

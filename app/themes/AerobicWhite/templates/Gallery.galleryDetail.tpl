@@ -17,7 +17,7 @@
 				{generate_paging collection=$gallery->images}
 				
 				{include  file='Base.part.editItem.tpl' itemPackage=Gallery itemController=Galleries itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$gallery}
-                </div>
+            </div>
         </div>
         <div class="grid_5">
         
