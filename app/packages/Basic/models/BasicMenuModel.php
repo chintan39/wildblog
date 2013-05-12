@@ -61,7 +61,7 @@ class BasicMenuModel extends AbstractCodebookModel {
 		return $menuTree;
     }
     
-    public function renderMenuItem($items, $level=0) {
+    public function renderMenuItem($items, $level=0, $menuId=false) {
     	$output = '';
    		$output .= '<div class="menuLinkWrap">'."\n";
     	foreach ($items as $item) {
@@ -70,18 +70,24 @@ class BasicMenuModel extends AbstractCodebookModel {
     		$output .= '<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/'.$item->getIcon().'.png" class="menuItemIcon" alt="'.$item->id.'" title="'.tg('Item').' #'.$item->id.'" />'."\n";
     		$output .= '<div class="menuLinkTitleWrap">'."\n";
     		$output .= '<div class="menuLinkTitle"><a href="'.Request::getLinkItem('Basic', 'MenuItems', 'actionEdit', $item).'">'.$item->title."</a></div>\n";
-    		$output .= '<div class="menuLinkLink"><a href="'.$item->getLink('link')->getLink().'">'.$item->getLink('link')->getLink()."</a></div>\n";
+    		$output .= '<div class="menuLinkLink"><a href="'.($item->link ? $item->getLink('link')->getLink() : '#').'">'.($item->link ? $item->getLink('link')->getLink() : tg('No link'))."</a></div>\n";
     		$output .= '</div> <!-- div.menuLinkTitleWrap -->'."\n";
     		$output .= '<div class="clear"></div>'."\n";
     		$output .= '<div class="menuLinkIcons">'."\n";
     		$output .= '<a href="'.Request::getLinkItem('Basic', 'MenuItems', 'actionEdit', $item).'"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/edit.png" alt="'.tg('Edit').'" title="'.tg('Edit item').'" /></a>'."\n";
     		$output .= '<a href="'.Request::getLinkItem('Basic', 'MenuItems', 'actionMoveUp', $item).'"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/up.png" alt="'.tg('Up').'" title="'.tg('Move up').'" /></a>'."\n";
     		$output .= '<a href="'.Request::getLinkItem('Basic', 'MenuItems', 'actionMoveDown', $item).'"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/down.png" alt="'.tg('Down').'" title="'.tg('Move down').'" /></a>'."\n";
+    		$output .= '<a href="'.Request::getLinkSimple('Basic', 'MenuItems', 'actionNew', array('_pred_' => array('menu' => $item->menu, 'parent' => $item->id))).'"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/page_add.png" alt="'.tg('New Subitem').'" title="'.tg('New Subitem').'" /></a>'."\n";
     		$output .= '<a href="'.Request::getLinkItem('Basic', 'MenuItems', 'actionRemove', $item).'" onclick="return confirm(\''.tg('Are you sure to remvoe this item?').'\');"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/remove.png" alt="'.tg('Remove').'" title="'.tg('Remove item').'" /></a>'."\n";
     		$output .= '</div> <!-- div.menuLinkIcons -->'."\n";
     		$output .= '</div> <!-- div.menuLink -->'."\n";
 			if ($item->subItems)
 				$output .= $this->renderMenuItem($item->subItems, $level+1);
+		}
+		if (!$level && $menuId) {
+    		$output .= '<div class="menuLink">'."\n";
+    		$output .= '<a href="'.Request::getLinkSimple('Basic', 'MenuItems', 'actionNew', array('_pred_' => array('menu' => $menuId, 'parent' => 0))).'"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/add.png" alt="'.tg('New Item').'" title="'.tg('New Item').'" /></a>'."\n";
+    		$output .= '</div> <!-- div.menuLink -->'."\n";
 		}
    		$output .= '</div><!-- div.menuLinkWrap -->'."\n";
     	return $output;
@@ -94,7 +100,7 @@ class BasicMenuModel extends AbstractCodebookModel {
 		$output = '';
 		if ($fieldName == 'menuitems') {
 			$menuItemsCollection = $model->getMenuItemsCollection(Environment::getPackage('Basic')->getController('Menu'));
-			$output .= $this->renderMenuItem($menuItemsCollection->getItems());
+			$output .= $this->renderMenuItem($menuItemsCollection->getItems(), 0, $model->id);
 		}
 		return $output;
 	}
