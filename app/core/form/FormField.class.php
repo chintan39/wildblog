@@ -285,10 +285,10 @@ class FormFieldInputDate extends FormField {
 	public function setHTML($class, $style, $onclick, $onchange) {
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'datetimepicker/datetimepicker.js');
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'datetimepicker/stylesheets/calendarview.css');
-		Javascript::addScript("Event.observe(window, 'load', function() { Calendar.setup({
+		Javascript::addOnload("Calendar.setup({
 		dateField: '" . $this->getIdValue() . "',
 		triggerElement: '" . $this->getIdValue('button') . "',
-		timeMode: 0})});");
+		timeMode: 0});");
 		$this->html = "<input type=\"text\"" . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" />"
 			."<a href=\"JavaScript:void(0);\" onclick=\"return false;\"" . $this->getIdAttr('button') . "><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . '32/calendar_view.png' . "\" alt=\"" . tg("Choose date") . "\"class=\"choose\" /></a>";
 	}
@@ -298,11 +298,11 @@ class FormFieldInputTime extends FormField {
 	public function setHTML($class, $style, $onclick, $onchange) {
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'datetimepicker/datetimepicker.js');
 		Javascript::addCSS(Request::$url['base'] . DIR_LIBS . 'datetimepicker/stylesheets/calendarview.css');
-		Javascript::addScript("Event.observe(window, 'load', function() { Calendar.setup({
+		Javascript::addOnload("Calendar.setup({
 		dateField: '" . $this->getIdValue() . "',
 		triggerElement: '" . $this->getIdValue('button') . "',
 		timeMode: 1,
-		timeStep: 30})});");
+		timeStep: 30});");
 		$this->html = "<input type=\"text\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" />"
 			. "<a href=\"JavaScript:void(0);\" onclick=\"return false;\" " . $this->getIdAttr('button') . "><img src=\"" . DIR_ICONS_IMAGES_DIR_THUMBS_URL . '32/calendar_view.png' . "\" alt=\"" . tg("Choose time") . "\"class=\"choose\" /></a>";
 	}
@@ -567,10 +567,10 @@ class FormFieldLink extends FormField {
 	public function setHTML($class, $style, $onclick, $onchange) {
 		$this->html = '';
 		Javascript::addFile(Request::$url['base'] . DIR_LIBS . 'linkselector.js');
-		Javascript::addScript("Event.observe(window, 'load', function() { LinkSelector.setup({
+		Javascript::addOnload("LinkSelector.setup({
 		container: '" . $this->getIdValue('container') . "',
 		dataField: '" . $this->getIdValue() . "',
-		triggerElement: '" . $this->getIdValue('button') . "'})});");
+		triggerElement: '" . $this->getIdValue('button') . "'});");
 		$this->html .= "<input type=\"text\" " . $this->getIdAttr() . " name=\"" . $this->meta->getName() . "\" value=\"" . $this->value . "\" class=\"$class\" />";
 		$this->html .= "<div id=\"" . $this->getIdValue('container') . "\"></div>";
 	}

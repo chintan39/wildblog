@@ -44,6 +44,7 @@ class Javascript {
 	static private $tabs = array();
 	static private $actualTranslations = array();
 	static private $protectedForms = array();
+	static private $onload = array();
 	
 	
 	/**
@@ -176,6 +177,8 @@ class Javascript {
 	 */
 	private static function scriptsToHTML() {
 		$html = '';
+		if (self::$onload)
+			self::addScript("Event.observe(window, 'load', function() {\n" . implode(";\n", self::$onload) . "\n});");
 		if (self::$scripts) {
 			$html .= '<script type="text/javascript">' . "\n";
 			foreach (array_unique(self::$scripts) as $script) {
@@ -311,7 +314,7 @@ class Javascript {
         	self::addFile(Request::$url['base'] . DIR_LIBS . 'selector/selector.js');
 			self::addCSS(Request::$url["base"] . DIR_LIBS . 'selector/stylesheets/selector.css');
 			if (!Config::Get('SELECTOR_IMMEDIATELY')) {
-				self::addScript("Event.observe(window, 'load', function() { $out })");
+				self::addOnload($out);
 			}
         }
 		return '';
@@ -334,7 +337,7 @@ class Javascript {
 			self::addCSS(Request::$url['base'] . DIR_LIBS . 'stereotabs/styles.css');
         	self::addFile(Request::$url['base'] . DIR_LIBS . 'stereotabs/stereotabs.js');
 			if (!Config::Get('TABS_IMMEDIATELY')) {
-				self::addScript("Event.observe(window, 'load', function() { $out });");
+				self::addOnload($out);
 			}
         }
 		return '';
@@ -455,7 +458,7 @@ window.onbeforeunload = function (e) {
     }
 };
 EOF;
-		self::addScript("Event.observe(window, 'load', function() { $output });");
+		self::addOnload($output);
 	}
 	
 	
@@ -523,6 +526,10 @@ EOF;
 	public static function addTimeout($message, $timeout) {
 		$timeout *= 1000; // we set it in seconds, but use in JS in micro seconds
 		self::addScript("sessionTimer('$message', $timeout);");
+	}
+	
+	public static function addOnload($code) {
+		self::$onload[] = $code;
 	}
 
 }

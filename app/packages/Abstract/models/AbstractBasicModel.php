@@ -1070,6 +1070,8 @@ class AbstractBasicModel {
 		if (!$this->hasMetadata($fieldName)) {
 			throw new Exception('Item being converted to LinkCollection does not have attribute "'.$fieldName.'"');
 		}
+		if (!trim($this->$fieldName))
+			return null;
 		$requestLocation = Request::getRequestLocationFromString($this->$fieldName);
 		$newLink = new Link(array(
 			//'link' => Request::getLinkFromRequestLocation($requestLocation), 

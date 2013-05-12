@@ -38,7 +38,7 @@ class BasicMenuRoutes extends AbstractPagesRoutes {
 			->addRuleUrl('linkslist/$')
 			->setBranch(Themes::BACK_END)
 			->setTemplate('index')
-			->setPermission(Permission::$ADMIN);
+			->setPermission(Permission::$ADMIN | Permission::$CONTENT_ADMIN);
 
 		Router::registerSubaction($this, 'subactionGetMenus')
 			->setTemplate('part.allPagesMenus');

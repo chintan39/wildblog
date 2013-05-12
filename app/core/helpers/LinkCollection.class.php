@@ -113,6 +113,8 @@ class LinkCollection {
 		$links = array();
 		foreach ($items as $item) {
 			$newLink = $item->getLink('link');
+			if (!$newLink)
+				continue;
 			$newLink->addSubLinks(self::getContentFromItemCollectionRecursive($item->subItems));
 			$links[] = $newLink;
 		}

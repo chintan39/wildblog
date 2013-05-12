@@ -70,7 +70,7 @@ class BasicMenuModel extends AbstractCodebookModel {
     		$output .= '<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/'.$item->getIcon().'.png" class="menuItemIcon" alt="'.$item->id.'" title="'.tg('Item').' #'.$item->id.'" />'."\n";
     		$output .= '<div class="menuLinkTitleWrap">'."\n";
     		$output .= '<div class="menuLinkTitle"><a href="'.Request::getLinkItem('Basic', 'MenuItems', 'actionEdit', $item).'">'.$item->title."</a></div>\n";
-    		$output .= '<div class="menuLinkLink"><a href="'.($item->link ? $item->getLink('link')->getLink() : '#').'">'.($item->link ? $item->getLink('link')->getLink() : tg('No link'))."</a></div>\n";
+    		$output .= '<div class="menuLinkLink"><a href="'.($item->getLink('link') ? $item->getLink('link')->getLink() : '#').'">'.($item->getLink('link') ? $item->getLink('link')->getLink() : tg('No link'))."</a></div>\n";
     		$output .= '</div> <!-- div.menuLinkTitleWrap -->'."\n";
     		$output .= '<div class="clear"></div>'."\n";
     		$output .= '<div class="menuLinkIcons">'."\n";
