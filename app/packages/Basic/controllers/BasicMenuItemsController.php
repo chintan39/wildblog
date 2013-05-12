@@ -31,6 +31,11 @@ class BasicMenuItemsController extends AbstractStructuredCodebookController {
 		Request::redirect(Request::getLinkItem($this->package, 'Menu', 'actionEdit', $arg->menu, array('paging' => PRESERVE_VALUE, 'order' => PRESERVE_VALUE)));
 	}
 	
+	protected function getActionAfterRemoval($item, $isSimple=false) {
+		if ($item->menu)
+			return Request::getLinkItem($this->package, 'Menu', 'actionEdit', $item->menu);
+		return parent::getActionAfterRemoval($item, $isSimple);
+	}
 	
 }
 

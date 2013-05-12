@@ -262,6 +262,7 @@ class AbstractDefaultController extends AbstractBasicController{
 	public function actionRemoveSelf($args, $isSimple=false) {
 		$item = $args;
 		$id = $item->id;
+		$actionAfterRemoval = $this->getActionAfterRemoval($item, $isSimple);
 		if (Request::checkCsrf()) {
 			$className = get_class($item);
 			$userId = Permission::getActualUserId();
@@ -272,7 +273,12 @@ class AbstractDefaultController extends AbstractBasicController{
 		} else {
 			MessageBus::sendMessage(tg('Item') . " #$id " . tg('has not been deleted.').' '.tg('CSRF protection failed.'));
 		}
-		Request::redirect(Request::getLinkSimple($this->package, $this->name, ($isSimple ? 'actionEmpty' : 'actionListing')));
+		Request::redirect($actionAfterRemoval);
+	}
+
+
+	protected function getActionAfterRemoval($item, $isSimple=false) {
+		return Request::getLinkSimple($this->package, $this->name, ($isSimple ? 'actionEmpty' : 'actionListing'));	
 	}
 
 	
