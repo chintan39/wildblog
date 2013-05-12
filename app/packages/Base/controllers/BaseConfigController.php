@@ -36,9 +36,9 @@ class BaseConfigController extends AbstractDefaultController {
 	 */
 	public function actionListing($args) {
 		$items = new ItemCollection($this->getMainListIdentifier(), $this, 'BaseConfigAllModel');
-		if (Permission::getActualUserPermissionLevel() == Permission::$CONTENT_ADMIN) {
-			$items->setQualification(array("onlysafemode" => array("safemode = ?" => array(1)))); // we overload filters - no qualifications are used
-		}
+		//if (Permission::getActualUserPermissionLevel() == Permission::$CONTENT_ADMIN) {
+		//	$items->setQualification(array("onlysafemode" => array(new ItemQualification("safemode = ?", array(1))))); // we overload filters - no qualifications are used
+		//}
 		$filters = new BaseFiltersModel();
 		$condition = '__field__';
 		$valueAdjust = '.*__value__.*';
@@ -77,9 +77,9 @@ class BaseConfigController extends AbstractDefaultController {
 	 * Hide "safemode" form item for content admins.
 	 */
 	protected function actionEditAdjustItem(&$item) {
-		if (Permission::getActualUserPermissionLevel() == Permission::$CONTENT_ADMIN) {
-			$item->setMetadata('safemode', 'isEditable', ModelMetaItem::NEVER);
-		}
+		//if (Permission::getActualUserPermissionLevel() == Permission::$CONTENT_ADMIN) {
+		//	$item->setMetadata('safemode', 'isEditable', ModelMetaItem::NEVER);
+		//}
 	}
 	
 	protected function getListingButtons() {
