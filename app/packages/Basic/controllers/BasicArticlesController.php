@@ -224,6 +224,7 @@ class BasicArticlesController extends AbstractPagesController {
 		}
 		$this->assign('pageTitle', tp('Project Title'));
 		$this->assign('article', $homepageArticle);
+		$this->assign('homepageArticle', true);
 		Benchmark::log('End of creating ArticlesController::actionHomepageArticle');
 	}
 	
