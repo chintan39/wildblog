@@ -1,0 +1,14 @@
+body { 	 
+	font: 12px/22px Arial, Helvetica, sans-serif;
+	color:#9d9d9d;
+	min-width:960px;
+	background:#fff;
+	border-top:#e6e6cd 8px solid;
+}
+
+h2 {font-size:34px; line-height:44px; color:#393939; font-weight:normal; font-family: 'Marck Script', cursive;}
+h3 {font-size:24px; line-height:44px; color:#bb2025; font-weight:normal;}
+h4 {font-size:20px; line-height:40px; color:#fff; font-weight:normal;}
+h3.cursive {font-size:34px; font-family: 'Marck Script', cursive;}
+h4.cursive {font-size:30px; font-family: 'Marck Script', cursive;}
+

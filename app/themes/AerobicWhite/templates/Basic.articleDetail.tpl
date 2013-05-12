@@ -1,0 +1,51 @@
+{include file='Base.part.header.tpl'}
+
+{if $homepageArticle}
+
+  <section id="content">
+      <div class="container_16">
+      	<div class="grid_16">
+        	<div class="page-1-col-1 wrapper">
+            	<img src="{$base}app/themes/{$generalTheme}/images/ome.png" alt="" class="img-indent">
+                <div class="extra-wrap">
+            	<h2 class="top-1">{$article->title}</h2>
+                <p class="color-4">{$article->text}</p>
+                <p>&nbsp;</p>
+				{include  file='Base.part.editItem.tpl' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
+				<a href="#" class="button">více o stylech cvičení</a>
+				<a href="#" class="button">více o kosmetice</a>
+                </div>
+            </div>
+        </div>    
+        <div class="grid_10">
+			<!-- Latest news list-->
+			{include file='Basic.part.recentNews.tpl'}
+			<!-- Latest news list END -->
+        </div>     
+      	<div class="grid_6">
+			<!-- Last photogaleries list-->
+        	{include file='Gallery.part.galleriesList.tpl'}
+			<!-- Last photogaleries list end-->
+        </div>
+        <div class="clear"></div>
+      </div>
+  </section> 
+{else}
+  <section id="content" class="content">
+      <div class="container_16">
+      	<div class="grid_11">
+            <div class="page-2-col-2 right-40">
+                <h2 class="top-2">{$article->title}</h2>
+                {$article->text}
+                </div>
+        </div>
+        <div class="grid_5">
+        	{include file='Basic.part.recentNews.tpl'}
+        </div>     
+        <div class="clear"></div>
+      </div>
+  </section> 
+{/if}
+
+{include file='Base.part.footer.tpl'}
+
