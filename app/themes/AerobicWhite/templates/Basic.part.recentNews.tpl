@@ -9,7 +9,7 @@
                 	<div class="number"><strong>{$key+1}</strong></div>
                     <div class="extra-wrap border-1">
                     	<a href="{$news->link}" class="color-5">{$news->title}</a>
-                        <p class="line_height_18">{$news->published|date_format2:"%relative"}<br />{$news->text|strip_tags|truncate:200}</p>
+                        <p class="line_height_18">{$news->published|date_format:"%e. %B %Y"}<br />{$news->text|strip_tags|truncate:200}</p>
                     </div>
                 </div>
                 {/foreach}
@@ -25,7 +25,7 @@
                 	<div class="number"><strong>{$key+1}</strong></div>
                     <div class="extra-wrap">
                     	<a href="{$news->link}" class="color-2">{$news->title}</a>
-                        <p class="color-3">{$news->published|date_format2:"%relative"}</p>
+                        <p class="color-3">{$news->published|date_format:"%e. %B %Y"}</p>
                     </div>
                 </div>
                 {/foreach}

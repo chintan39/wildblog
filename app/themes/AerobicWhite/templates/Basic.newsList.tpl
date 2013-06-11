@@ -10,7 +10,7 @@
 				<div class="number"><strong>{$key+1}</strong></div>
 				<div class="extra-wrap border-1">
 					<a href="{$item->link}" class="color-5">{$item->title}</a>
-					<p class="line_height_18">{$item->published|date_format:"%j. %F %Y"}<br />{$item->text|strip_tags|truncate:200}</p>
+					<p class="line_height_18">{$item->published|date_format:"%e. %B %Y"}<br />{$item->text|strip_tags|truncate:200}</p>
 				</div>
 			</div>
 			{/foreach}
@@ -25,6 +25,9 @@
         	{include file='Basic.part.recentNews.tpl'}
         	
         	{include file='Gallery.part.galleriesList.tpl'}
+			<!-- LinkBuilding list-->
+        	{include file='LinkBuilding.part.partnerLinks.tpl'}
+			<!-- LinkBuilding end -->
         </div>     
         <div class="clear"></div>
       </div>

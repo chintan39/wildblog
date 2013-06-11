@@ -14,6 +14,7 @@
 				{include  file='Base.part.editItem.tpl' itemPackage=Basic itemController=Articles itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$article}
 				<a href="{linkto package=Basic controller=Articles action=actionDetail dataItem=9}" class="button">více o stylech cvičení</a>
 				<a href="{linkto package=Basic controller=Articles action=actionDetail dataItem=36}" class="button">více o kosmetice</a>
+				<a style="float: right;" href="https://www.facebook.com/pokorna.jitka.9" rel="external" class="facebook page"><img src="{$iconsPath}48/facebook.png" alt="Facebook" /></a>
                 </div>
             </div>
         </div>    
@@ -26,6 +27,9 @@
 			<!-- Last photogaleries list-->
         	{include file='Gallery.part.galleriesList.tpl'}
 			<!-- Last photogaleries list end-->
+			<!-- LinkBuilding list-->
+        	{include file='LinkBuilding.part.partnerLinks.tpl'}
+			<!-- LinkBuilding end -->
         </div>
         <div class="clear"></div>
       </div>
@@ -42,6 +46,9 @@
         </div>
         <div class="grid_5">
         	{include file='Basic.part.recentNews.tpl'}
+			<!-- LinkBuilding list-->
+        	{include file='LinkBuilding.part.partnerLinks.tpl'}
+			<!-- LinkBuilding end -->
         </div>     
         <div class="clear"></div>
       </div>

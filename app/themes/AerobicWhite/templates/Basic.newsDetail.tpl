@@ -5,7 +5,7 @@
       	<div class="grid_11">
             <div class="page-2-col-2 right-40">
                 <h2 class="top-2">{$news->title}</h2>
-                <p><strong>{$news->published|date_format2:"%mnamelong /%e"}</strong></p>
+                <p><strong>{$news->published|date_format:"%e. %B %Y"}</strong></p>
                 {$news->text|addlinks}
                 {include  file='Base.part.editItem.tpl' itemPackage=Basic itemController=News itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$news}
                 </div>

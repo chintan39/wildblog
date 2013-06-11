@@ -26,6 +26,9 @@
         	{include file='Basic.part.recentNews.tpl'}
         	
         	{include file='Gallery.part.galleriesList.tpl'}
+			<!-- LinkBuilding list-->
+        	{include file='LinkBuilding.part.partnerLinks.tpl'}
+			<!-- LinkBuilding end -->
         </div>     
         <div class="clear"></div>
       </div>

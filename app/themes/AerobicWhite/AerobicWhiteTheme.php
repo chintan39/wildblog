@@ -31,42 +31,50 @@ class AerobicWhiteTheme extends AbstractTheme {
 		),
 		'Base.part.footer' => array(
 			'Common|Base.part.footer',
+			'Basic.part.htmlAreas',
 		),
 		'Basic.articleDetail' => array(
 			'Base.part.header',
 			'Base.part.footer',
 			'Basic.part.recentNews',
 			'Gallery.part.galleriesList',
+			'LinkBuilding.part.partnerLinks',
 		),
 		'Basic.newsDetail' => array(
 			'Base.part.header',
 			'Base.part.footer',
 			'Gallery.part.galleriesList',
+			'LinkBuilding.part.partnerLinks',
 		),
 		'Basic.newsList' => array(
 			'Base.part.header',
 			'Base.part.footer',
 			'Gallery.part.galleriesList',
+			'LinkBuilding.part.partnerLinks',
 		),
 		'Commodity.productDetail' => array(
 			'Base.part.header',
 			'Base.part.footer',
 			'Basic.part.recentNews',
+			'LinkBuilding.part.partnerLinks',
 		),
 		'Commodity.productList' => array(
 			'Base.part.header',
 			'Base.part.footer',
 			'Gallery.part.galleriesList',
+			'LinkBuilding.part.partnerLinks',
 		),
 		'Gallery.galleryDetail' => array(
 			'Base.part.header',
 			'Base.part.footer',
 			'Basic.part.recentNews',
+			'LinkBuilding.part.partnerLinks',
 		),
 		'Gallery.galleriesList' => array(
 			'Base.part.header',
 			'Base.part.footer',
 			'Basic.part.recentNews',
+			'LinkBuilding.part.partnerLinks',
 		),
 	);
 		
