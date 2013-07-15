@@ -469,7 +469,7 @@ class Thumbnail {
 	 */
 	private function getOrigImage() {
 		if ($this->origImage === null) {
-			if (!file_exists($this->originalImagePath)) {
+			if (!file_exists(Utilities::url2path($this->originalImagePath))) {
 				/*$this->origImage = imagecreatetruecolor($this->getWidth(), $this->getHeight());
 				$this->fillTransparentBackground($this->origImage);
 				list($r, $g, $b, $a) = $this->getContrastColor($this->getColorsFromHexa($this->getBackground()));
@@ -480,14 +480,14 @@ class Thumbnail {
 			} else {
 				switch ($this->getExtention()) {
 					case "png":
-						$this->origImage = imagecreatefrompng($this->getOriginalImagePath());
+						$this->origImage = imagecreatefrompng(Utilities::url2path($this->getOriginalImagePath()));
 						break;
 					case "jpg":
 					case "jpeg":
-						$this->origImage = imagecreatefromjpeg($this->getOriginalImagePath());
+						$this->origImage = imagecreatefromjpeg(Utilities::url2path($this->getOriginalImagePath()));
 						break;
 					case "gif":
-						$this->origImage = imagecreatefromgif($this->getOriginalImagePath());
+						$this->origImage = imagecreatefromgif(Utilities::url2path($this->getOriginalImagePath()));
 						break;
 					default:
 						throw new Exception("Extention " . $this->getExtention() . " not supported.");
