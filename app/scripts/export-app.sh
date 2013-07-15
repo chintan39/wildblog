@@ -26,6 +26,8 @@ git archive --format zip --output="${EXPORTDIR}${NAMEZIP}" HEAD
 echo "Unpacking ${EXPORTDIR}${NAMEZIP} into ${EXPORTDIR}${NAMEDATE} ..."
 mkdir -p "${EXPORTDIR}${NAMEDATE}"
 unzip "${EXPORTDIR}${NAMEZIP}" -d "${EXPORTDIR}${NAMEDATE}" >/dev/null
+read -p "Remove mpdf? (y/n): "
+if [ "x$REPLY" == "xy" -o "x$REPLY" == "xY" ] ; then rm -rf "${EXPORTDIR}${NAMEDATE}/app/libs/mpdf" ; fi
 echo "app exported to ../../${EXPORTDIR}${NAMEDATE}"
 if [ "x$1" != "x" ] ; then
 	echo "Cleaning ${EXPORTDIR}${NAMEDATE}-$1"
