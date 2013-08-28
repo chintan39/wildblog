@@ -72,9 +72,9 @@ function smarty_modifier_date_format2($string, $format=null, $default_date='', $
             } 
             $format = str_replace($_win_from, $_win_to, $format);
         } 
-        return gmstrftime($format, $timestamp);
+        return strftime($format, $timestamp);
     } else {
-        return gmdate($format, $timestamp);
+        return date($format, $timestamp);
     }
 } 
 
