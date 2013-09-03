@@ -78,7 +78,7 @@ class BasicMenuModel extends AbstractCodebookModel {
     		$output .= '<a href="'.Request::getLinkItem('Basic', 'MenuItems', 'actionMoveUp', $item, array('token' => Request::$tokenCurrent)).'"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/up.png" alt="'.tg('Up').'" title="'.tg('Move up').'" /></a>'."\n";
     		$output .= '<a href="'.Request::getLinkItem('Basic', 'MenuItems', 'actionMoveDown', $item, array('token' => Request::$tokenCurrent)).'"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/down.png" alt="'.tg('Down').'" title="'.tg('Move down').'" /></a>'."\n";
     		$output .= '<a href="'.Request::getLinkSimple('Basic', 'MenuItems', 'actionNew', array('_pred_' => array('menu' => $item->menu, 'parent' => $item->id))).'"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/page_add.png" alt="'.tg('New Subitem').'" title="'.tg('New Subitem').'" /></a>'."\n";
-    		$output .= '<a href="'.Request::getLinkItem('Basic', 'MenuItems', 'actionRemove', $item, array('token' => Request::$tokenCurrent)).'" onclick="return confirm(\''.tg('Are you sure to remvoe this item?').'\');"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/remove.png" alt="'.tg('Remove').'" title="'.tg('Remove item').'" /></a>'."\n";
+    		$output .= '<a href="'.Request::getLinkItem('Basic', 'MenuItems', 'actionRemove', $item, array('token' => Request::$tokenCurrent)).'" onclick="return confirm(\''.tg('Are you sure to remove this item?').'\');"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/remove.png" alt="'.tg('Remove').'" title="'.tg('Remove item').'" /></a>'."\n";
     		$output .= '</div> <!-- div.menuLinkIcons -->'."\n";
     		$output .= '</div> <!-- div.menuLink -->'."\n";
 			if ($item->subItems)

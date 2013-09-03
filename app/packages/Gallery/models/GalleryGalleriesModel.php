@@ -240,7 +240,7 @@ class GalleryGalleriesModel extends AbstractPagesModel {
 						$buttons .= '<a href="'.$origUrl.'" title="'.tg('View image').'" rel="lightbox[images]">'
 							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/view.png" alt="View" />'
 							."</a>\n";
-						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'GalleriesImages', 'actionRemoveImage', $fakeObject, $linkArgs).'" onclick="return confirm(\''.tg('Are you sure to remvoe this image from the gallery?').'\');" title="'.tg('Remove image').'">'
+						$buttons .= '<a href="'.Request::getLinkItem($this->package, 'GalleriesImages', 'actionRemoveImage', $fakeObject, $linkArgs).'" onclick="return confirm(\''.tg('Are you sure to remove this image from the gallery?').'\');" title="'.tg('Remove image').'">'
 							.'<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL . '24/remove.png" alt="Remove" />'
 							."</a>\n";
 						$output .= "<div class=\"simplethumb\">\n";

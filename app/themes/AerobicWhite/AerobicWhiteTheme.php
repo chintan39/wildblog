@@ -25,6 +25,12 @@ class AerobicWhiteTheme extends AbstractTheme {
 	var $name = 'AerobicWhite';
 	
 	var $templatesDependency = array(
+		'Attendance.eventDetail' => array(
+			'Base.part.header',
+			'Base.part.footer',
+			'Basic.part.recentNews',
+			'LinkBuilding.part.partnerLinks',
+		),
 		'Base.part.header' => array(
 			'Common|Base.part.header',
 			'Basic.part.allPagesMenus',
