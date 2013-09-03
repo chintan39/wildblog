@@ -63,6 +63,8 @@ class AttendanceEventsModel extends AbstractNodesModel {
     }
 
     public function renderParticipant($items, &$event) {
+    	if (!$event->id)
+    		return '';
     	$output = '';
    		$output .= '<div class="menuLinkWrap">'."\n";
 		$output .= '<div class="menuLink">'."\n";
