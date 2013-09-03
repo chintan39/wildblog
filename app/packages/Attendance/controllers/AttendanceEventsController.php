@@ -34,20 +34,23 @@ class AttendanceEventsController extends AbstractNodesController {
 		$this->assign('pageTitle', $event->title . ' | ' . tp('Project Title Short'));
 		$this->assign('event', $event);
 		
-		$registration = new AttendanceRegistrationModel();
-		$registration->event = $event;
-		$form = new Form();
-		$form->useRecaptcha(true);
-		$form->setIdentifier('registrationForm');
-		$form->fill($registration);
-		$form->setLabel(tg('Register'));
-		// handeling the form request
-		$form->handleRequest(array('all' => array(
-			'package' => $this->package, 
-			'controller' => $this->name, 
-			'action' => 'actionDetail',
-			'item' => $event)));
-		$this->assign($form->getIdentifier(), $form->toArray());
+		// process form only if there are free places
+		if ($event->capacity > $event->participantsCount) {
+			$registration = new AttendanceRegistrationModel();
+			$registration->event = $event;
+			$form = new Form();
+			$form->useRecaptcha(true);
+			$form->setIdentifier('registrationForm');
+			$form->fill($registration);
+			$form->setLabel(tg('Register'));
+			// handeling the form request
+			$form->handleRequest(array('all' => array(
+				'package' => $this->package, 
+				'controller' => $this->name, 
+				'action' => 'actionDetail',
+				'item' => $event)));
+			$this->assign($form->getIdentifier(), $form->toArray());
+		}
 	}
 	
 	/**
@@ -55,6 +58,11 @@ class AttendanceEventsController extends AbstractNodesController {
 	 */
 	public function getLinksSitemap() {
 		return $this->getItemsLinksDefault(array(), array('actionDetail' => tg('Registration for event')));
+	}
+	
+	public function actionRemoveAllParticipants($event) {
+		$event->DisconnectAll('AttendanceParticipantsModel');
+		Request::redirect(Request::getLinkItem($this->package, 'Events', 'actionEdit', $event->id));
 	}
 }
 

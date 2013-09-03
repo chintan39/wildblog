@@ -17,7 +17,7 @@
 */
 
 
-class AttendanceEventsRoutes extends AbstractNodesRoutes {
+class AttendanceEventsParticipantsRoutes extends AbstractDefaultRoutes {
 	
 
 	/**
@@ -32,14 +32,11 @@ class AttendanceEventsRoutes extends AbstractNodesRoutes {
 
 		AbstractAdminRoutes::setRouter($this);
 		
-		Router::registerAction($this, 'actionDetail')
-			->addRuleUrl('event/[url]/$')
-			->setTemplate('eventDetail');
-			
-		Router::registerAction($this, 'actionRemoveAllParticipants')
-			->addRuleUrl('remove-all-participant/[id]/$')
+		Router::registerAction($this, 'actionRemoveParticipant')
+			->addRuleUrl('remove-participant/[event]/[participant]/$')
 			->setTemplate('index')
 			->setPermission(Permission::$ADMIN | Permission::$CONTENT_ADMIN);
+
 	}
 	
 

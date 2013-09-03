@@ -726,6 +726,22 @@ class AbstractDBObjectModel extends AbstractBasicModel
 	}
 
 	/**
+	 * Disconnects the relation between this object and all objects of the given model.
+	 * This is ugly and non-efective.
+	 * @uses analyzeRelations
+	 * @param object $object the class to disconnect.
+	 */
+	public function DisconnectAll($modelName) 
+	{
+		$items = $this->Find($modelName);
+		if ($items) {
+			foreach ($items as $item) {
+				$this->Disconnect($item);
+			}
+		}
+	}
+
+	/**
 	 * Disconnects the relation between 2 objects.
 	 * Runs relation analyzer if needed.
 	 * @uses analyzeRelations

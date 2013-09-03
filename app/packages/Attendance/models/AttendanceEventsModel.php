@@ -34,10 +34,25 @@ class AttendanceEventsModel extends AbstractNodesModel {
 		
 		$this->addMetaData(AtributesFactory::stdLocation());
     	
-		$this->addMetaData(AtributesFactory::create('eventsParticipantsConnection')
-			->setLabel('Participatns')
-			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
-			->setOptionsMethod('listSelect'));
+//		$this->addMetaData(AtributesFactory::create('eventsParticipantsConnection')
+//			->setLabel('Participatns')
+//			->setType(Form::FORM_MULTISELECT_FOREIGNKEY)
+//			->setOptionsMethod('listSelect'));
+    	$this->addMetaData(AtributesFactory::create('eventsParticipantsConnection')
+    		->setLabel('Participatns')
+			->setDescription('add or remove participants')
+			->setType(Form::FORM_SPECIFIC_NOT_IN_DB)
+			->setRenderObject($this)
+			->setForceIsInDb(false));
+		
+		$this->addMetaData(AtributesFactory::create('capacity')
+			->setLabel('Capacity')
+			->setDescription('maximum number of attendies')
+			->setType(Form::FORM_INPUT_NUMBER)
+			->setDefaultValue(25)
+			->setSqlType('decimal(8,0) NULL DEFAULT NULL')
+			->setAdjustMethod('Number'));
+
     }
 
     protected function relationsDefinition() {
@@ -47,6 +62,40 @@ class AttendanceEventsModel extends AbstractNodesModel {
         $this->addCustomRelationMany('AttendanceParticipantsModel', 'AttendanceEventsParticipantsModel', 'event', 'participant', 'eventsParticipantsConnection');
     }
 
+    public function renderParticipant($items, &$event) {
+    	$output = '';
+   		$output .= '<div class="menuLinkWrap">'."\n";
+		$output .= '<div class="menuLink">'."\n";
+		$output .= '<a href="'.Request::getLinkItem('Attendance', 'Events', 'actionRemoveAllParticipants', $event, array('token' => Request::$tokenCurrent)).'" onclick="return confirm(\''.tg('Are you sure to remove all participants?').'\');"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/remove.png" alt="'.tg('Remove all participants').'" title="'.tg('Remove all participants').'" /> '.tg('Remove all participants').'</a>'."\n";
+		$output .= '</div> <!-- div.menuLink -->'."\n";
+    	foreach ($items as $item) {
+    		$connectItem = AttendanceEventsParticipantsModel::Search('AttendanceEventsParticipantsModel', array('event = ?', 'participant = ?'), array($event->id, $item->id));
+    		$connectItem = $connectItem[0];
+    		$output .= '<div class="menuLink">'."\n";
+    		$output .= '<img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/'.$item->getIcon().'.png" class="menuItemIcon" alt="'.$item->id.'" title="'.tg('Item').' #'.$item->id.'" />'."\n";
+    		$output .= '<div class="menuLinkTitleWrap">'."\n";
+    		$output .= '<div class="menuLinkTitle">'.$item->makeSelectTitle()."</div>\n";
+    		$output .= '</div> <!-- div.menuLinkTitleWrap -->'."\n";
+    		$output .= '<div class="clear"></div>'."\n";
+    		$output .= '<div class="menuLinkIcons">'."\n";
+    		$output .= '<a href="'.Request::getLinkItem('Attendance', 'EventsParticipants', 'actionRemoveParticipant', $connectItem, array('token' => Request::$tokenCurrent)).'" onclick="return confirm(\''.tg('Are you sure to remove this item?').'\');"><img src="'.DIR_ICONS_IMAGES_DIR_THUMBS_URL.'24/remove.png" alt="'.tg('Remove').'" title="'.tg('Remove item').'" /></a>'."\n";
+    		$output .= '</div> <!-- div.menuLinkIcons -->'."\n";
+    		$output .= '</div> <!-- div.menuLink -->'."\n";
+		}
+   		$output .= '</div><!-- div.menuLinkWrap -->'."\n";
+    	return $output;
+    }
+
+	public function getFormHTML($formField) {
+		$meta = $formField->getMeta();
+		$model = $formField->getDataModel();
+		$fieldName = $meta->getName();
+		$output = '';
+		if ($fieldName == 'eventsParticipantsConnection') {
+			$output .= $this->renderParticipant($model->Find('AttendanceParticipantsModel'), $model);
+		}
+		return $output;
+	}
 } 
 
 ?>

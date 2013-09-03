@@ -55,8 +55,10 @@ class AttendanceRegistrationModel extends AbstractVirtualModel {
 			$events = $participant->Find('AttendanceEventsModel', array('event = ?'), array($this->event->id));
 			if ($events)
 				MessageBus::sendMessage(tg('You are already registered for this event'), false, 'registrationForm'); 
-			else
+			else {
 				$participant->Connect($this->event);
+				MessageBus::sendMessage(tg('You have successfully registered for this event'), false, 'registrationForm');
+			}
 		}
 		
 		$participant->firstname = $this->firstname;
