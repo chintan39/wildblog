@@ -256,9 +256,10 @@ class Thumbnail {
 	 */
 	private function computeThumbnailImagePath() {
 		if ($this->getOriginalImagePath() == '' || !file_exists(Utilities::url2path($this->getOriginalImagePath()))) {
-			$thumbPath = DIR_PROJECT_PATH_MEDIA_THUMBS . self::DEFAULT_IMAGE;
+			$thumbPath = DIR_PROJECT_PATH_MEDIA . self::DEFAULT_IMAGE;
 			if (!file_exists($thumbPath))
 				$this->createDefaultThumb($thumbPath);
+			$thumbPath = DIR_PROJECT_URL_MEDIA . self::DEFAULT_IMAGE;
 		} else {
 			$thumbPath = str_replace(DIR_PROJECT_PATH_MEDIA, DIR_PROJECT_PATH_MEDIA_THUMBS, Utilities::path2url($this->getOriginalImagePath()));
 		}
@@ -267,7 +268,7 @@ class Thumbnail {
 		$prefix = $this->getWidth() . 'x' . $this->getHeight() . $this->getMode() . self::PREFIX_SUFFIX;
 		$thumbPath = preg_replace('/^('. Utilities::string2regexp(SUBDIR_MEDIA) . ')(.*\/)?([^\/]*)\.([^\/\.]*)$/', '${1}' . SUBDIR_THUMBS  . '${2}' . $prefix . '${3}.${4}', $thumbPath, 1, $count);
 		if ($count != 1) { // disable control
-			throw new Exception("Regular expression replace error.");
+			throw new Exception("Regular expression replace error: ". '/^(' . Utilities::string2regexp(SUBDIR_MEDIA) . ')(.*\/)?([^\/]*)\.([^\/\.]*)$/' .', '. '${1}' . SUBDIR_THUMBS  . '${2}' . $prefix . '${3}.${4}' .', ' . $thumbPath);
 		}
 		$this->thumbnailImagePath = $thumbPath;
 	}
