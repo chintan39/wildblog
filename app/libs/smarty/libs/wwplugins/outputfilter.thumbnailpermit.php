@@ -21,7 +21,7 @@
  */
 function smarty_outputfilter_thumbnailpermit($source, &$smarty)
 {
-	if (preg_match_all('/' . Utilities::string2regexp(substr(DIR_PROJECT_URL_MEDIA_THUMBS, 1)) . '[^\'"]+/', $source, $matches)) {
+	if (preg_match_all('/' . Utilities::string2regexp(substr(DIR_PROJECT_URL_MEDIA_THUMBS, 1)) . '[^\'"]+/', str_replace('&quot;', '"', $source), $matches)) {
 		foreach ($matches[0] as $k => $m) {
 			$path = Utilities::url2path($matches[0][$k]);
 			Utilities::createPath($path);
