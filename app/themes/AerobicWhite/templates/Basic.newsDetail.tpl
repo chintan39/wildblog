@@ -10,12 +10,13 @@
                 {include  file='Base.part.editItem.tpl' itemPackage=Basic itemController=News itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$news}
                 </div>
         </div>
+        {if strpos($news->text, '__wide_content__') === false}
         <div class="grid_5">
-        
         	{include file='Basic.part.recentNews.tpl'}
         	
         	{include file='Gallery.part.galleriesList.tpl'}
         </div>     
+        {/if}
         <div class="clear"></div>
       </div>
   </section> 
