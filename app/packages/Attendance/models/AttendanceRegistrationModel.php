@@ -33,6 +33,37 @@ class AttendanceRegistrationModel extends AbstractVirtualModel {
     	
     	$this->addMetaData(AtributesFactory::stdPhone());
 	}
+
+	private function sendConfirmation($email, $actionName, $date) {
+		// compose email
+		$mail = new Email(); // defaults to using php "mail()"
+
+		// use reply if set
+		$mail->ClearReplyTos();
+		$mail->AddReplyTo(Config::Get('ATTENDANCE_CONFIRMATION_REPLYTO'));
+
+		// use from if set
+		$mail->SetFrom(Config::Get('ATTENDANCE_CONFIRMATION_REPLYTO'));
+
+		$mail->AddAddress($email);
+		$mail->AddBCC(Config::Get('ATTENDANCE_CONFIRMATION_BCC'));
+
+		$mailSubject = Config::Get('ATTENDANCE_CONFIRMATION_SUBJECT');
+		$mailBody = str_replace('[event]', $actionName, Config::Get('ATTENDANCE_CONFIRMATION_TEXT'));
+		$mailBody = str_replace('[date]', date('j. n.', strtotime($date)), $mailBody);
+		//$mailBody = str_replace("/n", '<br />', $mailBody);
+		$mailAltBody = Utilities::stripTags($mailBody);
+
+                // fill basic fields
+                $mail->Subject = $mailSubject;
+                $mail->Body = $mailAltBody;
+                //$mail->AltBody = $mailAltBody;
+                //$mail->MsgHTML($mailBody);
+
+                // sending the email
+                $sent = $mail->Send();
+		return $sent;
+	}
 	
 	/**
 	 * Save data to virtual object means creating a new DB object
@@ -65,6 +96,8 @@ class AttendanceRegistrationModel extends AbstractVirtualModel {
 		$participant->surname = $this->surname;
 		$participant->phone = $this->phone;
 		$participant->Save();
+		$event = new AttendanceEventsModel($this->event->id);
+		$this->sendConfirmation($this->email, $event->title, $event->date_from);
 	}
 	
 }

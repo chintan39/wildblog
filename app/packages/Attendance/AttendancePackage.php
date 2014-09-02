@@ -25,6 +25,10 @@ class AttendancePackage extends Package {
 		Config::Set("ATTENDANCE_PACKAGE_ORDER", 7, null, Config::INT, true);
 		Config::Set("ATTENDANCE_PACKAGE_LANGUAGE_SUPPORT", false, null, Config::BOOL, false);
 		Config::Set("ATTENDANCE_PACKAGE_ALLOW", false, null, Config::BOOL, false);
+		Config::Set('ATTENDANCE_CONFIRMATION_REPLYTO', '', 'An e-mail set as Reply to in confirmation e-mail', Config::STRING, true);
+		Config::Set('ATTENDANCE_CONFIRMATION_BCC', '', 'Colon-separated list of e-mails where to send confirmation as bcc', Config::STRING, true);
+		Config::Set('ATTENDANCE_CONFIRMATION_TEXT', '', 'Text of the confirmation e-mail', Config::STRING, true);
+		Config::Set('ATTENDANCE_CONFIRMATION_SUBJECT', '', 'Subject of the confirmation e-mail', Config::STRING, true);
 	}
 	
 	public function getLinksAdminMenuLeft() {
