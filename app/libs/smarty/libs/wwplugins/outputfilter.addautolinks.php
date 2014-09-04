@@ -31,15 +31,15 @@ function smarty_outputfilter_addautolinks($source, &$smarty)
 	$replaces = array();
 	
 	// item link
-	if (preg_match_all("/autolink:(\w+)::(\w+)::(\w+)::(\d{1,9})/", $source, $matches)) {
+	if (preg_match_all("/autolink:(\w+)::(\w+)::(\w+)::(\d+)([^\d])/", $source, $matches)) {
 		foreach ($matches[0] as $key => $m) {
 			$pattern = 'autolink:' . $matches[1][$key] . '::' . $matches[2][$key] 
-							. '::' . $matches[3][$key] . '::' . $matches[4][$key];
+							. '::' . $matches[3][$key] . '::' . $matches[4][$key] . $matches[5][$key];
 			if (!array_key_exists($pattern, $storedPatterns)) {
 				$modelName = $matches[1][$key] . $matches[2][$key] . "Model";
 				$storedPatterns[$pattern] = 1;
 				$patterns[] = $pattern;
-				$replaces[] = Request::getLinkItem($matches[1][$key], $matches[2][$key], $matches[3][$key], new $modelName($matches[4][$key]));
+				$replaces[] = Request::getLinkItem($matches[1][$key], $matches[2][$key], $matches[3][$key], new $modelName($matches[4][$key])).$matches[5][$key];
 			}
 		}
 	}
