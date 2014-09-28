@@ -46,7 +46,10 @@ class AttendanceRegistrationModel extends AbstractVirtualModel {
 		$mail->SetFrom(Config::Get('ATTENDANCE_CONFIRMATION_REPLYTO'));
 
 		$mail->AddAddress($email);
-		$mail->AddBCC(Config::Get('ATTENDANCE_CONFIRMATION_BCC'));
+
+		if (Config::Get('ATTENDANCE_CONFIRMATION_BCC')) {
+			$mail->AddBCC(Config::Get('ATTENDANCE_CONFIRMATION_BCC'));
+		}
 
 		$mailSubject = Config::Get('ATTENDANCE_CONFIRMATION_SUBJECT');
 		$mailBody = str_replace('[event]', $actionName, Config::Get('ATTENDANCE_CONFIRMATION_TEXT'));
