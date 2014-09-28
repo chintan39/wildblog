@@ -27,7 +27,7 @@
 <ul class="errors">
 <li>Project cannot be installed successfully because of problems in database:</li>
 {foreach from=$errors item=item}
-<li>{$item}</li>
+<li>{$item};</li>
 {/foreach}
 </ul>
 {/if}

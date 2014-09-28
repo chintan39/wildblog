@@ -83,7 +83,7 @@ class BaseDatabaseController extends AbstractDefaultController {
 		if (!$result) {
 		} else {
 			// set PROJECT_STATUS to true
-			$file = DIR_PROJECT_PATH_CONFIG . 'config.php';
+			$file = DIR_PROJECT_CONFIG . 'config.php';
 			$content = file_get_contents($file);
 			$content = str_replace('Config::Set(\'PROJECT_STATUS\', PROJECT_NOT_INSTALLED)', 'Config::Set(\'PROJECT_STATUS\', PROJECT_READY)', $content);
 			file_put_contents($file, $content);

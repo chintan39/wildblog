@@ -1,0 +1,361 @@
+/*
+	Wide Angle by Pixelarity
+	pixelarity.com @pixelarity
+	License: pixelarity.com/license
+*/
+
+/*********************************************************************************/
+/* Basic                                                                         */
+/*********************************************************************************/
+
+	body
+	{
+		line-height: 1.5em;
+		font-size: 10.5pt;
+		letter-spacing: 0;
+	}
+
+	h2
+	{
+		font-size: 1.30em;
+	}
+
+	.container
+	{
+		padding: 0px 15px;
+	}
+	
+	.button
+	{
+		display: block;
+		margin: 0.75em 0;
+		text-align: center;
+		font-size: 1.2em;
+	}
+
+		.button-big
+		{
+			line-height: 3.25em;
+			font-size: 1.3em !important;
+		}
+
+	ul.menu
+	{
+	}
+	
+		ul.menu li
+		{
+			display: block;
+			margin-bottom: 5px;
+		}
+
+	ul.contact
+	{
+	}
+
+		ul.contact li a:before
+		{
+			display: inline-block;
+			background: #3f3f3f;
+			border-radius: 25px;
+			width: 50px;
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+			color: #FFFFFF;
+		}
+
+/*********************************************************************************/
+/* Mobile UI                                                                     */
+/*********************************************************************************/
+
+	#titleBar
+	{
+		background: none;
+	}
+
+		#titleBar .title
+		{
+			display: none;
+		}
+
+		#titleBar .toggle
+		{
+			position: absolute;
+			top: 0;
+			left: 0;
+			text-indent: -9999px;
+			width: 60px;
+			height: 44px;
+		}
+
+			#titleBar .toggle:before
+			{
+				content: '';
+				position: absolute;
+				top: 6px;
+				left: 6px;
+				display: block;
+				width: 54px;
+				height: 38px;
+				background-color: rgba(92,95,103,0.5);
+				border-radius: 0.25em;
+				-moz-transition: all .15s ease-in-out;
+				-webkit-transition: all .15s ease-in-out;
+				-o-transition: all .15s ease-in-out;
+				-ms-transition: all .15s ease-in-out;
+				transition: all .15s ease-in-out;
+			}
+
+			#titleBar .toggle:after
+			{
+				content: '';
+				display: block;
+				width: 44px;
+				height: 44px;
+				position: absolute;
+				left: 15px;
+				top: 6px;
+				background: url('images/toggle.svg') 8px 14px no-repeat;
+				opacity: 0.5;
+			}
+
+			#titleBar .toggle:active:before
+			{
+				background-color: rgba(92,95,103,0.75);
+			}
+
+	#navPanel
+	{
+		background: #191919 url('images/overlay.png');
+		box-shadow: inset -3px 0px 4px 0px rgba(0,0,0,0.1);
+	}
+
+		#navPanel .link
+		{
+			display: block;
+			color: rgba(255,255,255,0.5);
+			text-decoration: none;
+			font-size: 1em;
+			letter-spacing: 0.15em;
+			text-decoration: none;
+			height: 44px;
+			line-height: 44px;
+			border-top: solid 1px rgba(255,255,255,0.05);
+			margin: 0 15px 0 15px;
+		}
+	
+		#navPanel .link:first-child
+		{
+			border-top: 0;
+		}
+
+		#navPanel .indent-1 { display: inline-block; width: 1em; }
+		#navPanel .indent-2 { display: inline-block; width: 2em; }
+		#navPanel .indent-3 { display: inline-block; width: 3em; }
+		#navPanel .indent-4 { display: inline-block; width: 4em; }
+		#navPanel .indent-5 { display: inline-block; width: 5em; }
+		#navPanel .depth-0 { color: #fff; }
+
+/*********************************************************************************/
+/* Wrappers                                                                      */
+/*********************************************************************************/
+
+	#header-wrapper
+	{
+		padding: 0px 15px;
+	}
+	
+	#banner-wrapper
+	{
+	}
+	
+	#main-wrapper
+	{
+		padding: 5em 0em 6em 0em;
+	}
+	
+		.homepage #main-wrapper
+		{
+			padding: 5em 0em;
+		}
+	
+	#footer-wrapper
+	{
+		padding: 0em 15px !important;
+	}
+	
+	.wrapper-style1
+	{
+		padding: 3em 15px !important;
+	}
+
+/*********************************************************************************/
+/* Header                                                                        */
+/*********************************************************************************/
+
+	#header
+	{
+		position: relative;
+		padding: 4em 0em;
+	}
+
+/*********************************************************************************/
+/* Logo                                                                          */
+/*********************************************************************************/
+
+	#logo
+	{
+		width: 17em;
+		margin-left: -6em;
+		height: 8em;
+	}
+	
+		#logo:after
+		{
+			bottom: -2.24em;
+			border-top-width: 2.25em;
+			border-left-width: 8.5em;
+			border-right-width: 8.5em;
+		}
+		
+		#logo a
+		{
+			width: 17em;
+			height: 9em;
+		}
+		
+			#logo a > span
+			{
+				padding: 0.5em 0em;
+				font-size: 1.5em;
+			}
+
+/*********************************************************************************/
+/* Nav                                                                           */
+/*********************************************************************************/
+
+	#nav
+	{
+		display: none;
+	}
+	
+/*********************************************************************************/
+/* Content                                                                       */
+/*********************************************************************************/
+
+	#content
+	{
+	}
+	
+	.no-sidebar #content
+	{
+	}
+
+		#content header
+		{
+			margin-bottom: 3em;
+		}
+
+			#content header h2
+			{
+				font-size: 1.6em;
+				text-align: center;
+				line-height: 1.35em;
+				padding: 0 1em 0 1em;
+			}
+			
+			#content header .byline
+			{
+				font-size: 1.20em !important;
+			}
+
+		#content h3
+		{
+			margin: 3em 0em 1.5em 0em;
+			letter-spacing: 0.10em;
+			font-size: 1.2em;
+			color: #FFF;
+		}
+		
+		#content .image-full
+		{
+			margin-bottom: 2em;
+		}
+
+/*********************************************************************************/
+/* Footer                                                                        */
+/*********************************************************************************/
+
+	#footer
+	{
+		padding: 5em 0em 3em 0em;
+	}
+	
+		#footer hr
+		{
+			display: none;
+		}
+
+/*********************************************************************************/
+/* Copyright                                                                     */
+/*********************************************************************************/
+
+	#copyright
+	{
+		padding: 0em 0 5em 0;
+	}
+	
+		#copyright span
+		{
+			padding: 1.5em 4em 1.5em 4em;
+			line-height: 1.5em;
+		}
+		
+/*********************************************************************************/
+/* Slider                                                                        */
+/*********************************************************************************/
+
+	#slider
+	{
+		height: 360px;
+	}
+	
+		#slider .caption
+		{
+			padding: 2.5em 1.5em 2.5em 1.5em;
+		}
+		
+			#slider .caption h2
+			{
+				letter-spacing: 0.15em;
+				font-size: 1.25em;
+				margin: 0 0 0.5em 0;
+				line-height: 1.5em;
+			}
+			
+			#slider .caption p
+			{
+				letter-spacing: 0.25em;
+				font-size: 1em;
+				line-height: 1.75em;
+			}
+
+/*********************************************************************************/
+/* Intro                                                                         */
+/*********************************************************************************/
+	
+	#intro
+	{
+	}	
+
+		#intro .number
+		{
+			margin-bottom: 1em;
+			font-size: 2em;
+		}
+		
+		#intro .actions
+		{
+			margin-top: 1em;
+		}
