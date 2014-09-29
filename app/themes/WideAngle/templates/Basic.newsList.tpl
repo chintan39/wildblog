@@ -20,6 +20,7 @@
 	<h2><a href="{$item->link}">{$item->title}</a></h2>
 	<div class="date">{$item->published|date_format2:"%relative"}</div>
 	{$item->preview}
+	<p>&nbsp;</p>
 	<div class="clear"></div>
 	</div>
 {/foreach}
