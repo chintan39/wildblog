@@ -20,7 +20,7 @@
     <!--[if lte IE 8]><link rel="stylesheet" href="{$base}app/themes/{$generalTheme}/css/ie/v8.css" /><![endif]-->
     <!-- javascript_adding -->
     <!--[if lte IE 8]><script src="{$base}app/themes/{$generalTheme}/css/ie/html5shiv.js"></script><![endif]-->
-    <script src="{$base}app/themes/{$generalTheme}/js/jquery.min.js"></script>
+    <script src="{Javascript::JQUERY_URL}"></script>
     <script src="{$base}app/themes/{$generalTheme}/js/jquery.dropotron.min.js"></script>
     <script src="{$base}app/themes/{$generalTheme}/js/skel.min.js"></script>
     <script src="{$base}app/themes/{$generalTheme}/js/skel-layers.min.js"></script>

@@ -34,6 +34,7 @@ class Javascript {
 	const SELECTOR_DIPLAY_MODE_TEXTS = 'text';
 	const SELECTOR_SOURCE_AJAX = 'ajax';
 	const SELECTOR_SOURCE_VALUES = 'values';
+	const JQUERY_URL = 'http://code.jquery.com/jquery-2.1.0.min.js';
 	
 	static private $scripts = array();
 	static private $files = array();
@@ -380,8 +381,14 @@ class Javascript {
 		if (stripos($tpl_output, 'lightbox') !== false) {
 			self::addPrototype();
 			self::addScriptaculous();
-			self::addFile(Request::$url['base'] . DIR_LIBS . 'lightbox/lightbox.js');
-			self::addCSS(Request::$url['base'] . DIR_LIBS . 'lightbox/lightbox.css');
+			if (Config::Get('BASE_USE_JQUERY')) {
+				self::addFile(self::JQUERY_URL);
+				self::addFile(Request::$url['base'] . DIR_LIBS . 'lightbox-jquery/js/lightbox.js');
+				self::addCSS(Request::$url['base'] . DIR_LIBS . 'lightbox-jquery/css/lightbox.css');
+			} else {
+				self::addFile(Request::$url['base'] . DIR_LIBS . 'lightbox/lightbox.js');
+				self::addCSS(Request::$url['base'] . DIR_LIBS . 'lightbox/lightbox.css');
+			}
 		}
 		
 		if (stripos($tpl_output, '<pre class="highlight"><code>') !== false) {
