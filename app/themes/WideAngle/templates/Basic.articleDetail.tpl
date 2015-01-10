@@ -14,8 +14,8 @@
 
 				<div id="slider">
 					<div class="caption">
-						<h2>Nově otevřená bezkontaktní automyčka</h2>
-						<p>Starém Hradiště u Pardubic, Hradecká 545</p>
+						<h2>{tp}homepage slider text header{/tp}</h2>
+						<p>{tp}homepage slider text{/tp}</p>
 					</div>
 				</div>
 

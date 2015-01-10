@@ -4,12 +4,12 @@
 				<!-- Footer -->
 					<div id="footer" class="container">
 						<header>
-							<h2>Jsme tu pro Vás NONSTOP a Vaše auto</h2>
+							<h2>{tp}homepage footer text header{/tp}</h2>
 						</header>
-						<p><img src="{$base}app/themes/{$generalTheme}/images/logo_black.png"><br />Nově otevřená bezkontaktní automyčka se nachází ve Starém Hradišti, Hradecká 545 mezi sportovním centrem H-centrem a stavební firmou MIROS dopravní stavby (<a href="{linkto package=Basic controller=Articles action=actionDetail dataItem=5}">kontakt</a>).</p>
+						<p><img src="{$base}app/themes/{$generalTheme}/images/logo_black.png"><br />{tp}homepage footer text{/tp}</p>
 						<ul class="contact">
 							<!--li><a href="#" class="icon fa-instagram"><span>Instagram</span></a></li-->
-							<li><a href="https://www.facebook.com/automyckascf" class="icon fa-facebook"><span>Facebook</span></a></li>
+							<li><a href="{tp}facebook page link{/tp}" class="icon fa-facebook"><span>Facebook</span></a></li>
 							<!--li><a href="#" class="icon fa-twitter"><span>Twitter</span></a></li-->
 							<!--li><a href="#" class="icon fa-linkedin"><span>LinkedIn</span></a></li-->
 						</ul>
