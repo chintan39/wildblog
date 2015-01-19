@@ -53,16 +53,34 @@
 	<div id="top">
         <div id="logo">
             <img id="logoimage" src="{$base}app/themes/{$generalTheme}/images/logo.png" alt="logo">	<!-- Logo image -->
-            <h1 id="logotitle">liquid gem</h1>	<!-- Logo text -->
+            <h1 id="logotitle">{tp}Project Title{/tp}</h1>	<!-- Logo text -->
         </div><!--/logo-->
     
         <nav>	<!-- Navigation Start -->
+{if $allPagesMenus and $allPagesMenus.main_menu and $allPagesMenus.main_menu->links}
+<ul>
+	{foreach from=$allPagesMenus.main_menu->links item=item}
+		<li class="{$item->activity}{if $item->subLinks} li-with-ul{/if}"><a href="{$item->link}">{$item->title}</a>
+		{if $item->subLinks}
             <ul>
-            	<li><a href="{$base}#top">HOME</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#work">Work</a></li>
-                <li><a href="#footer">Contact</a></li>
+			{foreach from=$item->subLinks item=item2}
+				<li class="{$item2->activity}"><a href="{$item2->link}">{$item2->title}</a></li>
+			{/foreach}
+            </ul>
+		{/if}
+		</li>
+	{/foreach}
+</ul>
+{/if}
+
+{*
+            <ul>
+            	<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem=1}#top">{tg}Home{/tg}</a></li>
+                <li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem=2}">{tg}Main menu item 3{/tg}</a></li>
+                <li><a href="#work">{tg}Work{/tg}</a></li>
+                <li><a href="#footer">{tg}Contact{/tg}</a></li>
             </ul>      
+*}
         </nav>	<!-- Navigation End -->
     </div><!--/top-->
     

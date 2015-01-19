@@ -10,9 +10,9 @@
     	<h4>Contact</h4>
             <div id="formwrap">
                 <form method="post" id="submitform" action="submitemail.php" >
-                            <input type="text" class="formstyle" title="Name" name="name" />
-                            <input type="text" class="formstyle" title="Email" name="email" />
-                            <textarea name="message" title="Message"></textarea>
+                            <input type="text" class="formstyle" title="{tg}Name{/tg}" name="name" />
+                            <input type="text" class="formstyle" title="{tg}Email{/tg}" name="email" />
+                            <textarea name="message" title="{tg}Message{/tg}"></textarea>
                             <input class="formstyletwo" type="submit" value="Send">  
                 </form>
             </div>
