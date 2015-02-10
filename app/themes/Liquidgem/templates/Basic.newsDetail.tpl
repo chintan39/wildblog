@@ -1,39 +1,21 @@
 {include file='Base.part.header.tpl'}
 
+{include file='Basic.part.headerimage.tpl'}
 
-		<!-- Main Wrapper -->
-			<div id="main-wrapper">
-				<div id="main" class="container">
-					
-					<div class="row">
-					
-						<!-- Content -->
-							<div id="content" class="8u">
-								<article>
-									<header>
-<h2>{$news->title}</h2>
-									</header>
+    <header><!-- Work Showcase Section Start -->
+    
+    	<h1>{$news->title}</h1>
+    </header>
 
-	<div class="date">{tg}Published:{/tg} {$news->published|date_format2:"%mnamelong /%e"}</div>
-	{$news->text|addlinks}
-	<div class="clear"></div>
+     <section id="workbody"><!-- Project images start -->
+<p>{tg}Published:{/tg} {$news->published|date_format:"%e. %B %Y"}</p>
+<p>&nbsp;</p>
+{$news->text|addlinks}
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+    </section><!-- Project images end -->
+
 	{include  file='Base.part.editItem.tpl' itemPackage=Basic itemController=News itemAction=actionEdit itemActionSimple=actionSimpleEdit itemItem=$news}
-								</article>
-							</div>
-						
-						<!-- Sidebar -->
-							<div id="sidebar" class="4u">
-								<section class="section-padding">
-        	{include file='Basic.part.shortContact.tpl'}
-								</section>
-								
-							</div>
-						
-					</div>
-					
-				</div>
-			</div>
-
 
 {include file='Base.part.footer.tpl'}
 

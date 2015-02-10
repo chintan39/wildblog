@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+{*<!DOCTYPE HTML>
 <!-- ............................. -->
 <!-- ............................. -->
 <!-- ..... LIQUID GEM V.1.0. ..... -->
@@ -32,6 +32,7 @@
     <meta name="generator" content="{$appGenerator}" />
     <meta name="copyright" content="Honza Horák" />
     {include file='Base.part.rssFeeds.tpl'}
+    <link rel="stylesheet" media="screen,projection" type="text/css" href="{$base}app/themes/Common/css/common.css" />
     <link rel="shortcut icon" type="image/x-icon" href="{$base}{if $useThemeFavicon}app/themes/{$generalTheme}/images/{else}media/{/if}favicon.ico" />
     <title>{$pageTitle|default:$title}</title>
     <!-- css_adding -->
@@ -49,11 +50,14 @@
     <base href="{$base}" />
 </head>
 <body>
+*}
+{include file='Base.part.pageHeader.tpl' }
+
 <div class="wrapper">
 	<div id="top">
         <div id="logo">
-            <img id="logoimage" src="{$base}app/themes/{$generalTheme}/images/logo.png" alt="logo">	<!-- Logo image -->
-            <h1 id="logotitle">{tp}Project Title{/tp}</h1>	<!-- Logo text -->
+            <img id="logoimage" src="media/ml-logo-medium.png" alt="logo">	<!-- Logo image -->
+            <h1 id="logotitle"><a href="{$base}">{tp}Project Title{/tp}</a></h1>	<!-- Logo text -->
         </div><!--/logo-->
     
         <nav>	<!-- Navigation Start -->
@@ -73,14 +77,6 @@
 </ul>
 {/if}
 
-{*
-            <ul>
-            	<li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem=1}#top">{tg}Home{/tg}</a></li>
-                <li><a href="{linkto package=Basic controller=Articles action=actionDetail dataItem=2}">{tg}Main menu item 3{/tg}</a></li>
-                <li><a href="#work">{tg}Work{/tg}</a></li>
-                <li><a href="#footer">{tg}Contact{/tg}</a></li>
-            </ul>      
-*}
         </nav>	<!-- Navigation End -->
     </div><!--/top-->
     
