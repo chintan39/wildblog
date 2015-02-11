@@ -35,6 +35,9 @@ class BasicContactFormRoutes extends AbstractPagesRoutes {
 		Router::registerSubaction($this, 'subactionContactForm')
 			->setTemplate('part.contactForm');
 
+		Router::registerSubaction($this, 'subactionSimpleContactForm')
+			->setTemplate('part.simpleContactForm');
+
 		Router::registerAction($this, 'actionContactForm')
 			->addRuleUrl('contact-form')
 			->setTemplate('contactForm');

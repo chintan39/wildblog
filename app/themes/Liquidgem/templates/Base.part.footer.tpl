@@ -35,11 +35,10 @@
 
         </section> <!-- Social Icons End -->
         </section> <!-- Social Icons End -->
-        <p>lets get social - </p>
     </div>
     <div class="clearfix"></div>
-	<div class="wrapper">
-    	<section class="right social"> <!-- Social Icons Start -->
+	<div class="wrapper" style="position: relative;">
+    	<section class="social" style="position: absolute; bottom: 5px; right: 5px;"> <!-- Social Icons Start -->
       {include file='Base.part.wwFooter.tpl' sep=' ' nopopuplogin=1}
         </section> <!-- Social Icons End -->
         </div>
@@ -65,6 +64,15 @@ $("#slider").carouFredSel({
 <!-- SLIDESHOW SCRIPT END -->
 {include file='Basic.part.htmlAreas.tpl' package=Basic}
 {include file='Base.part.adminBox.tpl'}
+
+{literal}
+<script type="text/javascript">stLight.options({publisher: "40461cfd-1ab5-4bac-8033-9521e96cb87f", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+<script>
+var options={ "publisher": "40461cfd-1ab5-4bac-8033-9521e96cb87f", "position": "left", "ad": { "visible": false, "openDelay": 5, "closeDelay": 0}, "chicklets": { "items": ["facebook", "twitter", "linkedin", "pinterest", "sharethis"]}};
+var st_hover_widget = new sharethis.widgets.hoverbuttons(options);
+</script>
+{/literal}
+
 </body>
 </html>
 <!-- Thanks for looking at Liquid Gem! I hope you find it useful :) -->

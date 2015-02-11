@@ -56,6 +56,36 @@ class BasicContactFormController extends AbstractPagesController {
 	}
 
 
+	public function subactionSimpleContactForm($args) {
+		Benchmark::log("Begin of creating ContactFormController::subactionSimpleContactForm");
+		
+		// handel new contact form
+		$contactForm = new BasicContactFormModel();
+    	$contactForm->setMetaData('url', 'isEditable', ModelMetaItem::NEVER);
+		$form = new Form();
+		$form->addPredefinedValue('active', 0);
+		$form->addPredefinedValue('author', 0);
+		$form->addPredefinedValue('title', tg('Contact form message'));
+		$form->addPredefinedValue('firstname', tg('not filled'));
+		$form->addPredefinedValue('surname', tg('not filled'));
+		$form->fill($contactForm);
+		$form->setLabel(tg('Contact us'));
+		$form->setIdentifier('contactForm');
+		$form->useCaptchaTimer(true);
+		$form->useSendMail(array(
+			'subject' => 'Contact form question', 
+			'reply' => 'email', 
+			'from' => '',
+			));
+		
+		// handeling the form request
+		$form->handleRequest();
+		$this->assign($form->getIdentifier(), $form->toArray());
+		
+		Benchmark::log("End of creating ContactFormController::subactionSimpleContactForm");
+	}
+
+
 	/**
 	 * Request handler
 	 * Contact form executer.

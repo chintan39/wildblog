@@ -32,7 +32,7 @@ class LiquidgemTheme extends AbstractTheme {
 		'Base.part.footer' => array(
 			'Common|Base.part.footer',
 			'Basic.part.htmlAreas',
-			'Basic.part.contactForm',
+			'Basic.part.simpleContactForm',
 		),
 		'Basic.articleDetail' => array(
 			'Base.part.header', 
