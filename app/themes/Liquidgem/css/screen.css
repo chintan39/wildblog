@@ -38,6 +38,7 @@ body{
 #logo{
 	margin-top:5%;
 	text-decoration:none;
+	width: 300px;
 }
 
 #logoimage{
@@ -66,7 +67,7 @@ nav{
 	float:right;
 	width:700px;
 	display:block;
-	height:54px;
+	height:auto;
 	border-bottom: 1px solid #2d2d2d;
 }
 
@@ -85,7 +86,7 @@ nav ul li a{
 	text-transform:uppercase;
 	font-weight:350;
 	font-size:100%;
-	line-height:350%;
+	line-height:64px;
 	display:block;
 	color:#2d2d2d;
 }
@@ -509,7 +510,7 @@ input:focus, input.focused, textarea:focus, textarea.focused {  color: #3e3e3e; 
 @media only screen and (max-width: 720px) {
 	
 	#logo{
-		width:150px;
+		width:300px;
 		display:block;
 		margin:auto;
 		margin-bottom:5%;
@@ -579,8 +580,8 @@ input:focus, input.focused, textarea:focus, textarea.focused {  color: #3e3e3e; 
 
 
 div.news{
-padding-left: 64px;
-background: url(../images/flower.png) top left no-repeat;
+padding-left: 36px;
+background: url(../images/flower2.png) top left no-repeat;
 }	
 
 form.cleanform div.line {
@@ -635,8 +636,6 @@ form.cleanform span.small.error {
 
 div#formform_text_line textarea {
 	height: 40px;
-	width: 68%;
-	float: right;
 }
 
 div#formwrap h2 {

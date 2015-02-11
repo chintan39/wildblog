@@ -24,11 +24,6 @@
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
    <!-- css_adding -->
-
-<script type="text/javascript">var switchTo5x=true;</script>
-<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-<script type="text/javascript" src="http://s.sharethis.com/loader.js"></script>
-
   {include file='Base.part.rssFeeds.tpl'}
   <link rel="shortcut icon" type="image/x-icon" href="{$base}{if $useThemeFavicon}app/themes/{$generalTheme}/images/{else}media/{/if}favicon.ico" />
   <!-- javascript_adding -->
@@ -106,22 +101,17 @@
 {if $allPagesMenus and $allPagesMenus.main_menu and $allPagesMenus.main_menu->links}
 <ul>
 	{foreach from=$allPagesMenus.main_menu->links item=item}
-		<li class="{$item->activity}{if $item->subLinks} li-with-ul{/if}"><a href="{$item->link}">{$item->title}</a>
-		{if $item->subLinks}
-            <ul>
-			{foreach from=$item->subLinks item=item2}
-				<li class="{$item2->activity}"><a href="{$item2->link}">{$item2->title}</a></li>
-			{/foreach}
-            </ul>
-		{/if}
+		<li class="{$item->activity}"><a href="{$item->link}">{$item->title}</a>
 		</li>
 	{/foreach}
 </ul>
 {/if}
+    <div class="clearfix"></div>
 
         </nav>	<!-- Navigation End -->
     </div><!--/top-->
     
+    <div class="clearfix"></div>
     
     
 

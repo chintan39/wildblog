@@ -25,11 +25,11 @@
         </section> <!-- Social Icons End -->
     	<section class="right social"> <!-- Social Icons Start -->
 {*
-		<a href="http://plus.google.co.uk"><img class="icon" src="{$base}app/themes/{$generalTheme}/images/icons/google.png" width="48" height="48" alt="google"></a><!-- Replace with any 32px x 32px icons -->
  		       <a href="http://twitter.com"><img class="icon" src="{$base}app/themes/{$generalTheme}/images/icons/twitter.png" width="48" height="48" alt="twitter"></a><!-- Replace with any 32px x 32px icons -->
 
         <a href="http://youtube.com"><img class="icon" src="{$base}app/themes/{$generalTheme}/images/icons/youtube.png" width="48" height="48" alt="youtube"></a><!-- Replace with any 32px x 32px icons -->
 *}
+	<a href="http://www.addtoany.com/add_to/google_bookmarks?linkurl={$thisLink|urlencode}&linkname={$pageTitle|default:$title|urlencode}"><img class="icon" src="{$base}app/themes/{$generalTheme}/images/icons/google.png" width="48" height="48" alt="google"></a><!-- Replace with any 32px x 32px icons -->
         <a href="https://www.facebook.com/pages/Michaela-Luk%C5%A1%C3%AD%C4%8Dkov%C3%A1/1578852452329906"><img class="icon" src="{$base}app/themes/{$generalTheme}/images/icons/facebook.png" width="48" height="48" alt="facebook"></a><!-- Replace with any 32px x 32px icons -->
 	 <a href="http://www.mapy.cz/s/fMDo"><img class="icon" src="{$base}app/themes/{$generalTheme}/images/icons/map.png" width="48" height="48" alt="facebook"></a>
 
@@ -64,14 +64,6 @@ $("#slider").carouFredSel({
 <!-- SLIDESHOW SCRIPT END -->
 {include file='Basic.part.htmlAreas.tpl' package=Basic}
 {include file='Base.part.adminBox.tpl'}
-
-{literal}
-<script type="text/javascript">stLight.options({publisher: "40461cfd-1ab5-4bac-8033-9521e96cb87f", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
-<script>
-var options={ "publisher": "40461cfd-1ab5-4bac-8033-9521e96cb87f", "position": "left", "ad": { "visible": false, "openDelay": 5, "closeDelay": 0}, "chicklets": { "items": ["facebook", "twitter", "linkedin", "pinterest", "sharethis"]}};
-var st_hover_widget = new sharethis.widgets.hoverbuttons(options);
-</script>
-{/literal}
 
 </body>
 </html>
