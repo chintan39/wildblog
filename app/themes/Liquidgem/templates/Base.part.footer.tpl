@@ -23,7 +23,7 @@
 <h4>{tg}Recommend{/tg}:</h4>
 {tg}Recommend text box{/tg}
         </section> <!-- Social Icons End -->
-    	<section class="right social"> <!-- Social Icons Start -->
+    	<section class="right social" style="margin-bottom: 30px;"> <!-- Social Icons Start -->
 {*
  		       <a href="http://twitter.com"><img class="icon" src="{$base}app/themes/{$generalTheme}/images/icons/twitter.png" width="48" height="48" alt="twitter"></a><!-- Replace with any 32px x 32px icons -->
 
@@ -38,7 +38,7 @@
     </div>
     <div class="clearfix"></div>
 	<div class="wrapper" style="position: relative;">
-    	<section class="social" style="position: absolute; bottom: 5px; right: 5px;"> <!-- Social Icons Start -->
+    	<section class="wwfooter" style="position: absolute; bottom: 5px; right: 5px;"> <!-- Social Icons Start -->
       {include file='Base.part.wwFooter.tpl' sep=' ' nopopuplogin=1}
         </section> <!-- Social Icons End -->
         </div>

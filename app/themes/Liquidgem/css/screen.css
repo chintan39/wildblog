@@ -1,11 +1,35 @@
 @charset "UTF-8";
 /*@import url('http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,600,700|Open+Sans+Condensed:300,700');*/
-/*<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>*/
-/*@import url('http://fonts.googleapis.com/css?family=Allura&subset=latin,latin-ext');*/
+/*<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+@import url('http://fonts.googleapis.com/css?family=Allura&subset=latin,latin-ext');
 @import url('http://fonts.googleapis.com/css?family=Lato:300,400,700|Cookie');
 @import url('http://fonts.googleapis.com/css?family=Grand+Hotel&subset=latin,latin-ext');
 @import "font-awesome.min.css";
+*/
 @import "work.css";
+/*
+@font-face {
+    font-family: 'koala';
+    src: url('../fonts/koala.eot');
+    src: url('../fonts/koala.eot') format('embedded-opentype'),
+         url('../fonts/koala.woff2') format('woff2'),
+         url('../fonts/koala.woff') format('woff'),
+         url('../fonts/koala.ttf') format('truetype'),
+         url('../fonts/koala.svg#koala') format('svg');
+}
+
+@font-face {
+    font-family: 'koalab';
+    src: url('../fonts/koalab.eot');
+    src: url('../fonts/koalab.eot') format('embedded-opentype'),
+         url('../fonts/koalab.woff2') format('woff2'),
+         url('../fonts/koalab.woff') format('woff'),
+         url('../fonts/koalab.ttf') format('truetype'),
+         url('../fonts/koalab.svg#koalab') format('svg');
+}
+*/
+
+@import url('http://fonts.googleapis.com/css?family=Parisienne&subset=latin,latin-ext');
 
 /* ----------------- Reset all styles ----------------- */
 *{
@@ -38,7 +62,7 @@ body{
 #logo{
 	margin-top:5%;
 	text-decoration:none;
-	width: 300px;
+	width: 350px;
 }
 
 #logoimage{
@@ -50,10 +74,10 @@ body{
 #logotitle{
 	float:left;
 	/*font-family:Cookie, Helvetica, sans-serif;*/
-	font-family: 'Grand Hotel', cursive;
+	/*font-family: 'koalab', cursive;*/
+	font-family: 'Parisienne', cursive;
 	font-weight:normal;
-	font-style: italic;
-	font-size:275%;
+	font-size:250%;
 	line-height: 64px;
 	text-shadow: 0 1px 1px #FFF;
 }
@@ -121,9 +145,9 @@ header{
 header h1{
 	/*font-family: koala, Lato, Arial, Helvetica, sans-serif;*/
 	/*font-family: 'Allura', cursive;*/
-	font-family: 'Grand Hotel', cursive;
+	/*font-family: 'koalab', cursive;*/
+	font-family: 'Parisienne', cursive;
 	font-weight: bold;
-	font-style: italic;
 	text-align:left;
 	font-size:200%;
 	font-weight:normal;
@@ -183,12 +207,12 @@ a
 }
 
 .left h3, .right h3 {
-	font-family: 'Grand Hotel', cursive;
 	/*font-family:Cookie, Arial, Helvetica, sans-serif;*/
+	/*font-family: 'koalab', cursive;*/
+	font-family: 'Parisienne', cursive;
 	font-size:180%;
 	font-weight:normal;
 	text-align:center;
-	font-style: italic;
 	color:#f38094;
 	text-shadow: 0 1px 1px #dadada;
 	margin-bottom:5%;
@@ -306,7 +330,8 @@ a
 
 #bottom h3{
 	margin:4% 0 3% 0;
-	font-family:Cookie, Arial, Helvetica, sans-serif;
+	font-family: 'Parisienne', cursive;
+	/*font-family:Cookie, Arial, Helvetica, sans-serif;*/
 	font-size:190%;
 	font-weight:normal;
 	text-align:center;
@@ -337,12 +362,17 @@ footer a{
 .social{
 	color:#f38094;
 }
+.wwfooter{
+	color:#777777;
+}
+
 
 
 /* ----------------------------- FORM ----------------------------------- */
 
 .left h4{
-	font-family:Cookie, Arial, Helvetica, sans-serif;
+	font-family: 'Parisienne', cursive;
+	/*font-family:Cookie, Arial, Helvetica, sans-serif;*/
 	font-size:180%;
 	font-weight:normal;
 	color:#f38094;
@@ -602,16 +632,22 @@ form.cleanform input, form.cleanform textarea, form.cleanform select, form.clean
 	border: none !important;
 }
 form.cleanform label {
+	text-align: left !important;
 }
 
 form.cleanform textarea.lite {
-	width: 300px;
+	width: auto;
 	height: 150px;
 }
 
 form.cleanform input.button {
-	background-color: #333333 !important;
-	border-color: #555555 !important;
+	background-color: #444444 !important;
+	border-color: #777777 !important;
+}
+
+form.cleanform input.button:hover {
+	background-color: #555555 !important;
+	border-color: #888888 !important;
 }
 
 form.cleanform input.button.positive {
@@ -636,6 +672,11 @@ form.cleanform span.small.error {
 
 div#formform_text_line textarea {
 	height: 40px;
+	width: 100%;
+}
+
+input#formform_email {
+	width: 100%;
 }
 
 div#formwrap h2 {
