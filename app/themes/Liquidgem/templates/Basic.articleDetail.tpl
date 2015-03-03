@@ -45,6 +45,7 @@
     
 {/if}
 
+    <div class="clearfix"></div>
 
     <hr/>	<!-- Horizontal Line -->
 

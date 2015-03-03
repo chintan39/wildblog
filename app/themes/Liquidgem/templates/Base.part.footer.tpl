@@ -22,8 +22,27 @@
     	<section class="left">
 <h4>{tg}Recommend{/tg}:</h4>
 {tg}Recommend text box{/tg}
+
+
+<script type="text/javascript" src="http://www.skypeassets.com/i/scom/js/skype-uri.js"></script>
+<div id="SkypeButton_Call_veveruchov_1">
+  <script type="text/javascript">
+    Skype.ui({
+      "name": "call",
+      "element": "SkypeButton_Call_veveruchov_1",
+      "participants": ["veveruchov"],
+      "imageColor": "white",
+      "imageSize": 32
+    });
+  </script>
+</div>
+
+
+
         </section> <!-- Social Icons End -->
-    	<section class="right social" style="margin-bottom: 30px;"> <!-- Social Icons Start -->
+    	<section class="right social" style="margin-bottom: 0px;"> <!-- Social Icons Start -->
+
+
 {*
  		       <a href="http://twitter.com"><img class="icon" src="{$base}app/themes/{$generalTheme}/images/icons/twitter.png" width="48" height="48" alt="twitter"></a><!-- Replace with any 32px x 32px icons -->
 
@@ -32,6 +51,9 @@
 	<a href="http://www.addtoany.com/add_to/google_bookmarks?linkurl={$thisLink|urlencode}&linkname={$pageTitle|default:$title|urlencode}"><img class="icon" src="{$base}app/themes/{$generalTheme}/images/icons/google.png" width="48" height="48" alt="google"></a><!-- Replace with any 32px x 32px icons -->
         <a href="https://www.facebook.com/pages/Michaela-Luk%C5%A1%C3%AD%C4%8Dkov%C3%A1/1578852452329906"><img class="icon" src="{$base}app/themes/{$generalTheme}/images/icons/facebook.png" width="48" height="48" alt="facebook"></a><!-- Replace with any 32px x 32px icons -->
 	 <a href="http://www.mapy.cz/s/fMDo"><img class="icon" src="{$base}app/themes/{$generalTheme}/images/icons/map.png" width="48" height="48" alt="facebook"></a>
+
+
+
 
         </section> <!-- Social Icons End -->
         </section> <!-- Social Icons End -->

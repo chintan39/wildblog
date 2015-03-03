@@ -200,7 +200,7 @@ a
 /* - - - - - - - - - - - - - - -  Slider END  - - - - - - - - - - - - - - - */
 
 .left{
-	margin-top:4%;
+	margin-top:2%;
 	width:48%;
 	float:left;
 	margin-bottom:2%;
@@ -232,7 +232,7 @@ a
 }
 	
 .right{
-	margin-top:4%;
+	margin-top:2%;
 	width:48%;
 	float:right;
 	margin-bottom:2%;
@@ -633,6 +633,7 @@ form.cleanform input, form.cleanform textarea, form.cleanform select, form.clean
 }
 form.cleanform label {
 	text-align: left !important;
+	width: 30%;
 }
 
 form.cleanform textarea.lite {
@@ -642,7 +643,17 @@ form.cleanform textarea.lite {
 
 form.cleanform input.button {
 	background-color: #444444 !important;
+	background-image: none !important;
 	border-color: #777777 !important;
+	padding: 2px 4px !important;
+	text-indent: 0 !important;
+	font-size: 100% !important;
+	height: 120% !important;
+	line-height: 120% !important;
+}
+
+form.cleanform a.decrease, form.cleanform a.increase {
+	display: none !important;
 }
 
 form.cleanform input.button:hover {
@@ -671,14 +682,18 @@ form.cleanform span.small.error {
 }
 
 div#formform_text_line textarea {
-	height: 40px;
-	width: 100%;
+	height: 30px;
+	width: 60%;
 }
 
 input#formform_email {
-	width: 100%;
+	width: 60%;
 }
 
 div#formwrap h2 {
 display: none;
+}
+
+div#workbody img {
+width: auto !important;
 }
