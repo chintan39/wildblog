@@ -371,7 +371,7 @@ input:focus, input.focused, textarea:focus, textarea.focused {  color: #3e3e3e; 
 .social p{
 	float:right;
 	letter-spacing:1px;
-	margin:98px 0 0 0;
+	margin:2px 0 30px 0;
 }
 
 .clearfix {
