@@ -39,6 +39,27 @@ class AerobicWhiteTheme extends AbstractTheme {
 			'Common|Base.part.footer',
 			'Basic.part.htmlAreas',
 		),
+		'Blog.blogList' => array(
+			'Base.part.header',
+			'Base.part.footer',
+			'Basic.part.recentNews',
+			'Gallery.part.galleriesList',
+			'LinkBuilding.part.partnerLinks',
+		),
+		'Blog.blogPostDetail' => array(
+			'Base.part.header',
+			'Base.part.footer',
+			'Basic.part.recentNews',
+			'Gallery.part.galleriesList',
+			'LinkBuilding.part.partnerLinks',
+		),
+		'Blog.blogTagDetail' => array(
+			'Base.part.header',
+			'Base.part.footer',
+			'Basic.part.recentNews',
+			'Gallery.part.galleriesList',
+			'LinkBuilding.part.partnerLinks',
+		),
 		'Basic.articleDetail' => array(
 			'Base.part.header',
 			'Base.part.footer',
