@@ -1,0 +1,1 @@
+This is a screenshot from Wildblog's administration: ![http://www.wild-web.eu/wildblog.jpg](http://www.wild-web.eu/wildblog.jpg)

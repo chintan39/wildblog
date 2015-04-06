@@ -1,0 +1,1 @@
+WildBlog is simple universal CMS written in PHP to manage any web content.
